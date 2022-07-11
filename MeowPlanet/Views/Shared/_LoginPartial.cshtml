@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <li class="nav-item memberlogin">
+            <a class="text-light" asp-area="" asp-controller="Member" asp-action="Index">歡迎回來 @User.Identity?.Name!</a>
+        </li>
+        <li class="nav-item memberlogin d-flex align-items-center">
+            <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+                <button type="submit" class="btn text-light">登出</button>
+            </form>
+        </li>
+    }
+    else
+    {
+        <li class="nav-item">
+            <a class="btn navbar-brand" asp-area="" asp-controller="Login" asp-action="Index" id="loginbtn">
+                <div class="loginbtn">
+                    <i class="fa-regular fa-circle-user"></i>&nbsp;會員登入
+                </div>
+            </a>
+        </li>
+    }
+</ul>

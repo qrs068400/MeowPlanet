@@ -1,0 +1,73 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    font-family: '·L³n¥¿¶ÂÅé';
+    margin-bottom: 60px;
+    font-size: 20px;
+    background-color: #171b20;
+    overflow-x: hidden;
+}
+
+
+.navbar {
+    position: sticky;
+    top: 0px;
+    z-index: 999;
+}
+
+.bg-dark2 {
+    color: white;
+    background: rgba(0, 0, 0, .7);
+    box-shadow: 0 0 1rem rgba(134, 171, 190, 0.5) inset;
+}
+
+.footer {
+    width: 100%;
+    white-space: nowrap;
+    line-height: 60px; /* Vertically center the text there */
+}
+
+.footer .container {
+    text-align: center;
+}
+
+#logo a {
+    display: flex;
+    justify-content: center;
+}
+
+#logo img {
+    width: 50px;
+    height: 50px;
+}
+
+.loginbtn {
+    color:white;
+}
+
+.loginbtn:hover {
+    color: #FF8EFF;
+}
+
+.nav-item a {
+    margin: 10px;
+    margin-right: 30px;
+    color: white;
+    text-decoration: none;
+}
+
+.nav-item a:hover {
+    color: #FF8EFF;
+}
+
+.navbar-brand {
+    margin-right: 200px;
+}
+
+.memberlogin btn{
+    color:white;
+}
+
