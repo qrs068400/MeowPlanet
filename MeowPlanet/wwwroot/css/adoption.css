@@ -1,8 +1,10 @@
-﻿* {
+﻿
+html,
+body {
+    height: 100%;
     margin: 0;
     padding: 0;
 }
-
 :root {
     --project-bg-color: #171B20;
     --project-primary-color: #B99668;
@@ -146,12 +148,17 @@
 
 /*------------------------------------------------------------------------------------------*/
 @media screen and (min-width:600px) {
-
-    .container1 {
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+        .container1 {
         position: relative;
         max-width: 1200px;
-        margin-top:120px;
-        padding-bottom: 120px;
+        margin-top: 50px;
+        margin-bottom: 10px;
         font-size: 15px;
         color: rgb(59, 56, 56);
     }
@@ -184,7 +191,7 @@
 
     .box1 {
         width: 430px;
-        height: 700px;
+        height: 680px;
         position: center;
         color: white;
         top: 50px;
@@ -197,7 +204,7 @@
 
     .box2, .box3, .box4, .box5 {
         width: 380px;
-        height: 630px;
+        height: 610px;
         position: absolute;
         border: 5px double #406185;
         background: #171b20;
@@ -294,14 +301,14 @@
     }
 
     .like {
-        margin-top: -40px;
+        margin-top: -50px;
     }
 
     .select {
         position: absolute;
         font-size: 20px;
-        bottom: 40px;
-        right: -50px;
+        bottom: 10&;
+        right: 20%;
         z-index: 10;
     }
 }
