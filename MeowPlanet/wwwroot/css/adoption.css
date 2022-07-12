@@ -5,6 +5,7 @@ body {
     margin: 0;
     padding: 0;
 }
+
 :root {
     --project-bg-color: #171B20;
     --project-primary-color: #B99668;
@@ -20,30 +21,32 @@ body {
 }
 
 .container1 {
-    margin:auto;
+    margin: auto;
     position: relative;
     max-width: 1200px;
     margin-top: -10px;
-    margin-bottom:-50px;
+    margin-bottom: -50px;
     font-size: 15px;
     color: rgb(59, 56, 56);
 }
 
 .slick-prev:before {
     margin-left: 20px;
-
 }
 
 .slick-next:before {
     margin-left: -35px;
 }
+
 .slick-prev {
     margin-top: 50px;
 }
+
 .slick-next {
     margin-top: 49px;
 }
-    .autoplay {
+
+.autoplay {
     max-width: 90%;
     margin-left: 15px;
     margin: auto;
@@ -56,7 +59,7 @@ body {
         height: 190px;
         margin: auto;
         box-shadow: 0 0 5px #5e8ba5;
-        margin-top:50px;
+        margin-top: 50px;
     }
 
 .box1 {
@@ -73,7 +76,7 @@ body {
 
 
 .box2, .box3, .box4, .box5 {
- display:none;
+    display: none;
 }
 
 .context {
@@ -148,17 +151,22 @@ body {
 
 /*------------------------------------------------------------------------------------------*/
 @media screen and (min-width:600px) {
+    .all{
+        overflow:hidden;
+    }
     html,
     body {
         height: 100%;
         margin: 0;
         padding: 0;
     }
-        .container1 {
+
+    .container1 {
+        margin: auto;
         position: relative;
         max-width: 1200px;
         margin-top: 50px;
-        margin-bottom: 10px;
+        margin-bottom: 80px;
         font-size: 15px;
         color: rgb(59, 56, 56);
     }
@@ -174,6 +182,7 @@ body {
     .slick-next {
         margin-top: 50px;
     }
+
     .autoplay {
         max-width: 90%;
         margin-left: 15px;
@@ -208,13 +217,13 @@ body {
         position: absolute;
         border: 5px double #406185;
         background: #171b20;
-        color: #B99668 ;
+        color: #B99668;
         border-radius: 25px;
         text-align: center;
         font-size: 280px;
         padding-top: 90px;
         box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;
-        display:block;
+        display: block;
     }
 
 
@@ -307,7 +316,6 @@ body {
     .select {
         position: absolute;
         font-size: 20px;
-        bottom: 10&;
         right: 20%;
         z-index: 10;
     }
