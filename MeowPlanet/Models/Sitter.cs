@@ -7,9 +7,9 @@ namespace MeowPlanet.Models
     {
         public Sitter()
         {
+            Favorites = new HashSet<Favorite>();
             Orderlists = new HashSet<Orderlist>();
             Features = new HashSet<Feature>();
-            Members = new HashSet<Member>();
         }
 
         public int ServiceId { get; set; }
@@ -30,9 +30,9 @@ namespace MeowPlanet.Models
         public string? Img05 { get; set; }
 
         public virtual Member Member { get; set; } = null!;
+        public virtual ICollection<Favorite> Favorites { get; set; }
         public virtual ICollection<Orderlist> Orderlists { get; set; }
 
         public virtual ICollection<Feature> Features { get; set; }
-        public virtual ICollection<Member> Members { get; set; }
     }
 }

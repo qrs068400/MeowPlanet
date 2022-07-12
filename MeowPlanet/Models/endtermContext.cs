@@ -20,6 +20,7 @@ namespace MeowPlanet.Models
         public virtual DbSet<Cat> Cats { get; set; } = null!;
         public virtual DbSet<CatBreed> CatBreeds { get; set; } = null!;
         public virtual DbSet<Clue> Clues { get; set; } = null!;
+        public virtual DbSet<Favorite> Favorites { get; set; } = null!;
         public virtual DbSet<Feature> Features { get; set; } = null!;
         public virtual DbSet<Member> Members { get; set; } = null!;
         public virtual DbSet<Missing> Missings { get; set; } = null!;
@@ -194,6 +195,31 @@ namespace MeowPlanet.Models
                     .HasConstraintName("FK_clue_missing");
             });
 
+            modelBuilder.Entity<Favorite>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.ServiceId });
+
+                entity.ToTable("favorite");
+
+                entity.Property(e => e.MemberId).HasColumnName("member_id");
+
+                entity.Property(e => e.ServiceId).HasColumnName("service_id");
+
+                entity.Property(e => e.Test).HasColumnName("test");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_favorite_member");
+
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.ServiceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_favorite_sitter");
+            });
+
             modelBuilder.Entity<Feature>(entity =>
             {
                 entity.ToTable("feature");
@@ -233,23 +259,6 @@ namespace MeowPlanet.Models
                     .HasMaxLength(100)
                     .HasColumnName("photo")
                     .HasDefaultValueSql("(N'../images/defaultperson.png')");
-
-                entity.HasMany(d => d.Services)
-                    .WithMany(p => p.Members)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "Favorite",
-                        l => l.HasOne<Sitter>().WithMany().HasForeignKey("ServiceId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_favorite_sitter"),
-                        r => r.HasOne<Member>().WithMany().HasForeignKey("MemberId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_favorite_member"),
-                        j =>
-                        {
-                            j.HasKey("MemberId", "ServiceId");
-
-                            j.ToTable("favorite");
-
-                            j.IndexerProperty<int>("MemberId").HasColumnName("member_id");
-
-                            j.IndexerProperty<int>("ServiceId").HasColumnName("service_id");
-                        });
             });
 
             modelBuilder.Entity<Missing>(entity =>
