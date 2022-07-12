@@ -1,4 +1,6 @@
-﻿
+﻿.all {
+    overflow: hidden;
+}
 html,
 body {
     height: 100%;
