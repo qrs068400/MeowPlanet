@@ -20,6 +20,7 @@ namespace MeowPlanet.Models
         public string Password { get; set; } = null!;
         public string Phone { get; set; } = null!;
         public string Name { get; set; } = null!;
+        public string? Photo { get; set; }
 
         public virtual ICollection<Adopt> Adopts { get; set; }
         public virtual ICollection<Cat> Cats { get; set; }

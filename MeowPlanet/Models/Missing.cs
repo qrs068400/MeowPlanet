@@ -16,7 +16,7 @@ namespace MeowPlanet.Models
         public decimal Lat { get; set; }
         public decimal Lng { get; set; }
         public string Description { get; set; } = null!;
-        public bool Found { get; set; } = false;   
+        public bool IsFound { get; set; }
 
         public virtual Cat Cat { get; set; } = null!;
         public virtual ICollection<Clue> Clues { get; set; }

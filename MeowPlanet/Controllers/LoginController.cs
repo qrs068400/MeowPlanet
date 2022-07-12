@@ -24,6 +24,11 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Login(Member member)
         {
