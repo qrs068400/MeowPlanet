@@ -19,22 +19,21 @@ namespace MeowPlanet.Models
         public virtual DbSet<Adopt> Adopts { get; set; } = null!;
         public virtual DbSet<Cat> Cats { get; set; } = null!;
         public virtual DbSet<CatBreed> CatBreeds { get; set; } = null!;
-        public virtual DbSet<CatPicture> CatPictures { get; set; } = null!;
         public virtual DbSet<Clue> Clues { get; set; } = null!;
+        public virtual DbSet<Favorite> Favorites { get; set; } = null!;
+        public virtual DbSet<Feature> Features { get; set; } = null!;
         public virtual DbSet<Member> Members { get; set; } = null!;
         public virtual DbSet<Missing> Missings { get; set; } = null!;
         public virtual DbSet<Orderlist> Orderlists { get; set; } = null!;
         public virtual DbSet<Sitter> Sitters { get; set; } = null!;
-        public virtual DbSet<SitterHouse> SitterHouses { get; set; } = null!;
-        public virtual DbSet<SitterIndoor> SitterIndoors { get; set; } = null!;
-        public virtual DbSet<SitterOutdoor> SitterOutdoors { get; set; } = null!;
-        public virtual DbSet<SitterPicture> SitterPictures { get; set; } = null!;
-        public virtual DbSet<SitterSleep> SitterSleeps { get; set; } = null!;
+        public virtual DbSet<SitterFeature> SitterFeatures { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=114.35.243.117,49172;Initial Catalog=endterm;Persist Security Info=True;User ID=endterm;Password=iii-fourth;");
             }
         }
 
@@ -83,9 +82,32 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.BreedId).HasColumnName("breed_id");
 
+                entity.Property(e => e.Img01)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_01")
+                    .HasDefaultValueSql("(N'../images/defaultcat.png')");
+
+                entity.Property(e => e.Img02)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_02");
+
+                entity.Property(e => e.Img03)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_03");
+
+                entity.Property(e => e.Img04)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_04");
+
+                entity.Property(e => e.Img05)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_05");
+
                 entity.Property(e => e.Introduce).HasColumnName("introduce");
 
                 entity.Property(e => e.IsAdoptable).HasColumnName("is_adoptable");
+
+                entity.Property(e => e.IsMissing).HasColumnName("is_missing");
 
                 entity.Property(e => e.IsSitting).HasColumnName("is_sitting");
 
@@ -129,29 +151,6 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<CatPicture>(entity =>
-            {
-                entity.HasKey(e => e.PicId);
-
-                entity.ToTable("cat_picture");
-
-                entity.Property(e => e.PicId).HasColumnName("pic_id");
-
-                entity.Property(e => e.CatId).HasColumnName("cat_id");
-
-                entity.Property(e => e.Path)
-                    .HasMaxLength(100)
-                    .HasColumnName("path");
-
-                entity.Property(e => e.PicOrder).HasColumnName("pic_order");
-
-                entity.HasOne(d => d.Cat)
-                    .WithMany(p => p.CatPictures)
-                    .HasForeignKey(d => d.CatId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_cat_picture_cat1");
             });
 
             modelBuilder.Entity<Clue>(entity =>
@@ -199,6 +198,46 @@ namespace MeowPlanet.Models
                     .HasConstraintName("FK_clue_missing");
             });
 
+            modelBuilder.Entity<Favorite>(entity =>
+            {
+                entity.HasKey(e => new { e.MemberId, e.ServiceId });
+
+                entity.ToTable("favorite");
+
+                entity.Property(e => e.MemberId).HasColumnName("member_id");
+
+                entity.Property(e => e.ServiceId).HasColumnName("service_id");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
+
+                entity.HasOne(d => d.Member)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.MemberId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_favorite_member");
+
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.Favorites)
+                    .HasForeignKey(d => d.ServiceId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_favorite_sitter");
+            });
+
+            modelBuilder.Entity<Feature>(entity =>
+            {
+                entity.ToTable("feature");
+
+                entity.Property(e => e.FeatureId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("feature_id");
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(50)
+                    .HasColumnName("name");
+            });
+
             modelBuilder.Entity<Member>(entity =>
             {
                 entity.ToTable("member");
@@ -221,22 +260,10 @@ namespace MeowPlanet.Models
                     .HasMaxLength(50)
                     .HasColumnName("phone");
 
-                entity.HasMany(d => d.Services)
-                    .WithMany(p => p.Members)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "Favorite",
-                        l => l.HasOne<Sitter>().WithMany().HasForeignKey("ServiceId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_favorite_sitter"),
-                        r => r.HasOne<Member>().WithMany().HasForeignKey("MemberId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_favorite_member"),
-                        j =>
-                        {
-                            j.HasKey("MemberId", "ServiceId");
-
-                            j.ToTable("favorite");
-
-                            j.IndexerProperty<int>("MemberId").HasColumnName("member_id");
-
-                            j.IndexerProperty<int>("ServiceId").HasColumnName("service_id");
-                        });
+                entity.Property(e => e.Photo)
+                    .HasMaxLength(100)
+                    .HasColumnName("photo")
+                    .HasDefaultValueSql("(N'../images/defaultperson.png')");
             });
 
             modelBuilder.Entity<Missing>(entity =>
@@ -255,7 +282,7 @@ namespace MeowPlanet.Models
                     .HasMaxLength(200)
                     .HasColumnName("description");
 
-                entity.Property(e => e.Found).HasColumnName("found");
+                entity.Property(e => e.IsFound).HasColumnName("is_found");
 
                 entity.Property(e => e.Lat)
                     .HasColumnType("decimal(10, 8)")
@@ -335,9 +362,29 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
-                entity.Property(e => e.HouseId).HasColumnName("house_id");
+                entity.Property(e => e.House)
+                    .HasMaxLength(50)
+                    .HasColumnName("house");
 
-                entity.Property(e => e.IndoorId).HasColumnName("indoor_id");
+                entity.Property(e => e.Img01)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_01");
+
+                entity.Property(e => e.Img02)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_02");
+
+                entity.Property(e => e.Img03)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_03");
+
+                entity.Property(e => e.Img04)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_04");
+
+                entity.Property(e => e.Img05)
+                    .HasMaxLength(100)
+                    .HasColumnName("img_05");
 
                 entity.Property(e => e.IsService).HasColumnName("is_service");
 
@@ -347,7 +394,9 @@ namespace MeowPlanet.Models
                     .HasMaxLength(50)
                     .HasColumnName("name");
 
-                entity.Property(e => e.OutdoorId).HasColumnName("outdoor_id");
+                entity.Property(e => e.Outdoor)
+                    .HasMaxLength(50)
+                    .HasColumnName("outdoor");
 
                 entity.Property(e => e.Pay).HasColumnName("pay");
 
@@ -359,116 +408,44 @@ namespace MeowPlanet.Models
                     .HasColumnType("decimal(11, 8)")
                     .HasColumnName("pos_lng");
 
-                entity.Property(e => e.SleepId).HasColumnName("sleep_id");
+                entity.Property(e => e.Sleep)
+                    .HasMaxLength(50)
+                    .HasColumnName("sleep");
 
                 entity.Property(e => e.Summary).HasColumnName("summary");
-
-                entity.HasOne(d => d.House)
-                    .WithMany(p => p.Sitters)
-                    .HasForeignKey(d => d.HouseId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_sitter_sitter_house");
-
-                entity.HasOne(d => d.Indoor)
-                    .WithMany(p => p.Sitters)
-                    .HasForeignKey(d => d.IndoorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_sitter_sitter_indoor");
 
                 entity.HasOne(d => d.Member)
                     .WithMany(p => p.Sitters)
                     .HasForeignKey(d => d.MemberId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_sitter_member");
-
-                entity.HasOne(d => d.Outdoor)
-                    .WithMany(p => p.Sitters)
-                    .HasForeignKey(d => d.OutdoorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_sitter_sitter_outdoor1");
-
-                entity.HasOne(d => d.Sleep)
-                    .WithMany(p => p.Sitters)
-                    .HasForeignKey(d => d.SleepId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_sitter_sitter_sleep");
             });
 
-            modelBuilder.Entity<SitterHouse>(entity =>
+            modelBuilder.Entity<SitterFeature>(entity =>
             {
-                entity.HasKey(e => e.HouseId);
+                entity.HasKey(e => new { e.ServiceId, e.FeatureId });
 
-                entity.ToTable("sitter_house");
-
-                entity.Property(e => e.HouseId).HasColumnName("house_id");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<SitterIndoor>(entity =>
-            {
-                entity.HasKey(e => e.IndoorId);
-
-                entity.ToTable("sitter_indoor");
-
-                entity.Property(e => e.IndoorId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("indoor_id");
-
-                entity.Property(e => e.Name)
-                    .ValueGeneratedOnAdd()
-                    .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<SitterOutdoor>(entity =>
-            {
-                entity.HasKey(e => e.OutdoorId);
-
-                entity.ToTable("sitter_outdoor");
-
-                entity.Property(e => e.OutdoorId).HasColumnName("outdoor_id");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .HasColumnName("name");
-            });
-
-            modelBuilder.Entity<SitterPicture>(entity =>
-            {
-                entity.HasKey(e => e.PicId);
-
-                entity.ToTable("sitter_picture");
-
-                entity.Property(e => e.PicId).HasColumnName("pic_id");
-
-                entity.Property(e => e.Path)
-                    .HasMaxLength(100)
-                    .HasColumnName("path");
-
-                entity.Property(e => e.PicOrder).HasColumnName("pic_order");
+                entity.ToTable("sitter_feature");
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
+                entity.Property(e => e.FeatureId).HasColumnName("feature_id");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id");
+
+                entity.HasOne(d => d.Feature)
+                    .WithMany(p => p.SitterFeatures)
+                    .HasForeignKey(d => d.FeatureId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_sitter_feature_feature");
+
                 entity.HasOne(d => d.Service)
-                    .WithMany(p => p.SitterPictures)
+                    .WithMany(p => p.SitterFeatures)
                     .HasForeignKey(d => d.ServiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_sitter_picture_sitter");
-            });
-
-            modelBuilder.Entity<SitterSleep>(entity =>
-            {
-                entity.HasKey(e => e.SleepId);
-
-                entity.ToTable("sitter_sleep");
-
-                entity.Property(e => e.SleepId).HasColumnName("sleep_id");
-
-                entity.Property(e => e.Name)
-                    .HasMaxLength(50)
-                    .HasColumnName("name");
+                    .HasConstraintName("FK_sitter_feature_sitter");
             });
 
             OnModelCreatingPartial(modelBuilder);
