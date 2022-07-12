@@ -1,0 +1,324 @@
+﻿.all {
+    overflow: hidden;
+}
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --project-bg-color: #171B20;
+    --project-primary-color: #B99668;
+    --project-primary-color-buzz: rgba(185, 150, 104, 0.5);
+    --project-pink-color: #FF8EFF;
+    --project-pink-color-buzz: rgba(255, 142, 255, 0.5);
+    --project-gray-color: #4B5461;
+    --project-gray-color-buzz: rgba(75, 84, 97, 0.5);
+    --project-green-color: #2A483A;
+    --project-green-color-buzz: rgba(42, 72, 58, 0.5);
+    --project-txt-color: #ffffff;
+    --project-txt-color-buzz: rgba(255, 255, 255, 0.5);
+}
+
+.container1 {
+    margin: auto;
+    position: relative;
+    max-width: 1200px;
+    margin-top: -10px;
+    margin-bottom: -50px;
+    font-size: 15px;
+    color: rgb(59, 56, 56);
+}
+
+.slick-prev:before {
+    margin-left: 20px;
+}
+
+.slick-next:before {
+    margin-left: -35px;
+}
+
+.slick-prev {
+    margin-top: 50px;
+}
+
+.slick-next {
+    margin-top: 49px;
+}
+
+.autoplay {
+    max-width: 90%;
+    margin-left: 15px;
+    margin: auto;
+    padding-top: 50px;
+}
+
+    .autoplay img {
+        max-width: 100%;
+        border-radius: 5%;
+        height: 190px;
+        margin: auto;
+        box-shadow: 0 0 5px #5e8ba5;
+        margin-top: 50px;
+    }
+
+.box1 {
+    max-width: 430px;
+    height: 700px;
+    position: center;
+    color: white;
+    top: 50px;
+    left: 200px;
+    background: transparent url(../Images/887.png) 50% 50% no-repeat;
+    background-size: contain;
+    margin: auto;
+}
+
+
+.box2, .box3, .box4, .box5 {
+    display: none;
+}
+
+.context {
+    background-color: transparent;
+    font-weight: bold;
+    color: whitesmoke;
+    margin: auto;
+    padding-bottom: 80px;
+    text-align: center;
+}
+
+.title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    color: whitesmoke;
+    padding-bottom: 40px;
+    padding-top: 40px;
+}
+
+.btn-outline-danger {
+    color: #DDB178;
+    border-color: #DDB178;
+}
+
+    .btn-outline-danger:hover {
+        color: #fff;
+        background-color: #DDB178;
+        border-color: #DDB178;
+    }
+
+    .btn-outline-danger:focus, .btn-outline-danger.focus {
+        box-shadow: 0 0 0 0.2rem #DDB178;
+    }
+
+    .btn-outline-danger.disabled, .btn-outline-danger:disabled {
+        color: #DDB178;
+        background-color: transparent;
+    }
+
+    .btn-outline-danger:not(:disabled):not(.disabled):active, .btn-outline-danger:not(:disabled):not(.disabled).active,
+    .show > .btn-outline-danger.dropdown-toggle {
+        color: #DDB178;
+        background-color: #DDB178;
+        border-color: #DDB178;
+    }
+
+        .btn-outline-danger:not(:disabled):not(.disabled):active:focus, .btn-outline-danger:not(:disabled):not(.disabled).active:focus,
+        .show > .btn-outline-danger.dropdown-toggle:focus {
+            box-shadow: 0 0 0 0.2rem #DDB178;
+        }
+
+
+.like button {
+    width: 150px;
+    font-weight: bold;
+    box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;
+}
+
+.like {
+    margin-top: -35px;
+}
+
+.select {
+    position: absolute;
+    font-size: 20px;
+    bottom: 5px;
+    right: -5px;
+    z-index: 10;
+    border: 0px solid transparent;
+}
+
+/*------------------------------------------------------------------------------------------*/
+@media screen and (min-width:600px) {
+    .all{
+        overflow:hidden;
+    }
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container1 {
+        margin: auto;
+        position: relative;
+        max-width: 1200px;
+        margin-top: 50px;
+        margin-bottom: 80px;
+        font-size: 15px;
+        color: rgb(59, 56, 56);
+    }
+
+    .slick-prev:before {
+        margin-left: 20px;
+    }
+
+    .slick-next:before {
+        margin-left: -30px;
+    }
+
+    .slick-next {
+        margin-top: 50px;
+    }
+
+    .autoplay {
+        max-width: 90%;
+        margin-left: 15px;
+        margin: auto;
+        padding-top: 50px;
+    }
+
+        .autoplay img {
+            max-width: 100%;
+            border-radius: 5%;
+            height: 230px;
+            margin: auto;
+            box-shadow: 0 0 5px #5e8ba5;
+        }
+
+    .box1 {
+        width: 430px;
+        height: 680px;
+        position: center;
+        color: white;
+        top: 50px;
+        left: 200px;
+        background: transparent url(../Images/887.png) 50% 50% no-repeat;
+        background-size: contain;
+        margin: auto;
+    }
+
+
+    .box2, .box3, .box4, .box5 {
+        width: 380px;
+        height: 610px;
+        position: absolute;
+        border: 5px double #406185;
+        background: #171b20;
+        color: #B99668;
+        border-radius: 25px;
+        text-align: center;
+        font-size: 280px;
+        padding-top: 90px;
+        box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;
+        display: block;
+    }
+
+
+
+    .box2 {
+        top: 75px;
+        left: 180px;
+        z-index: -100;
+    }
+
+    .box3 {
+        top: 85px;
+        right: 180px;
+        z-index: -100;
+    }
+
+    .box4 {
+        top: 5px;
+        left: -20px;
+        z-index: -200;
+    }
+
+    .box5 {
+        top: 5px;
+        right: -20px;
+        z-index: -200;
+    }
+
+    .context {
+        background-color: transparent;
+        font-weight: bold;
+        color: whitesmoke;
+        margin: auto;
+        padding-bottom: 80px;
+        text-align: center;
+    }
+
+    .title {
+        text-align: center;
+        font-weight: bold;
+        font-size: 1rem;
+        color: whitesmoke;
+        padding-bottom: 40px;
+        padding-top: 40px;
+    }
+
+    .btn-outline-danger {
+        color: #DDB178;
+        border-color: #DDB178;
+    }
+
+        .btn-outline-danger:hover {
+            color: #fff;
+            background-color: #DDB178;
+            border-color: #DDB178;
+        }
+
+        .btn-outline-danger:focus, .btn-outline-danger.focus {
+            box-shadow: 0 0 0 0.2rem #DDB178;
+        }
+
+        .btn-outline-danger.disabled, .btn-outline-danger:disabled {
+            color: #DDB178;
+            background-color: transparent;
+        }
+
+        .btn-outline-danger:not(:disabled):not(.disabled):active, .btn-outline-danger:not(:disabled):not(.disabled).active,
+        .show > .btn-outline-danger.dropdown-toggle {
+            color: #DDB178;
+            background-color: #DDB178;
+            border-color: #DDB178;
+        }
+
+            .btn-outline-danger:not(:disabled):not(.disabled):active:focus, .btn-outline-danger:not(:disabled):not(.disabled).active:focus,
+            .show > .btn-outline-danger.dropdown-toggle:focus {
+                box-shadow: 0 0 0 0.2rem #DDB178;
+            }
+
+
+    .like button {
+        width: 150px;
+        font-weight: bold;
+        box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;
+    }
+
+    .like {
+        margin-top: -50px;
+    }
+
+    .select {
+        position: absolute;
+        font-size: 20px;
+        right: 20%;
+        z-index: 10;
+    }
+}
