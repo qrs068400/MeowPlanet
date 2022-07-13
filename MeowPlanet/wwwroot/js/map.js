@@ -16,12 +16,16 @@ function removeMarker() {
 }
 
 
+
+
+
 function initMap() {
 
     //初始化地圖
     map = new google.maps.Map($('#map')[0], {
         center: { lat: 22.629314218928563, lng: 120.29299528465663 },
         zoom: 16,
+        minZoom: 15,
         maxZoom: 18,
         disableDefaultUI: true,
         mapId: 'a5f4cec6781c8dda'
@@ -30,8 +34,9 @@ function initMap() {
     //定位按鈕
     const locationButton = document.createElement("button");
     locationButton.innerHTML = '<i class="fa-solid fa-crosshairs fa-lg"></i>';
-    $(locationButton).addClass('btn btn-primary btn-location');
+    $(locationButton).addClass('btn btn-dark btn-location');
     $(locationButton).css('border-radius', '10px');
+    $(locationButton).css('border-color', 'white');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
     $(locationButton).on('click', function () {
         if (navigator.geolocation) {
@@ -94,7 +99,7 @@ function initMap() {
             });
         });
 
-        
+
 
         //切換刊登&取消刊登顯示
         $(this).toggleClass('d-none');
@@ -156,39 +161,12 @@ function initMap() {
     });
 
     //隨中心依距離把貓貓圖標加進地圖
-    function searchCat() {
 
-        catList.forEach((value, index) => {
-            let cat = value;
-            let marker = cat.marker;
-            let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
-            let center = map.getCenter();
-            let distance = google.maps.geometry.spherical.computeDistanceBetween(center, LatLng);
-
-
-            //距離小於1.25公里就加入圖標
-            if (distance < 1250) {
-                marker.setMap(map);
-
-                if (!markerList.includes(marker)) {
-                    markerList.push(marker);
-                }
-            }
-            else {
-                marker.setMap(null);
-                if (markerList.includes(marker)) {
-                    markerList.splice(markerList.indexOf(marker), 1); 
-                }
-            }
-        })
-        
-    };
-    
 
     //綁定移動事件
     var listener = map.addListener('idle', searchCat)
 }
-    
+
 
 
 //日期選擇框
@@ -207,39 +185,72 @@ function setMarkerPos() {
 let catWindow;
 
 //把所有走失貓咪抓進catList
-window.onload = $.get("Missings/GetMissing", function (data, status) {
-    data.forEach((value, index) => {
-        let cat = value;
-        let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
-        let marker = new google.maps.Marker({
-            position: LatLng,
-            icon: {
-                url: "images/marker.png",
-                scaledSize: new google.maps.Size(30, 43)
-            }
-        });
-
-        //此marker內容
-        marker.addListener('click', function () {
-
-            if (catWindow != null) {
-                catWindow.close();
-            }          
-
-            catWindow = new google.maps.InfoWindow({
-                content: `貓貓id = ${cat.catId}`,
+$(function () {
+    $.get('Missings/GetMissing', function (data, status) {
+        data.forEach((value, index) => {
+            let cat = value;
+            let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
+            let marker = new google.maps.Marker({
+                position: LatLng,
+                icon: {
+                    url: "images/marker.png",
+                    scaledSize: new google.maps.Size(36, 51)
+                }
             });
 
-            catWindow.open({
-                anchor: this,
-                map,
-                shouldFocus: false
-            });
+            //此marker內容
+            marker.addListener('click', function () {
+
+                if (catWindow != null) {
+                    catWindow.close();
+                }
+
+                catWindow = new google.maps.InfoWindow({
+                    content: `貓貓id = ${cat.catId}`,
+                });
+
+                catWindow.open({
+                    anchor: this,
+                    map,
+                    shouldFocus: false
+                });
+            })
+
+            cat.marker = marker;
+            catList.push(cat);
         })
 
-        cat.marker = marker;
-        catList.push(cat);
+        searchCat();
     })
 })
+
+//搜尋中心點附近貓貓
+function searchCat() {
+
+    catList.forEach((value, index) => {
+        let cat = value;
+        let marker = cat.marker;
+        let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
+        let center = map.getCenter();
+        let distance = google.maps.geometry.spherical.computeDistanceBetween(center, LatLng);
+
+
+        //距離小於1公里就加入圖標
+        if (distance < 1000) {
+            marker.setMap(map);
+
+            if (!markerList.includes(marker)) {
+                markerList.push(marker);
+            }
+        }
+        else {
+            marker.setMap(null);
+            if (markerList.includes(marker)) {
+                markerList.splice(markerList.indexOf(marker), 1);
+            }
+        }
+    })
+};
+
 
 window.initMap = initMap;
