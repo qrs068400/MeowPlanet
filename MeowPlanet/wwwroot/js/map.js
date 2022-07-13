@@ -183,8 +183,7 @@ function initMap() {
         })
         
     };
-
-    searchCat();
+    
 
     //綁定移動事件
     var listener = map.addListener('idle', searchCat)
@@ -203,6 +202,10 @@ function setMarkerPos() {
     $('#lng').val(newMarker.getPosition().lng());
 }
 
+
+
+let catWindow;
+
 //把所有走失貓咪抓進catList
 window.onload = $.get("Missings/GetMissing", function (data, status) {
     data.forEach((value, index) => {
@@ -213,15 +216,30 @@ window.onload = $.get("Missings/GetMissing", function (data, status) {
             icon: {
                 url: "images/marker.png",
                 scaledSize: new google.maps.Size(30, 43)
-            },
-            //對此marker設定id
-            id: cat.catId
+            }
         });
+
+        //此marker內容
         marker.addListener('click', function () {
-            console.log(marker.id);
+
+            if (catWindow != null) {
+                catWindow.close();
+            }          
+
+            catWindow = new google.maps.InfoWindow({
+                content: `貓貓id = ${cat.catId}`,
+            });
+
+            catWindow.open({
+                anchor: this,
+                map,
+                shouldFocus: false
+            });
         })
+
         cat.marker = marker;
         catList.push(cat);
     })
 })
 
+window.initMap = initMap;
