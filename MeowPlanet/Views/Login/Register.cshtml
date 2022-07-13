@@ -1,4 +1,5 @@
-﻿
+﻿@model Member
+
 @{
     ViewData["Title"] = "Register";
 }
@@ -7,3 +8,50 @@
     <link href="~/css/registerpage.css" rel="stylesheet" />
 }
 
+    <section class="registersection img-bg d-flex align-items-center">
+        <div class="container">
+            <div class="row d-flex justify-content-center w-75">
+                <div class="col-6 mycontent-left d-flex align-items-center justify-content-center">
+                    <p>
+                        填寫簡單資料<br />
+                        一起登錄喵星
+                    </p>
+                </div>
+
+                <div class="col-6 mycontent-right d-flex justify-content-center align-items-center">
+
+                    <form id="account" method="post" asp-action="Login">
+                        <div class="text-center">
+                            <h2>註冊喵會員</h2>
+                        </div>
+
+                        <p class="form-p">Email</p>
+                        <div class="d-flex justify-content-center">
+                            <input asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" />
+                        </div>
+
+                        <p class="form-p">密碼</p>
+                        <div class="d-flex justify-content-center">
+                            <input asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                        </div>
+
+                        <p class="form-p">姓名</p>
+                        <div class="d-flex justify-content-center">
+                            <input asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                        </div>
+
+                        <p class="form-p">連絡電話</p>
+                        <div class="d-flex justify-content-center">
+                            <input asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                        </div>
+
+                        <div class="d-flex justify-content-center">
+                            <button id="regist-submit" type="submit" class="regist-sp my-5">登入</button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </section>
