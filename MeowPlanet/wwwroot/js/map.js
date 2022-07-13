@@ -1,20 +1,28 @@
 ﻿let map;
-let marker;
-let markersArray = [];
 
+//使用者設置的圖標
+let newMarker;
+
+//從資料庫撈到的所有貓咪物件
+let catList = [];
+
+//顯示在地圖上的marker物件 會因中心點改變而增減
+let markerList = [];
 
 function removeMarker() {
-    if (marker && marker.setMap) {
-        marker.setMap(null);
-    }    
+    if (newMarker != null) {
+        newMarker.setMap(null);
+    }
 }
+
 
 function initMap() {
 
     //初始化地圖
     map = new google.maps.Map($('#map')[0], {
-        center: { lat: 22.629314218928563, lng: 120.29299528465663},
+        center: { lat: 22.629314218928563, lng: 120.29299528465663 },
         zoom: 16,
+        maxZoom: 18,
         disableDefaultUI: true,
         mapId: 'a5f4cec6781c8dda'
     });
@@ -36,28 +44,30 @@ function initMap() {
                     map.setCenter(pos);
                 }
             )
-        };        
+        };
     })
 
 
     //刊登協尋
     $('#pre-publish').on('click', function () {
 
+        google.maps.event.removeListener(listener);
+
         //把資料庫內圖標隱藏
-        for (var i = 0; i < markersArray.length; i++) {
-            markersArray[i].setMap(null);
+        for (var i = 0; i < markerList.length; i++) {
+            markerList[i].setMap(null);
         }
 
         map.setOptions({ draggableCursor: 'url(../images/marker-cursor.png) 15 45, auto' });
-        
-        $('#div-items').addClass('items-activate');
-        $('#div-map').addClass('map-activate');       
 
-        let listenerHandle = map.addListener("click", (e) => {     
+        $('#div-items').addClass('items-activate');
+        $('#div-map').addClass('map-activate');
+
+        let listenerHandle = map.addListener("click", (e) => {
 
             removeMarker();
 
-            marker = new google.maps.Marker({
+            newMarker = new google.maps.Marker({
                 position: e.latLng,
                 map,
                 Draggable: true,
@@ -67,10 +77,9 @@ function initMap() {
                 }
             });
 
-            marker.setMap(map);
-            map.panTo(marker.getPosition());
+            map.panTo(newMarker.getPosition());
 
-            const contentString ='<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' + '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+            const contentString = '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' + '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
                 '<button class="btn btn-primary" onclick="setMarkerPos()" data-bs-toggle="modal" data-bs-target="#exampleModal">' +
                 'Yes' + '</button>' + '<button onclick="removeMarker();" class="btn btn-danger">No</button>' + '</div>';
 
@@ -79,11 +88,13 @@ function initMap() {
             });
 
             infowindow.open({
-                anchor: marker,
+                anchor: newMarker,
                 map,
                 shouldFocus: false,
             });
         });
+
+        
 
         //切換刊登&取消刊登顯示
         $(this).toggleClass('d-none');
@@ -102,13 +113,15 @@ function initMap() {
             removeMarker();
 
             //把資料庫內圖標顯示回來
-            for (var i = 0; i < markersArray.length; i++) {
-                markersArray[i].setMap(map);
+            for (var i = 0; i < markerList.length; i++) {
+                markerList[i].setMap(map);
             }
+
+            listener = map.addListener('idle', searchCat);
         })
     })
 
-    
+
     //搜尋框
     const input = document.getElementById("search-input");
     const searchBox = new google.maps.places.SearchBox(input);
@@ -141,8 +154,42 @@ function initMap() {
         });
         map.fitBounds(bounds);
     });
-    
+
+    //隨中心依距離把貓貓圖標加進地圖
+    function searchCat() {
+
+        catList.forEach((value, index) => {
+            let cat = value;
+            let marker = cat.marker;
+            let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
+            let center = map.getCenter();
+            let distance = google.maps.geometry.spherical.computeDistanceBetween(center, LatLng);
+
+
+            //距離小於1.25公里就加入圖標
+            if (distance < 1250) {
+                marker.setMap(map);
+
+                if (!markerList.includes(marker)) {
+                    markerList.push(marker);
+                }
+            }
+            else {
+                marker.setMap(null);
+                if (markerList.includes(marker)) {
+                    markerList.splice(markerList.indexOf(marker), 1); 
+                }
+            }
+        })
+        
+    };
+
+    searchCat();
+
+    //綁定移動事件
+    var listener = map.addListener('idle', searchCat)
 }
+    
 
 
 //日期選擇框
@@ -152,9 +199,29 @@ $(function () {
 
 //把marker位置寫進資料庫
 function setMarkerPos() {
-    $('#lat').val(marker.getPosition().lat());
-    $('#lng').val(marker.getPosition().lng());
+    $('#lat').val(newMarker.getPosition().lat());
+    $('#lng').val(newMarker.getPosition().lng());
 }
 
-
+//把所有走失貓咪抓進catList
+window.onload = $.get("Missings/GetMissing", function (data, status) {
+    data.forEach((value, index) => {
+        let cat = value;
+        let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
+        let marker = new google.maps.Marker({
+            position: LatLng,
+            icon: {
+                url: "images/marker.png",
+                scaledSize: new google.maps.Size(30, 43)
+            },
+            //對此marker設定id
+            id: cat.catId
+        });
+        marker.addListener('click', function () {
+            console.log(marker.id);
+        })
+        cat.marker = marker;
+        catList.push(cat);
+    })
+})
 

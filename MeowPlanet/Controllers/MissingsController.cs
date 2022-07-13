@@ -24,7 +24,7 @@ namespace MeowPlanet.Models
             return View();
         }
 
-        
+
         [HttpPost]
         public async Task<IActionResult> AddMissing(Missing missingCat)
         {
@@ -33,10 +33,11 @@ namespace MeowPlanet.Models
             return RedirectToAction("Index");
         }
 
-        public static List<Missing> catList = new List<Missing>();
 
+        [HttpGet]
         public ActionResult GetMissing()
-        {           
+        {
+            List<Missing> catList = new List<Missing>();
             foreach (var item in _context.Missings)
             {
                 Missing missingCat = new Missing
@@ -53,5 +54,6 @@ namespace MeowPlanet.Models
             var data = catList;
             return Json(data);
         }
+
     }
 }
