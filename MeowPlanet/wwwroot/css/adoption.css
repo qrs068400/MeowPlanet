@@ -1,6 +1,13 @@
 ﻿.all {
     overflow: hidden;
+    -webkit-user-select: none;
+    /* Safari */
+    -ms-user-select: none;
+    /* IE 10 and IE 11 */
+    user-select: none;
+    /* Standard syntax */
 }
+
 html,
 body {
     height: 100%;
@@ -22,11 +29,21 @@ body {
     --project-txt-color-buzz: rgba(255, 255, 255, 0.5);
 }
 
+.buzz {
+    background-color: var(--project-bg-color);
+    box-shadow: 0 0 0.5rem var(--project-txt-color-buzz) inset;
+}
+
+.buzz-pri {
+    background-color: var(--project-bg-color);
+    box-shadow: 0 0 0.5rem var(--project-primary-color-buzz) inset;
+}
+
 .container1 {
     margin: auto;
     position: relative;
     max-width: 1200px;
-    margin-top: -10px;
+    margin-top: -50px;
     margin-bottom: -50px;
     font-size: 15px;
     color: rgb(59, 56, 56);
@@ -65,15 +82,17 @@ body {
     }
 
 .box1 {
-    max-width: 430px;
+    max-width: 350px;
     height: 700px;
     position: center;
     color: white;
     top: 50px;
     left: 200px;
-    background: transparent url(../Images/887.png) 50% 50% no-repeat;
+    background: transparent url('../images/887.png') 50% 50% no-repeat;
     background-size: contain;
     margin: auto;
+    transform-style: preserve-3d;
+    transition: transform 0.7s;
 }
 
 
@@ -97,6 +116,17 @@ body {
     color: whitesmoke;
     padding-bottom: 40px;
     padding-top: 40px;
+}
+
+.detail {
+    position: absolute;
+    text-align: center;
+    overflow: auto;
+    max-width: 250px;
+    height: 250px;
+    top: 350px;
+    left: 40px;
+    font-size: 0.8rem;
 }
 
 .btn-outline-danger {
@@ -135,27 +165,39 @@ body {
 .like button {
     width: 150px;
     font-weight: bold;
-    box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;
 }
 
 .like {
-    margin-top: -35px;
+    margin-top: -50px;
 }
 
 .select {
     position: absolute;
     font-size: 20px;
-    bottom: 5px;
+    bottom: 55px;
     right: -5px;
     z-index: 10;
     border: 0px solid transparent;
 }
 
+.trun {
+    display: block;
+    backface-visibility: hidden;
+}
+
+.back {
+    transform: rotateY(180deg);
+}
+
+.flipped {
+    transform: rotateY(180deg);
+}
 /*------------------------------------------------------------------------------------------*/
 @media screen and (min-width:600px) {
-    .all{
-        overflow:hidden;
+    .all {
+        overflow: hidden;
     }
+
     html,
     body {
         height: 100%;
@@ -201,13 +243,13 @@ body {
         }
 
     .box1 {
-        width: 430px;
+        max-width: 430px;
         height: 680px;
         position: center;
         color: white;
         top: 50px;
         left: 200px;
-        background: transparent url(../Images/887.png) 50% 50% no-repeat;
+        background: transparent url(../images/887.png) 50% 50% no-repeat;
         background-size: contain;
         margin: auto;
     }
@@ -272,6 +314,17 @@ body {
         padding-top: 40px;
     }
 
+    .detail {
+        position: absolute;
+        text-align: center;
+        overflow: auto;
+        max-width: 250px;
+        height: 250px;
+        top: 350px;
+        left: 80px;
+        font-size: 0.8rem;
+    }
+
     .btn-outline-danger {
         color: #DDB178;
         border-color: #DDB178;
@@ -308,7 +361,6 @@ body {
     .like button {
         width: 150px;
         font-weight: bold;
-        box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;
     }
 
     .like {
