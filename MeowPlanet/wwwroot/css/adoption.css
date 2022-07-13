@@ -21,7 +21,14 @@ body {
     --project-txt-color: #ffffff;
     --project-txt-color-buzz: rgba(255, 255, 255, 0.5);
 }
-
+.buzz {
+    background-color: var(--project-bg-color);
+    box-shadow: 0 0 0.5rem var(--project-txt-color-buzz) inset;
+}
+.buzz-pri {
+    background-color: var(--project-bg-color);
+    box-shadow: 0 0 0.5rem var(--project-primary-color-buzz) inset;
+}
 .container1 {
     margin: auto;
     position: relative;
@@ -135,7 +142,7 @@ body {
 .like button {
     width: 150px;
     font-weight: bold;
-    box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;
+/*    box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;*/
 }
 
 .like {
@@ -308,7 +315,7 @@ body {
     .like button {
         width: 150px;
         font-weight: bold;
-        box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;
+/*        box-shadow: 0 0 0.4rem rgba(255, 255, 255, 0.5) inset;*/
     }
 
     .like {
