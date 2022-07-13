@@ -81,8 +81,9 @@ body {
     background: transparent url(../Images/887.png) 50% 50% no-repeat;
     background-size: contain;
     margin: auto;
+    transition: 0.5s ease-in-out;
 }
-
+    
 
 .box2, .box3, .box4, .box5 {
     display: none;
@@ -217,9 +218,10 @@ body {
         background: transparent url(../Images/887.png) 50% 50% no-repeat;
         background-size: contain;
         margin: auto;
+        transition: 0.5s ease-in-out;
     }
 
-
+      
     .box2, .box3, .box4, .box5 {
         width: 380px;
         height: 610px;
