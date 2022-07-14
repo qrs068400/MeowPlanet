@@ -169,8 +169,10 @@ function initMap() {
 
 //日期選擇框
 $(function () {
-    $("#datepicker").datepicker($.datepicker.regional['tw']);
+    $("#datepicker").datepicker($.datepicker.regional['tw']);    
 });
+
+
 
 //把marker位置寫進資料庫
 function setMarkerPos() {
