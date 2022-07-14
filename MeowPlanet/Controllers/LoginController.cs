@@ -47,6 +47,14 @@ namespace MeowPlanet.Controllers
             //return Json(count);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddMember(Member member)
+        {
+            _context.Members.Add(member);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
 
     }
 }

@@ -20,33 +20,33 @@
 
                 <div class="col-6 mycontent-right d-flex justify-content-center align-items-center">
 
-                    <form id="account" method="post" asp-action="Login">
+                    <form method="post" asp-action="AddMember" asp-controller="Login" autocomplete="off">
                         <div class="text-center">
                             <h2>註冊喵會員</h2>
                         </div>
 
                         <p class="form-p">Email</p>
                         <div class="d-flex justify-content-center">
-                            <input asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" />
+                            <input type="email" asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" />
                         </div>
 
                         <p class="form-p">密碼</p>
                         <div class="d-flex justify-content-center">
-                            <input asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                            <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
                         </div>
 
                         <p class="form-p">姓名</p>
                         <div class="d-flex justify-content-center">
-                            <input asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                            <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
                         </div>
 
                         <p class="form-p">連絡電話</p>
                         <div class="d-flex justify-content-center">
-                            <input asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                            <input type="text" asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
                         </div>
 
                         <div class="d-flex justify-content-center">
-                            <button id="regist-submit" type="submit" class="regist-sp my-5">登入</button>
+                            <button type="submit" class="btn regist-sp2 my-5">註冊</button>
                         </div>
 
                     </form>
