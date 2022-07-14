@@ -1,14 +1,31 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MeowPlanet.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeowPlanet.Controllers
 {
+
     public class AdoptionController : Controller
     {
+        private readonly endtermContext _context;
+
+        public AdoptionController(endtermContext context)
+        {
+            _context = context;
+        }
+
         // GET: AdoptionController
         public ActionResult Index()
         {
-            return View();
+            var adoptcat=_context.Cats.Where(x => x.IsAdoptable==true).ToList();
+           
+
+            return View(adoptcat);
         }
 
         // GET: AdoptionController/Details/5

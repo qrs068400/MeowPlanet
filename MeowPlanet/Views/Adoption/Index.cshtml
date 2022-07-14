@@ -1,10 +1,8 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model List<MeowPlanet.Models.Cat>
+
 @{
     ViewData["Title"] = "C";
+   
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
@@ -129,38 +127,50 @@
         <div class="box5">
             <i class="fa-solid fa-paw"></i>
         </div>
-
+     
         <div class="box1">
-            <div class="autoplay">
 
-                <div class="slide-2"><img src="@Href("~/images/12.jpg")" alt=""></div>
-                <div class="slide-3"><img src="@Href("~/images/13.jpg")" alt=""></div>
-                <div class="slide-1"><img src="@Href("~/images/14.jpg")" alt=""></div>
+            @{
+                int x = 0;
+                <div class="autoplay col-12">
+                @if(@Model[x].Img01!=null){
+                <div class="slide-1"><img src="@Url.Content(@Model[x].Img01)"></div>
+                }
+                @if(@Model[x].Img02!=null){
+                <div class="slide-2"><img src="@Url.Content(@Model[x].Img02)"></div>
+                }
+                @if(@Model[x].Img03!=null){
+                <div class="slide-3"><img src="@Url.Content(@Model[x].Img03)"></div>
+                }
+                @if(@Model[x].Img04!=null){
+                <div class="slide-4"><img src="@Url.Content(@Model[x].Img04)"></div>
+                }
+                @if(@Model[x].Img05!=null){ 
+                 <div class="slide-5"><img src="@Url.Content(@Model[x].Img05)"></div>
+                }
+             
             </div>
             
-            <div class="context trun front">
-                <div class="title">貓貓</div>
+            <div class="context trun front col-12">
+                <div class="title">@Model[x].Name</div>
                 <div class="a1">
-                    <p>英短 妹妹 五歲</p>
-                    <p>黃色</p>
-                    <p>高雄市鳳山區</p>                  
+                    <p>@Model[x].BreedId @Model[x].Sex @Model[x].Age</p>
                 </div>               
             </div>
-           <div class="detail trun back">
-                <p>貓貓超級親人快來認養~~~
-                    貓貓超級親人快來認養
+            <div class="detail trun back col-12">
+                <p>@Model[x].Introduce
               
                 </p> 
-                </div>
-                   <div class="like trun front" style="text-align:center; ">
-                <button type="button" class="btn btn-outline-danger  buzz-pri">
+             </div>
+                <div class="like trun front" style="text-align:center; ">
+                    <button type="button" class="btn btn-outline-danger  buzz-pri">
                     <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
                     </svg> 認養
                 </button>
-                <button type="button" class="btn btn-outline-secondary buzz ">PASS</button>
+                <button id="pass"type="button" class="btn btn-outline-secondary buzz ">PASS</button>
             </div>
-             
+          }
         </div>
  
     </div>
@@ -181,6 +191,10 @@
         autoplaySpeed: 2000,
 
     });
+     $("#pass").click(function(){
+       $(".box1").empty();
+  });
+
     $(".box1").dblclick(function(event){
 	$(this).toggleClass("flipped");
 })
