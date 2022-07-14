@@ -28,7 +28,8 @@ function initMap() {
         minZoom: 15,
         maxZoom: 18,
         disableDefaultUI: true,
-        mapId: 'a5f4cec6781c8dda'
+        mapId: 'a5f4cec6781c8dda',
+        gestureHandling: 'greedy'
     });
 
     //定位按鈕

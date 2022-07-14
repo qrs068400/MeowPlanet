@@ -9,6 +9,7 @@ body {
     height: 100%;
     margin: 0;
     padding: 0;
+    overflow: hidden;
 }
 
 #div-map, #div-items {
@@ -107,8 +108,14 @@ input[type="search"]::-webkit-search-cancel-button {
 }
 
 
-#cat-item div {
+.cat-item div {
     color: white;
     font-size: 1.05rem;
     font-weight: 600
+}
+
+.cat-item:hover {
+    background-color: #404C59;
+    cursor: pointer;
+    border-radius: 15px;
 }
