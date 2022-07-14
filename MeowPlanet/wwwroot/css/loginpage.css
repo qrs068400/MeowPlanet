@@ -56,13 +56,13 @@ body {
     .loginform h2 {
         color: white;
         font-size: 30px;
-        margin-top:5%;
+        margin-top:10%;
         margin-bottom: 30px;
     }
 
     .loginform .form-p {
         color: white;
-        margin-left: 30%;
+        /*margin-left: 30%;*/
     }
 
 .login-sp {
@@ -73,8 +73,12 @@ body {
     border-radius: 20px;
     color: white;
     text-align: center;
-    margin-bottom: 20px;
+    /*margin-bottom: 20px;*/
     display: block;
+}
+
+.enter-form{
+    margin-left:18%;
 }
 
 .return-sp {
@@ -103,7 +107,7 @@ body {
     }
 
 .cbox {
-    margin-left: 30%;
+    /*margin-left: 30%;*/
     color: white;
     margin-bottom: 3%;
 }
