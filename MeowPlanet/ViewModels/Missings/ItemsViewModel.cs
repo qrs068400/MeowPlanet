@@ -6,7 +6,9 @@
         public string? Image { get; set; }
         public string? Name { get; set; }
         public string? Breed { get; set; }
-        public DateTime Date { get; set; }
+        public int ClueCount { get; set; }
+        public DateTime MissingDate { get; set; }        
+        public DateTime? UpdateDate { get; set; }
 
     }
 }

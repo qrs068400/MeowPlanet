@@ -1,7 +1,15 @@
 ﻿@model Missing
 
+<div class="bg-animation">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    <div id="stars4"></div>
+</div>
 <div class="row h-100 flex-nowrap my-5 mx-4" style="justify-content: space-evenly">
-    <div class="w-20" id="div-items" style="transition: all 1s ease;"></div>
+    <div class="w-20" id="div-items" style="transition: all 1s ease;">
+        <partial name="_MissingItemsPartial" />
+    </div>
     <div class="col-9 p-0" id="div-map" style="overflow: hidden; position: relative; transition: all 1s ease; ">
         <div id="map"></div>
         <input id="search-input" type="search" class="form-control rounded-pill" placeholder="搜尋 Google 地圖">
@@ -64,14 +72,15 @@
     <script src="~/js/map.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
-    </script>    
+    </script>
     <script>
 
-       
+
     </script>
 }
 
     @section Styles{
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/ui-darkness/jquery-ui.css">
     <link rel="stylesheet" href="~/css/missing.css" />
+    <link rel="stylesheet" href="~/css/stars.css" />
 }
