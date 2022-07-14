@@ -58,7 +58,7 @@ function initMap() {
 
         google.maps.event.removeListener(listener);
 
-        //把資料庫內圖標隱藏
+        //把頁面上圖標隱藏
         for (var i = 0; i < markerList.length; i++) {
             markerList[i].setMap(null);
         }
@@ -117,7 +117,7 @@ function initMap() {
 
             removeMarker();
 
-            //把資料庫內圖標顯示回來
+            //把頁面上圖標顯示回來
             for (var i = 0; i < markerList.length; i++) {
                 markerList[i].setMap(map);
             }
@@ -160,8 +160,6 @@ function initMap() {
         map.fitBounds(bounds);
     });
 
-    //隨中心依距離把貓貓圖標加進地圖
-
 
     //綁定移動事件
     var listener = map.addListener('idle', searchCat)
@@ -194,7 +192,7 @@ $(function () {
                 position: LatLng,
                 icon: {
                     url: "images/marker.png",
-                    scaledSize: new google.maps.Size(36, 51)
+                    scaledSize: new google.maps.Size(33, 46)
                 }
             });
 
@@ -235,8 +233,8 @@ function searchCat() {
         let distance = google.maps.geometry.spherical.computeDistanceBetween(center, LatLng);
 
 
-        //距離小於1公里就加入圖標
-        if (distance < 1000) {
+        //距離小於1.25公里就加入圖標
+        if (distance < 1250) {
             marker.setMap(map);
 
             if (!markerList.includes(marker)) {
@@ -250,7 +248,9 @@ function searchCat() {
             }
         }
     })
-};
+}
 
 
 window.initMap = initMap;
+
+//隨中心依距離把貓貓圖標加進地圖
