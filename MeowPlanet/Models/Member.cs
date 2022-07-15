@@ -20,7 +20,7 @@ namespace MeowPlanet.Models
         public int MemberId { get; set; }
 
         [Required(ErrorMessage = "必填")]
-        [Remote(action: "VerifyEmail", controller: "Login")]
+        //[Remote(action: "VerifyEmail", controller: "Login")]
         [EmailAddress(ErrorMessage = "格式不符")]
         public string Email { get; set; } = null!;
         [Required(ErrorMessage = "必填")]

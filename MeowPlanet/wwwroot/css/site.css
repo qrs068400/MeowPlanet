@@ -39,8 +39,11 @@ body {
     justify-content: center;
 }
 
-#logo img {
-    width: 50px;
+#logo .img-t {
+    height: 30px;
+}
+
+#logo .img-p {
     height: 50px;
 }
 
