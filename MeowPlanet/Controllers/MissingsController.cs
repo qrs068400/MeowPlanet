@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using MeowPlanet.ViewModels.Missings;
 
 
 namespace MeowPlanet.Models
@@ -20,7 +21,7 @@ namespace MeowPlanet.Models
 
         // GET: Missings
         public ActionResult Index()
-        {
+        {           
             return View();
         }
 
@@ -42,6 +43,7 @@ namespace MeowPlanet.Models
             {
                 Missing missingCat = new Missing
                 {
+                    MissingId = item.MissingId,
                     CatId = item.CatId,
                     Date = item.Date,
                     Lat = item.Lat,
@@ -53,6 +55,13 @@ namespace MeowPlanet.Models
 
             var data = catList;
             return Json(data);
+        }
+
+        public ActionResult GetItems()
+        {
+            var list = _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId,img_01 AS Image,cat.name AS Name,date AS MissingDate,cat_breed.name AS Breed,COUNT(clue.clue_id) AS ClueCount,MAX(witness_time) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id GROUP BY missing.missing_id, img_01, cat.name, date, cat_breed.name").ToList();
+
+            return PartialView("_MissingItemsPartial", list);
         }
 
     }

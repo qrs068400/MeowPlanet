@@ -1,23 +1,41 @@
 ﻿@model IEnumerable<MeowPlanet.ViewModels.Missings.ItemsViewModel>
 
-<div id="" class="container-fluid cat-item">
-    <div class="row mt-2" style="border-bottom: 2px solid white; height: 180px">
-        <div class="col-6 d-flex flex-column " style="justify-content: space-evenly; align-items:center">
-            <img src="../images/14.jpg" style="max-height: 100%; max-width: 100%; border: 0px solid white; border-radius: 15px" />
-            <div>
-                走失日期 :
-                <div>2022-07-13</div>
-            </div>
 
-        </div>
-        <div class="col-6 d-flex flex-column " style="justify-content: space-evenly; align-items:center">
-            <div>貓貓</div>
-            <div>米克斯</div>
-            <div>共有 0 條線索 </div>
-            <div style="position: relative; top: 1px">
-                最近線索 :
-                <div>2022-07-13</div>
+@foreach (var item in Model)
+{
+    <div id="missing-@item.MissingId" data-id="@item.MissingId" class="container-fluid cat-item d-none" onclick="itemClicked(this)" onmouseenter="itemActive(this)" onmouseleave="itemInactive(this)">
+        <div class="row mt-2" style="border-bottom: 2px solid white; height: 180px">
+            <div class="col-6 d-flex flex-column " style="justify-content: space-evenly; align-items:stretch">
+                <img src="@item.Image" style="max-height: 100%; max-width: 100%; border: 0px solid white; border-radius: 15px" />
+                <div>
+                    最近線索 :
+                    @if (item.UpdateDate.HasValue)
+                    {
+                        <div class="text-end">@Html.DisplayFor(a => item.UpdateDate)</div>
+                    }
+                    else
+                    {
+                        <div class="text-end">暫無線索</div>
+                    }
+                </div>
+
+            </div>
+            <div class="col-6 d-flex flex-column " style="justify-content: space-evenly; align-items:stretch">
+                <div>@item.Name</div>
+                <div>@item.Breed</div>
+                @if (item.ClueCount == 0)
+                {
+                    <div>暫無線索</div>
+                }
+                else
+                {
+                    <div>共有 @item.ClueCount 條線索</div>
+                }
+                <div style="position: relative; top: 1px">
+                    走失日期 :
+                    <div class="text-end">@Html.DisplayFor(a => item.MissingDate)</div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+}

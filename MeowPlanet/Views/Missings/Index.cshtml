@@ -1,16 +1,16 @@
 ﻿@model Missing
 
 
-    <div id="stars"></div>
-    <div id="stars2"></div>
-    <div id="stars3"></div>
-    <div id="stars4"></div>
+<div id="stars"></div>
+<div id="stars2"></div>
+<div id="stars3"></div>
+<div id="stars4"></div>
 
 
 
-<div class="row h-100 flex-nowrap my-5 mx-4" style="justify-content: space-evenly; overflow: hidden">
+<div class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
     <div class="w-20" id="div-items" style="transition: all 1s ease; overflow-y: scroll">
-        <partial name="_MissingItemsPartial" />
+
     </div>
     <div class="col-9 p-0" id="div-map" style="overflow: hidden; position: relative; transition: all 1s ease; ">
         <div id="map"></div>
@@ -74,7 +74,11 @@
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
     </script>
     <script>
-
+        $(function() {
+            $.get("@Url.Action("GetItems", "Missings")", function(data) {
+                $('#div-items').html(data);
+            })
+        })
 
     </script>
 }
