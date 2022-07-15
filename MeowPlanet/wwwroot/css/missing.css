@@ -6,7 +6,7 @@
 
 html,
 body {
-    height: 100%;
+    height: 100vh;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -15,6 +15,7 @@ body {
 #div-map, #div-items {
     border: 2px solid white;
     border-radius: 20px;
+    height:100%;
 }
 
 #search-input {
@@ -119,3 +120,27 @@ input[type="search"]::-webkit-search-cancel-button {
     cursor: pointer;
     border-radius: 15px;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #b99668;
+    border-radius: 10px;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #b996689c;
+    }
