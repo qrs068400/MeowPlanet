@@ -28,7 +28,6 @@ namespace MeowPlanet.Models
         public virtual DbSet<Orderlist> Orderlists { get; set; } = null!;
         public virtual DbSet<Sitter> Sitters { get; set; } = null!;
         public virtual DbSet<SitterFeature> SitterFeatures { get; set; } = null!;
-        public virtual DbSet<ItemsViewModel> ItemsViewModels { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -448,8 +447,6 @@ namespace MeowPlanet.Models
                     .HasConstraintName("FK_sitter_feature_sitter");
 
             });
-
-            modelBuilder.Entity<ItemsViewModel>(entity => entity.HasNoKey());
 
             OnModelCreatingPartial(modelBuilder);
         }

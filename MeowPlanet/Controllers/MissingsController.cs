@@ -12,9 +12,9 @@ namespace MeowPlanet.Models
 {
     public class MissingsController : Controller
     {
-        private readonly endtermContext _context;
+        private readonly ExtendedContext _context;
 
-        public MissingsController(endtermContext context)
+        public MissingsController(ExtendedContext context)
         {
             _context = context;
         }
