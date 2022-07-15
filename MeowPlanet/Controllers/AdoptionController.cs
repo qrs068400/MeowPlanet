@@ -22,10 +22,34 @@ namespace MeowPlanet.Controllers
         // GET: AdoptionController
         public ActionResult Index()
         {
-            var adoptcat=_context.Cats.Where(x => x.IsAdoptable==true).ToList();
-           
 
-            return View(adoptcat);
+
+
+            var Lambdajoin = _context.CatBreeds.Join(_context.Cats, //第一個參數為 要加入的資料來源
+            c => c.BreedId,//主表要join的值
+            s => s.BreedId,//次表要join的值
+            (c, s) => new  // (c,s)代表將資料集合起來
+            {
+                CatId = s.CatId,
+                MemberId = s.MemberId,
+                CatName = s.Name,
+                CatSex = s.Sex,
+                CatAge = s.Age,
+                CatIntroduce = s.Introduce,
+                CatImg1 = s.Img01,
+                CatImg2 = s.Img02,
+                CatImg3 = s.Img03,
+                CatImg4 = s.Img04,
+                CatImg5 = s.Img05,
+                CatIsAdoptable = s.IsAdoptable,
+                BreedName = c.Name,
+
+            }).Where(cs => cs.CatIsAdoptable == true).OrderBy(x => Guid.NewGuid()).Take(1);//排序及查詢條件
+
+            //var adoptcat = _context.Cats.Where(x => x.IsAdoptable == true).ToList();
+
+
+            return View(Lambdajoin);
         }
 
         // GET: AdoptionController/Details/5

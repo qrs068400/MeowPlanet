@@ -1,4 +1,4 @@
-﻿@model List<MeowPlanet.Models.Cat>
+﻿@model IEnumerable<MeowPlanet.Models.Cat>
 
 @{
     ViewData["Title"] = "C";
@@ -19,8 +19,9 @@
 <div id="all">
     <div class="container1">
         <!-- Button trigger modal -->
-        <button type="button" class="btn btn-outline-secondary select " data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-            <img src="@Href("~/images/cat2.png")" style="width:40px;" />
+        <button type="button" class="btn btn-outline-secondary select" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
+            <img src="@Href("~/images/adopselect.png")"style="width:80px;border-radius:50%;
+" />
         </button>
         <!-- Modal -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -129,45 +130,46 @@
         </div>
      
         <div class="box1">
-
-            @{
-                                    <div class="autoplay col-12">
-                                    @if(@Model[x].Img01!=null){
-                                    <div class="slide-1"><img src="@Url.Content(@Model[x].Img01)"></div>
+            @foreach (var item in Model)
+        {
+                                            <div class="autoplay col-12">
+                                            @if(@item.Img01!=null){
+                                            <div class="slide-1"><img src="@Url.Content(@item.Img01)"></div>
                 }
-                                    @if(@Model[x].Img02!=null){
-                                    <div class="slide-2"><img src="@Url.Content(@Model[x].Img02)"></div>
+                                            @if(@item.Img02!=null){
+                                            <div class="slide-2"><img src="@Url.Content(@item.Img02)"></div>
                 }
-                                    @if(@Model[x].Img03!=null){
-                                    <div class="slide-3"><img src="@Url.Content(@Model[x].Img03)"></div>
+                                            @if(@item.Img03!=null){
+                                            <div class="slide-3"><img src="@Url.Content(@item.Img03)"></div>
                 }
-                                    @if(@Model[x].Img04!=null){
-                                    <div class="slide-4"><img src="@Url.Content(@Model[x].Img04)"></div>
+                                            @if(@item.Img04!=null){
+                                            <div class="slide-4"><img src="@Url.Content(@item.Img04)"></div>
                 }
-                                    @if(@Model[x].Img05!=null){ 
-                                     <div class="slide-5"><img src="@Url.Content(@Model[x].Img05)"></div>
+                                            @if(@item.Img05!=null){ 
+                                             <div class="slide-5"><img src="@Url.Content(@item.Img05)"></div>
                 }
-                                 
-                                </div>
+                                         
+                                        </div>
             
-                                <div class="context trun front col-12">
-                                    <div class="title">@Model[x].Name</div>
-                                    <div class="a1">
-                                        <p>@Model[x].BreedId @Model[x].Sex @Model[x].Age 歲</p>
-                                    </div>               
-                                </div>
-                                <div class="detail trun back col-12">
-                                    <p>@Model[x].Introduce
-                                    </p> 
-                                 </div>
-                                    <div class="like trun front" style="text-align:center; ">
-                                        <button type="button" class="btn btn-outline-danger  buzz-pri">
-                                        <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                                        </svg> 認養
-                                    </button>
-                                    <button id="pass"type="button" class="btn btn-outline-secondary buzz ">PASS</button>
-                                </div>
+                                        <div class="context trun front col-12">
+                                            <div class="title">@item.Name</div>
+                                            <div class="a1">
+                                                <p>@item.BreedId @item.Sex @item.Age 歲</p>
+                                            </div>               
+                                        </div>
+                                        <div class="detail trun back col-12">
+                                            <p>@item.Introduce
+                                            </p> 
+                                         </div>
+                                            <div class="like trun front" style="text-align:center; ">
+                                                <button type="button" class="btn btn-outline-danger  buzz-pri">
+                                                <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                                                </svg> 認養
+                                            </button>
+                                            <button id="pass"type="button" class="btn btn-outline-secondary buzz ">PASS</button>
+                                        </div>
+                                        break;
           }
         </div>
  
