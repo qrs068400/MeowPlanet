@@ -8,6 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\ViewModel\**" />
+    <Content Remove="Models\ViewModel\**" />
+    <EmbeddedResource Remove="Models\ViewModel\**" />
+    <None Remove="Models\ViewModel\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Models\CatPicture.cs" />
     <Compile Remove="Models\SitterHouse.cs" />
     <Compile Remove="Models\SitterIndoor.cs" />
@@ -20,14 +27,11 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Models\ViewModel\" />
   </ItemGroup>
 
 </Project>

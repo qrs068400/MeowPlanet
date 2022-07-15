@@ -35,6 +35,7 @@ namespace MeowPlanet.Controllers
             var count = _context.Members.Count(p => p.Email == member.Email && p.Password == member.Password);
             if (count > 0)
             {
+                
                 return RedirectToAction("Index", "Home");
             }
             else
