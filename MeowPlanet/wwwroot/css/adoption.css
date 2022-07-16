@@ -95,8 +95,23 @@ body {
     transform-style: preserve-3d;
     transition: transform 0.7s;
 }
+.a1>span{
+    padding:5px;
+}
+.age{
+    padding-top:20px;
+}
+.a1 {
+    margin-top: -15px;
+    font-size: 0.8rem;
+}
 
-
+.introduce {
+    margin: auto;
+    width: 300px;
+    height: 50px;
+    overflow: auto;
+}
 .box2, .box3, .box4, .box5 {
     display: none;
 }
@@ -113,7 +128,7 @@ body {
 .title {
     text-align: center;
     font-weight: bold;
-    font-size: 1rem;
+    font-size: 1.2rem;
     color: whitesmoke;
     padding-bottom: 40px;
     padding-top: 40px;
@@ -169,7 +184,7 @@ body {
 }
 
 .like {
-    margin-top: -50px;
+    margin-top: -60px;
 }
 
 .select {
@@ -188,7 +203,7 @@ body {
         margin: auto;
         position: relative;
         max-width: 1200px;
-        margin-top: 50px;
+        margin-top: 3%;
         margin-bottom: 80px;
         font-size: 15px;
         color: rgb(59, 56, 56);
@@ -249,8 +264,24 @@ body {
         display: block;
     }
 
+    .a1 > span {
+        padding: 5px;
+    }
 
+    .age {
+        padding-top: 20px;
+    }
 
+    .a1 {
+        margin-top:-15px;
+        font-size: 0.8rem;
+    }
+    .introduce {
+        margin: auto;
+        width: 300px;
+        height: 50px;
+        overflow: auto;
+    }
     .box2 {
         top: 75px;
         left: 180px;
@@ -287,7 +318,7 @@ body {
     .title {
         text-align: center;
         font-weight: bold;
-        font-size: 1rem;
+        font-size: 1.2rem;
         color: whitesmoke;
         padding-bottom: 40px;
         padding-top: 40px;
@@ -333,7 +364,7 @@ body {
     }
 
     .like {
-        margin-top: -50px;
+        margin-top: -60px;
     }
 
     .select {

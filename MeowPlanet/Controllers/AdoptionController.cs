@@ -77,8 +77,9 @@ namespace MeowPlanet.Controllers
             } else if (CatsDto[0].CatSex == true) {
                 html += "<span>" + '男' + " </span>";
             }
-            html += "<span>" + CatsDto[0].CatAge + " 歲</span>";
-            html += "<p>" + CatsDto[0].CatIntroduce + "</p>";
+            html += "<p class='age'>" + CatsDto[0].CatAge + " 歲</p>";
+            html += "<p>" + CatsDto[0].CatCity + "</p>";
+            html += "<p class='introduce'>" + CatsDto[0].CatIntroduce + "</p>";
             html += "</div>";
             html += "</div>";
             html += "<div class='like' style='text-align:center;'>";
@@ -96,7 +97,7 @@ namespace MeowPlanet.Controllers
 
         public List<CatsDto> GetCatsDto()
         {
-            var memberid = 9;
+            var memberid = 1;
             var catBreeds = _context.CatBreeds.ToList();
             var adopt = _context.Adopts.Where(x => x.MemberId == memberid).ToList();
             var catDtoList = new List<CatsDto>();
@@ -121,6 +122,7 @@ namespace MeowPlanet.Controllers
                         CatImg5 = catList[i].Img05,
                         CatIsAdoptable = catList[i].IsAdoptable,
                         BreedName = catName,
+                        CatCity = catList[i].City,
                     };
                     catDtoList.Add(catDto);
 
@@ -138,7 +140,7 @@ namespace MeowPlanet.Controllers
             //{
             //    return RedirectToAction("Login", "Members");
             //}
-            var memberid = 9;
+            var memberid = 1;
             adopt.MemberId = memberid;
             adopt.CatId = catid;
             adopt.DateStart = DateTime.Today;

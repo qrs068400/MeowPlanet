@@ -15,6 +15,7 @@
         public string? CatImg5 { get; set; }
         public bool CatIsAdoptable { get; set; }
         public string BreedName { get; set; } = null!;
+        public string? CatCity { get; set; }
 
 
 

@@ -13,20 +13,20 @@
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="~/css/adoption.css" rel="stylesheet" />
 <style>
- 
+
 
 </style>
 <div id="all">
     <div class="container1">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-secondary select" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
-            <img src="@Href("~/images/adopselect.png")"style="width:80px;border-radius:50%;
+            <img src="@Href("~/images/adopselect.png")" style="width:80px;border-radius:50%;
 " />
         </button>
         <!-- Modal -->
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content">          
+                <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLongTitle">請選擇喜歡的貓貓類型</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
@@ -54,7 +54,7 @@
                             <label for="inputState">性別</label>
                             <br />
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"checked>
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1" checked>
                                 <label class="form-check-label" for="inlineRadio1">全部</label>
                             </div>
                             <div class="form-check form-check-inline">
@@ -65,48 +65,38 @@
                                 <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
                                 <label class="form-check-label" for="inlineRadio3">母</label>
                             </div>
-                          
+
 
                             <br>
                             <br>
 
-                            <label for="inputState">顏色</label>
-                            <select id="inputState" class="form-select">
-                                <option selected>全部</option>
-                                <option>黑色</option>
-                                <option>灰色</option>
-                                <option>藍色</option>
-                                <option>橘色</option>
-                                <option>白色</option>
-                                <option>多種色</option>
-                            </select>
                             <br>
 
                             <label for="inputState">地點</label>
-                                <div class="form-row">
-                                    <div class="form-group col-4">
-                                        <select id="city" class="form-select">
-                                            <option>全部</option>
-                                            <option>臺北市</option>
-                                            <option>新北市</option>
-                                            <option>基隆市</option>
-                                            <option>新竹市</option>
-                                            <option>桃園市</option>
-                                            <option>新竹縣</option>
-                                            <option>宜蘭縣</option>
-                                            <option>臺中市</option>
-                                            <option>苗栗縣</option>
-                                            <option>彰化縣</option>
-                                            <option>南投縣</option>
-                                            <option>雲林縣</option>
-                                            <option>高雄市</option>
-                                            <option>臺南市</option>
-                                            <option>嘉義市</option>
-                                            <option>嘉義縣</option>
-                                            <option>屏東縣</option>
-                                        </select>
-                                    </div>
+                            <div class="form-row">
+                                <div class="form-group col-4">
+                                    <select id="city" class="form-select">
+                                        <option>全部</option>
+                                        <option>臺北市</option>
+                                        <option>新北市</option>
+                                        <option>基隆市</option>
+                                        <option>新竹市</option>
+                                        <option>桃園市</option>
+                                        <option>新竹縣</option>
+                                        <option>宜蘭縣</option>
+                                        <option>臺中市</option>
+                                        <option>苗栗縣</option>
+                                        <option>彰化縣</option>
+                                        <option>南投縣</option>
+                                        <option>雲林縣</option>
+                                        <option>高雄市</option>
+                                        <option>臺南市</option>
+                                        <option>嘉義市</option>
+                                        <option>嘉義縣</option>
+                                        <option>屏東縣</option>
+                                    </select>
                                 </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -128,187 +118,158 @@
         <div class="box5">
             <i class="fa-solid fa-paw"></i>
         </div>
-     
+
         <div class="box1">
             @foreach (var item in Model)
-        {
-                                            <div class="autoplay col-12">
-                                            @if(@item.CatImg1!=null){
-                                            <div class="slide-1"><img src="@Url.Content(@item.CatImg1)"></div>
-                }
-                                            @if(@item.CatImg2!=null){
-                                            <div class="slide-2"><img src="@Url.Content(@item.CatImg2)"></div>
-                }
-                                            @if(@item.CatImg3!=null){
-                                            <div class="slide-3"><img src="@Url.Content(@item.CatImg3)"></div>
-                }
-                                            @if(@item.CatImg4!=null){
-                                            <div class="slide-4"><img src="@Url.Content(@item.CatImg4)"></div>
-                }
-                                            @if(@item.CatImg5!=null){ 
-                                             <div class="slide-5"><img src="@Url.Content(@item.CatImg5)"></div>
-                }
-                                         
-                                        </div>
-            
-                                        <div class="context trun front col-12">
-                                            <div class="title">@item.CatName</div>
-                                            <div class="a1">
-                                                <span>@item.BreedName</span>
-                                                       @if (@item.CatSex == false)
-                                                       {
-                                                           <span>女</span>
-                                                       }
-                                                       else if (@item.CatSex == true)
-                                                       {
-                                                           <span>男</span>
-                                                       }
-                                                       <span>@item.CatAge 歲</span>
-                                                       <p>@item.CatIntroduce </p> 
-                                            </div>               
-                                        </div>
-                                     
-                                            <div class="like" style="text-align:center; ">
-                                                <button id="like"type="button" class="btn btn-outline-danger buzz-pri">
-                                                <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
-                                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                                                </svg> 認養
-                                                </button>
-                                                <button id="pass"type="button" class="btn btn-outline-secondary buzz">PASS</button>
-                                        </div>
-                                        break;
-          }
-        </div>
- 
-    </div>
-  
+            {
+                <div class="autoplay col-12">
+                    @if (@item.CatImg1 != null)
+                    {
+                        <div class="slide-1"><img src="@Url.Content(@item.CatImg1)"></div>
+                    }
+                    @if (@item.CatImg2 != null)
+                    {
+                        <div class="slide-2"><img src="@Url.Content(@item.CatImg2)"></div>
+                    }
+                    @if (@item.CatImg3 != null)
+                    {
+                        <div class="slide-3"><img src="@Url.Content(@item.CatImg3)"></div>
+                    }
+                    @if (@item.CatImg4 != null)
+                    {
+                        <div class="slide-4"><img src="@Url.Content(@item.CatImg4)"></div>
+                    }
+                    @if (@item.CatImg5 != null)
+                    {
+                        <div class="slide-5"><img src="@Url.Content(@item.CatImg5)"></div>
+                    }
 
-    
+                </div>
+
+                <div class="context trun front col-12">
+                    <div class="title">@item.CatName</div>
+                    <div class="a1">
+                        <span>@item.BreedName</span>
+                        @if (@item.CatSex == false)
+                        {
+                            <span>女</span>
+                        }
+                        else if (@item.CatSex == true)
+                        {
+                            <span>男</span>
+                        }
+                        <p class="age">@item.CatAge 歲</p>
+                        <p>@item.CatCity </p>
+                        <p class="introduce">@item.CatIntroduce </p>
+                    </div>
+                </div>
+
+                <div class="like" style="text-align:center; ">
+                    <button id="like" type="button" class="btn btn-outline-danger buzz-pri">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                        </svg> 認養
+                    </button>
+                    <button id="pass" type="button" class="btn btn-outline-secondary buzz">PASS</button>
+                </div>
+                break;
+            }
+        </div>
+
+    </div>
+
+
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
-    <script src="~/js/vue.js"></script>
+<script src="~/js/vue.js"></script>
 
-    <script src="~/js/homepage.js"></script>
+<script src="~/js/homepage.js"></script>
 <script>
 
- 
-    // $('#pass').click(function () {
-    //     alert('123');        
-           
-    //});
-
-    
-    //$('#pass').click(function() {
-    //        $.ajax({
-    //            method: 'post',
-    //            url: '/Adoption/Next',
-    //            data: null,
-    //            dataType: 'json',
-    //            success: function (data) {
-    //                $(".box1").empty();
-    //                $('.box1').append(data.item);
-                   
-    //            },
-    //            error: function () { 
-    //                alert('發生錯誤');
-    //            }
-
-    //        });
-                 
-    //})
-
-var catId = 0;
+    var catId = 0;
 
     //綁定的物件改為item的父層元素$('#main')，若沒有父層可直接綁定$(document)即可
-    $('.box1').on('click', '#pass', function(){
-          //alert(@ViewBag.catid);
+    $('.box1').on('click', '#pass', function() {
+        //alert(@ViewBag.catid);
         $.ajax({
-                method: 'post',
-                url: '/Adoption/Next',
-                data: null,
-                dataType: 'json',
-                success: function (data) {
-                   //$('.autoplay').slick(data.item);                  
-                    $(".box1").empty();
-                    $('.box1').append(data.item);
-                    initSlider();
-                    catId = data.catId;
-                },
-                error: function () {
-                    alert('發生錯誤');
-                }
+            method: 'post',
+            url: '/Adoption/Next',
+            data: null,
+            dataType: 'json',
+            success: function(data) {
+                //$('.autoplay').slick(data.item);
+                $(".box1").empty();
+                $('.box1').append(data.item);
+                initSlider();
+                catId = data.catId;
+            },
+            error: function() {
+                alert('發生錯誤');
+            }
 
-            });
+        });
     });
     //點擊按鈕動態產生一個div方塊
-        $('#pass').click(function() {
-          //alert(@ViewBag.catid);
-            $.ajax({
-                method: 'post',
-                url: '/Adoption/Next',
-                data: null,
-                dataType: 'json',
-                success: function (data) {
-                    $(".box1").empty();
-                    $('.box1').append(data.item);
-                    initSlider();
-                   
-                },
-                error: function () { 
-                    alert('發生錯誤');
-                }
+    $('#pass').click(function() {
+        $.ajax({
+            method: 'post',
+            url: '/Adoption/Next',
+            data: null,
+            dataType: 'json',
+            success: function(data) {
+                $(".box1").empty();
+                $('.box1').append(data.item);
+                initSlider();
 
-            });                
+            },
+            error: function() {
+                alert('發生錯誤');
+            }
+
+        });
     })
 
 
-      $('.box1').on('click', '#like', function(){
-          //alert(@ViewBag.catid);
+    $('.box1').on('click', '#like', function() {
         $.ajax({
-                   method: 'post',
-                   url: '/Adoption/like',
-                   data: { catid: catId},
-                dataType: 'json',
-                success: function (data) {
-                                   window.location.reload();
-
-                   
-                },
-                error: function () { 
+            method: 'post',
+            url: '/Adoption/like',
+            data: { catid: catId },
+            dataType: 'json',
+            success: function(data) {
                 window.location.reload();
-                }
-
-            });                
+            },
+            error: function() {
+                window.location.reload();
+            }
+        });
     });
 
 
-           $('#like').click(function() {
-          //alert(@ViewBag.catid);
-               $.ajax({
-                   method: 'post',
-                   url: '/Adoption/like',
-                   data: { catid: @ViewBag.catid},
-                dataType: 'json',
-                success: function (data) {
-                                   window.location.reload();
-
-                   
-                },
-                error: function () { 
+    $('#like').click(function() {
+        $.ajax({
+            method: 'post',
+            url: '/Adoption/like',
+            data: { catid: @ViewBag.catid},
+            dataType: 'json',
+            success: function(data) {
                 window.location.reload();
-                }
-
-            });                
+            },
+            error: function() {
+                window.location.reload();
+            }
+        });
     })
 
 
 
 
-    function initSlider(){
-       $('.autoplay').slick({
+    function initSlider() {
+        $('.autoplay').slick({
             slidesToShow: 1,
             slidesToScroll: 1,
             autoplay: true,
