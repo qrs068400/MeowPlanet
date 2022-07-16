@@ -240,26 +240,28 @@ function searchCat() {
         let distance = google.maps.geometry.spherical.computeDistanceBetween(center, LatLng);
 
 
-        //距離小於1.25公里就加入圖標 & 顯示在左邊item列
-        if (distance < 1250) {
+        //距離小於1公里就加入圖標 & 顯示在左邊item列
+        if (distance < 1000) {
 
-            marker.setMap(map);
-            $(`#missing-${cat.missingId}`).removeClass('d-none');
+            marker.setMap(map);            
 
             if (!showingCatList.includes(cat)) {
                 showingCatList.push(cat);
+                $(`#missing-${cat.missingId}`).remove().appendTo('#div-items').delay(100).fadeIn(600);
             }
+            $(`#missing-${cat.missingId}`).fadeIn(600);
         }
         else {
 
-            marker.setMap(null);
-            $(`#missing-${cat.missingId}`).addClass('d-none');
+            marker.setMap(null);            
 
             if (showingCatList.includes(cat)) {
                 showingCatList.splice(showingCatList.indexOf(cat), 1);
+                $(`#missing-${cat.missingId}`).fadeOut(600);
             }
         }
     })
+
 }
 
 
@@ -293,7 +295,6 @@ function itemClicked(item) {
         shouldFocus: false
     });
 
-    clickedCat.marker.setAnimation(null);
 }
 
 function itemActive(item) {

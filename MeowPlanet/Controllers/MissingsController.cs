@@ -53,15 +53,14 @@ namespace MeowPlanet.Models
                 catList.Add(missingCat);
             }
 
-            var data = catList;
-            return Json(data);
+            return Json(catList);
         }
 
         public ActionResult GetItems()
         {
-            var list = _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId,img_01 AS Image,cat.name AS Name,date AS MissingDate,cat_breed.name AS Breed,COUNT(clue.clue_id) AS ClueCount,MAX(witness_time) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id GROUP BY missing.missing_id, img_01, cat.name, date, cat_breed.name").ToList();
+            var itemList = _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId,img_01 AS Image,cat.name AS Name,date AS MissingDate,cat_breed.name AS Breed,COUNT(clue.clue_id) AS ClueCount,MAX(witness_time) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id GROUP BY missing.missing_id, img_01, cat.name, date, cat_breed.name").ToList();
 
-            return PartialView("_MissingItemsPartial", list);
+            return PartialView("_MissingItemsPartial", itemList);
         }
 
     }

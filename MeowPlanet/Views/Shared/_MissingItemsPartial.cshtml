@@ -3,7 +3,7 @@
 
 @foreach (var item in Model)
 {
-    <div id="missing-@item.MissingId" data-id="@item.MissingId" class="container-fluid cat-item d-none" onclick="itemClicked(this)" onmouseenter="itemActive(this)" onmouseleave="itemInactive(this)">
+    <div id="missing-@item.MissingId" data-id="@item.MissingId" style="display:none" class="container-fluid cat-item" onclick="itemClicked(this)" onmouseenter="itemActive(this)" onmouseleave="itemInactive(this)">
         <div class="row mt-2" style="border-bottom: 2px solid white; height: 180px">
             <div class="col-6 d-flex flex-column " style="justify-content: space-evenly; align-items:stretch">
                 <img src="@item.Image" style="max-height: 100%; max-width: 100%; border: 0px solid white; border-radius: 15px" />

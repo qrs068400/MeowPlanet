@@ -10,16 +10,16 @@
 
 <div class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
     <div class="w-20" id="div-items" style="transition: all 1s ease; overflow-y: scroll">
-
+        @*items的位置*@ 
     </div>
     <div class="col-9 p-0" id="div-map" style="overflow: hidden; position: relative; transition: all 1s ease; ">
         <div id="map"></div>
         <input id="search-input" type="search" class="form-control rounded-pill" placeholder="搜尋 Google 地圖">
         <button id="pre-publish" class="btn btn-dark rounded-pill" style="border-color: white; width:180px">
-            <span class="h5 font-weight-bold"><i class="fa-solid fa-location-dot"></i> 刊登協尋</span>
+            <span class="h5"><i class="fa-solid fa-location-dot"></i> 刊登協尋</span>
         </button>
         <button id="cancel-publish" class="btn btn-danger rounded-pill d-none" style="border-color: white; width:180px">
-            <span class="h5 font-weight-bold"><i class="fa-solid fa-ban"></i> 取消刊登</span>
+            <span class="h5"><i class="fa-solid fa-circle-xmark"></i> 取消刊登</span>
         </button>
     </div>
 </div>
@@ -87,4 +87,7 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/ui-darkness/jquery-ui.css">
     <link rel="stylesheet" href="~/css/missing.css" />
     <link rel="stylesheet" href="~/css/stars.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 }
