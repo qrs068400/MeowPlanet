@@ -21,14 +21,13 @@ namespace MeowPlanet.Models
         public string? Name { get; set; }
         public bool? Sex { get; set; }
         public int? Age { get; set; }
-        public decimal? PosLat { get; set; }
-        public decimal? PosLng { get; set; }
         public string? Introduce { get; set; }
         public string? Img01 { get; set; }
         public string? Img02 { get; set; }
         public string? Img03 { get; set; }
         public string? Img04 { get; set; }
         public string? Img05 { get; set; }
+        public string? City { get; set; }
 
         public virtual CatBreed Breed { get; set; } = null!;
         public virtual Member Member { get; set; } = null!;

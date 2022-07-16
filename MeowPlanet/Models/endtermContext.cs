@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
-using MeowPlanet.ViewModels.Missings;
 
 namespace MeowPlanet.Models
 {
@@ -81,6 +80,10 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.BreedId).HasColumnName("breed_id");
 
+                entity.Property(e => e.City)
+                    .HasMaxLength(50)
+                    .HasColumnName("city");
+
                 entity.Property(e => e.Img01)
                     .HasMaxLength(100)
                     .HasColumnName("img_01")
@@ -115,14 +118,6 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .HasColumnName("name");
-
-                entity.Property(e => e.PosLat)
-                    .HasColumnType("decimal(10, 8)")
-                    .HasColumnName("pos_lat");
-
-                entity.Property(e => e.PosLng)
-                    .HasColumnType("decimal(11, 8)")
-                    .HasColumnName("pos_lng");
 
                 entity.Property(e => e.Sex).HasColumnName("sex");
 
@@ -326,9 +321,7 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
-                entity.Property(e => e.Star)
-                    .HasColumnType("decimal(3, 2)")
-                    .HasColumnName("star");
+                entity.Property(e => e.Star).HasColumnName("star");
 
                 entity.Property(e => e.Status).HasColumnName("status");
 
@@ -360,6 +353,10 @@ namespace MeowPlanet.Models
                 entity.ToTable("sitter");
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
+
+                entity.Property(e => e.AvgStar)
+                    .HasColumnType("decimal(2, 1)")
+                    .HasColumnName("avg_star");
 
                 entity.Property(e => e.House)
                     .HasMaxLength(50)
@@ -445,7 +442,6 @@ namespace MeowPlanet.Models
                     .HasForeignKey(d => d.ServiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_sitter_feature_sitter");
-
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -15,7 +15,7 @@ namespace MeowPlanet.Models
         public DateTime DateOrder { get; set; }
         public int Total { get; set; }
         public string Comment { get; set; } = null!;
-        public decimal Star { get; set; }
+        public int Star { get; set; }
 
         public virtual Cat Cat { get; set; } = null!;
         public virtual Member Member { get; set; } = null!;

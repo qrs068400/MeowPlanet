@@ -28,6 +28,7 @@ namespace MeowPlanet.Models
         public string? Img03 { get; set; }
         public string? Img04 { get; set; }
         public string? Img05 { get; set; }
+        public decimal? AvgStar { get; set; }
 
         public virtual Member Member { get; set; } = null!;
         public virtual ICollection<Favorite> Favorites { get; set; }
