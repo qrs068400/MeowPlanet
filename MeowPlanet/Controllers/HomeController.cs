@@ -7,14 +7,17 @@ namespace MeowPlanet.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly IMemberRepostry _mem;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger,IMemberRepostry mem)
         {
             _logger = logger;
+            _mem = mem;
         }
 
         public IActionResult Index()
         {
+            _mem.selectMember(2);
             return View();
         }
 

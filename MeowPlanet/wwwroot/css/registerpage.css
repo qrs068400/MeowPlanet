@@ -61,7 +61,7 @@ body {
     border: 1px rgb(219, 232, 248) solid;
     border-radius: 20px;
     color: white;
-    text-align: center;
+    /*text-align: center;*/
     display: block;
 }
 
