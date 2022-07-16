@@ -1,0 +1,218 @@
+﻿@model MeowPlanet.ViewModels.SitterViewModels;
+ @section Styles{
+    <link  href="~/css/sitter-detail.css" rel="stylesheet"/>
+}
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="title">
+            <span class="h1">服務名稱：</span>
+            <h1>@Html.DisplayFor(model => model.sitter.Name)</h1>
+            </div>
+        </div>
+
+        @*輪播牆*@
+        <slider>
+            <div class="row">
+                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="~/images/sitter/slide3.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item active">
+                            <img src="~/images/sitter/slide3.jpg" class="d-block w-100" alt="...">
+                        </div>
+                        <div class="carousel-item active">
+                            <img src="~/images/sitter/slide3.jpg" class="d-block w-100" alt="...">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </slider>
+
+        <content>
+            <div class="row sitter-detail pt-4 pb-4">
+                <div class="col-7 p-0">
+                    <h3>服務介紹</h3>
+                    <hr>
+                    <h5>摘要</h5>
+                    <p>@Html.DisplayFor(model => model.sitter.Summary)</p>
+                    <h5>寵物晚上睡覺的地方</h5>
+                    <p>@Html.DisplayFor(model => model.sitter.Sleep)</p>
+                    <h5>我家的類型</h5>
+                    <p>@Html.DisplayFor(model => model.sitter.House)</p>
+                    <h5>我的戶外區域大小</h5>
+                    <p>@Html.DisplayFor(model => model.sitter.Outdoor)</p>
+                    <h5>貓需要的室內設施</h5>
+                        @for(int i = 0 ; i< Model.sitterfeatureList.Count; i++)
+                        {
+                            <p>
+                            @Html.DisplayFor(model => model.sitterfeatureList[i].FeatureId)
+                            </p>
+                        }
+                        
+                </div>
+                <div class="sticky order-col  buzz col-4 p-4">
+                    <div class="pay-star">
+                        <div class="">
+                            <span class="pay-money">$ @Html.DisplayFor(model => model.sitter.Pay) TWD</span>
+                            <span>&nbsp;/晚</span>
+                        </div>
+                        <div class="star">
+                            <i class="fa-solid fa-star"></i>
+                            <span class="star-txt">4.9</span>
+                            <span class="comment-num">@Html.DisplayFor(model => model.OrderCommentList.Count) 則評價</span>
+                        </div>
+                    </div>
+                    <div class="reserve-panel">
+                        <div class="reserve-btn">
+
+                            <div class="calender-rec buzz" style="display: none;">
+                                <div class="calender-header">
+                                    <div class="night h3">選擇日期</div>
+                                    <div>
+                                        <span></span>-<span></span>
+                                    </div>
+                                </div>
+                                <div class="calendar"></div>
+                                <div>
+                                    <span class="clear-select">
+                                        <button>清除日期</button>
+                                    </span>
+                                    <span class="close-calendar">
+                                        <button>關閉</button>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="date-rec">
+                                <div class="date-inout">
+                                    <div class="inout">入住</div>
+                                    <div class="date" id="check-in">選取日期</div>
+                                </div>
+                                <div class="date-inout">
+                                    <div class="inout">退房</div>
+                                    <div class="date" id="check-out">選取日期</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="reserve-number-btn">
+                            <div class="number-txt">哪一隻寵物</div>
+                            <div class="number">
+                                咪咪
+                            </div>
+                            <i class="icon fa-solid fa-angle-down"></i>
+                        </button>
+                    </div>
+                    <a asp-controller="Missings" asp-action="Index">
+                        <div class="btn btn-order">預定</div>
+                    </a>
+                </div>
+            </div>
+        </content>
+
+        <hr>
+        <comment>
+            <div class="row d-block pt-4 pb-4">
+                <div class="star">
+                    <i class="fa-solid fa-star h3"></i>
+                    <span class="star-txt h4">4.9</span>
+                    <span class="h4">&nbsp;@Html.DisplayFor(model => model.OrderCommentList.Count)則評價</span>
+                </div>
+                <div class="comment-area">
+                    @for (int i = 0; i < Model.OrderCommentList.Count; i++)
+                    {
+                    <div class="one-comment">
+                        <div class="user-info">
+                            <div class="d-flex">
+                                <img class="user-pic" src="@Href("~/images/sitter/cat.jpg")">
+                                <div class="user-detail">
+                                    <div class="user-name">@Html.DisplayFor(model => model.OrderCommentList[i].MemberId)</div>
+                                    <div class="comment-time">@Html.DisplayFor(model => model.OrderCommentList[i].DateOver)</div>
+                                </div>
+                            </div>
+                            <div class="user-comment">
+                                @Html.DisplayFor(model => model.OrderCommentList[i].Comment)
+                            </div>
+                        </div>
+                    </div>
+                    }
+                    <button class="more-comment buzz">
+                        顯示全部評價
+                    </button>
+                </div>
+                
+                
+            </div>
+        </comment>
+        <hr>
+
+        <location>
+            <div class="row pt-5 pb-5">
+                <div class="h3">保母位置</div>
+
+                <div class="map">
+
+                </div>
+
+            </div>
+        </location>
+        <hr>
+
+
+    </div>
+
+
+    @section Scripts{
+    <script src="~/js/sitter-detail.js"></script>
+
+    @*彈出更多評論*@
+    <script>
+        $(".more-comment, .comment-num").click(function () {
+        Swal.fire(
+        {
+            title: '',
+            width: 1000,
+            padding: '2em',
+            color: '#fff',
+            background: "#171B20",
+            showConfirmButton: false,
+            showCloseButton: true,
+            backdrop: `rgba(0,0,0,0.4)`,
+            html: `<div class="pop-star h2">
+                        <i class="fa-solid fa-star"></i>
+                        <span class="star-txt">4.9</span>
+                        <span class="">@Html.DisplayFor(model => model.OrderCommentList.Count)則評價</span>
+                    </div>`+
+                    @for(int i = 0 ; i < 4;i++){
+
+                    <div class="pop-comment-area">
+                        <div class="pop-one-comment">
+                            <div class="pop-user-info">
+                                <div class="d-flex">
+                                    <img class="user-pic" src="/images/sitter/cat.jpg">
+                                    <div class="user-detail">
+                                        <div class="user-name">@Html.DisplayFor(model => model.OrderCommentList[0].MemberId)</div>
+                                        <div class="comment-time">@Html.DisplayFor(model => model.OrderCommentList[0].DateOver)</div>
+                                    </div>
+                                </div>
+                                <div class="user-comment">
+                                    @Html.DisplayFor(model => model.OrderCommentList[0].Comment)
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    }
+                    ,
+        });
+})
+    </script>
+    
+}
+   
+    
+
+    
+</body>
