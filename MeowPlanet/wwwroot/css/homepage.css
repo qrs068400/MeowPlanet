@@ -14,60 +14,6 @@ body {
     width: 100%;
 }
 
-.modal-footer {
-    height: 100px;
-    justify-content: center;
-}
-
-.modal-header {
-    height: 100px;
-    justify-content: flex-end;
-    border: none;
-}
-
-.modal-content {
-    background-color: #171b20;
-    border-radius: 50px;
-    border: 1px rgb(219, 232, 248) solid;
-    box-shadow: 0 0 1rem rgba(134, 171, 190, 0.5) inset;
-}
-
-.modal-header h3 {
-    font-size: 30px;
-    color: white;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.modal-header button {
-    font-size: 20px;
-    color: white;
-    background: none;
-    border: none;
-}
-
-.modal-body form .account,
-.modal-body form .password {
-    margin: 10px;
-    width: 60%;
-    border-radius: 20px;
-}
-
-.modal-body form .form-control {
-    display: inline;
-}
-
-.modal-body form .form-group {
-    font-size: 20px;
-    color: white;
-}
-
-.modal-body form {
-    text-align: center;
-}
-
 
 .img-bg1 {
     color: white;
@@ -848,3 +794,28 @@ html {
         top: 500px;
     }
 }
+
+
+/*  scrollbar --------------------------------------------------------- */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--project-primary-color);
+    border-radius: 10px;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #b996689c;
+    }
