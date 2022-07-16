@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using MeowPlanet.ViewModels.Missings;
 
 namespace MeowPlanet.Models
 {
@@ -444,6 +445,7 @@ namespace MeowPlanet.Models
                     .HasForeignKey(d => d.ServiceId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_sitter_feature_sitter");
+
             });
 
             OnModelCreatingPartial(modelBuilder);
