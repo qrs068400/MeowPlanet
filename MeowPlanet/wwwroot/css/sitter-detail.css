@@ -1,0 +1,459 @@
+:root {
+    --project-bg-color: #171B20;
+    --project-primary-color: #B99668;
+    --project-primary-color-buzz: rgba(185, 150, 104, 0.5);
+    --project-pink-color: #FF8EFF;
+    --project-pink-color-buzz: rgba(255, 142, 255, 0.5);
+
+    --project-gray-color: #4B5461;
+    --project-gray-color-buzz: rgba(75, 84, 97, 0.5);
+    --project-green-color: #2A483A;
+    --project-green-color-buzz: rgba(42, 72, 58, 0.5);
+    --project-txt-color: #ffffff;
+    --project-txt-color-buzz: rgba(255, 255, 255, 0.5);
+
+    --project-scroll-color: #b996689c;
+
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+.title{
+    margin: 10px 0px 10px 0px;
+    
+}
+    .title > h1 {
+        display: contents;
+    }
+
+@media (min-width: 1900px) {
+    .container {
+        max-width: 1400px;
+    }
+}
+
+body {
+    background-color: var(--project-bg-color);
+    color: var(--project-txt-color);
+}
+
+body button {
+    color: var(--project-txt-color);
+}
+
+.sitter-detail {
+    justify-content: space-between;
+}
+
+.buzz {
+    background-color: var(--project-bg-color);
+    border: 2px var(--project-txt-color) solid;
+    box-shadow: 0 0 1rem var(--project-txt-color-buzz) inset;
+}
+
+.buzz-gray {
+    background-color: var(--project-bg-color);
+    border: 2px var(--project-gray-color) solid;
+    box-shadow: 0 0 1rem var(--project-gray-color-buzz) inset;
+}
+
+hr {
+    border-bottom: 1px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    margin-right: -15px;
+    margin-left: -15px;
+}
+
+
+/* 預定面板 ------------------------------------------*/
+
+.order-col {
+    border-radius: 12px;
+    height: fit-content
+}
+
+.sticky {
+    position: sticky;
+    top: 3rem;
+}
+
+.pay-star {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.star {
+    margin-top: 8px;
+}
+
+.comment-num {
+    text-decoration: underline;
+    color: rgb(113, 113, 113);
+    cursor: pointer;
+}
+
+.pay-money {
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.reserve-panel {
+    /* display: flex; */
+}
+
+.reserve-btn {
+    background-color: transparent;
+    border: none;
+    text-align: left;
+    width: 100%;
+}
+
+.calender-header {
+    margin-left: 15px;
+}
+
+.date-rec {
+    border: 1px solid #8a8a8a;
+    border-radius: 8px 8px 0px 0px;
+    display: flex;
+    cursor: pointer;
+}
+
+.date-inout {
+    position: relative;
+    width: 100%;
+}
+
+.inout {
+    font-size: 14px;
+    font-weight: 700;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    left: 12px;
+}
+
+.date {
+    padding: 35px 12px 10px;
+    font-size: 16px;
+    color: rgb(113, 113, 113);
+}
+
+.reserve-number-btn {
+    background-color: transparent;
+    border: 1px solid #8a8a8a;
+    border-radius: 0px 0px 8px 8px;
+    text-align: left;
+    width: 100%;
+    position: relative;
+
+}
+
+.number-txt {
+    font-size: 14px;
+    font-weight: 700;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    left: 12px;
+}
+
+.number {
+    padding: 35px 12px 10px;
+    font-size: 16px;
+    color: rgb(113, 113, 113);
+}
+
+.icon {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: large;
+}
+
+.btn-order {
+    margin-top: 20px;
+    width: 100%;
+    background-color: #C99833;
+    font-weight: 600;
+}
+
+
+/*  日歷 ------------------------------------------- */
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@100;200;300;400;500;600;700&display=swap');
+
+:root {
+    --calendar-date-hover-color: #a0e1ff;
+    --calendar-current-date-color: #1b1f21;
+    --calendar-during-color: #302d29;
+    --calendar-nextprev-bg-color: transparent;
+    --next-prev-arrow-color: #FFF;
+    --calendar-border-radius: 16px;
+}
+
+.calender-rec {
+    border-radius: 3%;
+    position: absolute;
+    right: -30px;
+    top: 50px;
+    padding: 40px 30px 20px 30px;
+    z-index: 1;
+}
+
+.calendar {
+    font-family: 'IBM Plex Sans', sans-serif;
+    position: relative;
+    max-width: 384px;
+    min-width: 384px;
+    /* 50*7 + 20 (out-margin) + 2 (in-margin) *7 */
+    background: var(--project-bg-color);
+    color: var(--project-txt-color);
+    box-sizing: border-box;
+    overflow: hidden;
+    font-weight: normal;
+    border-radius: var(--calendar-border-radius);
+}
+
+.calendar-inner {
+    /* padding: 10px 10px; */
+}
+
+.calendar .calendar-inner .calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+}
+
+.calendar .calendar-inner .calendar-body div>a {
+    color: var(--project-txt-color);
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+}
+
+.calendar .calendar-inner .calendar-body div {
+    /* padding: 1px; */
+    min-height: 50px;
+    line-height: 50px;
+    border: 1px solid transparent;
+    margin: 1px 0px;
+}
+
+.calendar .calendar-inner .calendar-body div.number-item a:hover {
+    outline: 1px var(--project-primary-color) solid;
+    box-shadow: 0 0 1rem var(--project-primary-color-buzz) inset;
+}
+
+.calendar-controls {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.calendar-year-month {
+    display: flex;
+    min-width: 100px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.calendar-next {
+    text-align: right;
+}
+
+.calendar-year-month .calendar-year-label,
+.calendar-year-month .calendar-month-label {
+    font-weight: 500;
+    font-size: 20px;
+}
+
+.calendar-today {
+    background: var(--project-primary-color);
+}
+
+.calendar-during {
+    background: var(--calendar-during-color);
+}
+
+.calendar-during-start {
+    background: var(--calendar-during-color);
+    border-top-left-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+
+.calendar-during-end {
+    background: var(--calendar-during-color);
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+}
+
+.number-item>a {
+    border-radius: 50%;
+}
+
+.calendar-today a {
+    outline: 2px solid var(--calendar-today-innerborder-color);
+
+}
+
+.calendar-next a,
+.calendar-prev a {
+    color: var(--calendar-font-color);
+    font-family: arial, consolas, sans-serif;
+    font-size: 26px;
+    text-decoration: none;
+    padding: 4px 12px;
+    display: inline-block;
+    background: var(--calendar-nextprev-bg-color);
+    margin: 10px 2px 10px 2px;
+}
+
+.calendar-next a:hover,
+.calendar-prev a:hover {
+    outline: 1px var(--project-primary-color) solid;
+    box-shadow: 0 0 1rem var(--project-primary-color-buzz) inset;
+}
+
+.calendar-next a svg,
+.calendar-prev a svg {
+    height: 20px;
+    width: 20px;
+}
+
+.calendar-next a svg path,
+.calendar-prev a svg path {
+    fill: var(--next-prev-arrow-color);
+}
+
+.calendar+div {
+    float: right;
+    color: var(--project-txt-color);
+}
+
+.clear-select button {
+    background-color: var(--project-bg-color);
+    padding: 5px 15px;
+    border-color: transparent;
+}
+
+.close-calendar button {
+    background-color: var(--project-primary-color);
+    padding: 5px 15px;
+    border-radius: 5px;
+}
+
+
+/*  評論區 ---------------------------------------------------- */
+
+.comment-area {
+    display: flex;
+    margin-top: 1rem;
+    flex-wrap: wrap;
+}
+
+.one-comment {
+    width: 50%;
+    margin-bottom: 40px;
+}
+
+.user-info {
+    width: 80%;
+}
+
+.user-pic {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+}
+
+.user-detail {
+    justify-content: space-around;
+    padding: 10px;
+}
+
+.user-name {
+    font-weight: 700;
+    font-size: large;
+}
+
+.comment-time {
+    color: #8a8a8a;
+}
+
+.user-comment {
+    margin-top: 0.5rem;
+    text-align: left;
+}
+
+.more-comment {
+    padding: 10px 20px;
+    border: 2px rgb(219, 232, 248) solid;
+    border-radius: 8px;
+}
+
+
+/*  評論彈出 ----------------------------------------------------------- */
+
+.swal2-modal {
+    background-color: var(--project-bg-color);
+    border: 2px var(--project-txt-color) solid;
+    box-shadow: 0 0 1rem var(--project-txt-color-buzz) inset;
+    border-radius: 2%;
+}
+
+.pop-star {
+    margin-bottom: 15px;
+}
+
+.pop-comment-area {
+    overflow-y: auto;
+    height: 500px;
+}
+
+.pop-one-comment {
+    /* width: 100%; */
+    text-align: left;
+    margin-bottom: 40px;
+}
+
+.pop-user-info {
+    /* width: 80%; */
+}
+
+
+/* <!-- 保母位置 --> */
+.map {
+    width: 1400px;
+    height: 500px;
+    background-color: cadetblue;
+}
+
+
+/*  scrollbar --------------------------------------------------------- */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--project-primary-color);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #b996689c;
+}
