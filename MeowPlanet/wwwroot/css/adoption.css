@@ -181,18 +181,7 @@ body {
     border: 0px solid transparent;
 }
 
-.trun {
-    display: block;
-    backface-visibility: hidden;
-}
 
-.back {
-    transform: rotateY(180deg);
-}
-
-.flipped {
-    transform: rotateY(180deg);
-}
 /*------------------------------------------------------------------------------------------*/
 @media screen and (min-width:600px) {
     .container1 {
@@ -304,16 +293,6 @@ body {
         padding-top: 40px;
     }
 
-/*    .detail {
-        position: absolute;
-        text-align: center;
-        overflow: auto;
-        max-width: 70%;
-        height: 50%;
-        top: 50%;
-        left: 20%;
-        font-size: 0.8rem;
-    }*/
 
     .btn-outline-danger {
         color: #DDB178;
