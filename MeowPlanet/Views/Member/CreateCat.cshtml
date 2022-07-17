@@ -143,19 +143,17 @@
         font-size: 30px;
     }
 
-    #f3 input {
-        font-size: 30px;
-        margin-bottom: 50px;
-        border-radius: 10px;
+    #f3 .bre-btn {
+        color: white;
+        margin: 20px;
+        font-size: 25px;
+        border-radius: 20px;
+        height: 80px;
         width: 500px;
-        height: 59px;
-        text-align: center;
-    }
-
-    #f3 select {
-        font-size: 30px;
-        border-radius: 10px;
-        text-align: center;
+        padding: 1rem;
+        border: 2px rgb(115, 244, 222) solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        background: rgba(0, 0, 0, .3);
     }
 
     #f3 .div-btn {
@@ -171,6 +169,43 @@
         border-radius: 20px;
         height: 80px;
         width: 200px;
+    }
+
+    #f3 .re-b {
+        color: #171b20;
+        font-size: 40px;
+        border-radius: 20px;
+        height: 70px;
+        width: 200px;
+        padding: 1rem;
+        border: 2px rgb(115, 244, 222) solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        background: rgba(0, 0, 0, .3);
+        background-color: #73F4DE;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        position: absolute;
+        bottom: 2%;
+        left: 52%;
+    }
+
+        #f3 .re-b {
+        font-size: 40px;
+        border-radius: 20px;
+        height: 70px;
+        width: 200px;
+        padding: 1rem;
+        border: 2px rgb(115, 244, 222) solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        background: rgba(0, 0, 0, .3);
+        background-color: #73F4DE;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        position: absolute;
+        bottom: 2%;
+        left: 52%;
     }
 
     #f4 p {
@@ -294,11 +329,19 @@
             </div>
 
             <div class="div-right-form text-center" id="f3">
-                <button class="btn btn-primary">是，此為待領貓咪</button>
-                <div class="d-flex justify-content-between div-btn">
-                    <button class="btn btn-dark" id="f3-b1">返回</button>
-                    <button class="btn btn-primary" id="f3-b2">下一步</button>
-                </div>
+                <div><button class="btn btn-primary bre-btn">美國短毛貓</button></div>
+                <div><button class="btn btn-primary bre-btn">英國短毛貓</button></div>
+                <div><button class="btn btn-primary bre-btn">波斯貓</button></div>
+                <div><button class="btn btn-primary bre-btn">布偶貓</button></div>
+                <div><button class="btn btn-primary bre-btn">曼赤肯</button></div>
+                <div><button class="btn btn-primary bre-btn">米克斯</button></div>
+                <div><button class="btn btn-primary bre-btn">其他</button></div>
+
+
+                <button class="btn btn-dark re-b" id="f3-b1">返回</button>
+                <button class="btn btn-primary" id="f3-b2">下一步</button>
+
+                <div class="d-flex justify-content-between div-btn"></div>
 
             </div>
 
