@@ -1,0 +1,28 @@
+﻿* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.al-reg{
+    height:100vh;
+}
+
+.left-reg{
+    background-color:violet;
+}
+
+.left-reg {
+    background-color: violet;
+    font-size:50px;
+}
+
+.right-reg {
+    background-color:darkblue;
+}

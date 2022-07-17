@@ -1,0 +1,332 @@
+﻿@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container-fluid {
+        height: 100vh;
+    }
+
+    .row {
+        height: 100%;
+    }
+
+    .left-reg {
+        background-color: violet;
+    }
+
+    .right-reg {
+        background-color: darkblue;
+    }
+
+    .div-left-p {
+        font-size: 60px;
+        color: white;
+    }
+
+    .div-right-form {
+        font-size: 60px;
+        color: white;
+    }
+
+        .div-right-form .c-btn {
+            font-size: 30px;
+            border-radius: 20px;
+            height: 70px;
+            width: 200px;
+            position: absolute;
+            bottom: 20%;
+            left: 75%;
+            transform: translateX(-50%);
+        }
+
+        .div-right-form .r-btn {
+            font-size: 20px;
+            position: absolute;
+            top: 0%;
+            right: 0%;
+        }
+
+    #p1 {
+        display: none;
+    }
+
+    #p2 {
+        display: none;
+    }
+
+    #p3 {
+        display: none;
+    }
+
+    #p4 {
+        display: block;
+    }
+
+    #p5 {
+        display: none;
+    }
+
+    #f1 {
+        display: none;
+    }
+
+    #f2 {
+        display: none;
+    }
+
+    #f3 {
+        display: none;
+    }
+
+    #f4 {
+        display: block;
+    }
+
+    #f5 {
+        display: none;
+    }
+
+    #f2 button {
+        margin: 50px;
+        font-size: 40px;
+        border-radius: 30px;
+        height: 100px;
+        width: 500px;
+    }
+
+    #f3 p {
+        text-align: start;
+        font-size: 30px;
+    }
+
+    #f3 input {
+        font-size: 30px;
+        margin-bottom: 50px;
+        border-radius: 10px;
+        width: 500px;
+        height: 59px;
+        text-align: center;
+    }
+
+    #f3 select {
+        font-size: 30px;
+        border-radius: 10px;
+        text-align: center;
+    }
+
+    #f3 .div-btn {
+        width: 500px;
+        position: absolute;
+        bottom: 10%;
+        left: 75%;
+        transform: translateX(-50%);
+    }
+
+    #f3 button {
+        font-size: 40px;
+        border-radius: 20px;
+        height: 80px;
+        width: 200px;
+    }
+
+    #f4 .div-btn {
+        width: 500px;
+        position: absolute;
+        bottom: 10%;
+        left: 75%;
+        transform: translateX(-50%);
+    }
+
+    #f4 button {
+        font-size: 40px;
+        border-radius: 20px;
+        height: 80px;
+        width: 200px;
+    }
+
+    #f4 .in-p {
+        width: 256px;
+    }
+
+    #f4 .img-wrap {
+        width: 200px;
+        height: 200px;
+        background-color: white;
+        border-radius: 10px;
+        margin: 30px;
+    }
+
+    #f4 .div1 {
+        width:300px;
+    }
+
+    #f4 .in-n{
+        
+    }
+</style>
+
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 left-reg h-100 d-flex justify-content-center align-items-center">
+
+            <div class="div-left-p" id="p1">
+                <p>加入您的貓咪資訊</p>
+                <p>體驗喵星球的便利</p>
+            </div>
+
+            <div class="div-left-p" id="p2">
+                <p>這隻貓咪是否提供領養?</p>
+            </div>
+
+            <div class="div-left-p" id="p3">
+                <p>請問這隻貓咪的品種是?</p>
+            </div>
+
+            <div class="div-left-p" id="p4">
+                <p>請提供貓咪的詳細資訊</p>
+            </div>
+
+            <div class="div-left-p" id="p5">
+                <p>請介紹一下您的貓咪</p>
+            </div>
+
+        </div>
+        <div class="col-6 right-reg h-100 d-flex justify-content-center align-items-center">
+
+            <div class="div-right-form text-center" id="f1">
+                <p>依簡單步驟輸入資訊</p>
+                <p>讓我們認識您的寵物</p>
+                <button class="btn btn-primary c-btn" id="f1-b1">馬上開始!</button>
+                <button class="btn btn-dark r-btn">返回</button>
+            </div>
+
+            <div class="div-right-form text-center" id="f2">
+                <div>
+                    <button class="btn btn-primary" id="f2-b1">是，此為待領貓咪</button>
+                </div>
+                <div>
+                    <button class="btn btn-primary" id="f2-b2">否，此為專屬貓咪</button>
+                </div>
+                <div>
+                    <button class="btn btn-dark" id="f2-b3">返回</button>
+                </div>
+
+            </div>
+
+            <div class="div-right-form text-center" id="f3">
+                <p>搜尋</p>
+                <input type="text" />
+                <select class="form-select" aria-label="Default select example">
+                    <option selected>品種</option>
+                    <option value="1">波斯貓</option>
+                    <option value="2">米克斯</option>
+                    <option value="3">短毛貓</option>
+                </select>
+                <div class="d-flex justify-content-between div-btn">
+                    <button class="btn btn-dark" id="f3-b1">返回</button>
+                    <button class="btn btn-primary" id="f3-b2">下一步</button>
+                </div>
+
+            </div>
+
+            <div class="div-right-form text-center" id="f4">
+                <div class="d-flex align-items-center">
+                    <div class="div1 d-flex align-items-center justify-content-center">
+                        <p>照片</p>
+                    </div>
+                    <div class="div1 d-flex align-items-center justify-content-center">
+                        <div class="img-wrap"></div>
+                    </div>
+                    <div class="div1 d-flex align-items-center justify-content-center">
+                        <input type="file" class="in-p"/>
+                    </div>
+                </div>
+
+                <div>
+                    <p>名字</p>
+                    <input type="text" class="in-n"/>
+                </div>
+
+                <div>
+
+                </div>
+
+                <div>
+
+                </div>
+
+                <div class="d-flex justify-content-between div-btn">
+                    <button class="btn btn-dark">返回</button>
+                    <button class="btn btn-primary">下一步</button>
+                </div>
+            </div>
+
+            <div class="div-right-form text-center" id="f5">
+                <p>依簡單步驟輸入資訊</p>
+                <p>讓我們認識您的寵物</p>
+                <button class="btn btn-primary c-btn">馬上開始!</button>
+                <button class="btn btn-dark r-btn">返回</button>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $('#f1-b1').click(function() {
+        $('#p1').css('display', 'none');
+        $('#p2').css('display', 'block');
+        $('#f1').css('display', 'none');
+        $('#f2').css('display', 'block');
+    })
+
+    $('#f2-b1').click(function() {
+        $('#p2').css('display', 'none');
+        $('#p3').css('display', 'block');
+        $('#f2').css('display', 'none');
+        $('#f3').css('display', 'block');
+    })
+
+    $('#f2-b2').click(function() {
+        $('#p2').css('display', 'none');
+        $('#p3').css('display', 'block');
+        $('#f2').css('display', 'none');
+        $('#f3').css('display', 'block');
+    })
+
+    $('#f2-b3').click(function() {
+        $('#p1').css('display', 'block');
+        $('#p2').css('display', 'none');
+        $('#f1').css('display', 'block');
+        $('#f2').css('display', 'none');
+    })
+
+    $('#f3-b1').click(function() {
+        $('#p3').css('display', 'none');
+        $('#p2').css('display', 'block');
+        $('#f3').css('display', 'none');
+        $('#f2').css('display', 'block');
+    })
+
+</script>

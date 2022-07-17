@@ -18,5 +18,9 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        public IActionResult CreateCat()
+        {
+            return View();
+        }
     }
 }
