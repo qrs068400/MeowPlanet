@@ -27,11 +27,11 @@
     }
 
     .left-reg {
-        background-color: violet;
+        background-image: linear-gradient(to top left, #327382, #171b20);
     }
 
     .right-reg {
-        background-color: darkblue;
+        background-color: #171b20;
     }
 
     .div-left-p {
@@ -46,20 +46,28 @@
 
         .div-right-form .c-btn {
             font-size: 30px;
+            padding: 1rem;
+            border: 2px rgb(115, 244, 222) solid;
             border-radius: 20px;
+            box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+            background: rgba(0, 0, 0, .3);
             height: 70px;
             width: 200px;
             position: absolute;
             bottom: 20%;
             left: 75%;
             transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .div-right-form .r-btn {
+            color: white;
             font-size: 20px;
             position: absolute;
-            top: 0%;
-            right: 0%;
+            top: 0;
+            right: 0;
         }
 
     #p1 {
@@ -71,11 +79,11 @@
     }
 
     #p3 {
-        display: none;
+        display: block;
     }
 
     #p4 {
-        display: block;
+        display: none;
     }
 
     #p5 {
@@ -91,24 +99,44 @@
     }
 
     #f3 {
-        display: none;
+        display: block;
     }
 
     #f4 {
-        display: block;
+        display: none;
     }
 
     #f5 {
         display: none;
     }
 
-    #f2 button {
+    #f2 .ct-b {
+        color: white;
         margin: 50px;
         font-size: 40px;
-        border-radius: 30px;
+        border-radius: 20px;
         height: 100px;
         width: 500px;
+        padding: 1rem;
+        border: 2px rgb(115, 244, 222) solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        background: rgba(0, 0, 0, .3);
     }
+
+    #f2 .re-b {
+        color: #171b20;
+        margin: 50px;
+        font-size: 40px;
+        border-radius: 20px;
+        height: 100px;
+        width: 500px;
+        padding: 1rem;
+        border: 2px rgb(115, 244, 222) solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        background: rgba(0, 0, 0, .3);
+        background-color: #73F4DE;
+    }
+
 
     #f3 p {
         text-align: start;
@@ -145,6 +173,15 @@
         width: 200px;
     }
 
+    #f4 p {
+        margin: 0;
+        font-size: 30px;
+    }
+
+    #f4 input {
+        font-size: 30px;
+    }
+
     #f4 .div-btn {
         width: 500px;
         position: absolute;
@@ -162,6 +199,7 @@
 
     #f4 .in-p {
         width: 256px;
+        margin: 0px;
     }
 
     #f4 .img-wrap {
@@ -173,11 +211,35 @@
     }
 
     #f4 .div1 {
-        width:300px;
+        width: 300px;
     }
 
-    #f4 .in-n{
-        
+    #f4 .in-n {
+        font-size: 30px;
+        border-radius: 10px;
+        width: 500px;
+        height: 59px;
+        text-align: center;
+    }
+
+    #f4 .div2-1 {
+        width: 300px;
+    }
+
+    #f4 .div2-2 {
+        width: 600px;
+    }
+
+    #f4 .in-a {
+        font-size: 30px;
+        border-radius: 10px;
+        width: 200px;
+        height: 59px;
+        text-align: center;
+    }
+
+    #f4 {
+        padding-bottom: 180px;
     }
 </style>
 
@@ -185,26 +247,26 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-6 left-reg h-100 d-flex justify-content-center align-items-center">
+        <div class="col-6 left-reg h-100 d-flex align-items-center">
 
-            <div class="div-left-p" id="p1">
+            <div class="div-left-p mx-5" id="p1">
                 <p>加入您的貓咪資訊</p>
-                <p>體驗喵星球的便利</p>
+                <p>體驗喵屋星球的便利</p>
             </div>
 
-            <div class="div-left-p" id="p2">
+            <div class="div-left-p mx-5" id="p2">
                 <p>這隻貓咪是否提供領養?</p>
             </div>
 
-            <div class="div-left-p" id="p3">
+            <div class="div-left-p mx-5" id="p3">
                 <p>請問這隻貓咪的品種是?</p>
             </div>
 
-            <div class="div-left-p" id="p4">
+            <div class="div-left-p mx-5" id="p4">
                 <p>請提供貓咪的詳細資訊</p>
             </div>
 
-            <div class="div-left-p" id="p5">
+            <div class="div-left-p mx-5" id="p5">
                 <p>請介紹一下您的貓咪</p>
             </div>
 
@@ -220,13 +282,13 @@
 
             <div class="div-right-form text-center" id="f2">
                 <div>
-                    <button class="btn btn-primary" id="f2-b1">是，此為待領貓咪</button>
+                    <button class="btn btn-primary ct-b" id="f2-b1">是，此為待領貓咪</button>
                 </div>
                 <div>
-                    <button class="btn btn-primary" id="f2-b2">否，此為專屬貓咪</button>
+                    <button class="btn btn-primary ct-b" id="f2-b2">否，此為專屬貓咪</button>
                 </div>
                 <div>
-                    <button class="btn btn-dark" id="f2-b3">返回</button>
+                    <button class="btn btn-dark re-b" id="f2-b3">返回</button>
                 </div>
 
             </div>
@@ -248,7 +310,7 @@
             </div>
 
             <div class="div-right-form text-center" id="f4">
-                <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center my-3">
                     <div class="div1 d-flex align-items-center justify-content-center">
                         <p>照片</p>
                     </div>
@@ -256,21 +318,46 @@
                         <div class="img-wrap"></div>
                     </div>
                     <div class="div1 d-flex align-items-center justify-content-center">
-                        <input type="file" class="in-p"/>
+                        <input type="file" class="in-p" />
                     </div>
                 </div>
 
-                <div>
-                    <p>名字</p>
-                    <input type="text" class="in-n"/>
+                <div class="d-flex align-items-center my-3">
+                    <div class="div2-1 d-flex justify-content-center">
+                        <p>名字</p>
+                    </div>
+
+                    <div class="div2-2 d-flex justify-content-center">
+                        <input type="text" class="in-n" />
+                    </div>
                 </div>
 
-                <div>
+                <div class="d-flex align-items-center my-3">
+                    <div class="div1 d-flex justify-content-center">
+                        <p>性別</p>
+                    </div>
 
+                    <div class="div1 d-flex justify-content-center">
+                        <button>弟弟</button>
+                    </div>
+
+                    <div class="div1 d-flex justify-content-center">
+                        <button>妹妹</button>
+                    </div>
                 </div>
 
-                <div>
+                <div class="d-flex align-items-center my-3">
+                    <div class="div1 d-flex justify-content-center">
+                        <p>年齡</p>
+                    </div>
 
+                    <div class="div1 d-flex justify-content-center">
+                        <input type="text" class="in-a" />
+                    </div>
+
+                    <div class="div1 d-flex justify-content-center">
+                        <p>歲</p>
+                    </div>
                 </div>
 
                 <div class="d-flex justify-content-between div-btn">
@@ -328,5 +415,14 @@
         $('#f3').css('display', 'none');
         $('#f2').css('display', 'block');
     })
+
+    $('#f3-b2').click(function() {
+        $('#p3').css('display', 'none');
+        $('#p4').css('display', 'block');
+        $('#f3').css('display', 'none');
+        $('#f4').css('display', 'block');
+    })
+
+
 
 </script>
