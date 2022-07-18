@@ -244,6 +244,10 @@
         margin-top: 40px;
     }
 
+    .location-div {
+        margin-top: 40px;
+    }
+
     #f5 p {
         margin-bottom: 10px;
         font-size: 30px;
@@ -306,7 +310,7 @@
             </div>
 
             <div class="div-left-p mx-5" id="p6">
-                <p>請提供介紹一下您的貓咪</p>
+                <p>請介紹一下您的貓咪</p>
             </div>
 
             <div class="div-left-p mx-5" id="p7">
@@ -377,7 +381,7 @@
                         <input type="text" />
                     </div>
                 </div>
-                <div class="d-flex align-items-center my-3">
+                <div class="d-flex align-items-center location-div">
                     <div>
                         <p class="text-start">所在地</p>
                         <input type="text" />
@@ -397,6 +401,14 @@
 
                 <button class="btn btn-dark re-b" id="f6-b1">返回</button>
                 <button class="btn btn-light ct-b" id="f6-b2">下一步</button>
+            </div>
+
+            <div class="div-right-form text-center" id="f7">
+                <div class="d-flex align-items-center">
+                </div>
+
+                <button class="btn btn-dark re-b" id="f7-b1">返回</button>
+                <button class="btn btn-light ct-b" id="f7-b2">完成</button>
             </div>
 
         </div>
@@ -470,5 +482,25 @@
         $('#f6').css('display', 'block');
     })
 
+    $('#f6-b1').click(function() {
+        $('#p6').css('display', 'none');
+        $('#p5').css('display', 'block');
+        $('#f6').css('display', 'none');
+        $('#f5').css('display', 'block');
+    })
+
+    $('#f6-b2').click(function() {
+        $('#p6').css('display', 'none');
+        $('#p7').css('display', 'block');
+        $('#f6').css('display', 'none');
+        $('#f7').css('display', 'block');
+    })
+
+    $('#f7-b1').click(function() {
+        $('#p7').css('display', 'none');
+        $('#p6').css('display', 'block');
+        $('#f7').css('display', 'none');
+        $('#f6').css('display', 'block');
+    })
 
 </script>
