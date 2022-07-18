@@ -83,9 +83,14 @@ function initMap() {
 
             map.panTo(newMarker.getPosition());
 
-            const contentString = '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' + '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-                '<button class="btn btn-primary" onclick="setMarkerPos()" data-bs-toggle="modal" data-bs-target="#exampleModal">' +
-                'Yes' + '</button>' + '<button onclick="removeMarker();" class="btn btn-danger">No</button>' + '</div>';
+            const contentString =
+                '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
+                '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+                    '<button class="btn btn-primary" onclick="setMarkerPos()" data-bs-toggle="modal" data-bs-target="#exampleModal">' +
+                    'Yes' +
+                    '</button>' +
+                    '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
+                '</div>';
 
             const infowindow = new google.maps.InfoWindow({
                 content: contentString,
