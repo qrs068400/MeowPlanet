@@ -12,11 +12,18 @@
       integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="~/css/adoption.css" rel="stylesheet" />
+<link href="~/css/stars.css" rel="stylesheet" />
+
 <style>
 
 
 </style>
+
 <div id="all">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    <div id="stars4"></div>
     <div class="container1">
         <!-- Button trigger modal -->
         <button type="button" class="btn btn-outline-secondary select" data-bs-toggle="modal" data-bs-target="#exampleModalCenter">
@@ -106,76 +113,78 @@
                 </div>
             </div>
         </div>
-        <div class="box2">
-            <i class="fa-solid fa-paw"></i>
-        </div>
-        <div class="box3">
-            <i class="fa-solid fa-paw"></i>
-        </div>
-        <div class="box4">
-            <i class="fa-solid fa-paw"></i>
-        </div>
-        <div class="box5">
-            <i class="fa-solid fa-paw"></i>
-        </div>
+        <div class="bounce-in-top">
+            <div class="box2">
+                <i class="fa-solid fa-paw"></i>
+            </div>
+            <div class="box3">
+                <i class="fa-solid fa-paw"></i>
+            </div>
+            <div class="box4">
+                <i class="fa-solid fa-paw"></i>
+            </div>
+            <div class="box5">
+                <i class="fa-solid fa-paw"></i>
+            </div>
+            <div class="cardbox">
+                <div class="box1 bounce-in-top2">
+                    @foreach (var item in Model)
+                    {
+                        <div class="autoplay col-12">
+                            @if (@item.CatImg1 != null)
+                            {
+                                <div class="slide-1"><img src="@Url.Content(@item.CatImg1)"></div>
+                            }
+                            @if (@item.CatImg2 != null)
+                            {
+                                <div class="slide-2"><img src="@Url.Content(@item.CatImg2)"></div>
+                            }
+                            @if (@item.CatImg3 != null)
+                            {
+                                <div class="slide-3"><img src="@Url.Content(@item.CatImg3)"></div>
+                            }
+                            @if (@item.CatImg4 != null)
+                            {
+                                <div class="slide-4"><img src="@Url.Content(@item.CatImg4)"></div>
+                            }
+                            @if (@item.CatImg5 != null)
+                            {
+                                <div class="slide-5"><img src="@Url.Content(@item.CatImg5)"></div>
+                            }
 
-        <div class="box1">
-            @foreach (var item in Model)
-            {
-                <div class="autoplay col-12">
-                    @if (@item.CatImg1 != null)
-                    {
-                        <div class="slide-1"><img src="@Url.Content(@item.CatImg1)"></div>
-                    }
-                    @if (@item.CatImg2 != null)
-                    {
-                        <div class="slide-2"><img src="@Url.Content(@item.CatImg2)"></div>
-                    }
-                    @if (@item.CatImg3 != null)
-                    {
-                        <div class="slide-3"><img src="@Url.Content(@item.CatImg3)"></div>
-                    }
-                    @if (@item.CatImg4 != null)
-                    {
-                        <div class="slide-4"><img src="@Url.Content(@item.CatImg4)"></div>
-                    }
-                    @if (@item.CatImg5 != null)
-                    {
-                        <div class="slide-5"><img src="@Url.Content(@item.CatImg5)"></div>
-                    }
+                        </div>
 
+                        <div class="context trun front col-12">
+                            <div class="title">@item.CatName</div>
+                            <div class="a1">
+                                <span>@item.BreedName</span>
+                                @if (@item.CatSex == false)
+                                {
+                                    <i class="fa-solid fa-venus" style="color:#FF8EFF;font-size:1.3rem"></i>
+                                }
+                                else if (@item.CatSex == true)
+                                {
+                                    <i class="fa-solid fa-mars" style="color:#99b8d4;font-size:1.3rem"></i>
+                                }
+                                <p class="age">@item.CatAge 歲</p>
+                                <p>@item.CatCity </p>
+                                <p class="introduce">@item.CatIntroduce </p>
+                            </div>
+                        </div>
+
+                        <div class="like" style="text-align:center; ">
+                            <button id="like" onclick='checklike()' type="button" class="btn btn-outline-danger buzz-pri pulsate-bck">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                                </svg> 認養
+                            </button>
+                            <button id="pass" type="button" class="btn btn-outline-secondary buzz">PASS</button>
+                        </div>
+                        break;
+                    }
                 </div>
-
-                <div class="context trun front col-12">
-                    <div class="title">@item.CatName</div>
-                    <div class="a1">
-                        <span>@item.BreedName</span>
-                        @if (@item.CatSex == false)
-                        {
-                            <span>女</span>
-                        }
-                        else if (@item.CatSex == true)
-                        {
-                            <span>男</span>
-                        }
-                        <p class="age">@item.CatAge 歲</p>
-                        <p>@item.CatCity </p>
-                        <p class="introduce">@item.CatIntroduce </p>
-                    </div>
-                </div>
-
-                <div class="like" style="text-align:center; ">
-                    <button id="like" type="button" class="btn btn-outline-danger buzz-pri">
-                        <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
-                            <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                        </svg> 認養
-                    </button>
-                    <button id="pass" type="button" class="btn btn-outline-secondary buzz">PASS</button>
-                </div>
-                break;
-            }
+            </div>
         </div>
-
     </div>
 
 
@@ -186,14 +195,15 @@
         integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
 <script src="~/js/vue.js"></script>
-
-<script src="~/js/homepage.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.9/sweetalert2.all.min.js"
+        integrity="sha512-IZ95TbsPTDl3eT5GwqTJH/14xZ2feLEGJRbII6bRKtE/HC6x3N4cHye7yyikadgAsuiddCY2+6gMntpVHL1gHw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
 
     var catId = 0;
 
     //綁定的物件改為item的父層元素$('#main')，若沒有父層可直接綁定$(document)即可
-    $('.box1').on('click', '#pass', function() {
+    $('.cardbox').on('click', '#pass', function() {
         //alert(@ViewBag.catid);
         $.ajax({
             method: 'post',
@@ -202,8 +212,8 @@
             dataType: 'json',
             success: function(data) {
                 //$('.autoplay').slick(data.item);
-                $(".box1").empty();
-                $('.box1').append(data.item);
+                $(".cardbox").empty();
+                $('.cardbox').append(data.item);
                 initSlider();
                 catId = data.catId;
             },
@@ -213,29 +223,54 @@
 
         });
     });
-    //點擊按鈕動態產生一個div方塊
-    $('#pass').click(function() {
-        $.ajax({
-            method: 'post',
-            url: '/Adoption/Next',
-            data: null,
-            dataType: 'json',
-            success: function(data) {
-                $(".box1").empty();
-                $('.box1').append(data.item);
-                initSlider();
-
-            },
-            error: function() {
-                alert('發生錯誤');
+    function checklike() {
+        Swal.fire({
+            title: "確認要領養貓貓嗎？",
+            text: "確認申請領養後不可取消，請慎重考慮！",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#B99668',
+            cancelButtonColor: '#4B5461',
+            confirmButtonText: '申請'
+        }).then(function(result) {
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            ).then(function(result) {
+                $.ajax({
+                    method: 'post',
+                    url: '/Adoption/like',
+                    data: { catid: @ViewBag.catid},
+                    dataType: 'json',
+                    success: function(data) {
+                        window.location.reload();
+                    },
+                    error: function() {
+                        window.location.reload();
+                    }
+                });
             }
+            )
 
         });
-    })
-
-
-    $('.box1').on('click', '#like', function() {
-        $.ajax({
+    }
+function checklike2() {
+        Swal.fire({
+            title: "確認要領養貓貓嗎？",
+            text: "確認申請領養後不可取消，請慎重考慮！",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#B99668',
+            cancelButtonColor: '#4B5461',
+            confirmButtonText: '申請'
+        }).then(function(result) {
+            Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+            ).then(function(result) {
+                $.ajax({
             method: 'post',
             url: '/Adoption/like',
             data: { catid: catId },
@@ -247,23 +282,63 @@
                 window.location.reload();
             }
         });
-    });
+            }
+            )
 
-
-    $('#like').click(function() {
+        });
+    }
+    //點擊按鈕動態產生一個div方塊
+    $('#pass').click(function() {
         $.ajax({
             method: 'post',
-            url: '/Adoption/like',
-            data: { catid: @ViewBag.catid},
+            url: '/Adoption/Next',
+            data: null,
             dataType: 'json',
             success: function(data) {
-                window.location.reload();
+                $(".cardbox").empty();
+                $('.cardbox').append(data.item);
+                initSlider();
+
             },
             error: function() {
-                window.location.reload();
+                alert('發生錯誤');
             }
+
         });
     })
+
+
+
+    //$('.cardbox').on('click', '#like', function() {
+    //    $.ajax({
+    //        method: 'post',
+    //        url: '/Adoption/like',
+    //        data: { catid: catId },
+    //        dataType: 'json',
+    //        success: function(data) {
+    //            window.location.reload();
+    //        },
+    //        error: function() {
+    //            window.location.reload();
+    //        }
+    //    });
+    //});
+
+
+    //$('#like').click(function() {
+    //    $.ajax({
+    //        method: 'post',
+    //        url: '/Adoption/like',
+    //        data: { catid: @ViewBag.catid},
+    //        dataType: 'json',
+    //        success: function(data) {
+    //            window.location.reload();
+    //        },
+    //        error: function() {
+    //            window.location.reload();
+    //        }
+    //    });
+    //})
 
 
 

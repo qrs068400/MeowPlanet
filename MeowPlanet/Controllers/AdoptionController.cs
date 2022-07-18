@@ -41,7 +41,8 @@ namespace MeowPlanet.Controllers
             var CatsDto = GetCatsDto().OrderBy(x => Guid.NewGuid()).ToList(); //排序及查詢條件
             ViewBag.catid = CatsDto[0].CatId;
             var html = "";
-            html = "<div class='autoplay col-12'>";
+            html = "<div class='box1 rotate-vert-center'>";
+            html += "<div class='autoplay col-12'>";
             if (CatsDto[0].CatImg1 != null) {
                 var CatImg1 = Url.Content(CatsDto[0].CatImg1);
                 html += "<div class='slide-1'><img src='" + CatImg1 + "'></div>";
@@ -73,9 +74,9 @@ namespace MeowPlanet.Controllers
             html += "<span>" + CatsDto[0].BreedName + " </span>";
             if (CatsDto[0].CatSex == false)
             {
-                html += "<span>" + '女' + " </span>";
+                html += "<i class='fa-solid fa-venus' style='color:#FF8EFF;font-size:1.1rem'></i>";
             } else if (CatsDto[0].CatSex == true) {
-                html += "<span>" + '男' + " </span>";
+                html += "<i class='fa-solid fa-mars' style='color:#99b8d4;font-size:1.1rem'></i>";
             }
             html += "<p class='age'>" + CatsDto[0].CatAge + " 歲</p>";
             html += "<p>" + CatsDto[0].CatCity + "</p>";
@@ -83,13 +84,15 @@ namespace MeowPlanet.Controllers
             html += "</div>";
             html += "</div>";
             html += "<div class='like' style='text-align:center;'>";
-            html += "<button id='like' type='button' class='btn btn-outline-danger buzz-pri'>";
+            html += "<button id='like'onclick='checklike2()' type='button' class='btn btn-outline-danger buzz-pri pulsate-bck'>";
             html += "<svg xmlns='http://www.w3.org/2000/svg' style='padding-bottom:3px;' width='18' height='18' fill='currentColor' class='bi bi-heart-fill' viewBox='0 0 16 16'>";
             html += "<path fill-rule='evenodd' d='M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z' />";
             html += "</svg> 認養";
             html += "</button>";
             html += "<button id='pass' type='button' class='btn btn-outline-secondary buzz' style='margin-left: 5px;'>PASS</button>";
             html += "</div>";
+            html += "</div>";
+
             ViewBag.catid = CatsDto[0].CatId;
 
             return Json(new { item = html, catId = CatsDto[0].CatId });
