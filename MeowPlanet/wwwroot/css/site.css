@@ -20,7 +20,7 @@ body {
 
 .bg-dark2 {
     color: white;
-    background: rgba(0, 0, 0, .7);
+    background: rgba(0, 0, 0, 1);
     box-shadow: 0 0 1rem rgba(134, 171, 190, 0.5) inset;
 }
 
@@ -39,8 +39,11 @@ body {
     justify-content: center;
 }
 
-#logo img {
-    width: 50px;
+#logo .img-t {
+    height: 30px;
+}
+
+#logo .img-p {
     height: 50px;
 }
 

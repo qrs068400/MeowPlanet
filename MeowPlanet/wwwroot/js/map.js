@@ -1,29 +1,41 @@
 ﻿let map;
-let marker;
-let markersArray = [];
+
+//使用者設置的圖標
+let newMarker;
+
+//從資料庫撈到的所有貓咪物件
+let catList = [];
 
 
 function removeMarker() {
-    if (marker && marker.setMap) {
-        marker.setMap(null);
-    }    
+    if (newMarker != null) {
+        newMarker.setMap(null);
+    }
 }
+
+
+
+
 
 function initMap() {
 
     //初始化地圖
     map = new google.maps.Map($('#map')[0], {
-        center: { lat: 22.629314218928563, lng: 120.29299528465663},
+        center: { lat: 22.629314218928563, lng: 120.29299528465663 },
         zoom: 16,
+        minZoom: 15,
+        maxZoom: 17,
         disableDefaultUI: true,
-        mapId: 'a5f4cec6781c8dda'
+        mapId: 'a5f4cec6781c8dda',
+        gestureHandling: 'greedy'
     });
 
     //定位按鈕
     const locationButton = document.createElement("button");
     locationButton.innerHTML = '<i class="fa-solid fa-crosshairs fa-lg"></i>';
-    $(locationButton).addClass('btn btn-primary btn-location');
+    $(locationButton).addClass('btn btn-dark btn-location');
     $(locationButton).css('border-radius', '10px');
+    $(locationButton).css('border-color', 'white');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
     $(locationButton).on('click', function () {
         if (navigator.geolocation) {
@@ -36,28 +48,30 @@ function initMap() {
                     map.setCenter(pos);
                 }
             )
-        };        
+        };
     })
 
 
     //刊登協尋
     $('#pre-publish').on('click', function () {
 
-        //把資料庫內圖標隱藏
-        for (var i = 0; i < markersArray.length; i++) {
-            markersArray[i].setMap(null);
+        google.maps.event.removeListener(listener);
+
+        //把頁面上圖標隱藏
+        for (var i = 0; i < showingCatList.length; i++) {
+            showingCatList[i].marker.setMap(null);
         }
 
         map.setOptions({ draggableCursor: 'url(../images/marker-cursor.png) 15 45, auto' });
-        
-        $('#div-items').addClass('items-activate');
-        $('#div-map').addClass('map-activate');       
 
-        let listenerHandle = map.addListener("click", (e) => {     
+        $('#div-items').addClass('items-activate');
+        $('#div-map').addClass('map-activate');
+
+        let listenerHandle = map.addListener("click", (e) => {
 
             removeMarker();
 
-            marker = new google.maps.Marker({
+            newMarker = new google.maps.Marker({
                 position: e.latLng,
                 map,
                 Draggable: true,
@@ -67,10 +81,9 @@ function initMap() {
                 }
             });
 
-            marker.setMap(map);
-            map.panTo(marker.getPosition());
+            map.panTo(newMarker.getPosition());
 
-            const contentString ='<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' + '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+            const contentString = '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' + '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
                 '<button class="btn btn-primary" onclick="setMarkerPos()" data-bs-toggle="modal" data-bs-target="#exampleModal">' +
                 'Yes' + '</button>' + '<button onclick="removeMarker();" class="btn btn-danger">No</button>' + '</div>';
 
@@ -79,11 +92,13 @@ function initMap() {
             });
 
             infowindow.open({
-                anchor: marker,
+                anchor: newMarker,
                 map,
                 shouldFocus: false,
             });
         });
+
+
 
         //切換刊登&取消刊登顯示
         $(this).toggleClass('d-none');
@@ -101,14 +116,16 @@ function initMap() {
 
             removeMarker();
 
-            //把資料庫內圖標顯示回來
-            for (var i = 0; i < markersArray.length; i++) {
-                markersArray[i].setMap(map);
+            //把頁面上圖標顯示回來
+            for (var i = 0; i < showingCatList.length; i++) {
+                showingCatList[i].marker.setMap(map);
             }
+
+            listener = map.addListener('idle', searchCat);
         })
     })
 
-    
+
     //搜尋框
     const input = document.getElementById("search-input");
     const searchBox = new google.maps.places.SearchBox(input);
@@ -141,20 +158,154 @@ function initMap() {
         });
         map.fitBounds(bounds);
     });
-    
+
+
+    //綁定移動事件
+    var listener = map.addListener('idle', searchCat)
 }
+
 
 
 //日期選擇框
 $(function () {
-    $("#datepicker").datepicker($.datepicker.regional['tw']);
+    $("#datepicker").datepicker($.datepicker.regional['tw']);    
 });
+
+
 
 //把marker位置寫進資料庫
 function setMarkerPos() {
-    $('#lat').val(marker.getPosition().lat());
-    $('#lng').val(marker.getPosition().lng());
+    $('#lat').val(newMarker.getPosition().lat());
+    $('#lng').val(newMarker.getPosition().lng());
 }
 
 
 
+let showingWindow;
+
+//把所有走失貓咪抓進catList
+$(function () {
+    $.get('Missings/GetMissing', function (data, status) {
+        data.forEach((value, index) => {
+            let cat = value;
+            let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
+            let marker = new google.maps.Marker({
+                position: LatLng,
+                icon: {
+                    url: "images/marker.png",
+                    scaledSize: new google.maps.Size(33, 46)
+                }
+            });
+
+            //貓貓詳細資訊
+            let catWindow = new google.maps.InfoWindow({
+                content: `貓貓id = ${cat.catId}`
+            });
+
+            //綁定此marker點擊事件
+            marker.addListener('click', function () {              
+
+                removeWindow(catWindow);
+                catWindow.open({
+                    anchor: marker,
+                    map,
+                    shouldFocus: false
+                });
+
+                map.setZoom(16);
+                map.panTo({
+                    lat: this.getPosition().lat() + 0.005,
+                    lng: this.getPosition().lng() 
+                })
+            })
+            
+            cat.window = catWindow;
+            cat.marker = marker;
+            cat.missingId = cat.missingId;
+            catList.push(cat);
+        })
+
+        searchCat();
+    })
+})
+
+let showingCatList = [];
+//搜尋中心點附近貓貓
+function searchCat() {
+
+    catList.forEach((cat, index) => {
+        let marker = cat.marker;
+        let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
+        let center = map.getCenter();
+        let distance = google.maps.geometry.spherical.computeDistanceBetween(center, LatLng);
+
+
+        //距離小於1公里就加入圖標 & 顯示在左邊item列
+        if (distance < 1000) {
+
+            marker.setMap(map);            
+
+            if (!showingCatList.includes(cat)) {
+                showingCatList.push(cat);
+                $(`#missing-${cat.missingId}`).remove().appendTo('#div-items').delay(100).fadeIn(600);
+            }
+            $(`#missing-${cat.missingId}`).fadeIn(600);
+        }
+        else {
+
+            marker.setMap(null);            
+
+            if (showingCatList.includes(cat)) {
+                showingCatList.splice(showingCatList.indexOf(cat), 1);
+                $(`#missing-${cat.missingId}`).fadeOut(600);
+            }
+        }
+    })
+
+}
+
+
+
+//關掉前一個貓貓視窗
+function removeWindow(clickedWindow) {
+    if (showingWindow != null) {
+        showingWindow.close();
+    }
+    showingWindow = clickedWindow
+}
+
+
+//點擊item導到該marker且打開window
+function itemClicked(item) {
+
+    let id = $(item).data('id');
+    let clickedCat = catList.filter(x => x.missingId == id)[0];
+
+    map.setZoom(16);
+    map.panTo({
+        lat: clickedCat.marker.getPosition().lat() + 0.005,
+        lng: clickedCat.marker.getPosition().lng()
+    });
+
+
+    removeWindow(clickedCat.window)
+    clickedCat.window.open({
+        anchor: clickedCat.marker,
+        map,
+        shouldFocus: false
+    });
+
+}
+
+function itemActive(item) {
+    let id = $(item).data('id');
+    catList.filter(x => x.missingId == id)[0].marker.setAnimation(google.maps.Animation.BOUNCE);
+}
+
+function itemInactive(item) {
+    let id = $(item).data('id');
+    catList.filter(x => x.missingId == id)[0].marker.setAnimation(null);
+}
+
+
+window.initMap = initMap;

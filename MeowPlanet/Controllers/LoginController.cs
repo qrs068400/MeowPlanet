@@ -24,12 +24,18 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        public IActionResult Register()
+        {
+            return View();
+        }
+
         [HttpPost]
         public IActionResult Login(Member member)
         {
             var count = _context.Members.Count(p => p.Email == member.Email && p.Password == member.Password);
             if (count > 0)
             {
+                
                 return RedirectToAction("Index", "Home");
             }
             else
@@ -42,6 +48,29 @@ namespace MeowPlanet.Controllers
             //return Json(count);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddMember(Member member)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Members.Add(member);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
 
+            return RedirectToAction("Register");
+
+        }
+
+        public IActionResult VerifyEmail(Member member)
+        {
+            var count = _context.Members.Count(p => p.Email == member.Email);
+            if (count > 0)
+            {
+                return Json("已存在");
+            }
+            return Json(true);
+
+        }
     }
 }

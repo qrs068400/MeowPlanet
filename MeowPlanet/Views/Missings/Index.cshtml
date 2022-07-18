@@ -1,21 +1,28 @@
-﻿@model MeowPlanet.Models.Missing
+﻿@model Missing
 
 
-<div class="row h-100 flex-nowrap my-3" style="justify-content: space-evenly">
-    <div class="w-20" id="div-items" style="transition: all 1s ease;"></div>
+<div id="stars"></div>
+<div id="stars2"></div>
+<div id="stars3"></div>
+<div id="stars4"></div>
+
+
+
+<div class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
+    <div class="w-20" id="div-items" style="transition: all 1s ease; overflow-y: scroll">
+        @*items的位置*@ 
+    </div>
     <div class="col-9 p-0" id="div-map" style="overflow: hidden; position: relative; transition: all 1s ease; ">
         <div id="map"></div>
         <input id="search-input" type="search" class="form-control rounded-pill" placeholder="搜尋 Google 地圖">
-        <button id="pre-publish" class="btn btn-primary rounded-pill">
-            <span class="h5 font-weight-bold"><i class="fa-solid fa-location-dot"></i> 刊登協尋</span>
+        <button id="pre-publish" class="btn btn-dark rounded-pill" style="border-color: white; width:180px">
+            <span class="h5"><i class="fa-solid fa-location-dot"></i> 刊登協尋</span>
         </button>
-        <button id="cancel-publish" class="btn btn-danger rounded-pill d-none">
-            <span class="h5 font-weight-bold"><i class="fa-solid fa-ban"></i> 取消刊登</span>
+        <button id="cancel-publish" class="btn btn-danger rounded-pill d-none" style="border-color: white; width:180px">
+            <span class="h5"><i class="fa-solid fa-circle-xmark"></i> 取消刊登</span>
         </button>
     </div>
 </div>
-
-
 
 
 
@@ -62,43 +69,25 @@
     }
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="~/lib/datepicker/i18n/datepicker.zh-TW.min.js"></script>
-    <script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places&callback=initMap">
-    </script>
     <script src="~/js/map.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
+    </script>
     <script>
-        $.get('@Url.Action("GetMissing", "Missings")', function(data, status) {
-
-            for (var i = 0; i < data.length; i++) {
-                cat = data[i];
-                LatLng = new google.maps.LatLng(cat.lat, cat.lng);
-
-                marker = new google.maps.Marker({
-                    position: LatLng,
-                    map: map,
-                    icon: {
-                        url: "images/marker.png",
-                        scaledSize: new google.maps.Size(30, 43)
-                    }
-                });
-
-                marker.setMap(map);
-                markersArray.push(marker);
-                //Creating a closure to retain the correct data, notice how I pass the current data in the loop into the closure (marker, data)
-                //(function (marker, data) {
-                //    // Attaching a click event to the current marker
-                //    google.maps.event.addListener(marker, "click", function (e) {
-                //        infoWindow.setContent(data.NpoName);
-                //        infoWindow.open(map, marker);
-                //    });
-
-                //})(marker, data);
-            };
+        $(function() {
+            $.get("@Url.Action("GetItems", "Missings")", function(data) {
+                $('#div-items').html(data);
+            })
         })
+
     </script>
 }
 
     @section Styles{
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/ui-darkness/jquery-ui.css">
     <link rel="stylesheet" href="~/css/missing.css" />
+    <link rel="stylesheet" href="~/css/stars.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
 }

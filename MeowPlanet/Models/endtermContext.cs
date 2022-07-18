@@ -32,7 +32,6 @@ namespace MeowPlanet.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-
             }
         }
 
@@ -322,9 +321,7 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
-                entity.Property(e => e.Star)
-                    .HasColumnType("decimal(3, 2)")
-                    .HasColumnName("star");
+                entity.Property(e => e.Star).HasColumnName("star");
 
                 entity.Property(e => e.Status).HasColumnName("status");
 
@@ -356,6 +353,10 @@ namespace MeowPlanet.Models
                 entity.ToTable("sitter");
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
+
+                entity.Property(e => e.AvgStar)
+                    .HasColumnType("decimal(2, 1)")
+                    .HasColumnName("avg_star");
 
                 entity.Property(e => e.House)
                     .HasMaxLength(50)

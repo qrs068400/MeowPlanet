@@ -19,25 +19,28 @@
         <div class="img-bg1"></div>
         <div class="bgdiv">
             <p>在各方面為您的貓咪著想</p>
-            <a href="#" class="btn navbar-brand" data-toggle="modal" data-target="#loginModel" id="addbtn">成為會員</a>
+            <a class="btn navbar-brand" asp-controller="Login" asp-action="Register" id="addbtn">成為會員</a>
         </div>
     </section>
 
     <section id="stroll-intro">
         <div class="move-section" id="move-section1">
             <div class="f-pic">
+                <a href="#"></a>
                 <div id="img4">
                     <p class="p1">保母</p>
                 </div>
-
+                
+                <a asp-controller="Adoption" asp-action="Index"></a>
                 <div id="img5">
                     <p class="p1">領養</p>
                 </div>
-
+                
+                <a asp-controller="Missings" asp-action="Index"></a>
                 <div id="img6">
                     <p class="p1">協尋</p>
                 </div>
-
+                
                 <p class="intro-p1">搭配地圖搜尋</p>
                 <p class="intro-p2">保姆地址保護</p>
                 <p class="intro-p3">用戶使用評價</p>
@@ -72,7 +75,7 @@
         <div class="fediv">
             <div class="febg"></div>
             <div class="fetitle">
-                <p>為您提供最專業的貓咪服務</p>
+                <p>找到最適合您的貓咪服務123</p>
             </div>
             <div class="fetext1-wrap">
                 <img src="@Href("~/Images/sittericon.png")" alt="">

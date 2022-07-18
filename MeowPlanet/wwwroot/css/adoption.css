@@ -198,7 +198,17 @@ body {
 
 
 /*------------------------------------------------------------------------------------------*/
+
 @media screen and (min-width:600px) {
+    .all{
+        overflow:hidden;
+    }
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
     .container1 {
         margin: auto;
         position: relative;
