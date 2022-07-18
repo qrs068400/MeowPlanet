@@ -203,7 +203,7 @@ $(function () {
             });
 
             //綁定此marker點擊事件
-            marker.addListener('click', function () {              
+            marker.addListener('click', function () {
 
                 removeWindow(catWindow);
                 catWindow.open({
@@ -212,21 +212,25 @@ $(function () {
                     shouldFocus: false
                 });
 
+                //地圖中心移動到圖標偏上位置
                 map.setZoom(16);
                 map.panTo({
                     lat: this.getPosition().lat() + 0.005,
-                    lng: this.getPosition().lng() 
+                    lng: this.getPosition().lng()
                 })
             })
-            
+
             cat.window = catWindow;
             cat.marker = marker;
             cat.missingId = cat.missingId;
             catList.push(cat);
         })
-
-        searchCat();
     })
+
+        .then(function () {
+            searchCat();
+        })
+        
 })
 
 let showingCatList = [];
@@ -309,3 +313,4 @@ function itemInactive(item) {
 
 
 window.initMap = initMap;
+

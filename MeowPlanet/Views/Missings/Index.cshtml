@@ -51,8 +51,8 @@
                         <input type="text" class="form-control" asp-for="Description" />
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
-                    <input type="text" class="d-none" id="lat" asp-for="Lat" />
-                    <input type="text" class="d-none" id="lng" asp-for="Lng" />
+                    <input type="hidden" id="lat" asp-for="Lat" />
+                    <input type="hidden" id="lng" asp-for="Lng" />
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
@@ -69,18 +69,18 @@
     }
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="~/lib/datepicker/i18n/datepicker.zh-TW.min.js"></script>
-    <script src="~/js/map.js"></script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
-    </script>
     <script>
         $(function() {
             $.get("@Url.Action("GetItems", "Missings")", function(data) {
                 $('#div-items').html(data);
             })
         })
-
     </script>
+    <script src="~/js/map.js"></script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
+    </script>
+
 }
 
     @section Styles{

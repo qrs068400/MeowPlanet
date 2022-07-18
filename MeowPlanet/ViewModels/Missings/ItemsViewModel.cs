@@ -7,6 +7,7 @@ namespace MeowPlanet.ViewModels.Missings
         public int MissingId { get; set; }
         public string? Image { get; set; }
         public string? Name { get; set; }
+        public bool? Sex { get; set; }
         public string? Breed { get; set; }
         public int ClueCount { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]

@@ -11,6 +11,7 @@ body {
     padding: 0;
     overflow: hidden;
     font-family: 'Noto Sans TC', sans-serif;
+    background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%);
 }
 
 .my{
