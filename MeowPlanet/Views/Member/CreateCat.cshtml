@@ -280,6 +280,21 @@
         background: rgba(0, 0, 0, .3);
         border-radius: 40px;
     }
+
+    #dropzone1 {
+        padding: 1rem;
+        border: 2px rgb(115, 244, 222) solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        background: rgba(0, 0, 0, .3);
+        width: 500px;
+        height: 500px;
+    }
+
+    #dropImg1 {
+        max-width: 500px;
+        max-height: 500px;
+    }
+
 </style>
 
 
@@ -405,6 +420,9 @@
 
             <div class="div-right-form text-center" id="f7">
                 <div class="d-flex align-items-center">
+                    <div id="dropZone1">
+                        <img id="dropImg1" />
+                    </div>
                 </div>
 
                 <button class="btn btn-dark re-b" id="f7-b1">返回</button>
@@ -419,6 +437,7 @@
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script>
+    // 畫面切換
     $('#f1-b1').click(function() {
         $('#p1').css('display', 'none');
         $('#p2').css('display', 'block');
@@ -503,4 +522,24 @@
         $('#f6').css('display', 'block');
     })
 
+    // 圖片拖曳
+    function doFirst() {
+        document.getElementById('dropZone1').ondragover = dragOver
+        document.getElementById('dropZone1').ondrop = dropped
+    }
+    function dragOver(e) {
+        e.preventDefault()
+    }
+    function dropped(e) {
+        e.preventDefault()
+        let file = e.dataTransfer.files[0]
+        document.getElementById('fileName').innerText = file.name
+
+        let readFile = new FileReader()
+        readFile.readAsDataURL(file)
+        readFile.addEventListener('load', function() {
+            document.getElementById('dropImg1').src = readFile.result
+        })
+    }
+    window.addEventListener('load', doFirst)
 </script>
