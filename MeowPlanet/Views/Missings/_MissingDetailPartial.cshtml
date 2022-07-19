@@ -14,9 +14,9 @@
             transform: scale(1.5);
         }
 
-    button.btn-dark {
+    .modal-footer button {
         width: 150px;
-        font-size:1.2rem;
+        font-size: 1.3rem;
     }
 
     #thumbnail div {
@@ -24,14 +24,15 @@
         overflow: hidden;
     }
 
-    #thumbnail div:hover{
+    .hover-border {
         border: 3px solid white;
     }
+
 </style>
 
 
 <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
-    <div class="modal-content" style="background-color: #3f474f;">
+    <div class="modal-content" style="background-color: rgb(27, 39, 53);">
         <div class="modal-header">
             <h5 class="modal-title" id="detailModalLabel">詳細資訊</h5>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -39,34 +40,45 @@
         <div class="modal-body" style="height: 500px;">
             <div class="float-end" style="height: 300px; width: 300px">
                 <div id="main-img" style="height: 225px; width: 300px">
-                    <img class="h-100 w-100" src="~/images/12.jpg">
+                    <img class="h-100 w-100" src="@Model.Img01">
                 </div>
-                <div id="thumbnail" class="d-flex justify-content-between mt-1">
-                    <div style="height: 75px; width: 95px">
-                        <img class="h-100 w-100" src="~/images/12.jpg">
+                <div id="thumbnail" class="d-flex justify-content-between mt-2">
+                    <div style="height: 75px; width: 95px" class="hover-border">
+                        <img class="h-100 w-100" src="@Model.Img01">
                     </div>
                     <div style="height: 75px; width: 95px">
-                        <img class="h-100 w-100" src="~/images/13.jpg">
+                        <img class="h-100 w-100" src="@Model.Img02">
                     </div>
                     <div style="height: 75px; width: 95px">
-                        <img class="h-100 w-100" src="~/images/14.jpg">
+                        <img class="h-100 w-100" src="@Model.Img03">
                     </div>
                 </div>
             </div>
 
         </div>
         <div class="modal-footer d-flex justify-content-around">
-            <button class="btn btn-dark rounded-pill" id="checkClues">查看線索</button>
-            <button class="btn btn-dark rounded-pill" id="provideClues">提供線索</button>
+            <button class="btn btn-light rounded-pill" id="checkClues">查看線索</button>
+            <button class="btn btn-light rounded-pill" id="provideClues">提供線索</button>
         </div>
     </div>
 </div>
 
+
+
 <script>
-    $('#thumbnail img').mouseenter(function() {
+
+
+    hovered = $('#thumbnail').find(':first-child')
+
+
+    $('#thumbnail div').mouseenter(function() {
 
         let img = $('#main-img>img');
 
-        img.attr('src', $(this).attr('src'));        
+        img.attr('src', $(this).find(':first-child').attr('src'));
+
+        hovered.removeClass('hover-border')
+        hovered = $(this);
+        hovered.addClass('hover-border');
     })
 </script>

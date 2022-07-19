@@ -30,6 +30,8 @@ namespace MeowPlanet.Models
         public async Task<IActionResult> AddMissing(Missing missingCat)
         {
             _context.Missings.Add(missingCat);
+            _context.Cats.Where(x => x.CatId == missingCat.CatId).First().IsMissing = true;
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -66,17 +68,30 @@ namespace MeowPlanet.Models
 
         public ActionResult GetDetail(int missingId)
         {
-            var result = _context.Missings.Where(x => x.MissingId == missingId).Include(x => x.Cat).Include(x => x.Cat.Member).Select(x => new
-            {
-                x.Cat.Name,
-                x.Cat.Sex,
-                x.Cat.Age,
-                x.Cat.Img01,
-                x.Cat.Img02,
-                x.Cat.Img03,
-                x.Cat.Member.Photo
-            });
-            return PartialView("_MissingDetailPartial");
+            var result = _context.Missings
+                .Where(x => x.MissingId == missingId)
+                .Include(x => x.Cat)
+                .Include(x => x.Cat.Member)
+                .Select(x => new DetailViewModel()
+                {
+                    Name = x.Cat.Name,
+                    Sex = x.Cat.Sex,
+                    Age = x.Cat.Age,
+                    Date = x.Date,
+                    Img01 = x.Cat.Img01,
+                    Img02 = x.Cat.Img02,
+                    Img03 = x.Cat.Img03,
+                    Description = x.Description,
+                    MemberName = x.Cat.Member.Name,
+                    Photo = x.Cat.Member.Photo
+                })
+                .FirstOrDefault();
+            return PartialView("_MissingDetailPartial" ,result);
+        }
+
+        public ActionResult GetPublish()
+        {
+            return PartialView("_MissingPublishPartial");
         }
     }
 }
