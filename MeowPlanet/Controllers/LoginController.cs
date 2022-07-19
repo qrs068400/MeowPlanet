@@ -61,16 +61,5 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Register");
 
         }
-
-        public IActionResult VerifyEmail(Member member)
-        {
-            var count = _context.Members.Count(p => p.Email == member.Email);
-            if (count > 0)
-            {
-                return Json("已存在");
-            }
-            return Json(true);
-
-        }
     }
 }

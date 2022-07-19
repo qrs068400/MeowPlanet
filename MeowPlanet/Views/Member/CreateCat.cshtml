@@ -365,119 +365,124 @@
                 <button class="btn btn-dark r-btn">返回</button>
             </div>
 
-            <div class="div-right-form text-center" id="f2">
-                <div>
-                    <button class="btn btn-light st-b" id="f2-b1">是，此為待領貓咪</button>
-                </div>
-                <div>
-                    <button class="btn btn-light st-b" id="f2-b2">否，此為專屬貓咪</button>
-                </div>
-                <button class="btn btn-dark re-b" id="f2-b3">返回</button>
-                <button class="btn btn-light ct-b" id="f2-b4">下一步</button>
-            </div>
+            <form method="post" asp-action="AddCat" asp-controller="Member" autocomplete="off">
 
-            <div class="div-right-form text-center" id="f3">
-                <div><button class="btn btn-light bre-btn">美國短毛貓</button></div>
-                <div><button class="btn btn-light bre-btn">英國短毛貓</button></div>
-                <div><button class="btn btn-light bre-btn">波斯貓</button></div>
-                <div><button class="btn btn-light bre-btn">布偶貓</button></div>
-                <div><button class="btn btn-light bre-btn">曼赤肯</button></div>
-                <div><button class="btn btn-light bre-btn">米克斯</button></div>
-                <div><button class="btn btn-light bre-btn">其他</button></div>
-
-                <button class="btn btn-dark re-b" id="f3-b1">返回</button>
-                <button class="btn btn-light ct-b" id="f3-b2">下一步</button>
-
-            </div>
-
-            <div class="div-right-form text-center" id="f4">
-
-                <div class="d-flex align-items-center">
+                <div class="div-right-form text-center" id="f2">
                     <div>
-                        <p class="text-start">名稱</p>
-                        <input type="text" />
+                        <button class="btn btn-light st-b" id="f2-b1">是，此為待領貓咪</button>
                     </div>
-                </div>
-
-                <div class="sex-div">
-                    <p class="text-start">性別</p>
-
-                    <div class="d-flex justify-content-between">
-                        <button class="btn btn-light sex-b">喵弟弟</button>
-                        <button class="btn btn-light sex-b">喵妹妹</button>
-                    </div>
-                </div>
-
-                <button class="btn btn-dark re-b" id="f4-b1">返回</button>
-                <button class="btn btn-light ct-b" id="f4-b2">下一步</button>
-            </div>
-
-            <div class="div-right-form text-center" id="f5">
-                <div class="d-flex align-items-center">
                     <div>
-                        <p class="text-start">年齡</p>
-                        <input type="text" />
+                        <button class="btn btn-light st-b" id="f2-b2">否，此為專屬貓咪</button>
                     </div>
+                    
+                    <button class="btn btn-dark re-b" id="f2-b3">返回</button>
+                    <button class="btn btn-light ct-b" id="f2-b4">下一步</button>
                 </div>
-                <div class="d-flex align-items-center location-div">
-                    <div>
-                        <p class="text-start">所在地</p>
-                        <input type="text" />
-                    </div>
-                </div>
-                <button class="btn btn-dark re-b" id="f5-b1">返回</button>
-                <button class="btn btn-light ct-b" id="f5-b2">下一步</button>
-            </div>
+                
+                <div class="div-right-form text-center" id="f3">
+                    <div><button class="btn btn-light bre-btn" value="0">美國短毛貓</button></div>
+                    <div><button class="btn btn-light bre-btn">英國短毛貓</button></div>
+                    <div><button class="btn btn-light bre-btn">波斯貓</button></div>
+                    <div><button class="btn btn-light bre-btn">布偶貓</button></div>
+                    <div><button class="btn btn-light bre-btn">曼赤肯</button></div>
+                    <div><button class="btn btn-light bre-btn">米克斯</button></div>
+                    <div><button class="btn btn-light bre-btn">其他</button></div>
 
-            <div class="div-right-form text-center" id="f6">
-                <div class="d-flex align-items-center">
-                    <div>
-                        <p class="text-start">貓咪介紹</p>
-                        <textarea rows="10" cols="50"></textarea>
-                    </div>
-                </div>
+                    <input type="text" asp-for="BreedId" class="d-none"/>
 
-                <button class="btn btn-dark re-b" id="f6-b1">返回</button>
-                <button class="btn btn-light ct-b" id="f6-b2">下一步</button>
-            </div>
+                    <button class="btn btn-dark re-b" id="f3-b1">返回</button>
+                    <button class="btn btn-light ct-b" id="f3-b2">下一步</button>
 
-            <div class="div-right-form text-center" id="f7">
-                <div class="d-flex align-items-center justify-content-center">
-                    <div id="dropZone1" class="dropZone1" style="position: relative;">
-                        <img id="dropImg1" class="dropImg" />
-                        <p id="plus1">+</p>
-                        <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile1" />
-                    </div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div id="dropZone2" class="dropZone" style="position: relative;">
-                        <img id="dropImg2" class="dropImg" />
-                        <p id="plus2">+</p>
-                        <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile2" />
-                    </div>
-                    <div id="dropZone3" class="dropZone" style="position: relative;">
-                        <img id="dropImg3" class="dropImg" />
-                        <p id="plus3">+</p>
-                        <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile3" />
-                    </div>
-                </div>
-                <div class="d-flex align-items-center">
-                    <div id="dropZone4" class="dropZone" style="position: relative;">
-                        <img id="dropImg4" class="dropImg" />
-                        <p id="plus4">+</p>
-                        <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile4" />
-                    </div>
-                    <div id="dropZone5" class="dropZone" style="position: relative;">
-                        <img id="dropImg5" class="dropImg" />
-                        <p id="plus5">+</p>
-                        <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile5" />
-                    </div>
                 </div>
 
-                <button class="btn btn-dark re-b" id="f7-b1">返回</button>
-                <button class="btn btn-light ct-b" id="f7-b2">完成</button>
-            </div>
+                <div class="div-right-form text-center" id="f4">
 
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="text-start">名稱</p>
+                            <input type="text" asp-for="Name"/>
+                        </div>
+                    </div>
+
+                    <div class="sex-div">
+                        <p class="text-start">性別</p>
+
+                        <div class="d-flex justify-content-between">
+                            <button class="btn btn-light sex-b">喵弟弟</button>
+                            <button class="btn btn-light sex-b">喵妹妹</button>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark re-b" id="f4-b1">返回</button>
+                    <button class="btn btn-light ct-b" id="f4-b2">下一步</button>
+                </div>
+
+                <div class="div-right-form text-center" id="f5">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="text-start">年齡</p>
+                            <input type="text" />
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center location-div">
+                        <div>
+                            <p class="text-start">所在地</p>
+                            <input type="text" />
+                        </div>
+                    </div>
+                    <button class="btn btn-dark re-b" id="f5-b1">返回</button>
+                    <button class="btn btn-light ct-b" id="f5-b2">下一步</button>
+                </div>
+
+                <div class="div-right-form text-center" id="f6">
+                    <div class="d-flex align-items-center">
+                        <div>
+                            <p class="text-start">貓咪介紹</p>
+                            <textarea rows="10" cols="50"></textarea>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark re-b" id="f6-b1">返回</button>
+                    <button class="btn btn-light ct-b" id="f6-b2">下一步</button>
+                </div>
+
+                <div class="div-right-form text-center" id="f7">
+                    <div class="d-flex align-items-center justify-content-center">
+                        <div id="dropZone1" class="dropZone1" style="position: relative;">
+                            <img id="dropImg1" class="dropImg" />
+                            <p id="plus1">+</p>
+                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile1" />
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div id="dropZone2" class="dropZone" style="position: relative;">
+                            <img id="dropImg2" class="dropImg" />
+                            <p id="plus2">+</p>
+                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile2" />
+                        </div>
+                        <div id="dropZone3" class="dropZone" style="position: relative;">
+                            <img id="dropImg3" class="dropImg" />
+                            <p id="plus3">+</p>
+                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile3" />
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div id="dropZone4" class="dropZone" style="position: relative;">
+                            <img id="dropImg4" class="dropImg" />
+                            <p id="plus4">+</p>
+                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile4" />
+                        </div>
+                        <div id="dropZone5" class="dropZone" style="position: relative;">
+                            <img id="dropImg5" class="dropImg" />
+                            <p id="plus5">+</p>
+                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile5" />
+                        </div>
+                    </div>
+
+                    <button class="btn btn-dark re-b" id="f7-b1">返回</button>
+                    <button type="submit" class="btn btn-light ct-b" id="f7-b2">完成</button>
+                </div>
+            </form>
         </div>
 
 

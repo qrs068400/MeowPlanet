@@ -6,9 +6,9 @@ namespace MeowPlanet.Controllers
 {
     public class MemberController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly endtermContext _context;
 
-        public MemberController(ApplicationDbContext context)
+        public MemberController(endtermContext context)
         {
             _context = context;
         }
@@ -21,6 +21,20 @@ namespace MeowPlanet.Controllers
         public IActionResult CreateCat()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddCat(Cat cat)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Cats.Add(cat);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("CreateCat");
+
         }
     }
 }
