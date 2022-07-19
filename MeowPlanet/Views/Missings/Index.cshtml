@@ -24,11 +24,14 @@
     </div>
 </div>
 
+@*走失詳細資訊的彈出視窗*@
+<div class="modal fade" id="detailModal" tabindex="-1">
 
+</div>
 
 @*刊登協尋的彈出視窗*@
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <form method="post" asp-action="AddMissing" asp-controller="Missings" autocomplete="off">
                 <div class="modal-header">

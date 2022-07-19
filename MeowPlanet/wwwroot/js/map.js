@@ -202,30 +202,24 @@ $(function () {
                 }
             });
 
-            //貓貓詳細資訊
-            let catWindow = new google.maps.InfoWindow({
-                content: `貓貓id = ${cat.catId}`
-            });
-
             //綁定此marker點擊事件
             marker.addListener('click', function () {
 
-                removeWindow(catWindow);
-                catWindow.open({
-                    anchor: marker,
-                    map,
-                    shouldFocus: false
-                });
-
-                //地圖中心移動到圖標偏上位置
+                //地圖中心移動到圖標位置
                 map.setZoom(16);
                 map.panTo({
-                    lat: this.getPosition().lat() + 0.005,
+                    lat: this.getPosition().lat(), //+ 0.005
                     lng: this.getPosition().lng()
                 })
+
+                //發送AJAX取得資料
+                $.get('Missings/GetDetail', cat.missingId, function (data) {
+                    $('#detailModal').html(data);
+                    $('#detailModal').modal('show')
+                })
+
             })
 
-            cat.window = catWindow;
             cat.marker = marker;
             cat.missingId = cat.missingId;
             catList.push(cat);
@@ -292,18 +286,15 @@ function itemClicked(item) {
 
     map.setZoom(16);
     map.panTo({
-        lat: clickedCat.marker.getPosition().lat() + 0.005,
+        lat: clickedCat.marker.getPosition().lat(),
         lng: clickedCat.marker.getPosition().lng()
     });
 
-
-    removeWindow(clickedCat.window)
-    clickedCat.window.open({
-        anchor: clickedCat.marker,
-        map,
-        shouldFocus: false
-    });
-
+    //發送AJAX取得資料
+    $.get('Missings/GetDetail', id, function (data) {
+        $('#detailModal').html(data);
+        $('#detailModal').modal('show')
+    })
 }
 
 function itemActive(item) {

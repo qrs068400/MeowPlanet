@@ -1,0 +1,72 @@
+﻿@model MeowPlanet.ViewModels.Missings.DetailViewModel
+
+<style>
+    img {
+        object-fit: cover;
+    }
+
+    #main-img > img {
+        border-radius: 15px;
+        transition: all 0.5s ease;
+    }
+
+        #main-img > img:hover {
+            transform: scale(1.5);
+        }
+
+    button.btn-dark {
+        width: 150px;
+        font-size:1.2rem;
+    }
+
+    #thumbnail div {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    #thumbnail div:hover{
+        border: 3px solid white;
+    }
+</style>
+
+
+<div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
+    <div class="modal-content" style="background-color: #3f474f;">
+        <div class="modal-header">
+            <h5 class="modal-title" id="detailModalLabel">詳細資訊</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" style="height: 500px;">
+            <div class="float-end" style="height: 300px; width: 300px">
+                <div id="main-img" style="height: 225px; width: 300px">
+                    <img class="h-100 w-100" src="~/images/12.jpg">
+                </div>
+                <div id="thumbnail" class="d-flex justify-content-between mt-1">
+                    <div style="height: 75px; width: 95px">
+                        <img class="h-100 w-100" src="~/images/12.jpg">
+                    </div>
+                    <div style="height: 75px; width: 95px">
+                        <img class="h-100 w-100" src="~/images/13.jpg">
+                    </div>
+                    <div style="height: 75px; width: 95px">
+                        <img class="h-100 w-100" src="~/images/14.jpg">
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer d-flex justify-content-around">
+            <button class="btn btn-dark rounded-pill" id="checkClues">查看線索</button>
+            <button class="btn btn-dark rounded-pill" id="provideClues">提供線索</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#thumbnail img').mouseenter(function() {
+
+        let img = $('#main-img>img');
+
+        img.attr('src', $(this).attr('src'));        
+    })
+</script>
