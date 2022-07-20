@@ -324,7 +324,7 @@ body {
 
     .a1 {
         margin-top:-15px;
-        font-size: 1rem;
+        font-size: 0.7rem;
     }
     .introduce {
         margin: auto;
@@ -368,7 +368,7 @@ body {
     .title {
         text-align: center;
         font-weight: bold;
-        font-size: 1.5rem;
+        font-size: 1rem;
         color: whitesmoke;
         padding-bottom: 40px;
         padding-top: 40px;
@@ -411,7 +411,7 @@ body {
     .like button {
         width: 150px;
         font-weight: bold;
-        font-size:1.3rem;
+        font-size:0.8rem;
     }
 
     .like {

@@ -131,25 +131,25 @@ namespace MeowPlanet.Controllers
             return catDtoList;
         }
 
-        public ActionResult LikeTolist()
-        {
-            //var adoptlike = _context.Adopts.Where(x => x.MemberId == 1).OrderBy(x => x.DateStart).ToList();
-            //var adoptlike = _context.Adopts.Include(x => x.Cat).Include(x=>x.Member).Include(x=>x.Cat.BreedId)
+        //public ActionResult LikeTolist()
+        //{
+        //    //var adoptlike = _context.Adopts.Where(x => x.MemberId == 1).OrderBy(x => x.DateStart).ToList();
+        //    //var adoptlike = _context.Adopts.Include(x => x.Cat).Include(x=>x.Member).Include(x=>x.Cat.BreedId)
 
-            var liketolist = new List<CatsDto>();
-            for (int i = 0; i < adoptlike.Count(); i++)
-            {
-                var like = new CatsDto
-                {
+        //    var liketolist = new List<CatsDto>();
+        //    for (int i = 0; i < adoptlike.Count(); i++)
+        //    {
+        //        var like = new CatsDto
+        //        {
 
 
 
-                }
+        //        }
             
 
-            }
-            return View(liketolist);
-        }
+        //    }
+        //    return View(liketolist);
+        //}
 
         [HttpPost]
         public JsonResult Like(Adopt adopt ,int catid)
