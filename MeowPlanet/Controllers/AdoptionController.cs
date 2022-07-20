@@ -136,7 +136,7 @@ namespace MeowPlanet.Controllers
         }
 
         [HttpPost]
-        public JsonResult like(Adopt adopt ,int catid)
+        public JsonResult Like(Adopt adopt ,int catid)
         {
             var v = @ViewBag.catid;
             //if (Session["emp"] == null)

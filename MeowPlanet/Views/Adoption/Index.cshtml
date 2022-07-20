@@ -223,6 +223,7 @@
 
         });
     });
+
     function checklike() {
         Swal.fire({
             title: "確認要領養貓貓嗎？",
@@ -233,29 +234,31 @@
             cancelButtonColor: '#4B5461',
             confirmButtonText: '申請'
         }).then(function(result) {
-            Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            ).then(function(result) {
-                $.ajax({
-                    method: 'post',
-                    url: '/Adoption/like',
-                    data: { catid: @ViewBag.catid},
-                    dataType: 'json',
-                    success: function(data) {
-                        window.location.reload();
-                    },
-                    error: function() {
-                        window.location.reload();
-                    }
-                });
+            if (result.value) {
+                Swal.fire(
+                    '已申請領養！',
+                    '請等候貓貓主人確認申請',
+                    'success'
+                ).then(function(result) {
+                    $.ajax({
+                        method: 'post',
+                        url: '/Adoption/Like',
+                        data: { catid: @ViewBag.catid},
+                        dataType: 'json',
+                        success: function(data) {
+                            window.location.reload();
+                        },
+                        error: function() {
+                            window.location.reload();
+                        }
+                    });
+                }
+                )
             }
-            )
-
         });
     }
-function checklike2() {
+
+    function checklike2() {
         Swal.fire({
             title: "確認要領養貓貓嗎？",
             text: "確認申請領養後不可取消，請慎重考慮！",
@@ -265,28 +268,30 @@ function checklike2() {
             cancelButtonColor: '#4B5461',
             confirmButtonText: '申請'
         }).then(function(result) {
-            Swal.fire(
-                'Deleted!',
-                'Your file has been deleted.',
-                'success'
-            ).then(function(result) {
-                $.ajax({
-            method: 'post',
-            url: '/Adoption/like',
-            data: { catid: catId },
-            dataType: 'json',
-            success: function(data) {
-                window.location.reload();
-            },
-            error: function() {
-                window.location.reload();
+            if (result.value) {
+                Swal.fire(
+                    '已申請領養！',
+                    '請等候貓貓主人確認申請',
+                    'success'
+                ).then(function(result) {
+                    $.ajax({
+                        method: 'post',
+                        url: '/Adoption/Like',
+                        data: { catid: catId },
+                        dataType: 'json',
+                        success: function(data) {
+                            window.location.reload();
+                        },
+                        error: function() {
+                            window.location.reload();
+                        }
+                    });
+                }
+                )
             }
-        });
-            }
-            )
-
         });
     }
+
     //點擊按鈕動態產生一個div方塊
     $('#pass').click(function() {
         $.ajax({
@@ -306,42 +311,6 @@ function checklike2() {
 
         });
     })
-
-
-
-    //$('.cardbox').on('click', '#like', function() {
-    //    $.ajax({
-    //        method: 'post',
-    //        url: '/Adoption/like',
-    //        data: { catid: catId },
-    //        dataType: 'json',
-    //        success: function(data) {
-    //            window.location.reload();
-    //        },
-    //        error: function() {
-    //            window.location.reload();
-    //        }
-    //    });
-    //});
-
-
-    //$('#like').click(function() {
-    //    $.ajax({
-    //        method: 'post',
-    //        url: '/Adoption/like',
-    //        data: { catid: @ViewBag.catid},
-    //        dataType: 'json',
-    //        success: function(data) {
-    //            window.location.reload();
-    //        },
-    //        error: function() {
-    //            window.location.reload();
-    //        }
-    //    });
-    //})
-
-
-
 
     function initSlider() {
         $('.autoplay').slick({
