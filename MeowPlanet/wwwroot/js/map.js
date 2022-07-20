@@ -13,9 +13,20 @@ function removeMarker() {
     }
 }
 
-
-
-
+//把地圖平移到目前位置
+function currentPos() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                let pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                map.setCenter(pos);
+            }
+        )
+    };
+}
 
 function initMap() {
 
@@ -30,6 +41,8 @@ function initMap() {
         gestureHandling: 'greedy'
     });
 
+    //currentPos();
+
     //定位按鈕
     const locationButton = document.createElement("button");
     locationButton.innerHTML = '<i class="fa-solid fa-crosshairs fa-lg"></i>';
@@ -38,17 +51,7 @@ function initMap() {
     $(locationButton).css('border-color', 'white');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
     $(locationButton).on('click', function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    let pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    };
-                    map.setCenter(pos);
-                }
-            )
-        };
+        currentPos();
     })
 
 
@@ -83,9 +86,14 @@ function initMap() {
 
             map.panTo(newMarker.getPosition());
 
-            const contentString = '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' + '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-                '<button class="btn btn-primary" onclick="setMarkerPos()" data-bs-toggle="modal" data-bs-target="#exampleModal">' +
-                'Yes' + '</button>' + '<button onclick="removeMarker();" class="btn btn-danger">No</button>' + '</div>';
+            const contentString =
+                '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
+                '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+                '<button class="btn btn-primary" onclick="confirmPos()">' +
+                'Yes' +
+                '</button>' +
+                '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
+                '</div>';
 
             const infowindow = new google.maps.InfoWindow({
                 content: contentString,
@@ -166,21 +174,6 @@ function initMap() {
 
 
 
-//日期選擇框
-$(function () {
-    $("#datepicker").datepicker($.datepicker.regional['tw']);    
-});
-
-
-
-//把marker位置寫進資料庫
-function setMarkerPos() {
-    $('#lat').val(newMarker.getPosition().lat());
-    $('#lng').val(newMarker.getPosition().lng());
-}
-
-
-
 let showingWindow;
 
 //把所有走失貓咪抓進catList
@@ -197,36 +190,34 @@ $(function () {
                 }
             });
 
-            //貓貓詳細資訊
-            let catWindow = new google.maps.InfoWindow({
-                content: `貓貓id = ${cat.catId}`
-            });
-
             //綁定此marker點擊事件
-            marker.addListener('click', function () {              
+            marker.addListener('click', function () {
 
-                removeWindow(catWindow);
-                catWindow.open({
-                    anchor: marker,
-                    map,
-                    shouldFocus: false
-                });
-
+                //地圖中心移動到圖標位置
                 map.setZoom(16);
                 map.panTo({
-                    lat: this.getPosition().lat() + 0.005,
-                    lng: this.getPosition().lng() 
+                    lat: this.getPosition().lat(), //+ 0.005
+                    lng: this.getPosition().lng()
                 })
+
+                //發送AJAX取得資料
+                $.get('Missings/GetDetail', { 'missingId': cat.missingId }, function (data) {
+                    $('#detailModal').html(data);
+                    $('#detailModal').modal('show');
+                })
+
             })
-            
-            cat.window = catWindow;
+
             cat.marker = marker;
             cat.missingId = cat.missingId;
             catList.push(cat);
         })
-
-        searchCat();
     })
+
+        .then(function () {
+            searchCat();
+        })
+
 })
 
 let showingCatList = [];
@@ -243,7 +234,7 @@ function searchCat() {
         //距離小於1公里就加入圖標 & 顯示在左邊item列
         if (distance < 1000) {
 
-            marker.setMap(map);            
+            marker.setMap(map);
 
             if (!showingCatList.includes(cat)) {
                 showingCatList.push(cat);
@@ -253,7 +244,7 @@ function searchCat() {
         }
         else {
 
-            marker.setMap(null);            
+            marker.setMap(null);
 
             if (showingCatList.includes(cat)) {
                 showingCatList.splice(showingCatList.indexOf(cat), 1);
@@ -261,7 +252,6 @@ function searchCat() {
             }
         }
     })
-
 }
 
 
@@ -283,18 +273,15 @@ function itemClicked(item) {
 
     map.setZoom(16);
     map.panTo({
-        lat: clickedCat.marker.getPosition().lat() + 0.005,
+        lat: clickedCat.marker.getPosition().lat(),
         lng: clickedCat.marker.getPosition().lng()
     });
 
-
-    removeWindow(clickedCat.window)
-    clickedCat.window.open({
-        anchor: clickedCat.marker,
-        map,
-        shouldFocus: false
-    });
-
+    //發送AJAX取得資料
+    $.get('Missings/GetDetail', { 'missingId': id }, function (data) {
+        $('#detailModal').html(data);
+        $('#detailModal').modal('show')
+    })
 }
 
 function itemActive(item) {
@@ -308,4 +295,20 @@ function itemInactive(item) {
 }
 
 
+
+
+function confirmPos() {
+
+    $.get('Missings/GetPublish', (data) => {
+        $('#publishModal').html(data);
+        $('#publishModal').modal('show');
+
+        $('#lat').val(newMarker.getPosition().lat());
+        $('#lng').val(newMarker.getPosition().lng());
+    })
+}
+
+
+
 window.initMap = initMap;
+
