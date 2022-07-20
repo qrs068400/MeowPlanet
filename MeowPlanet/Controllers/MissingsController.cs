@@ -74,7 +74,7 @@ namespace MeowPlanet.Models
                 .Include(x => x.Cat.Member)
                 .Include(x => x.Cat.Breed)
                 .Select(x => new DetailViewModel()
-                {
+                {                    
                     Name = x.Cat.Name,                    
                     Sex = x.Cat.Sex,
                     Age = x.Cat.Age,

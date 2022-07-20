@@ -1,5 +1,17 @@
 ﻿@model MeowPlanet.ViewModels.Missings.DetailViewModel
 
+@{
+    string sex;
+    if (Model.Sex == true)
+    {
+        sex = "男生";
+    }
+    else
+    {
+        sex = "女生";
+    }
+}
+
 <style>
     img {
         object-fit: cover;
@@ -48,11 +60,11 @@
             border-top: 0;
             border-left: 0;
             margin-left: -20px;
-            margin-top: -23px;            
+            margin-top: -23px;
         }
 
     .modal-body {
-        color: white;        
+        color: white;
     }
 
         .modal-body p {
@@ -90,14 +102,7 @@
                 </div>
             </div>
             <p>名字 : @Model.Name</p>
-            @if (@Model.Sex == true)
-            {
-                <p>性別 : 男生</p>
-            }
-            else
-            {
-                <p>性別 : 女生</p>
-            }
+            <p>性別 : @sex</p>
             <p>年齡 : @Model.Age 歲</p>
             <p>品種 : @Model.Breed</p>
             <p>走失日期 : @Html.DisplayFor(x => x.Date)</p>
@@ -108,7 +113,7 @@
             <div class="speech-bubble" style="height:30%; width:90%; color:black; ">
                 <div class="overflow-auto h-100 w-100 py-2 px-4" style="word-break:break-all">
                     @Model.Description
-                </div>                
+                </div>
             </div>
         </div>
         <div class="modal-footer d-flex justify-content-around">
