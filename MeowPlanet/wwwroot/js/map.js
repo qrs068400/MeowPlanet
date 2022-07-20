@@ -58,79 +58,16 @@ function initMap() {
     //刊登協尋
     $('#pre-publish').on('click', function () {
 
-        google.maps.event.removeListener(listener);
+        let windowContent =
+            '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
+            '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+            '<button class="btn btn-primary" onclick="confirmPos()">' +
+            'Yes' +
+            '</button>' +
+            '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
+            '</div>';
 
-        //把頁面上圖標隱藏
-        for (var i = 0; i < showingCatList.length; i++) {
-            showingCatList[i].marker.setMap(null);
-        }
-
-        map.setOptions({ draggableCursor: 'url(../images/marker-cursor.png) 15 45, auto' });
-
-        $('#div-items').addClass('items-activate');
-        $('#div-map').addClass('map-activate');
-
-        let listenerHandle = map.addListener("click", (e) => {
-
-            removeMarker();
-
-            newMarker = new google.maps.Marker({
-                position: e.latLng,
-                map,
-                Draggable: true,
-                icon: {
-                    url: "images/marker.png",
-                    scaledSize: new google.maps.Size(40, 57)
-                }
-            });
-
-            map.panTo(newMarker.getPosition());
-
-            const contentString =
-                '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
-                '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-                '<button class="btn btn-primary" onclick="confirmPos()">' +
-                'Yes' +
-                '</button>' +
-                '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
-                '</div>';
-
-            const infowindow = new google.maps.InfoWindow({
-                content: contentString,
-            });
-
-            infowindow.open({
-                anchor: newMarker,
-                map,
-                shouldFocus: false,
-            });
-        });
-
-
-
-        //切換刊登&取消刊登顯示
-        $(this).toggleClass('d-none');
-        $('#cancel-publish').toggleClass('d-none');
-
-        //取消刊登按鈕 綁定單次事件
-        $('#cancel-publish').one('click', function () {
-            map.setOptions({ draggableCursor: '' });
-            google.maps.event.removeListener(listenerHandle);
-            $(this).toggleClass('d-none');
-            $('#pre-publish').toggleClass('d-none');
-
-            $('#div-items').removeClass('items-activate');
-            $('#div-map').removeClass('map-activate');
-
-            removeMarker();
-
-            //把頁面上圖標顯示回來
-            for (var i = 0; i < showingCatList.length; i++) {
-                showingCatList[i].marker.setMap(map);
-            }
-
-            listener = map.addListener('idle', searchCat);
-        })
+        settingMode(windowContent);
     })
 
 
@@ -169,8 +106,87 @@ function initMap() {
 
 
     //綁定移動事件
-    var listener = map.addListener('idle', searchCat)
+    listener = map.addListener('idle', searchCat)
 }
+
+
+//設定位置模式
+function settingMode(windowContent, offset) {
+
+    google.maps.event.removeListener(listener);
+
+    //把頁面上圖標隱藏
+    setMarkerVisibility('hide');
+
+    map.setOptions({ draggableCursor: 'url(../images/marker-cursor.png) 15 45, auto' });
+
+    toggleMap()
+
+    let listenerHandle = map.addListener("click", (e) => {
+
+        removeMarker();
+
+        newMarker = new google.maps.Marker({
+            position: e.latLng,
+            map,
+            Draggable: true,
+            icon: {
+                url: "images/marker.png",
+                scaledSize: new google.maps.Size(40, 57)
+            }
+        });
+
+
+        map.setZoom(16);
+        if (offset == true) {
+
+            map.panTo({
+                lat: newMarker.getPosition().lat() + 0.005,
+                lng: newMarker.getPosition().lng()
+            });
+        }
+        else
+        {
+            map.panTo(newMarker.getPosition());
+        }
+        
+
+        const infowindow = new google.maps.InfoWindow({
+            content: windowContent
+        });
+
+        infowindow.open({
+            anchor: newMarker,
+            map,
+            shouldFocus: false,
+        });
+    });
+
+    //切換刊登&取消刊登顯示
+    $('#pre-publish').toggleClass('d-none');
+    $('#cancel-publish').toggleClass('d-none');
+
+    //取消刊登按鈕 綁定單次事件
+    $('#cancel-publish').one('click', function () {
+
+        map.setOptions({ draggableCursor: '' });
+        google.maps.event.removeListener(listenerHandle);
+
+        $('#cancel-publish').toggleClass('d-none');
+        $('#pre-publish').toggleClass('d-none');
+
+        toggleMap();
+
+        removeMarker();
+
+        //把頁面上圖標顯示回來
+        setMarkerVisibility('show');
+
+        listener = map.addListener('idle', searchCat);
+    })
+}
+
+
 
 
 
@@ -221,6 +237,7 @@ $(function () {
 })
 
 let showingCatList = [];
+
 //搜尋中心點附近貓貓
 function searchCat() {
 
@@ -254,6 +271,18 @@ function searchCat() {
     })
 }
 
+// 顯示/隱藏圖標
+function setMarkerVisibility(option) {
+    for (var i = 0; i < showingCatList.length; i++) {
+        if (option == 'show') {
+            showingCatList[i].marker.setMap(map);
+        }
+        else if (option == 'hide')
+        {
+            showingCatList[i].marker.setMap(null);
+        }        
+    }
+}
 
 
 //關掉前一個貓貓視窗
@@ -294,9 +323,13 @@ function itemInactive(item) {
     catList.filter(x => x.missingId == id)[0].marker.setAnimation(null);
 }
 
+//切換地圖區塊布局
+function toggleMap() {
+    $('#div-items').toggleClass('items-activate');
+    $('#div-map').toggleClass('map-activate');
+}
 
-
-
+//確定貓咪在此遺失
 function confirmPos() {
 
     $.get('Missings/GetPublish', (data) => {
@@ -309,6 +342,21 @@ function confirmPos() {
 }
 
 
+//提供線索
+$(document).on('click', '#provideClues', () => {
 
-window.initMap = initMap;
+    let windowContent =
+        '<span class="h5 my-3">請輸入線索詳細資訊</span>' +
+        '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+            '<button class="btn btn-primary" onclick="">發布</button>' +
+            '<button onclick="removeMarker();" class="btn btn-danger">取消</button>' +
+        '</div>';
 
+    $('#detailModal').modal('hide');
+
+    settingMode(windowContent, true);
+    $('#cancel-publish').one('click', () => {
+        $('#detailModal').modal('show');
+    })
+
+})

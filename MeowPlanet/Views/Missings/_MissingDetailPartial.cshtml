@@ -1,15 +1,7 @@
 ﻿@model MeowPlanet.ViewModels.Missings.DetailViewModel
 
 @{
-    string sex;
-    if (Model.Sex == true)
-    {
-        sex = "男生";
-    }
-    else
-    {
-        sex = "女生";
-    }
+    string sex = Model.Sex == true ? "男生" : "女生";
 }
 
 <style>
@@ -27,7 +19,7 @@
         }
 
     .modal-footer button {
-        width: 150px;
+        width: 170px;
         font-size: 1.3rem;
     }
 
@@ -75,21 +67,29 @@
         text-decoration: none;
         color: white;
     }
+
+    .mt-75 {
+        margin-top: 0.75rem;
+    }
+
+    .btn-light:hover {
+        background-color: #404C59;
+        color: white;
+    }
 </style>
 
 
 <div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
     <div class="modal-content" style="background-color: rgb(27, 39, 53);">
         <div class="modal-header">
-            <h5 class="modal-title" id="detailModalLabel">詳細資訊</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h5 class="modal-title text-light m-auto" id="detailModalLabel">詳細資訊</h5>
         </div>
         <div class="modal-body p-4" style="height: 500px;">
-            <div class="float-end" style="height: 300px; width: 300px">
+            <div class="float-end" style="width: 300px">
                 <div id="main-img" style="height: 225px; width: 300px">
                     <img class="h-100 w-100" src="@Model.Img01">
                 </div>
-                <div id="thumbnail" class="d-flex justify-content-between mt-2">
+                <div id="thumbnail" class="d-flex justify-content-between mt-75">
                     <div style="height: 75px; width: 95px" class="hover-border">
                         <img class="h-100 w-100" src="@Model.Img01">
                     </div>
@@ -117,8 +117,8 @@
             </div>
         </div>
         <div class="modal-footer d-flex justify-content-around">
-            <button class="btn btn-light rounded-pill" id="checkClues">查看線索</button>
-            <button class="btn btn-light rounded-pill" id="provideClues">提供線索</button>
+            <button class="btn btn-light rounded-pill" id="checkClues"><i class="fa-solid fa-magnifying-glass"></i> 查看線索</button>
+            <button class="btn btn-light rounded-pill" id="provideClues"><i class="fa-solid fa-location-dot"></i> 提供線索</button>
         </div>
     </div>
 </div>
@@ -126,8 +126,6 @@
 
 
 <script>
-
-
     hovered = $('#thumbnail').find(':first-child')
 
 
@@ -141,4 +139,5 @@
         hovered = $(this);
         hovered.addClass('hover-border');
     })
+
 </script>
