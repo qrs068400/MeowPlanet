@@ -7,6 +7,7 @@ namespace MeowPlanet.ViewModels.Missings
         public string? Name { get; set; }
         public bool? Sex { get; set; }
         public int? Age { get; set; }
+        public string? Breed { get; set; }
 
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]

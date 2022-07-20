@@ -72,11 +72,13 @@ namespace MeowPlanet.Models
                 .Where(x => x.MissingId == missingId)
                 .Include(x => x.Cat)
                 .Include(x => x.Cat.Member)
+                .Include(x => x.Cat.Breed)
                 .Select(x => new DetailViewModel()
                 {
-                    Name = x.Cat.Name,
+                    Name = x.Cat.Name,                    
                     Sex = x.Cat.Sex,
                     Age = x.Cat.Age,
+                    Breed = x.Cat.Breed.Name,
                     Date = x.Date,
                     Img01 = x.Cat.Img01,
                     Img02 = x.Cat.Img02,
@@ -86,6 +88,7 @@ namespace MeowPlanet.Models
                     Photo = x.Cat.Member.Photo
                 })
                 .FirstOrDefault();
+
             return PartialView("_MissingDetailPartial" ,result);
         }
 

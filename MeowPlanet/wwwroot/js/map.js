@@ -174,14 +174,6 @@ function initMap() {
 
 
 
-
-
-
-
-//把marker位置寫進資料庫
-
-
-
 let showingWindow;
 
 //把所有走失貓咪抓進catList
