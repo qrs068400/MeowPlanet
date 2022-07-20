@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MeowPlanet.Models.Cat
+
+@{
     Layout = null;
 }
 
@@ -369,29 +371,29 @@
 
                 <div class="div-right-form text-center" id="f2">
                     <div>
-                        <button class="btn btn-light st-b" id="f2-b1">是，此為待領貓咪</button>
+                        <button type="button" class="btn btn-light st-b" id="f2-b1">是，此為待領貓咪</button>
                     </div>
                     <div>
-                        <button class="btn btn-light st-b" id="f2-b2">否，此為專屬貓咪</button>
+                        <button type="button" class="btn btn-light st-b" id="f2-b2">否，此為專屬貓咪</button>
                     </div>
                     
-                    <button class="btn btn-dark re-b" id="f2-b3">返回</button>
-                    <button class="btn btn-light ct-b" id="f2-b4">下一步</button>
+                    <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
+                    <button type="button" class="btn btn-light ct-b" id="f2-b4">下一步</button>
                 </div>
                 
                 <div class="div-right-form text-center" id="f3">
-                    <div><button class="btn btn-light bre-btn" value="0">美國短毛貓</button></div>
-                    <div><button class="btn btn-light bre-btn">英國短毛貓</button></div>
-                    <div><button class="btn btn-light bre-btn">波斯貓</button></div>
-                    <div><button class="btn btn-light bre-btn">布偶貓</button></div>
-                    <div><button class="btn btn-light bre-btn">曼赤肯</button></div>
-                    <div><button class="btn btn-light bre-btn">米克斯</button></div>
-                    <div><button class="btn btn-light bre-btn">其他</button></div>
+                    <div><button type="button" class="btn btn-light bre-btn" value="0">美國短毛貓</button></div>
+                    <div><button type="button" class="btn btn-light bre-btn" value="1">英國短毛貓</button></div>
+                    <div><button type="button" class="btn btn-light bre-btn" value="2">波斯貓</button></div>
+                    <div><button type="button" class="btn btn-light bre-btn" value="3">布偶貓</button></div>
+                    <div><button type="button" class="btn btn-light bre-btn" value="4">曼赤肯</button></div>
+                    <div><button type="button" class="btn btn-light bre-btn" value="5">米克斯</button></div>
+                    <div><button type="button" class="btn btn-light bre-btn" value="6">其他</button></div>
 
-                    @*<input type="text" asp-for="BreedId" class="d-none"/>*@
+                    <input type="text" asp-for="BreedId" class="d-none" id="bre-in"/>
 
-                    <button class="btn btn-dark re-b" id="f3-b1">返回</button>
-                    <button class="btn btn-light ct-b" id="f3-b2">下一步</button>
+                    <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
+                    <button type="button" class="btn btn-light ct-b" id="f3-b2">下一步</button>
 
                 </div>
 
@@ -400,7 +402,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">名稱</p>
-                            @*<input type="text" asp-for="Name"/>*@
+                            <input type="text" asp-for="Name"/>
                         </div>
                     </div>
 
@@ -408,13 +410,13 @@
                         <p class="text-start">性別</p>
 
                         <div class="d-flex justify-content-between">
-                            <button class="btn btn-light sex-b">喵弟弟</button>
-                            <button class="btn btn-light sex-b">喵妹妹</button>
+                            <button type="button" class="btn btn-light sex-b">喵弟弟</button>
+                            <button type="button" class="btn btn-light sex-b">喵妹妹</button>
                         </div>
                     </div>
 
-                    <button class="btn btn-dark re-b" id="f4-b1">返回</button>
-                    <button class="btn btn-light ct-b" id="f4-b2">下一步</button>
+                    <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
+                    <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
                 </div>
 
                 <div class="div-right-form text-center" id="f5">
@@ -430,8 +432,8 @@
                             <input type="text" />
                         </div>
                     </div>
-                    <button class="btn btn-dark re-b" id="f5-b1">返回</button>
-                    <button class="btn btn-light ct-b" id="f5-b2">下一步</button>
+                    <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
+                    <button type="button" class="btn btn-light ct-b" id="f5-b2">下一步</button>
                 </div>
 
                 <div class="div-right-form text-center" id="f6">
@@ -442,8 +444,8 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-dark re-b" id="f6-b1">返回</button>
-                    <button class="btn btn-light ct-b" id="f6-b2">下一步</button>
+                    <button type="button" class="btn btn-dark re-b" id="f6-b1">返回</button>
+                    <button type="button" class="btn btn-light ct-b" id="f6-b2">下一步</button>
                 </div>
 
                 <div class="div-right-form text-center" id="f7">
@@ -479,7 +481,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-dark re-b" id="f7-b1">返回</button>
+                    <button type="button" class="btn btn-dark re-b" id="f7-b1">返回</button>
                     <button type="submit" class="btn btn-light ct-b" id="f7-b2">完成</button>
                 </div>
             </form>
@@ -575,6 +577,13 @@
         $('#f7').css('display', 'none');
         $('#f6').css('display', 'block');
     })
+
+    //品種輸入
+    $('.bre-btn').click(function(){
+        $('#bre-in').attr(value,this.value);
+    })
+
+
 
     function doFirst() {
         // 圖片拖曳
