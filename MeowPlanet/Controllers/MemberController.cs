@@ -26,15 +26,9 @@ namespace MeowPlanet.Controllers
         [HttpPost]
         public async Task<IActionResult> AddCat(Cat cat)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Cats.Add(cat);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            return RedirectToAction("CreateCat");
-
+            _context.Cats.Add(cat);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
         }
     }
 }

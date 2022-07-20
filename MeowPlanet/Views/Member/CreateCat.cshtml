@@ -371,11 +371,13 @@
 
                 <div class="div-right-form text-center" id="f2">
                     <div>
-                        <button type="button" class="btn btn-light st-b" id="f2-b1">是，此為待領貓咪</button>
+                        <button type="button" class="btn btn-light st-b" id="f2-b1" value="true">是，此為待領貓咪</button>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-light st-b" id="f2-b2">否，此為專屬貓咪</button>
+                        <button type="button" class="btn btn-light st-b" id="f2-b2" value="false">否，此為專屬貓咪</button>
                     </div>
+
+                    <input type="text" asp-for="IsAdoptable" class="d-none" id="ad-in"/>
 
                     <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f2-b4">下一步</button>
@@ -392,7 +394,7 @@
 
                     <input type="text" asp-for="MemberId" class="d-none" id="member-in" value="1"/>
 
-                    <input type="text" asp-for="BreedId" class="d-none" id="bre-in"/>
+                    <input type="text" asp-for="BreedId" class="d-none" id="bre-in" />
 
                     <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f3-b2">下一步</button>
@@ -410,12 +412,13 @@
 
                     <div class="sex-div">
                         <p class="text-start">性別</p>
-
                         <div class="d-flex justify-content-between">
-                            <button type="button" class="btn btn-light sex-b">喵弟弟</button>
-                            <button type="button" class="btn btn-light sex-b">喵妹妹</button>
+                            <button type="button" class="btn btn-light sex-b" value="true">喵弟弟</button>
+                            <button type="button" class="btn btn-light sex-b" value="False">喵妹妹</button>
                         </div>
                     </div>
+
+                    <input type="text" asp-for="Sex" class="d-none" id="sex-in" />
 
                     <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
@@ -425,13 +428,13 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">年齡</p>
-                            <input type="text" />
+                            <input type="text" asp-for="Age"/>
                         </div>
                     </div>
                     <div class="d-flex align-items-center location-div">
                         <div>
-                            <p class="text-start">所在地</p>
-                            <input type="text" />
+                            <p class="text-start">所在縣市</p>
+                            <input type="text" asp-for="City"/>
                         </div>
                     </div>
                     <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
@@ -442,7 +445,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">貓咪介紹</p>
-                            <textarea rows="10" cols="50"></textarea>
+                            <textarea type="text" rows="10" cols="50" asp-for="Introduce"></textarea>
                         </div>
                     </div>
 
@@ -455,31 +458,31 @@
                         <div id="dropZone1" class="dropZone1" style="position: relative;">
                             <img id="dropImg1" class="dropImg" />
                             <p id="plus1">+</p>
-                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile1" />
+                            <input asp-for="Img01" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile1" />
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <div id="dropZone2" class="dropZone" style="position: relative;">
                             <img id="dropImg2" class="dropImg" />
                             <p id="plus2">+</p>
-                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile2" />
+                            <input asp-for="Img02" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile2" />
                         </div>
                         <div id="dropZone3" class="dropZone" style="position: relative;">
                             <img id="dropImg3" class="dropImg" />
                             <p id="plus3">+</p>
-                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile3" />
+                            <input asp-for="Img03" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile3" />
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <div id="dropZone4" class="dropZone" style="position: relative;">
                             <img id="dropImg4" class="dropImg" />
                             <p id="plus4">+</p>
-                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile4" />
+                            <input asp-for="Img04" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile4" />
                         </div>
                         <div id="dropZone5" class="dropZone" style="position: relative;">
                             <img id="dropImg5" class="dropImg" />
                             <p id="plus5">+</p>
-                            <input type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile5" />
+                            <input asp-for="Img05" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile5" />
                         </div>
                     </div>
 
@@ -585,7 +588,15 @@
         $('#bre-in').attr('value',this.value);
     })
 
+    //性別輸入
+    $('.sex-b').click(function(){
+        $('#sex-in').attr('value',this.value);
+    })
 
+    //領養輸入
+    $('.st-b').click(function(){
+        $('#ad-in').attr('value',this.value);
+    })
 
     function doFirst() {
         // 圖片拖曳
@@ -623,7 +634,6 @@
     function dropped1(e) {
         e.preventDefault()
         let file = e.dataTransfer.files[0]
-
         let readFile = new FileReader()
         readFile.readAsDataURL(file)
         readFile.addEventListener('load', function() {
