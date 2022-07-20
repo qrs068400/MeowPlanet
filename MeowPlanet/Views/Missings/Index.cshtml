@@ -1,4 +1,4 @@
-﻿@model Missing
+﻿@model IEnumerable<MeowPlanet.ViewModels.Missings.ItemsViewModel>
 
 
 <div id="stars"></div>
@@ -10,7 +10,10 @@
 
 <div  class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
     <div class="w-20" id="div-items" style="transition: all 1s ease; overflow-y: auto; min-width: 346px">
-        @*items的位置*@ 
+        @foreach (var item in Model)
+        {
+            <partial name="_MissingItemsPartial" model="item" />
+        }
     </div>
     <div class="col-9 p-0" id="div-map" style="overflow: hidden; position: relative; transition: all 1s ease; ">
         <div id="map"></div>
@@ -41,11 +44,11 @@
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="~/lib/datepicker/i18n/datepicker.zh-TW.min.js"></script>
     <script>
-        $(function() {
-            $.get("@Url.Action("GetItems", "Missings")", function(data) {
-                $('#div-items').html(data);
-            })
-        })
+        //$(function() {
+        //    $.get("@Url.Action("GetItems", "Missings")", function(data) {
+        //        $('#div-items').html(data);
+        //    })
+        //})
     </script>
     <script src="~/js/map.js"></script>
     <script async defer
