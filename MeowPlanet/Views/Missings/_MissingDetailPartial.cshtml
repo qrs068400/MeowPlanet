@@ -1,0 +1,144 @@
+﻿@model MeowPlanet.ViewModels.Missings.DetailViewModel
+
+@{
+    string sex;
+    if (Model.Sex == true)
+    {
+        sex = "男生";
+    }
+    else
+    {
+        sex = "女生";
+    }
+}
+
+<style>
+    img {
+        object-fit: cover;
+    }
+
+    #main-img > img {
+        border-radius: 15px;
+        transition: all 0.5s ease;
+    }
+
+        #main-img > img:hover {
+            transform: scale(1.5);
+        }
+
+    .modal-footer button {
+        width: 150px;
+        font-size: 1.3rem;
+    }
+
+    #thumbnail div {
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .hover-border {
+        border: 3px solid white;
+    }
+
+    .speech-bubble {
+        position: relative;
+        background: #c9c9c9;
+        border-radius: .4em;
+        top: 5px;
+        margin: auto;
+    }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            top: 5px;
+            left: 7%;
+            width: 0;
+            height: 0;
+            border: 18px solid transparent;
+            border-bottom-color: #c9c9c9;
+            border-top: 0;
+            border-left: 0;
+            margin-left: -20px;
+            margin-top: -23px;
+        }
+
+    .modal-body {
+        color: white;
+    }
+
+        .modal-body p {
+            margin-bottom: 3.5%;
+        }
+
+    a {
+        text-decoration: none;
+        color: white;
+    }
+</style>
+
+
+<div class="modal-dialog modal-dialog-centered" style="max-width: 600px;">
+    <div class="modal-content" style="background-color: rgb(27, 39, 53);">
+        <div class="modal-header">
+            <h5 class="modal-title" id="detailModalLabel">詳細資訊</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body p-4" style="height: 500px;">
+            <div class="float-end" style="height: 300px; width: 300px">
+                <div id="main-img" style="height: 225px; width: 300px">
+                    <img class="h-100 w-100" src="@Model.Img01">
+                </div>
+                <div id="thumbnail" class="d-flex justify-content-between mt-2">
+                    <div style="height: 75px; width: 95px" class="hover-border">
+                        <img class="h-100 w-100" src="@Model.Img01">
+                    </div>
+                    <div style="height: 75px; width: 95px">
+                        <img class="h-100 w-100" src="@Model.Img02">
+                    </div>
+                    <div style="height: 75px; width: 95px">
+                        <img class="h-100 w-100" src="@Model.Img03">
+                    </div>
+                </div>
+            </div>
+            <p>名字 : @Model.Name</p>
+            <p>性別 : @sex</p>
+            <p>年齡 : @Model.Age 歲</p>
+            <p>品種 : @Model.Breed</p>
+            <p>走失日期 : @Html.DisplayFor(x => x.Date)</p>
+            <div class="mb-4" style="width:40%;">
+                <a asp-action=""><img src="@Model.Photo" class="rounded-circle" style="height:50px; width:50px;" /></a>
+                <a asp-action="">@Model.MemberName</a>
+            </div>
+            <div class="speech-bubble" style="height:30%; width:90%; color:black; ">
+                <div class="overflow-auto h-100 w-100 py-2 px-4" style="word-break:break-all">
+                    @Model.Description
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-around">
+            <button class="btn btn-light rounded-pill" id="checkClues">查看線索</button>
+            <button class="btn btn-light rounded-pill" id="provideClues">提供線索</button>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+
+
+    hovered = $('#thumbnail').find(':first-child')
+
+
+    $('#thumbnail div').mouseenter(function() {
+
+        let img = $('#main-img>img');
+
+        img.attr('src', $(this).find(':first-child').attr('src'));
+
+        hovered.removeClass('hover-border')
+        hovered = $(this);
+        hovered.addClass('hover-border');
+    })
+</script>

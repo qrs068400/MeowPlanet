@@ -180,6 +180,7 @@ body {
     top: var(--top);
     transform: translate(-(var(--lef)), -var(--top));
     width: var(--wid);
+
 }
 
 .move-section .f-pic div {
