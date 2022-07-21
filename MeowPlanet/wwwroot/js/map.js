@@ -224,6 +224,23 @@ $(function () {
 
             })
 
+            //綁定此marker hover事件
+            marker.addListener('mouseover', function () {
+                const id = cat.missingId;
+                catList.filter(x => x.missingId == id)[0].marker.setAnimation(google.maps.Animation.BOUNCE);
+                showingCatList.filter(x => x.missingId != id).forEach((cat) => {
+                    cat.marker.setOptions({ 'opacity': 0.35 })
+                })
+            })
+
+            marker.addListener('mouseout', function () {
+                const id = cat.missingId;
+                catList.filter(x => x.missingId == id)[0].marker.setAnimation(null);
+                showingCatList.filter(x => x.missingId != id).forEach((cat) => {
+                    cat.marker.setOptions({ 'opacity': 1 })
+                })
+            })
+
             cat.marker = marker;
             cat.missingId = cat.missingId;
             catList.push(cat);
@@ -316,11 +333,17 @@ function itemClicked(item) {
 function itemActive(item) {
     let id = $(item).data('id');
     catList.filter(x => x.missingId == id)[0].marker.setAnimation(google.maps.Animation.BOUNCE);
+    showingCatList.filter(x => x.missingId != id).forEach((cat) => {
+        cat.marker.setOptions({ 'opacity': 0.35 })
+    })
 }
 
 function itemInactive(item) {
     let id = $(item).data('id');
     catList.filter(x => x.missingId == id)[0].marker.setAnimation(null);
+    showingCatList.filter(x => x.missingId != id).forEach((cat) => {
+        cat.marker.setOptions({ 'opacity': 1 })
+    })
 }
 
 //切換地圖區塊布局
