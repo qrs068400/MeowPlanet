@@ -6,322 +6,7 @@
 
 <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
 
-<style>
-    * {
-        padding: 0;
-        margin: 0;
-        box-sizing: border-box;
-    }
-
-    html,
-    body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-    }
-
-    .img-logo {
-        width: 100px;
-        height: 100px;
-        position: absolute;
-        top: 5px;
-        left: 5px;
-    }
-
-    .container-fluid {
-        height: 100vh;
-    }
-
-    .row {
-        height: 100%;
-    }
-
-    .left-reg {
-        background-image: linear-gradient(to top left, #327382, #171b20);
-    }
-
-    .right-reg {
-        background-color: #171b20;
-    }
-
-    .div-left-p {
-        font-size: 60px;
-        color: white;
-    }
-
-    .div-right-form {
-        font-size: 60px;
-        color: white;
-    }
-
-    .c-btn {
-        color: white;
-        font-size: 30px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        border-radius: 20px;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        height: 70px;
-        width: 200px;
-        position: absolute;
-        bottom: 20%;
-        left: 75%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .div-right-form .r-btn {
-        color: white;
-        font-size: 20px;
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-
-    #p1 {
-        display: block;
-    }
-
-    #p2 {
-        display: none;
-    }
-
-    #p3 {
-        display: none;
-    }
-
-    #p4 {
-        display: none;
-    }
-
-    #p5 {
-        display: none;
-    }
-
-    #p6 {
-        display: none;
-    }
-
-    #p7 {
-        display: none;
-    }
-
-    #f1 {
-        display: block;
-    }
-
-    #f2 {
-        display: none;
-    }
-
-    #f3 {
-        display: none;
-    }
-
-    #f4 {
-        display: none;
-    }
-
-    #f5 {
-        display: none;
-    }
-
-    #f6 {
-        display: none;
-    }
-
-    #f7 {
-        display: none;
-    }
-
-    .st-b {
-        color: white;
-        margin: 50px;
-        font-size: 30px;
-        border-radius: 50px;
-        height: 100px;
-        width: 500px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-    }
-
-    .re-b {
-        color: #171b20;
-        font-size: 30px;
-        border-radius: 20px;
-        height: 70px;
-        width: 200px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        background-color: #73F4DE;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        bottom: 2%;
-        left: 52%;
-    }
-
-    .ct-b {
-        color: white;
-        font-size: 30px;
-        border-radius: 20px;
-        height: 70px;
-        width: 200px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        bottom: 2%;
-        right: 2%;
-    }
-
-    #f3 {
-        padding-bottom: 60px;
-    }
-
-        #f3 p {
-            text-align: start;
-            font-size: 30px;
-        }
-
-    .bre-btn {
-        color: white;
-        margin: 10px;
-        font-size: 25px;
-        border-radius: 40px;
-        height: 80px;
-        width: 500px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-    }
-
-    .sex-b {
-        color: white;
-        font-size: 25px;
-        border-radius: 40px;
-        height: 80px;
-        width: 200px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    #f4 p {
-        margin-bottom: 10px;
-        font-size: 30px;
-    }
-
-    #f4 input {
-        color: white;
-        font-size: 30px;
-        height: 80px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        border-radius: 40px;
-        width: 500px;
-        text-align: left;
-    }
-
-    .sex-div {
-        margin-top: 40px;
-    }
-
-    .location-div {
-        margin-top: 40px;
-    }
-
-    #f5 p {
-        margin-bottom: 10px;
-        font-size: 30px;
-    }
-
-    #f5 input {
-        color: white;
-        font-size: 30px;
-        height: 80px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        border-radius: 40px;
-        width: 500px;
-        text-align: left;
-    }
-
-    #f6 p {
-        margin-bottom: 10px;
-        font-size: 30px;
-    }
-
-    #f6 textarea {
-        color: white;
-        font-size: 30px;
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        border-radius: 40px;
-    }
-
-    .dropZone1 {
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) dashed;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        border-radius: 40px;
-        width: 400px;
-        height: 250px;
-        margin:20px;
-        display:flex;
-        align-items:center;
-        justify-content: center;
-    }
-
-    .dropZone {
-        padding: 1rem;
-        border: 2px rgb(115, 244, 222) dashed;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        border-radius: 40px;
-        width: 300px;
-        height: 200px;
-        margin:20px;
-        display:flex;
-        align-items:center;
-        justify-content: center;
-    }
-
-    .dropImg {
-        max-width: 100%;
-        max-height: 100%;
-    }
-
-    #f7{
-        padding-bottom:10%;
-    }
-
-</style>
-
+<link href="~/css/createcat.css" rel="stylesheet" />
 
 
 <div class="container-fluid">
@@ -367,7 +52,7 @@
                 <button class="btn btn-dark r-btn">返回</button>
             </div>
 
-            <form method="post" asp-action="AddCat" asp-controller="Member" autocomplete="off">
+            <form method="post" asp-action="AddCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
 
                 <div class="div-right-form text-center" id="f2">
                     <div>
@@ -377,7 +62,9 @@
                         <button type="button" class="btn btn-light st-b" id="f2-b2" value="false">否，此為專屬貓咪</button>
                     </div>
 
-                    <input type="text" asp-for="IsAdoptable" class="d-none" id="ad-in"/>
+                    <input type="text" asp-for="IsAdoptable" class="d-none" id="ad-in" />
+
+                    <span id="bre-sp"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f2-b4">下一步</button>
@@ -392,9 +79,10 @@
                     <div><button type="button" class="btn btn-light bre-btn" value="5">米克斯</button></div>
                     <div><button type="button" class="btn btn-light bre-btn" value="6">其他</button></div>
 
-                    <input type="text" asp-for="MemberId" class="d-none" id="member-in" value="1"/>
+                    <input type="text" asp-for="MemberId" class="d-none" id="member-in" value="1" />
 
                     <input type="text" asp-for="BreedId" class="d-none" id="bre-in" />
+                    <span asp-validation-for="BreedId"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f3-b2">下一步</button>
@@ -406,7 +94,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">名稱</p>
-                            <input type="text" asp-for="Name"/>
+                            <input type="text" asp-for="Name" class="text-center" />
                         </div>
                     </div>
 
@@ -428,13 +116,13 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">年齡</p>
-                            <input type="text" asp-for="Age"/>
+                            <input type="text" asp-for="Age" class="text-center" />
                         </div>
                     </div>
                     <div class="d-flex align-items-center location-div">
                         <div>
                             <p class="text-start">所在縣市</p>
-                            <input type="text" asp-for="City"/>
+                            <input type="text" asp-for="City" class="text-center" />
                         </div>
                     </div>
                     <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
@@ -445,7 +133,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">貓咪介紹</p>
-                            <textarea type="text" rows="10" cols="50" asp-for="Introduce"></textarea>
+                            <textarea type="text" rows="10" cols="50" asp-for="Introduce" class="p-4"></textarea>
                         </div>
                     </div>
 
@@ -454,35 +142,37 @@
                 </div>
 
                 <div class="div-right-form text-center" id="f7">
-                    <div class="d-flex align-items-center justify-content-center">
+
+
+                    <div class="d-flex align-items-center ">
                         <div id="dropZone1" class="dropZone1" style="position: relative;">
                             <img id="dropImg1" class="dropImg" />
                             <p id="plus1">+</p>
-                            <input asp-for="Img01" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile1" />
+                            <input type="file" name="file1" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile1" />
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <div id="dropZone2" class="dropZone" style="position: relative;">
                             <img id="dropImg2" class="dropImg" />
                             <p id="plus2">+</p>
-                            <input asp-for="Img02" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile2" />
+                            <input type="file" name="file2" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile2" />
                         </div>
                         <div id="dropZone3" class="dropZone" style="position: relative;">
                             <img id="dropImg3" class="dropImg" />
                             <p id="plus3">+</p>
-                            <input asp-for="Img03" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile3" />
+                            <input type="file" name="file3" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile3" />
                         </div>
                     </div>
                     <div class="d-flex align-items-center">
                         <div id="dropZone4" class="dropZone" style="position: relative;">
                             <img id="dropImg4" class="dropImg" />
                             <p id="plus4">+</p>
-                            <input asp-for="Img04" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile4" />
+                            <input type="file" name="file4" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile4" />
                         </div>
                         <div id="dropZone5" class="dropZone" style="position: relative;">
                             <img id="dropImg5" class="dropImg" />
                             <p id="plus5">+</p>
-                            <input asp-for="Img05" type="file" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile5" />
+                            <input type="file" name="file5" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile5" />
                         </div>
                     </div>
 
@@ -497,254 +187,10 @@
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
-<script>
-    // 畫面切換
-    $('#f1-b1').click(function() {
-        $('#p1').css('display', 'none');
-        $('#p2').css('display', 'block');
-        $('#f1').css('display', 'none');
-        $('#f2').css('display', 'block');
-    })
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/createcat.js"></script>
 
-    $('#f2-b4').click(function() {
-        $('#p2').css('display', 'none');
-        $('#p3').css('display', 'block');
-        $('#f2').css('display', 'none');
-        $('#f3').css('display', 'block');
-    })
-
-    $('#f2-b3').click(function() {
-        $('#p1').css('display', 'block');
-        $('#p2').css('display', 'none');
-        $('#f1').css('display', 'block');
-        $('#f2').css('display', 'none');
-    })
-
-    $('#f3-b1').click(function() {
-        $('#p3').css('display', 'none');
-        $('#p2').css('display', 'block');
-        $('#f3').css('display', 'none');
-        $('#f2').css('display', 'block');
-    })
-
-    $('#f3-b2').click(function() {
-        $('#p3').css('display', 'none');
-        $('#p4').css('display', 'block');
-        $('#f3').css('display', 'none');
-        $('#f4').css('display', 'block');
-    })
-
-    $('#f4-b1').click(function() {
-        $('#p4').css('display', 'none');
-        $('#p3').css('display', 'block');
-        $('#f4').css('display', 'none');
-        $('#f3').css('display', 'block');
-    })
-
-    $('#f4-b2').click(function() {
-        $('#p4').css('display', 'none');
-        $('#p5').css('display', 'block');
-        $('#f4').css('display', 'none');
-        $('#f5').css('display', 'block');
-    })
-
-    $('#f5-b1').click(function() {
-        $('#p5').css('display', 'none');
-        $('#p4').css('display', 'block');
-        $('#f5').css('display', 'none');
-        $('#f4').css('display', 'block');
-    })
-
-    $('#f5-b2').click(function() {
-        $('#p5').css('display', 'none');
-        $('#p6').css('display', 'block');
-        $('#f5').css('display', 'none');
-        $('#f6').css('display', 'block');
-    })
-
-    $('#f6-b1').click(function() {
-        $('#p6').css('display', 'none');
-        $('#p5').css('display', 'block');
-        $('#f6').css('display', 'none');
-        $('#f5').css('display', 'block');
-    })
-
-    $('#f6-b2').click(function() {
-        $('#p6').css('display', 'none');
-        $('#p7').css('display', 'block');
-        $('#f6').css('display', 'none');
-        $('#f7').css('display', 'block');
-    })
-
-    $('#f7-b1').click(function() {
-        $('#p7').css('display', 'none');
-        $('#p6').css('display', 'block');
-        $('#f7').css('display', 'none');
-        $('#f6').css('display', 'block');
-    })
-
-    //品種輸入
-    $('.bre-btn').click(function(){
-        $('#bre-in').attr('value',this.value);
-    })
-
-    //性別輸入
-    $('.sex-b').click(function(){
-        $('#sex-in').attr('value',this.value);
-    })
-
-    //領養輸入
-    $('.st-b').click(function(){
-        $('#ad-in').attr('value',this.value);
-    })
-
-    function doFirst() {
-        // 圖片拖曳
-        document.getElementById('dropZone1').ondragover = dragOver1
-        document.getElementById('dropZone1').ondrop = dropped1
-        document.getElementById('dropZone2').ondragover = dragOver2
-        document.getElementById('dropZone2').ondrop = dropped2
-        document.getElementById('dropZone3').ondragover = dragOver3
-        document.getElementById('dropZone3').ondrop = dropped3
-        document.getElementById('dropZone4').ondragover = dragOver4
-        document.getElementById('dropZone4').ondrop = dropped4
-        document.getElementById('dropZone5').ondragover = dragOver5
-        document.getElementById('dropZone5').ondrop = dropped5
-        // 圖片新增
-        document.getElementById('theFile1').onchange = fileChange1
-        document.getElementById('theFile2').onchange = fileChange2
-        document.getElementById('theFile3').onchange = fileChange3
-        document.getElementById('theFile4').onchange = fileChange4
-        document.getElementById('theFile5').onchange = fileChange5
-    }
-
-    function fileChange1(e) {
-        let file = document.getElementById('theFile1').files[0]
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg1').src = readFile.result
-        })
-        $('#plus1').css('display', 'none')
-        $('.dropZone1').css('border', '2px rgb(115, 244, 222) solid')
-    }
-    function dragOver1(e) {
-        e.preventDefault()
-    }
-    function dropped1(e) {
-        e.preventDefault()
-        let file = e.dataTransfer.files[0]
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg1').src = readFile.result
-        })
-        $('#plus1').css('display', 'none')
-        $('.dropZone1').css('border', '2px rgb(115, 244, 222) solid')
-    }
-
-    function fileChange2(e) {
-        let file = document.getElementById('theFile2').files[0]
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg2').src = readFile.result
-        })
-        $('#plus2').css('display', 'none')
-        $('#dropZone2').css('border', '2px rgb(115, 244, 222) solid')
-    }
-    function dragOver2(e) {
-        e.preventDefault()
-    }
-    function dropped2(e) {
-        e.preventDefault()
-        let file = e.dataTransfer.files[0]
-
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg2').src = readFile.result
-        })
-        $('#plus2').css('display', 'none')
-        $('#dropZone2').css('border', '2px rgb(115, 244, 222) solid')
-    }
-
-    function fileChange3(e) {
-        let file = document.getElementById('theFile3').files[0]
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg3').src = readFile.result
-        })
-        $('#plus3').css('display', 'none')
-        $('#dropZone3').css('border', '2px rgb(115, 244, 222) solid')
-    }
-    function dragOver3(e) {
-        e.preventDefault()
-    }
-    function dropped3(e) {
-        e.preventDefault()
-        let file = e.dataTransfer.files[0]
-
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg3').src = readFile.result
-        })
-        $('#plus3').css('display', 'none')
-        $('#dropZone3').css('border', '2px rgb(115, 244, 222) solid')
-    }
-
-    function fileChange4(e) {
-        let file = document.getElementById('theFile4').files[0]
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg4').src = readFile.result
-        })
-        $('#plus4').css('display', 'none')
-        $('#dropZone4').css('border', '2px rgb(115, 244, 222) solid')
-    }
-    function dragOver4(e) {
-        e.preventDefault()
-    }
-    function dropped4(e) {
-        e.preventDefault()
-        let file = e.dataTransfer.files[0]
-
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg4').src = readFile.result
-        })
-        $('#plus4').css('display', 'none')
-        $('#dropZone4').css('border', '2px rgb(115, 244, 222) solid')
-    }
-
-    function fileChange5(e) {
-        let file = document.getElementById('theFile5').files[0]
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg5').src = readFile.result
-        })
-        $('#plus5').css('display', 'none')
-        $('#dropZone5').css('border', '2px rgb(115, 244, 222) solid')
-    }
-    function dragOver5(e) {
-        e.preventDefault()
-    }
-    function dropped5(e) {
-        e.preventDefault()
-        let file = e.dataTransfer.files[0]
-
-        let readFile = new FileReader()
-        readFile.readAsDataURL(file)
-        readFile.addEventListener('load', function() {
-            document.getElementById('dropImg5').src = readFile.result
-        })
-        $('#plus5').css('display', 'none')
-        $('#dropZone5').css('border', '2px rgb(115, 244, 222) solid')
-    }
-    window.addEventListener('load', doFirst)
-</script>
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
