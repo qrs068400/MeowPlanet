@@ -24,6 +24,10 @@ $(document).on('scroll', function () {
         $('.intro-p8').css('opacity', '0')
         $('.intro-p9').css('opacity', '0')
 
+        $('#sitterLink').css('pointer-events', 'auto')
+        $('#adoptionLink').css('pointer-events', 'auto')
+        $('#missingLink').css('pointer-events', 'auto')
+
     } else if ((now > start) && (now < mid)) {
         $('#img4')
             .css('--lef', `${5 + (20 * (now - start) / (mid - start))}%`)
@@ -41,6 +45,11 @@ $(document).on('scroll', function () {
         $('.intro-p7').css('opacity', '0')
         $('.intro-p8').css('opacity', '0')
         $('.intro-p9').css('opacity', '0')
+
+        $('#sitterLink').css('pointer-events', 'auto')
+        $('#adoptionLink').css('pointer-events', 'none')
+        $('#missingLink').css('pointer-events', 'none')
+
     } else if ((now > mid) && (now < mid_1)) {
         $('#img5').css('opacity', '0')
         $('#img6').css('opacity', '0')
@@ -78,6 +87,11 @@ $(document).on('scroll', function () {
         $('.intro-p7').css('opacity', '0')
         $('.intro-p8').css('opacity', '0')
         $('.intro-p9').css('opacity', '0')
+
+        $('#sitterLink').css('pointer-events', 'none')
+        $('#adoptionLink').css('pointer-events', 'auto')
+        $('#missingLink').css('pointer-events', 'none')
+
     } else if ((now > mid2) && (now < mid2_2)) {
         $('#img4').css('opacity', '0')
         $('#img6').css('opacity', '0')
@@ -115,6 +129,11 @@ $(document).on('scroll', function () {
         $('.intro-p7').css('opacity', `${(now - end2) / (mid3 - end2)}`)
         $('.intro-p8').css('opacity', `${(now - end2) / (mid3 - end2)}`)
         $('.intro-p9').css('opacity', `${(now - end2) / (mid3 - end2)}`)
+
+        $('#sitterLink').css('pointer-events', 'none')
+        $('#adoptionLink').css('pointer-events', 'none')
+        $('#missingLink').css('pointer-events', 'auto')
+
     } else if ((now > mid3) && (now < mid3_2)) {
         $('#img4').css('opacity', '0')
         $('#img5').css('opacity', '0')
@@ -142,6 +161,10 @@ $(document).on('scroll', function () {
         $('.intro-p7').css('opacity', '0')
         $('.intro-p8').css('opacity', '0')
         $('.intro-p9').css('opacity', '0')
+
+        $('#sitterLink').css('pointer-events', 'auto')
+        $('#adoptionLink').css('pointer-events', 'auto')
+        $('#missingLink').css('pointer-events', 'auto')
     }
 
 })

@@ -26,21 +26,25 @@
     <section id="stroll-intro">
         <div class="move-section" id="move-section1">
             <div class="f-pic">
-                <a href="#"></a>
+
+                <a asp-controller="Sitter" asp-action="Index" id="sitterLink">
                 <div id="img4">
                     <p class="p1">保母</p>
                 </div>
-                
-                <a asp-controller="Adoption" asp-action="Index"></a>
+                </a>
+
+                <a asp-controller="Adoption" asp-action="Index" id="adoptionLink">
                 <div id="img5">
                     <p class="p1">領養</p>
                 </div>
-                
-                <a asp-controller="Missings" asp-action="Index"></a>
+                </a>
+
+                <a asp-controller="Missings" asp-action="Index" id="missingLink">
                 <div id="img6">
                     <p class="p1">協尋</p>
                 </div>
-                
+                </a>
+
                 <p class="intro-p1">搭配地圖搜尋</p>
                 <p class="intro-p2">保姆地址保護</p>
                 <p class="intro-p3">用戶使用評價</p>
@@ -75,7 +79,7 @@
         <div class="fediv">
             <div class="febg"></div>
             <div class="fetitle">
-                <p>找到最適合您的貓咪服務123</p>
+                <p>找到最適合您的貓咪服務</p>
             </div>
             <div class="fetext1-wrap">
                 <img src="@Href("~/Images/sittericon.png")" alt="">
@@ -228,4 +232,5 @@
 
 @section Scripts{
     <script src="~/js/homepage.js"></script>
+
 }
