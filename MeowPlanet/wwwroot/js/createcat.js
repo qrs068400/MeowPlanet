@@ -10,7 +10,7 @@ $('#f1-b1').click(function () {
 $('#f2-b4').click(function () {
 
     if ($('#ad-in').attr('value') == '') {
-        $('#bre-sp').text('此為必填');
+        $('#ado-sp').text('請選擇');
     }
     else {
         $('#p2').css('display', 'none');
@@ -35,10 +35,16 @@ $('#f3-b1').click(function () {
 })
 
 $('#f3-b2').click(function () {
-    $('#p3').css('display', 'none');
-    $('#p4').css('display', 'block');
-    $('#f3').css('display', 'none');
-    $('#f4').css('display', 'block');
+    if ($('#bre-in').attr('value') == '') {
+        $('#bre-sp').text('請選擇');
+    }
+    else {
+        $('#p3').css('display', 'none');
+        $('#p4').css('display', 'block');
+        $('#f3').css('display', 'none');
+        $('#f4').css('display', 'block');
+    }
+
 })
 
 $('#f4-b1').click(function () {
@@ -92,6 +98,10 @@ $('#f7-b1').click(function () {
 
 //品種輸入
 $('.bre-btn').click(function () {
+
+    $('.bre-btn').removeClass('b-press');
+    $(this).addClass('b-press');
+
     $('#bre-in').attr('value', this.value);
 })
 
@@ -103,34 +113,85 @@ $('.sex-b').click(function () {
 //領養輸入
 $('.st-b').click(function () {
 
-    $('.st-b').removeClass('st-b-press');
-    $(this).addClass('st-b-press');
+    $('.st-b').removeClass('b-press');
+    $(this).addClass('b-press');
 
     $('#ad-in').attr('value', this.value);
 })
 
-function doFirst() {
-    // 圖片拖曳
-    document.getElementById('dropZone1').ondragover = dragOver1
-    document.getElementById('dropZone1').ondrop = dropped1
-    document.getElementById('dropZone2').ondragover = dragOver2
-    document.getElementById('dropZone2').ondrop = dropped2
-    document.getElementById('dropZone3').ondragover = dragOver3
-    document.getElementById('dropZone3').ondrop = dropped3
-    document.getElementById('dropZone4').ondragover = dragOver4
-    document.getElementById('dropZone4').ondrop = dropped4
-    document.getElementById('dropZone5').ondragover = dragOver5
-    document.getElementById('dropZone5').ondrop = dropped5
-    
-    //document.getElementById('dropZone1').ondragover = dragOver
-    //document.getElementById('dropZone1').ondrop = multiDrag
+
+let inputList = [] // 放input dom的list
+let imgList = [] //放img dom的list
+
+for (var i = 0; i < $(":file").length; i++) {
+    inputList.push($(":file")[i])  //把所有的input dom加進去
 }
+
+for (var i = 0; i < $(".dropImg").length; i++) {
+    imgList.push($(".dropImg")[i]) //把所有的img dom加進去
+}
+
+let remainNum = 5;
+
+$(".dropZone, .dropZone1").on({
+
+    "dragover": function (event) {
+        event.preventDefault();
+    },
+
+
+    "drop": function (event) {
+
+        event.preventDefault();
+        event.stopPropagation();
+
+        let fileList = event.originalEvent.dataTransfer.files;  //把滑鼠抓住的若干檔案assign進去
+
+        for (let i = 0; i < fileList.length; i++) {   
+
+            let file = fileList[i];          //把fileList拆分成單獨file跑迴圈
+
+
+            //預覽功能
+            let reader = new FileReader();
+            reader.readAsDataURL(file);
+            reader.addEventListener("load", function (event) {
+                for (let i = 0; i < imgList.length; i++) {
+
+                    //如果該img為空則把該圖片的url assign進去
+                    if (imgList[i].src == '') {
+                        imgList[i].src = event.target.result;
+                        $(`#plus${i+1}`).css('display', 'none')
+                        $(`#dropZone${i+1}`).css('border', '2px rgb(115, 244, 222) solid')
+                        remainNum -= 1;
+                        $('#re-p').text(`還剩${remainNum}張可以選擇`)
+                        break;  //跳脫出for迴圈
+                    }
+                }
+            })
+
+            //檔案上傳
+            for (let i = 0; i < inputList.length; i++) {
+
+                //如果該input裡的file為空則把file assign進去
+                if (inputList[i].files.length == 0) {
+
+                    let dt = new DataTransfer();
+                    dt.items.add(file);
+                    inputList[i].files = dt.files;
+                    break;
+                }
+            }
+        }       
+        
+    }
+})
 
 
 $(function () {
     $('#theFile1').change(function () {
         fileChange(1);
-    })    
+    })
     $('#theFile2').change(function() {
         fileChange(2);
     })
@@ -143,8 +204,6 @@ $(function () {
     $('#theFile5').change(function () {
         fileChange(5);
     })
-
-
 })
 
 function fileChange(num) {
@@ -154,117 +213,8 @@ function fileChange(num) {
     readFile.addEventListener('load', function () {
         $(`#dropImg${num}`)[0].src = readFile.result
     })
+    remainNum -= 1;
+    $('#re-p').text(`還剩${remainNum}張可以選擇`)
     $(`#plus${num}`).css('display', 'none')
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
-function dragOver(e) {
-    e.preventDefault()
-}
-function dragOver1(e) {
-    e.preventDefault()
-}
-function dropped1(e) {
-    e.preventDefault()
-    let file = e.dataTransfer.files[0]
-    theFile1.files = e.dataTransfer.files;
-    let readFile = new FileReader()
-    readFile.readAsDataURL(file)
-    readFile.addEventListener('load', function () {
-        document.getElementById('dropImg1').src = readFile.result
-    })
-    document.getElementById('theFile1').files[0] = file
-    $('#plus1').css('display', 'none')
-    $('.dropZone1').css('border', '2px rgb(115, 244, 222) solid')
-}
-
-//let fileList = []
-//function multiDrag(e) {
-    
-//    e.preventDefault()
-    
-
-//    for (let i = 0; i < e.dataTransfer.files.length; i++) {
-//        fileList.push(e.dataTransfer.files[i]);
-//    }
-
-
-//    fileList.forEach(function (file, index) {
-
-
-//        $(`#theFile${index + 1}`)[0].files.push(file);
-
-//        let readFile = new FileReader();
-//        readFile.addEventListener('load', function () {
-//            readFile.readAsDataURL(file);
-//            document.getElementById(`dropImg${index + 1}`).src = readFile.result;
-//        })
-//        //$(`#theFile${index + 1}`)[0].files[0] = file;
-//    })
-//}
-
-function dragOver2(e) {
-    e.preventDefault()
-}
-function dropped2(e) {
-    e.preventDefault()
-    let file = e.dataTransfer.files[0]
-    theFile2.files = e.dataTransfer.files;
-    let readFile = new FileReader()
-    readFile.readAsDataURL(file)
-    readFile.addEventListener('load', function () {
-        document.getElementById('dropImg2').src = readFile.result
-    })
-    $('#plus2').css('display', 'none')
-    $('#dropZone2').css('border', '2px rgb(115, 244, 222) solid')
-}
-
-function dragOver3(e) {
-    e.preventDefault()
-}
-function dropped3(e) {
-    e.preventDefault()
-    let file = e.dataTransfer.files[0]
-    theFile3.files = e.dataTransfer.files;
-    let readFile = new FileReader()
-    readFile.readAsDataURL(file)
-    readFile.addEventListener('load', function () {
-        document.getElementById('dropImg3').src = readFile.result
-    })
-    $('#plus3').css('display', 'none')
-    $('#dropZone3').css('border', '2px rgb(115, 244, 222) solid')
-}
-
-
-function dragOver4(e) {
-    e.preventDefault()
-}
-function dropped4(e) {
-    e.preventDefault()
-    let file = e.dataTransfer.files[0]
-    theFile4.files = e.dataTransfer.files;
-    let readFile = new FileReader()
-    readFile.readAsDataURL(file)
-    readFile.addEventListener('load', function () {
-        document.getElementById('dropImg4').src = readFile.result
-    })
-    $('#plus4').css('display', 'none')
-    $('#dropZone4').css('border', '2px rgb(115, 244, 222) solid')
-}
-
-function dragOver5(e) {
-    e.preventDefault()
-}
-function dropped5(e) {
-    e.preventDefault()
-    let file = e.dataTransfer.files[0]
-    theFile5.files = e.dataTransfer.files;
-    let readFile = new FileReader()
-    readFile.readAsDataURL(file)
-    readFile.addEventListener('load', function () {
-        document.getElementById('dropImg5').src = readFile.result
-    })
-    $('#plus5').css('display', 'none')
-    $('#dropZone5').css('border', '2px rgb(115, 244, 222) solid')
-}
-window.addEventListener('load', doFirst)
-
