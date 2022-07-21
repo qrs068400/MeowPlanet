@@ -1,4 +1,13 @@
-﻿// 畫面切換
+﻿$(document).ready(function () {
+    $(window).keydown(function (event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+});
+
+// 畫面切換
 $('#f1-b1').click(function () {
     $('#p1').css('display', 'none');
     $('#p2').css('display', 'block');
@@ -55,10 +64,17 @@ $('#f4-b1').click(function () {
 })
 
 $('#f4-b2').click(function () {
-    $('#p4').css('display', 'none');
-    $('#p5').css('display', 'block');
-    $('#f4').css('display', 'none');
-    $('#f5').css('display', 'block');
+
+    if (($('#name-in').val() == '') || ($('#sex-in').attr('value') == '')) {
+        $('#name-sex-sp').text('請填寫及選擇');
+    } else {
+        $('#p4').css('display', 'none');
+        $('#p5').css('display', 'block');
+        $('#f4').css('display', 'none');
+        $('#f5').css('display', 'block');
+    }
+
+
 })
 
 $('#f5-b1').click(function () {
@@ -69,10 +85,16 @@ $('#f5-b1').click(function () {
 })
 
 $('#f5-b2').click(function () {
-    $('#p5').css('display', 'none');
-    $('#p6').css('display', 'block');
-    $('#f5').css('display', 'none');
-    $('#f6').css('display', 'block');
+
+    if (($('#age-in').val() == '') || ($('#city-in').val() == '')) {
+        $('#age-city-sp').text('請填寫');
+    } else {
+        $('#p5').css('display', 'none');
+        $('#p6').css('display', 'block');
+        $('#f5').css('display', 'none');
+        $('#f6').css('display', 'block');
+    }
+
 })
 
 $('#f6-b1').click(function () {
@@ -83,10 +105,17 @@ $('#f6-b1').click(function () {
 })
 
 $('#f6-b2').click(function () {
-    $('#p6').css('display', 'none');
-    $('#p7').css('display', 'block');
-    $('#f6').css('display', 'none');
-    $('#f7').css('display', 'block');
+
+    if ($('#intro-in').val() == '') {
+        $('#intro-sp').text('請填寫');
+    } else {
+        $('#p6').css('display', 'none');
+        $('#p7').css('display', 'block');
+        $('#f6').css('display', 'none');
+        $('#f7').css('display', 'block');
+    }
+
+
 })
 
 $('#f7-b1').click(function () {
@@ -107,6 +136,10 @@ $('.bre-btn').click(function () {
 
 //性別輸入
 $('.sex-b').click(function () {
+
+    $('.sex-btn').removeClass('b-press');
+    $(this).addClass('b-press');
+
     $('#sex-in').attr('value', this.value);
 })
 

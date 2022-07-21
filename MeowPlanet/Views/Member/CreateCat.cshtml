@@ -96,7 +96,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">名稱</p>
-                            <input type="text" asp-for="Name" class="text-center" />
+                            <input type="text" asp-for="Name" class="text-center" id="name-in"/>
                         </div>
                     </div>
 
@@ -110,6 +110,8 @@
 
                     <input type="text" asp-for="Sex" class="d-none" id="sex-in" />
 
+                    <span id="name-sex-sp" class="in-sp"></span>
+
                     <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
                 </div>
@@ -118,15 +120,18 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">年齡</p>
-                            <input type="text" asp-for="Age" class="text-center" />
+                            <input type="text" asp-for="Age" class="text-center" id="age-in"/>
                         </div>
                     </div>
                     <div class="d-flex align-items-center location-div">
                         <div>
                             <p class="text-start">所在縣市</p>
-                            <input type="text" asp-for="City" class="text-center" />
+                            <input type="text" asp-for="City" class="text-center" id="city-in"/>
                         </div>
                     </div>
+
+                    <span id="age-city-sp" class="in-sp"></span>
+
                     <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f5-b2">下一步</button>
                 </div>
@@ -135,9 +140,11 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">貓咪介紹</p>
-                            <textarea type="text" rows="10" cols="50" asp-for="Introduce" class="p-4"></textarea>
+                            <textarea type="text" rows="10" cols="50" asp-for="Introduce" class="p-4" id="intro-in"></textarea>
                         </div>
                     </div>
+
+                    <span id="intro-sp" class="in-sp"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f6-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f6-b2">下一步</button>
