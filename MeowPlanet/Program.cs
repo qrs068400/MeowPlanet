@@ -20,6 +20,13 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromDays(1);
+    option.Cookie.IsEssential = true;
+    option.Cookie.HttpOnly = true;
+});
 
 var app = builder.Build();
 
@@ -42,6 +49,10 @@ app.UseRouting();
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.UseCookiePolicy();
+
+app.UseSession();
 
 app.MapControllerRoute(
     name: "default",

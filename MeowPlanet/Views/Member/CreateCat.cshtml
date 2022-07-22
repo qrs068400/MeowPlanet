@@ -12,7 +12,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-6 left-reg h-100 d-flex align-items-center">
-            <img class="img-logo" src="@Href("~/Images/LOGO2.png")" alt="">
+            <img class="img-logo" src="@Href("~/Images/LOGO.png")" alt="">
             <div class="div-left-p mx-5" id="p1">
                 <p>加入您的貓咪資訊</p>
                 <p>體驗喵屋星球的便利</p>
@@ -64,7 +64,7 @@
 
                     <input type="text" asp-for="IsAdoptable" class="d-none" id="ad-in" />
 
-                    <span id="bre-sp"></span>
+                    <span id="ado-sp" class="in-sp"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f2-b4">下一步</button>
@@ -84,6 +84,8 @@
                     <input type="text" asp-for="BreedId" class="d-none" id="bre-in" />
                     <span asp-validation-for="BreedId"></span>
 
+                    <span id="bre-sp" class="in-sp"></span>
+
                     <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f3-b2">下一步</button>
 
@@ -94,7 +96,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">名稱</p>
-                            <input type="text" asp-for="Name" class="text-center" />
+                            <input type="text" asp-for="Name" class="text-center" id="name-in"/>
                         </div>
                     </div>
 
@@ -108,6 +110,8 @@
 
                     <input type="text" asp-for="Sex" class="d-none" id="sex-in" />
 
+                    <span id="name-sex-sp" class="in-sp"></span>
+
                     <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
                 </div>
@@ -116,15 +120,18 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">年齡</p>
-                            <input type="text" asp-for="Age" class="text-center" />
+                            <input type="text" asp-for="Age" class="text-center" id="age-in"/>
                         </div>
                     </div>
                     <div class="d-flex align-items-center location-div">
                         <div>
                             <p class="text-start">所在縣市</p>
-                            <input type="text" asp-for="City" class="text-center" />
+                            <input type="text" asp-for="City" class="text-center" id="city-in"/>
                         </div>
                     </div>
+
+                    <span id="age-city-sp" class="in-sp"></span>
+
                     <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f5-b2">下一步</button>
                 </div>
@@ -133,9 +140,11 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">貓咪介紹</p>
-                            <textarea type="text" rows="10" cols="50" asp-for="Introduce" class="p-4"></textarea>
+                            <textarea type="text" rows="10" cols="50" asp-for="Introduce" class="p-4" id="intro-in"></textarea>
                         </div>
                     </div>
+
+                    <span id="intro-sp" class="in-sp"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f6-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f6-b2">下一步</button>
@@ -143,13 +152,17 @@
 
                 <div class="div-right-form text-center" id="f7">
 
-
                     <div class="d-flex align-items-center ">
-                        <div id="dropZone1" class="dropZone1" style="position: relative;">
+                        <div id="dropZone1" class="dropZone" style="position: relative;">
                             <img id="dropImg1" class="dropImg" />
                             <p id="plus1">+</p>
                             <input type="file" name="file1" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile1" />
                         </div>
+                        <div class="hint-d">
+                            <p>請點擊圖框或拖曳加入</p>
+                            <p id="re-p">還剩5張可以選擇</p>
+                        </div>
+                        
                     </div>
                     <div class="d-flex align-items-center">
                         <div id="dropZone2" class="dropZone" style="position: relative;">
