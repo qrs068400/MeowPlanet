@@ -33,6 +33,8 @@ namespace MeowPlanet.Controllers
                 OrderCommentList = await _context.Orderlists.Where(m => m.ServiceId == id).ToListAsync(),
 
             };
+
+            
             if (model.sitter == null)
             {
                 return NotFound();
