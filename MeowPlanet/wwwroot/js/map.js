@@ -145,11 +145,10 @@ function settingMode(windowContent, offset) {
                 lng: newMarker.getPosition().lng()
             });
         }
-        else
-        {
+        else {
             map.panTo(newMarker.getPosition());
         }
-        
+
 
         const infowindow = new google.maps.InfoWindow({
             content: windowContent
@@ -194,8 +193,8 @@ let showingWindow;
 
 //把所有走失貓咪抓進catList
 $(function () {
-    $.get('Missings/GetMissing', function (data, status) {
-        data.forEach((value, index) => {
+    $.get('Missings/GetMissing', function (data) {
+        data.forEach((value) => {
             let cat = value;
             let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
             let marker = new google.maps.Marker({
@@ -236,7 +235,7 @@ $(function () {
             marker.addListener('mouseout', function () {
                 const id = cat.missingId;
                 catList.filter(x => x.missingId == id)[0].marker.setAnimation(null);
-                showingCatList.filter(x => x.missingId != id).forEach((cat) => {
+                catList.forEach((cat) => {
                     cat.marker.setOptions({ 'opacity': 1 })
                 })
             })
@@ -258,7 +257,7 @@ let showingCatList = [];
 //搜尋中心點附近貓貓
 function searchCat() {
 
-    catList.forEach((cat, index) => {
+    catList.forEach((cat) => {
         let marker = cat.marker;
         let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
         let center = map.getCenter();
@@ -294,10 +293,9 @@ function setMarkerVisibility(option) {
         if (option == 'show') {
             showingCatList[i].marker.setMap(map);
         }
-        else if (option == 'hide')
-        {
+        else if (option == 'hide') {
             showingCatList[i].marker.setMap(null);
-        }        
+        }
     }
 }
 
@@ -341,7 +339,7 @@ function itemActive(item) {
 function itemInactive(item) {
     let id = $(item).data('id');
     catList.filter(x => x.missingId == id)[0].marker.setAnimation(null);
-    showingCatList.filter(x => x.missingId != id).forEach((cat) => {
+    catList.forEach((cat) => {
         cat.marker.setOptions({ 'opacity': 1 })
     })
 }
@@ -369,11 +367,13 @@ function confirmPos() {
 $(document).on('click', '#provideClues', () => {
 
     let windowContent =
-        '<span class="h5 my-3">請輸入線索詳細資訊</span>' +
-        '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+        '<form>' +
+            '<span class="h5 my-3">請輸入線索詳細資訊</span>' +
+            '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
             '<button class="btn btn-primary" onclick="">發布</button>' +
             '<button onclick="removeMarker();" class="btn btn-danger">取消</button>' +
-        '</div>';
+            '</div>' +
+        '</form>';
 
     $('#detailModal').modal('hide');
 
