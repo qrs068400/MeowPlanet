@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MeowPlanet.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,7 @@ namespace MeowPlanet.Controllers
         public IActionResult Login(Member member)
         {
             var count = _context.Members.Count(p => p.Email == member.Email && p.Password == member.Password);
+
             if (count > 0)
             {
                 
@@ -48,18 +50,23 @@ namespace MeowPlanet.Controllers
             //return Json(count);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddMember(Member member)
+        [HttpGet]
+        public ActionResult EmailCheck(string email)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Members.Add(member);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
 
-            return RedirectToAction("Register");
+                var count = _context.Members.Count(x => x.Email == email);
+
+                if(count > 0)
+                {
+                    return Content("此信箱已註冊");
+                }
+                else
+                {
+                    return Content("此信箱尚未註冊");
+                }
+
 
         }
+
     }
 }
