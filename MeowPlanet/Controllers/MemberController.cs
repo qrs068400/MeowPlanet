@@ -20,7 +20,11 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            string LoginEmail = HttpContext.Session.GetString("LoginMemberEmail");
+
+            var member = _context.Members.First(s => s.Email == LoginEmail);
+
+            return View(member);
         }
 
         public IActionResult CreateCat()

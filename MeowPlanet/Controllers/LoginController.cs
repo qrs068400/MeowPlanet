@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-
+using Microsoft.AspNetCore.Http;
 
 namespace MeowPlanet.Controllers
 {
@@ -22,6 +22,7 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
+            
             return View();
         }
 
@@ -37,8 +38,9 @@ namespace MeowPlanet.Controllers
 
             if (count > 0)
             {
-                
-                return RedirectToAction("Index", "Home");
+                HttpContext.Session.SetString("LoginMemberEmail",member.Email);
+
+                return RedirectToAction("Index", "Member");
             }
             else
             {
@@ -62,11 +64,21 @@ namespace MeowPlanet.Controllers
                 }
                 else
                 {
-                    return Content("此信箱尚未註冊");
+                    return Content("此信箱可使用");
                 }
-
-
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddMember(Member member)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Members.Add(member);
+                await _context.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+
+            return RedirectToAction("Register");
+        }
     }
 }

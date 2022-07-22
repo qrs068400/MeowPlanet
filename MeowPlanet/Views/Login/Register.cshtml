@@ -1,4 +1,4 @@
-﻿@model MeowPlanet.Models.Member
+﻿@model MeowPlanet.ViewModels.RegisterModel
 
 @{
     ViewData["Title"] = "Register";
@@ -27,42 +27,43 @@
                         <div class="regist-form">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">Email</p>
-                                <span class="text-danger" id="alert"></span>
-                                <span asp-validation-for="Email" class="text-danger"></span>
+                                <span id="alert"></span>
+
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="email" asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" />
+                                <span asp-validation-for="Email" class="text-danger ms-1" id="EmailValid"></span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">密碼</p>
-                                <span asp-validation-for="Password" class="text-danger"></span>
+
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
-
+                                <span asp-validation-for="Password" class="text-danger ms-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">姓名</p>
-                                <span asp-validation-for="Name" class="text-danger"></span>
+
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
-
+                                <span asp-validation-for="Name" class="text-danger ms-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">連絡電話</p>
-                                <span asp-validation-for="Phone" class="text-danger"></span>
+
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="text" asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
-
+                                <span asp-validation-for="Phone" class="text-danger ms-1"></span>
                             </div>
                         </div>
                         <div class="d-flex justify-content-center">
@@ -85,9 +86,25 @@
     <script>
 
         $('input[type=email]').blur(function() {
-            $.get("EmailCheck", { email : this.value }, function(data) {
-                $('#alert').html(data)
-            })
+
+            if ($('#EmailValid').text() == '') {
+                if ($('input[type=email]').val() == '') {
+                    $('#alert').css('display', 'none')
+                } else {
+                    $('#alert').css('display', 'block')
+                    $.get("EmailCheck", { email: this.value }, function(data) {
+                        if (data == "此信箱已註冊") {
+                            $('#alert').html(data).css('color', '#2A483A')
+                        } else {
+                            $('#alert').html(data).css('color', '#FF8EFF')
+                        }
+                    })
+                }
+            } else {
+                $('#alert').css('display', 'none')
+            }
+
+
         })
     </script>
 

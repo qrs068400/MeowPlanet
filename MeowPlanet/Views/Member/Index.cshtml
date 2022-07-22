@@ -1,4 +1,6 @@
-﻿@{
+﻿@model MeowPlanet.Models.Member
+
+@{
     ViewData["Title"] = "memberInfo";
 }
 
@@ -7,8 +9,6 @@
 
 
     }
-
-
 
 
 
@@ -46,19 +46,19 @@
                         <div class="title"><p>會員資料</p></div>
                         <div class="my-3">
                             <p>Email</p>
-                            <input type="text"/>
+                            <input type="text" value="@Model.Email" id="email-in"/>
                         </div>
                         <div class="my-3">
                             <p>密碼</p>
-                            <input type="text"/>
+                            <input type="text" value="@Model.Password"/>
                         </div>
                         <div class="my-3">
                             <p>姓名</p>
-                            <input type="text"/>
+                            <input type="text" value="@Model.Name""/>
                         </div>
                         <div class="my-3">
                             <p>電話</p>
-                            <input type="text"/>
+                            <input type="text" value="@Model.Phone"/>
                         </div>
 
                         <div class="d-flex justify-content-between">
