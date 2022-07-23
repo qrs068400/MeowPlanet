@@ -77,10 +77,13 @@
 
         $('#login-submit').click(function() {
 
-            $.get("Login/EmailExist", { email: $('input[type=email]').val() }, function(data) {
-                if (data == "此信箱不存在") {
-                    alert(data);
+            $.get("Login/LoginCheck", { email: $('input[type=email]').val(), password: $('input[type=password]').val() }, function(data) {
+                
+                if (data == "Email或密碼錯誤") {
+                    $('#alert').html(data).css('color', '#2A483A')
                 }
+
+
             })
         })
 
