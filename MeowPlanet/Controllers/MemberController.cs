@@ -3,6 +3,7 @@ using MeowPlanet.Models;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 
 namespace MeowPlanet.Controllers
@@ -20,11 +21,13 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
-            string LoginEmail = HttpContext.Session.GetString("LoginMemberEmail");
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
 
-            var member = _context.Members.First(s => s.Email == LoginEmail);
+            var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
 
-            return View(member);
+            
+
+            return View(LoginInfo);
         }
 
         public IActionResult CreateCat()

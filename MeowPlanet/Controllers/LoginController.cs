@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
 
 namespace MeowPlanet.Controllers
 {
@@ -22,7 +25,6 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
-            
             return View();
         }
 
@@ -38,7 +40,26 @@ namespace MeowPlanet.Controllers
 
             if (count > 0)
             {
-                HttpContext.Session.SetString("LoginMemberEmail",member.Email);
+                var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == member.Email);
+
+                var LoginId = LoginInfo.MemberId;
+
+                var LoginName = LoginInfo.Name;
+
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Sid, LoginId.ToString()),
+                    new Claim(ClaimTypes.Name, LoginName),
+
+                };
+
+                var claimsIdentity = new ClaimsIdentity(
+                           claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                        new ClaimsPrincipal(claimsIdentity));
+
+                
 
                 return RedirectToAction("Index", "Member");
             }
@@ -47,10 +68,15 @@ namespace MeowPlanet.Controllers
                 return RedirectToAction("Index");
             }
 
-            //var count = _context.Members.Count(p => p.Email == member.Email && p.Password == member.Password);
-
-            //return Json(count);
         }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            return RedirectToAction("Index","Home");
+        }
+
 
         [HttpGet]
         public ActionResult EmailCheck(string email)

@@ -2,6 +2,7 @@ using MeowPlanet.Data;
 using MeowPlanet.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 var appConnectString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -20,6 +21,16 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews();
 
+// cookie
+builder.Services
+    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(option =>
+    {
+        option.LogoutPath = "/Login/Index";
+        option.ExpireTimeSpan = TimeSpan.FromHours(6);
+    });
+
+// session
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(option =>
 {
@@ -42,15 +53,19 @@ else
     app.UseHsts();
 }
 
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCookiePolicy();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
-app.UseCookiePolicy();
+
 
 app.UseSession();
 

@@ -1,4 +1,5 @@
 ﻿@model MeowPlanet.Models.Cat
+@using System.Security.Claims;
 
 @{
     Layout = null;
@@ -79,7 +80,7 @@
                     <div><button type="button" class="btn btn-light bre-btn" value="5">米克斯</button></div>
                     <div><button type="button" class="btn btn-light bre-btn" value="6">其他</button></div>
 
-                    <input type="text" asp-for="MemberId" class="d-none" id="member-in" value="1" />
+                    <input type="text" asp-for="MemberId" class="d-none" id="member-in" value="@User.FindFirst(ClaimTypes.Sid).Value" />
 
                     <input type="text" asp-for="BreedId" class="d-none" id="bre-in" />
                     <span asp-validation-for="BreedId"></span>
