@@ -82,7 +82,7 @@ namespace MeowPlanet.Controllers
             }
             else
             {
-                return RedirectToAction("Index");
+                return Content("信箱或密碼錯誤");
             }
 
         }
