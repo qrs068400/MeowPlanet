@@ -33,6 +33,23 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        // 登入判定Email是否存在
+        [HttpGet]
+        public ActionResult EmailExist(string email)
+        {
+            var count = _context.Members.Count(x => x.Email == email);
+
+            if(count > 0)
+            {
+                return Content("");
+            }
+            else
+            {
+                return Content("此信箱不存在");
+            }
+        }
+
+        // 登入
         [HttpPost]
         public IActionResult Login(Member member)
         {
@@ -77,7 +94,7 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Index","Home");
         }
 
-
+        // 註冊判定Email是否可使用
         [HttpGet]
         public ActionResult EmailCheck(string email)
         {
@@ -94,6 +111,7 @@ namespace MeowPlanet.Controllers
                 }
         }
 
+        // 註冊
         [HttpPost]
         public async Task<IActionResult> AddMember(Member member)
         {

@@ -3,14 +3,13 @@
 @inject UserManager<IdentityUser> UserManager
 @using Microsoft.AspNetCore.Http
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
-
 @using System.Security.Claims;
 
 
 <ul class="navbar-nav">
     @if (User.FindFirst(ClaimTypes.Sid) != null)
     {
-        <li class="nav-item memberlogin">
+        <li class="nav-item memberlogin d-flex align-items-center">
             <a class="text-light" asp-area="" asp-controller="Member" asp-action="Index">歡迎回來 @User.FindFirst(ClaimTypes.Name).Value</a>
         </li>
         <li class="nav-item memberlogin d-flex align-items-center">

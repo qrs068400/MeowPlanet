@@ -1,4 +1,4 @@
-﻿@model Member
+﻿@model MeowPlanet.ViewModels.LoginModel
 
 @{
     ViewData["Title"] = "Index";
@@ -23,23 +23,22 @@
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p my-3">Email</p>
-                                <span asp-validation-for="Email" class="text-danger"></span>
+                                <span id="alert"></span>
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="email" asp-for="Email" class="form-control login-sp" autocomplete="username" aria-required="true" />
-
+                                <span asp-validation-for="Email" class="text-danger ms-1"></span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p my-3">密碼</p>
-                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
 
-                            
+
                             <div class="d-flex align-items-center">
                                 <input type="password" asp-for="Password" class="form-control login-sp" autocomplete="current-password" aria-required="true" />
-                                
+                                <span asp-validation-for="Password" class="text-danger ms-1"></span>
                             </div>
 
                             <div class="form-check form-switch cbox my-3">
@@ -71,21 +70,20 @@
 
 
 
-
-
     @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
     <script>
-        //$.post('@Url.Action("Login", "Login")', function(data, stutus){
-        //    if(data == 1){
-        //        @Url.Action("Index", "Home")
-        //    }
-        //    else
-        //    {
-        //        @Url.Action("Index", "Login")
-        //    }
-        //})
+
+        $('#login-submit').click(function() {
+
+            $.get("Login/EmailExist", { email: $('input[type=email]').val() }, function(data) {
+                if (data == "此信箱不存在") {
+                    alert(data);
+                }
+            })
+        })
+
 
     </script>
 
