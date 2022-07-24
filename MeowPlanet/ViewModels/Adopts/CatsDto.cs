@@ -1,8 +1,9 @@
-﻿namespace MeowPlanet.ViewModels
+﻿namespace MeowPlanet.ViewModels.Adopts
 {
     public class CatsDto
     {
         public int CatId { get; set; }
+        public int BreedId { get; set; }
         public int MemberId { get; set; }
         public string? CatName { get; set; }
         public bool? CatSex { get; set; }
