@@ -72,8 +72,17 @@
 
     })
 
+
     function showcatdetail(i){
         $('#cat-region-select').css('display','none')
+
+        let catSex = ""
+
+        if (catInfo[i].sex == true) {
+            catSex = "貓弟弟"
+        } else {
+            catSex = "貓妹妹"
+        }
 
         let cat = `
 
@@ -88,7 +97,7 @@
                 </div>
                 <div class="my-3">
                     <p>性別</p>
-                    <input type="text" value="${catInfo[i].sex}"/>
+                    <input type="text" value="${catSex}"/>
                 </div>
                 <div class="my-3">
                     <p>年齡</p>
