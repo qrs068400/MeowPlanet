@@ -31,7 +31,6 @@ namespace MeowPlanet.Controllers
                 ViewBag.catid = cats.ToList()[0].CatId;
             }
             return View(cats); //排序及查詢條件
-
         }
 
         [HttpPost]
@@ -97,7 +96,6 @@ namespace MeowPlanet.Controllers
 
             return Json(new { item = html, catId = CatsDto[0].CatId });
         }
-
         public List<CatsDto> GetCatsDto()
         {
             var memberid = 1;
@@ -128,12 +126,30 @@ namespace MeowPlanet.Controllers
                         CatCity = catList[i].City,
                     };
                     catDtoList.Add(catDto);
-
                 }
             }
             return catDtoList;
-
         }
+
+        //public ActionResult LikeTolist()
+        //{
+        //    //var adoptlike = _context.Adopts.Where(x => x.MemberId == 1).OrderBy(x => x.DateStart).ToList();
+        //    //var adoptlike = _context.Adopts.Include(x => x.Cat).Include(x=>x.Member).Include(x=>x.Cat.BreedId)
+
+        //    var liketolist = new List<CatsDto>();
+        //    for (int i = 0; i < adoptlike.Count(); i++)
+        //    {
+        //        var like = new CatsDto
+        //        {
+
+
+
+        //        }
+            
+
+        //    }
+        //    return View(liketolist);
+        //}
 
         [HttpPost]
         public JsonResult Like(Adopt adopt ,int catid)
@@ -153,7 +169,6 @@ namespace MeowPlanet.Controllers
             _context.SaveChanges();
             return null;
         }
-
 
         // GET: AdoptionController/Details/5
         public ActionResult Details(int id)
