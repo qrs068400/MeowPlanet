@@ -1,15 +1,34 @@
 ﻿
 
-<div class="cat-region-select">
+<div class="cat-region-select" id="cat-region-select">
+@*    <div class="cat-select"></div>
     <div class="cat-select"></div>
-    <div class="cat-select"></div>
-    <div class="cat-select"></div>
+    <div class="cat-select"></div>*@
 </div>
 
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+
 <script>
+    
+
 
     $(function(){
+        $.get("Member/GetCatInfo", function(data) {
 
+            var cat = `
+                <div class="cat-select d-flex align-items-center justify-content-center">
+                
+                <img src="${data[0].img01}" style="width:100px;height:100px;" >
+
+                </div>
+            `;
+
+            $('#cat-region-select').append(cat)
+
+
+            console.log(data[0].img01);
+        })
     })
 
 </script>

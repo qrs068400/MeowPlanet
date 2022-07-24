@@ -35,6 +35,7 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        // 建立貓咪資料
         [HttpPost]
         public async Task<IActionResult> AddCat(Cat cat, IFormFile file1 , IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
         {
@@ -104,6 +105,17 @@ namespace MeowPlanet.Controllers
             _context.Cats.Add(cat);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        // 取得貓咪資料
+        [HttpGet]
+        public ActionResult GetCatInfo()
+        {
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+
+            var CatInfo = _context.Cats.Where(x => x.MemberId == LoginId);
+
+            return Json(CatInfo);
         }
     }
 }
