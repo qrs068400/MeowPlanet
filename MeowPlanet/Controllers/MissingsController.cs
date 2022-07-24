@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MeowPlanet.ViewModels.Missings;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace MeowPlanet.Models
 {
@@ -98,5 +98,7 @@ namespace MeowPlanet.Models
         {
             return PartialView("_MissingPublishPartial");
         }
+
+
     }
 }
