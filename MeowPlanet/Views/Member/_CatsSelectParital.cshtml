@@ -9,7 +9,7 @@
 </div>
 
 <div class="cat-region-detail" id="cat-region-detail">
-
+    <btn></btn>
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -76,17 +76,31 @@
         $('#cat-region-select').css('display','none')
 
         let cat = `
-            <a>
-            <div class="cat-select d-flex align-items-center px-4" style="cursor:pointer;" onclick="showcatdetail()">
+
+            <div class="cat-detail p-4">
+                <div class="text-center">
+                    <img src="${catInfo[i].img01}" style="width:180px;height:140px;border-radius:30px;" >
+                </div>
                 
-            <img src="${catInfo[i].img01}" style="width:150px;height:110px;border-radius:30px;" >
+                <div class="my-3">
+                    <p>名稱</p>
+                    <input type="text" value="${catInfo[i].name}"/>
+                </div>
+                <div class="my-3">
+                    <p>性別</p>
+                    <input type="text" value="${catInfo[i].sex}"/>
+                </div>
+                <div class="my-3">
+                    <p>年齡</p>
+                    <input type="text" value="${catInfo[i].age}"/>
+                </div>
+                <div class="my-3">
+                    <p>介紹</p>
+                    <textarea type="text">${catInfo[i].introduce}</textarea>
+                </div>
 
-            <div class="d-flex align-items-center justify-content-center" style="width:219px;height:110px;">
-                <p  style="font-size:30px">${catInfo[i].name}</p>
             </div>
 
-            </div>
-            </a>
         `;
 
         $('#cat-region-detail').css('display','block').append(cat)
