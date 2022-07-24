@@ -70,3 +70,33 @@ body {
 .memberlogin btn{
     color:white;
 }
+
+:root {
+    --project-bg-color: #171B20;
+    --project-primary-color: #B99668;
+    --project-primary-color-buzz: rgba(185, 150, 104, 0.5);
+    --project-pink-color: #FF8EFF;
+    --project-pink-color-buzz: rgba(255, 142, 255, 0.5);
+    --project-gray-color: #4B5461;
+    --project-gray-color-buzz: rgba(75, 84, 97, 0.5);
+    --project-green-color: #2A483A;
+    --project-green-color-buzz: rgba(42, 72, 58, 0.5);
+    --project-txt-color: #ffffff;
+    --project-txt-color-buzz: rgba(255, 255, 255, 0.5);
+}
+
+::-webkit-scrollbar {
+    width: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--project-primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}

@@ -1,9 +1,15 @@
-﻿
+﻿<style>
+    #cat-region-detail{
+        display:none;
+    }
+</style>
 
 <div class="cat-region-select" id="cat-region-select">
-@*    <div class="cat-select"></div>
-    <div class="cat-select"></div>
-    <div class="cat-select"></div>*@
+
+</div>
+
+<div class="cat-region-detail" id="cat-region-detail">
+
 </div>
 
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
@@ -11,24 +17,79 @@
 
 <script>
     
-
+    var catInfo = [];
 
     $(function(){
         $.get("Member/GetCatInfo", function(data) {
 
-            var cat = `
-                <div class="cat-select d-flex align-items-center justify-content-center">
+            var catall = "";
+
+            catInfo = data;
+
+            for (let i = 0; i < data.length; i++){
+
+                let cat = `
+                    <a>
+                    <div class="cat-select d-flex align-items-center px-4" style="cursor:pointer;" onclick="showcatdetail(${i})" id="cat${i}">
                 
-                <img src="${data[0].img01}" style="width:100px;height:100px;" >
+                    <img src="${data[i].img01}" style="width:150px;height:110px;border-radius:30px;" >
 
-                </div>
-            `;
+                    <div class="d-flex align-items-center justify-content-center" style="width:219px;height:110px;">
+                        <p  style="font-size:30px">${data[i].name}</p>
+                    </div>
 
-            $('#cat-region-select').append(cat)
+                    </div>
+                    </a>
+                `;
+
+                catall += cat;
+            }
+
+            $('#cat-region-select').append(catall)
 
 
-            console.log(data[0].img01);
+            function showcatdetail(){
+                $('#cat-region-select').css('display','none')
+
+                let cat = `
+                    <a>
+                    <div class="cat-select d-flex align-items-center px-4" style="cursor:pointer;" onclick="showcatdetail()">
+                
+                    <img src="${data[1].img01}" style="width:150px;height:110px;border-radius:30px;" >
+
+                    <div class="d-flex align-items-center justify-content-center" style="width:219px;height:110px;">
+                        <p  style="font-size:30px">${data[1].name}</p>
+                    </div>
+
+                    </div>
+                    </a>
+                `;
+
+                $('#cat-region-detail').css('display','block').append(cat)
+            }
+
         })
+
     })
+
+    function showcatdetail(i){
+        $('#cat-region-select').css('display','none')
+
+        let cat = `
+            <a>
+            <div class="cat-select d-flex align-items-center px-4" style="cursor:pointer;" onclick="showcatdetail()">
+                
+            <img src="${catInfo[i].img01}" style="width:150px;height:110px;border-radius:30px;" >
+
+            <div class="d-flex align-items-center justify-content-center" style="width:219px;height:110px;">
+                <p  style="font-size:30px">${catInfo[i].name}</p>
+            </div>
+
+            </div>
+            </a>
+        `;
+
+        $('#cat-region-detail').css('display','block').append(cat)
+    }
 
 </script>
