@@ -91,11 +91,6 @@ body {
     padding-top:50px;
 }
 
-.cat-region {
-    background-color: #A9ADB1;
-    height:90%;
-    border-radius:25px;
-}
 
 .mem-btn {
     width: 120px;
@@ -107,3 +102,43 @@ body {
     font-size: 20px;
     color: white;
 }
+
+.cat-region {
+    background-color: #A9ADB1;
+    height: 90%;
+    border-radius: 25px;
+    padding: 30px;
+}
+
+.cat-region-title{
+    margin-left:30px;
+}
+
+.cat-region-title p {
+    font-size: 24px;
+}
+
+.cat-region-title .btn {
+    font-size: 18px;
+    color: white;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    border-radius: 30px;
+    width: 120px;
+    height: 41.5px;
+    margin-left: auto;
+}
+
+.cat-region-title .btn:hover{
+    color:black;
+    background:white;
+}
+
+.cat-select {
+    border-radius: 30px;
+    margin-top: 15px;
+    width: 100%;
+    height: 140px;
+    background-color: #CCCCCC;
+}
+
