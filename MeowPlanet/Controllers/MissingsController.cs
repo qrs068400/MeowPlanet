@@ -14,12 +14,10 @@ namespace MeowPlanet.Models
     public class MissingsController : Controller
     {
         private readonly endtermContext _context;
-        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MissingsController(endtermContext context, IWebHostEnvironment webHostEnvironment)
+        public MissingsController(endtermContext context)
         {
             _context = context;
-            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Missings
@@ -84,7 +82,7 @@ namespace MeowPlanet.Models
             return PartialView("_MissingPublishPartial");
         }
 
-        public string PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId)
+        public string PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId, [FromServices] IWebHostEnvironment _webHostEnvironment)
         {
             var clue = new Clue
             {
@@ -97,7 +95,7 @@ namespace MeowPlanet.Models
             };
 
             Random random = new Random();
-            string? uniqueFileName = null;
+            string? uniqueFileName;
 
             if (Image != null)
             {
