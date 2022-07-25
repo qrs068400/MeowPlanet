@@ -15,6 +15,8 @@
         public DateTime? DateOver { get; set; }
         public int Status { get; set; }
         public int Owner { get; set; }
+        public string Phone { get; set; } = null!;
+
 
 
     }

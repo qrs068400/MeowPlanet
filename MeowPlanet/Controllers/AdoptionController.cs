@@ -146,18 +146,14 @@ namespace MeowPlanet.Controllers
                         CatCity = catList[i].City,
                     };
                     catDtoList.Add(catDto);
-
                 }
             }
             return catDtoList;
-
         }
 
         public ActionResult LikeTolist()
-        {
-            //var adoptlike = _context.Adopts.Where(x => x.MemberId == 1).OrderBy(x => x.DateStart).ToList();
-            //var adoptlike = _context.Adopts.Include(x => x.Cat).Include(x=>x.Member).Include(x=>x.Cat.BreedId)
-
+        {     
+            //申請領養列表
             var likeadopts = _context.Adopts
              .Where(x => x.MemberId == 1)
              .Include(x => x.Cat)
@@ -173,11 +169,33 @@ namespace MeowPlanet.Controllers
                  DateOver = x.DateOver,
                  Status = x.Status,
                  Owner = x.owner,
-             })
-             .ToList();
+             }).ToList();
 
+            //送養列表
+            var owner = _context.Adopts.Where(x => x.owner == 1).ToList();
+            var owners = new List<ViewModels.LikeAdopts>();
 
-            return View(likeadopts);
+            for (int i = 0; i <= owner.Count(); i++)
+            {
+                var ownerlist = _context.Adopts
+                 .Where(x => x.owner == 1)
+                 .Include(x => x.Member)
+                 .Select(x => new ViewModels.LikeAdopts()
+                 {
+                     CatId=x.CatId,
+                     CatName = x.Cat.Name,
+                     CatSex = x.Cat.Sex,
+                     CatAge = x.Cat.Age,
+                     BreedName = x.Cat.Breed.Name,
+                     CatImg1 = x.Cat.Img01,
+                     DateStart = x.DateStart,
+                     DateOver = x.DateOver,
+                     Status = x.Status,
+                     Phone = x.Member.Phone,
+                 }).ToList();
+                   ViewBag.owner = ownerlist;
+            }
+              return View(likeadopts);
         }
     }
 }
