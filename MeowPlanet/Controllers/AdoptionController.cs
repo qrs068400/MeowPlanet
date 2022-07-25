@@ -8,6 +8,8 @@ using MeowPlanet.ViewModels.Adopts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
 
 namespace MeowPlanet.Controllers
 {
@@ -18,7 +20,9 @@ namespace MeowPlanet.Controllers
 
         public AdoptionController(endtermContext context)
         {
+
             _context = context;
+
         }
 
         public ActionResult Index()
@@ -65,8 +69,8 @@ namespace MeowPlanet.Controllers
             //主人ID
             var owner = _context.Cats
             .Where(x => x.CatId == adopt.CatId).Select(x => x.MemberId).FirstOrDefault();
-
-            var memberid = 1;
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            var memberid = LoginId;
             adopt.MemberId = memberid;
             adopt.CatId = catid;
             adopt.DateStart = DateTime.Today;
@@ -96,7 +100,8 @@ namespace MeowPlanet.Controllers
 
         public List<CatsDto> GetCatsDto(string? city, int breedId, bool? catSex)
         {
-            var memberid = 1;
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            var memberid = LoginId;
             var catBreeds = _context.CatBreeds.ToList();
             //頁面上呈現品種
             ViewBag.CatBreeds = catBreeds;
@@ -152,10 +157,12 @@ namespace MeowPlanet.Controllers
         }
 
         public ActionResult LikeTolist()
-        {     
+        {
             //申請領養列表
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            var memberid = LoginId;
             var likeadopts = _context.Adopts
-             .Where(x => x.MemberId == 1)
+             .Where(x => x.MemberId == memberid)
              .Include(x => x.Cat)
              .Include(x => x.Cat.Breed)
              .Select(x => new ViewModels.LikeAdopts()
@@ -172,13 +179,13 @@ namespace MeowPlanet.Controllers
              }).ToList();
 
             //送養列表
-            var owner = _context.Adopts.Where(x => x.owner == 1).ToList();
+            var owner = _context.Adopts.Where(x => x.owner == memberid).ToList();
             var owners = new List<ViewModels.LikeAdopts>();
 
             for (int i = 0; i <= owner.Count(); i++)
             {
                 var ownerlist = _context.Adopts
-                 .Where(x => x.owner == 1)
+                 .Where(x => x.owner == memberid)
                  .Include(x => x.Member)
                  .Select(x => new ViewModels.LikeAdopts()
                  {
@@ -197,5 +204,22 @@ namespace MeowPlanet.Controllers
             }
               return View(likeadopts);
         }
+
+        [HttpPost]
+        public  JsonResult OwnerNo(int catid)
+        {
+     
+            var ownerno = new Adopt();
+            var owner = _context.Adopts.Where(x => x.CatId == catid).FirstOrDefault();
+        
+            owner.DateOver= DateTime.Today;
+            owner.Status = 1;
+
+            _context.Entry(owner).State= EntityState.Modified;
+            _context.SaveChanges();
+            return null;
+        }
+
+
     }
 }
