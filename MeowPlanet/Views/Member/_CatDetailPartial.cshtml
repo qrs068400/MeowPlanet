@@ -1,0 +1,26 @@
+﻿@model MeowPlanet.ViewModels.MemberInfo.CatDetailViewModel
+
+@{
+    string sex = Model.Sex == true ? "男生" : "女生";
+}
+
+    <div class="text-center">
+        <img src="@Model.Img01" style="width:180px;height:140px;border-radius:30px;" >
+    </div>
+                
+    <div class="my-3">
+        <p>名稱</p>
+        <input type="text" value="@Model.Name"/>
+    </div>
+    <div class="my-3">
+        <p>性別</p>
+        <input type="text" value="@sex"/>
+    </div>
+    <div class="my-3">
+        <p>年齡</p>
+        <input type="text" value="@Model.Age"/>
+    </div>
+    <div class="my-3">
+        <p>介紹</p>
+        <textarea type="text">@Model.Introduce</textarea>
+    </div>
