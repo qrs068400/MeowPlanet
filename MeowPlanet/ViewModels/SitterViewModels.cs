@@ -7,8 +7,10 @@ namespace MeowPlanet.ViewModels
         public SitterFeature? sitterfeature { get; set; }
         public Orderlist? orderlist{ get; set; }
 
-        public List<SitterFeature> sitterfeatureList { get; set; }
+        public string? memberPhoto { get; set; }
 
-        public List<Orderlist> OrderCommentList { get; set; }
+        public List<SitterFeature>? sitterfeatureList { get; set; }
+
+        public List<Orderlist>? OrderCommentList { get; set; }
     }
 }
