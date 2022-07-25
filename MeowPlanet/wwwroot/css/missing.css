@@ -87,7 +87,9 @@ a[href^="http://maps.google.com/maps"] {
 a[href^="https://maps.google.com/maps"] {
     display: none !important
 }
-
+.gm-style{
+    font: inherit;
+}
 .gmnoprint a,
 .gmnoprint span,
 .gm-style-cc {

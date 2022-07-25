@@ -188,7 +188,7 @@ function settingMode(windowContent, offset) {
 
 
 
-
+let missingId;
 let showingWindow;
 
 //把所有走失貓咪抓進catList
@@ -221,6 +221,7 @@ $(function () {
                     $('#detailModal').modal('show');
                 })
 
+                missingId = cat.missingId;
             })
 
             //綁定此marker hover事件
@@ -241,7 +242,6 @@ $(function () {
             })
 
             cat.marker = marker;
-            cat.missingId = cat.missingId;
             catList.push(cat);
         })
     })
@@ -313,6 +313,7 @@ function removeWindow(clickedWindow) {
 function itemClicked(item) {
 
     let id = $(item).data('id');
+    missingId = id;
     let clickedCat = catList.filter(x => x.missingId == id)[0];
 
     map.setZoom(16);
@@ -362,24 +363,96 @@ function confirmPos() {
     })
 }
 
+$(document).on({
+    'click': () => $('#imgInput').trigger("click"),
+    'dragover': (event) => event.preventDefault(),
+    'drop': (event) => {
+
+        event.preventDefault();
+
+        let file = event.originalEvent.dataTransfer.files[0];
+        let reader = new FileReader()
+
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            $('#imgPreview').attr('src', e.target.result)
+        }
+
+        let dt = new DataTransfer();
+        dt.items.add(file);
+        $('#imgInput')[0].files = dt.files
+    }
+}, '#imgPreview')
+
+$(document).on('change', '#imgInput', function () {
+
+    let reader = new FileReader();
+    reader.onload = function (e) {
+        $('#imgPreview').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL($('#imgInput')[0].files[0])
+})
+
 
 //提供線索
-$(document).on('click', '#provideClues', () => {
+$(document).on('click', '#provideClues', () => {    
 
     let windowContent =
-        '<form>' +
-            '<span class="h5 my-3">請輸入線索詳細資訊</span>' +
-            '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-            '<button class="btn btn-primary" onclick="">發布</button>' +
-            '<button onclick="removeMarker();" class="btn btn-danger">取消</button>' +
+        '<form id="clueForm" enctype="multipart/form-data" style="width: 300px; height: 400px">' +
+            '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
+            '<div class="form-group mt-3 text-center" style="height: 35%">' +
+                '<image id="imgPreview" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
+                '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
             '</div>' +
+            '<div class="form-group mt-3">' +
+                '<label for="witness-time">目擊時間 :</label>' +
+                '<input type="text" id="witness-time" class="form-control" name="WitnessTime" />' +
+            '</div>' +
+            '<div class="form-group mt-3">' +
+                '<label for="witness-time">其他描述 :</label>' +
+                '<input type="text" id="witness-time" class="form-control" name="Description" />' +
+            '</div>' +
+            '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+                '<button type="submit" class="btn btn-primary">發布</button>' +
+                '<button onclick="removeMarker();" class="btn btn-danger">取消</button>' +
+            '</div>' +
+            '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
+            `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
         '</form>';
 
     $('#detailModal').modal('hide');
 
     settingMode(windowContent, true);
+
     $('#cancel-publish').one('click', () => {
         $('#detailModal').modal('show');
     })
+
+})
+
+//提供線索表單
+$(document).on('submit', '#clueForm', function (e) {
+
+    $('#WitnessLat').val(newMarker.getPosition().lat())
+    $('#WitnessLng').val(newMarker.getPosition().lng())
+
+    let formData = new FormData($('#clueForm')[0])
+
+    $.ajax({
+
+        url: '/Missings/PostClue',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+            if (data == "OK") {
+                $('#cancel-publish').trigger('click');
+            }
+        }
+    })
+
+    e.preventDefault();
 
 })
