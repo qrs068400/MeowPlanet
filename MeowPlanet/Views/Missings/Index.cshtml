@@ -38,6 +38,10 @@
 </div>
 
 @section Scripts{
+
+    <script>
+        $('.nav-item a').eq(1).addClass('nav-item-active');
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
@@ -48,7 +52,7 @@
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
     </script>
-    
+
 
 
 }

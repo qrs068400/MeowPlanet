@@ -38,7 +38,8 @@ function initMap() {
         maxZoom: 17,
         disableDefaultUI: true,
         mapId: 'a5f4cec6781c8dda',
-        gestureHandling: 'greedy'
+        gestureHandling: 'greedy',
+        clickableIcons: false
     });
 
     //currentPos();
