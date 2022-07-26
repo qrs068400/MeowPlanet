@@ -7,7 +7,8 @@
     string Missing = Model.IsMissing == true ? "走失中" : "無走失";
 }
 <div class="row">
-    <div class="col-6">
+    <div class="col-1"></div>
+    <div class="col-4">
         <div class="my-3">
             <p>名稱</p>
             <input type="text" value="@Model.Name" />
@@ -18,11 +19,15 @@
         </div>
         <div class="my-3">
             <p>性別</p>
-            <input type="text" value="@sex" />
+            @*<input type="text" value="@sex" />*@
+            <div class="d-flex justify-content-between">
+                <button type="button" class="btn btn-light mem-btn" value="true" id="sex1">喵弟弟</button>
+                <button type="button" class="btn btn-light mem-btn" value="False" id="sex1">喵妹妹</button>
+            </div>
         </div>
         <div class="my-3">
             <p>年齡</p>
-            <input type="text" value="@Model.Age" />
+            <input type="text" value="@Model.Age 歲" />
         </div>
         <div class="my-3">
             <p>所在地</p>
@@ -45,26 +50,230 @@
             <input type="text" value="@Missing" />
         </div>
     </div>
+    <div class="col-1"></div>
     <div class="col-6">
-        <div class="text-center">
-            @*            <img src="@Model.Img01" style="width:230px;height:190px;border-radius:30px;margin:10px;">
-            <img src="@Model.Img02" style="width:150px;height:110px;border-radius:30px;margin:10px;">
-            <img src="@Model.Img03" style="width:150px;height:110px;border-radius:30px;margin:10px;">
-            <img src="@Model.Img04" style="width:150px;height:110px;border-radius:30px;margin:10px">
-            <img src="@Model.Img05" style="width:150px;height:110px;border-radius:30px;margin:10px;">*@
 
 
-
-            <div class="my-5 d-flex justify-content-center">
-                <button class="btn mem-btn d-flex align-items-center justify-content-center">修改資料</button>
-            </div>
-            <div class="my-5 d-flex justify-content-center">
-                <button class="btn mem-btn d-flex align-items-center justify-content-center">返回列表</button>
-            </div>
+        <div class="text-center" style="margin:16px;">
+            <img src="@Model.Img01" style="width:250px;height:180px;border-radius:30px;" id="imgPreview1">
+            <input id="imgInput1" type="file" class="d-none" />
         </div>
+
+
+        <div class="d-flex justify-content-center" style="margin:10px;">
+
+            <div>
+                <img src="@Model.Img02" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview2">
+                <input id="imgInput2" type="file" class="d-none" />
+            </div>
+            <div>
+                <img src="@Model.Img03" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview3">
+                <input id="imgInput3" type="file" class="d-none" />
+            </div>
+
+        </div>
+
+        <div class="d-flex justify-content-center" style="margin:10px;">
+
+            <div>
+                <img src="@Model.Img04" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview4">
+                <input id="imgInput4" type="file" class="d-none" />
+            </div>
+            <div>
+                <img src="@Model.Img05" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview5">
+                <input id="imgInput5" type="file" class="d-none" />
+            </div>
+
+        </div>
+
+        <div class="text-center">
+            <p style="font-size:25px; margin:20px;">可點擊或拖曳更換照片</p>
+        </div>
+
+        <div class="my-5 d-flex justify-content-center">
+            <button class="btn cat-detail-btn d-flex align-items-center justify-content-center">修改資料</button>
+        </div>
+        <div class="my-5 d-flex justify-content-center">
+            <button class="btn cat-detail-btn d-flex align-items-center justify-content-center">返回列表</button>
+        </div>
+
 
 
     </div>
 </div>
 
+<script>
 
+    $(function() {
+        //性別btn顯示
+        if (@Model.Sex == true) {
+            $('#sex1').attr("checked");
+        }else{
+
+        }
+    })
+
+
+
+
+    //img01
+    $(document).on({
+        'click': () => $('#imgInput1').trigger("click"),
+        'dragover': (event) => event.preventDefault(),
+        'drop': (event) => {
+
+            event.preventDefault();
+
+            let file = event.originalEvent.dataTransfer.files[0];
+            let reader = new FileReader()
+
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                $('#imgPreview1').attr('src', e.target.result)
+            }
+
+            let dt = new DataTransfer();
+            dt.items.add(file);
+            $('#imgInput1')[0].files = dt.files
+        }
+    }, '#imgPreview1')
+
+    $(document).on('change', '#imgInput1', function() {
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imgPreview1').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL($('#imgInput1')[0].files[0])
+    })
+
+    //img02
+    $(document).on({
+        'click': () => $('#imgInput2').trigger("click"),
+        'dragover': (event) => event.preventDefault(),
+        'drop': (event) => {
+
+            event.preventDefault();
+
+            let file = event.originalEvent.dataTransfer.files[0];
+            let reader = new FileReader()
+
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                $('#imgPreview2').attr('src', e.target.result)
+            }
+
+            let dt = new DataTransfer();
+            dt.items.add(file);
+            $('#imgInput2')[0].files = dt.files
+        }
+    }, '#imgPreview2')
+
+    $(document).on('change', '#imgInput2', function() {
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imgPreview2').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL($('#imgInput2')[0].files[0])
+    })
+
+    //img03
+    $(document).on({
+        'click': () => $('#imgInput3').trigger("click"),
+        'dragover': (event) => event.preventDefault(),
+        'drop': (event) => {
+
+            event.preventDefault();
+
+            let file = event.originalEvent.dataTransfer.files[0];
+            let reader = new FileReader()
+
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                $('#imgPreview3').attr('src', e.target.result)
+            }
+
+            let dt = new DataTransfer();
+            dt.items.add(file);
+            $('#imgInput3')[0].files = dt.files
+        }
+    }, '#imgPreview3')
+
+    $(document).on('change', '#imgInput3', function() {
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imgPreview3').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL($('#imgInput3')[0].files[0])
+    })
+
+    //img04
+    $(document).on({
+        'click': () => $('#imgInput4').trigger("click"),
+        'dragover': (event) => event.preventDefault(),
+        'drop': (event) => {
+
+            event.preventDefault();
+
+            let file = event.originalEvent.dataTransfer.files[0];
+            let reader = new FileReader()
+
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                $('#imgPreview4').attr('src', e.target.result)
+            }
+
+            let dt = new DataTransfer();
+            dt.items.add(file);
+            $('#imgInput4')[0].files = dt.files
+        }
+    }, '#imgPreview4')
+
+    $(document).on('change', '#imgInput4', function() {
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imgPreview4').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL($('#imgInput4')[0].files[0])
+    })
+
+    //img05
+    $(document).on({
+        'click': () => $('#imgInput5').trigger("click"),
+        'dragover': (event) => event.preventDefault(),
+        'drop': (event) => {
+
+            event.preventDefault();
+
+            let file = event.originalEvent.dataTransfer.files[0];
+            let reader = new FileReader()
+
+            reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                $('#imgPreview5').attr('src', e.target.result)
+            }
+
+            let dt = new DataTransfer();
+            dt.items.add(file);
+            $('#imgInput5')[0].files = dt.files
+        }
+    }, '#imgPreview5')
+
+    $(document).on('change', '#imgInput5', function() {
+
+        let reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imgPreview5').attr('src', e.target.result);
+        }
+
+        reader.readAsDataURL($('#imgInput5')[0].files[0])
+    })
+
+</script>

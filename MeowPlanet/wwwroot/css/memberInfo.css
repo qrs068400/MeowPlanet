@@ -75,7 +75,6 @@ body {
     background: #4B5461;
     height: 700px;
     border-radius: 30px;
-    padding-top:60px;
 }
 
 .title {
@@ -118,6 +117,9 @@ body {
     border-radius: 30px;
     font-size: 20px;
     color: white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .cat-region {
@@ -186,4 +188,15 @@ textarea {
     font-size: 25px;
     width: 100%;
     padding: 0 1rem;
+}
+
+.cat-detail-btn {
+    width: 240px;
+    height: 83px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 41.5px;
+    font-size: 40px;
+    color: white;
 }

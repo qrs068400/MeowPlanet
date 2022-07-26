@@ -42,8 +42,8 @@
 
 
                 </div>
-                <div class="col-9 memberright ms-3 row d-flex justify-content-center">
-                    <div class="col-5 member-region">
+                <div class="col-9 memberright mx-3 row d-flex justify-content-center">
+                    <div class="col-5 member-region my-3">
                         <div class="title"><p>會員資料</p></div>
                         <div class="my-4">
                             <p>Email</p>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="my-4">
                             <p>密碼</p>
-                            <input type="password" value="" />
+                            <input type="password" value="@Model.Password" />
                         </div>
                         <div class="my-4">
                             <p>姓名</p>
@@ -68,7 +68,7 @@
 
                     </div>
 
-                    <div class="col-6 cat-region" id="cat-region">
+                    <div class="col-6 cat-region my-3" id="cat-region">
                         <div class="cat-region-title d-flex">
                             <p>喵星人</p>
                             <a class="btn" asp-controller="Member" asp-action="CreateCat">+建立</a>
