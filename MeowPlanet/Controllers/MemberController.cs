@@ -247,5 +247,19 @@ namespace MeowPlanet.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
+        // 修改會員資料
+        [HttpPost]
+        public async Task<IActionResult> UpdateMember(Member member)
+        {
+            var oldMember = _context.Members.FirstOrDefault(p => p.MemberId == member.MemberId);
+
+            oldMember.Password = member.Password;
+            oldMember.Name = member.Name;
+            oldMember.Phone = member.Phone;
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
