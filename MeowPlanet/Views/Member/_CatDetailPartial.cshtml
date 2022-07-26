@@ -107,9 +107,9 @@
     $(function() {
         //性別btn顯示
         if (@Model.Sex == true) {
-            $('#sex1').attr("checked");
+            $('#sex1').prop('checked', true)
         }else{
-
+            $('#sex2').prop('checked', true)
         }
     })
 
