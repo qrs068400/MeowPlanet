@@ -4,6 +4,7 @@ using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using MeowPlanet.ViewModels.MemberInfo;
 
 
 namespace MeowPlanet.Controllers
@@ -35,6 +36,7 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        // 建立貓咪資料
         [HttpPost]
         public async Task<IActionResult> AddCat(Cat cat, IFormFile file1 , IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
         {
@@ -104,6 +106,58 @@ namespace MeowPlanet.Controllers
             _context.Cats.Add(cat);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        // 取得選擇貓咪資料
+        [HttpGet]
+        public ActionResult GetCatInfo()
+        {
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+
+            var CatInfo = _context.Cats.Where(x => x.MemberId == LoginId).Join(_context.CatBreeds,
+                c => c.BreedId,
+                s => s.BreedId,
+                (c, s) => new CatSelectViewModel
+                {
+                    CatId = c.CatId,
+                    Breed = s.Name,
+                    Name = c.Name,
+                    Sex = c.Sex,
+                    Img01 = c.Img01
+
+                }).ToList();                           
+
+            return PartialView("_CatSelectPartial", CatInfo);
+        }
+
+        // 取得貓咪詳細資料
+        [HttpGet]
+        public ActionResult GetCatDetail(int CatId)
+        {
+
+            var CatDetail = _context.Cats.Where(x => x.CatId == CatId).Join(_context.CatBreeds,
+                c => c.BreedId,
+                s => s.BreedId,
+                (c, s) => new CatDetailViewModel
+                {
+                    Name = c.Name,
+                    Breed = s.Name,
+                    Sex = c.Sex,
+                    Age = c.Age,
+                    Introduce = c.Introduce,
+                    Img01 = c.Img01,
+                    Img02 = c.Img02,
+                    Img03 = c.Img03,
+                    Img04 = c.Img04,
+                    Img05 = c.Img05,
+                    City = c.City,
+                    IsAdoptable = c.IsAdoptable,
+                    IsMissing = c.IsMissing,
+                    IsSitting = c.IsSitting
+
+                }).FirstOrDefault();
+
+            return PartialView("_CatDetailPartial", CatDetail);
         }
     }
 }

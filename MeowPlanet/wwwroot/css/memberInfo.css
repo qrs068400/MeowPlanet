@@ -12,6 +12,22 @@ body {
     height: 100%;
 }
 
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--project-primary-color);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
 #member {
     height: 100%;
 }
@@ -43,6 +59,7 @@ body {
 .memberleft a {
     text-decoration: none;
     color: white;
+    font-size: 25px;
 }
 
     .memberleft a:hover {
@@ -88,7 +105,7 @@ body {
 .member-region {
     padding-left: 50px;
     padding-right: 50px;
-    padding-top:50px;
+    padding-top:30px;
 }
 
 
@@ -105,9 +122,10 @@ body {
 
 .cat-region {
     background-color: #A9ADB1;
-    height: 90%;
+    height: 95%;
     border-radius: 25px;
     padding: 30px;
+    /*transition: 0.5s all ease;*/
 }
 
 .cat-region-title{
@@ -142,3 +160,30 @@ body {
     background-color: #CCCCCC;
 }
 
+.cat-region-select {
+    margin-top: 15px;
+    height: 480px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.cat-detail {
+    border-radius: 30px;
+    margin-top: 15px;
+    width: 100%;
+    height: 480px;
+    background-color: #CCCCCC;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+textarea {
+    color: white;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 25px;
+    font-size: 25px;
+    width: 100%;
+    padding: 0 1rem;
+}
