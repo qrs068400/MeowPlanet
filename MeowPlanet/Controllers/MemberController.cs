@@ -238,11 +238,30 @@ namespace MeowPlanet.Controllers
             oldCat.IsAdoptable = cat.IsAdoptable;
             oldCat.IsSitting = cat.IsSitting;
             oldCat.IsMissing = cat.IsMissing;
-            oldCat.Img01 = cat.Img01;
-            oldCat.Img02 = cat.Img02;
-            oldCat.Img03 = cat.Img03;
-            oldCat.Img04 = cat.Img04;
-            oldCat.Img05 = cat.Img05;
+            if(cat.Img01 != null)
+            {
+                oldCat.Img01 = cat.Img01;
+            }
+            if(cat.Img02 != null)
+            {
+                oldCat.Img02 = cat.Img02;
+            }
+            if (cat.Img03 != null)
+            {
+                oldCat.Img03 = cat.Img03;
+            }
+            if (cat.Img04 != null)
+            {
+                oldCat.Img04 = cat.Img04;
+            }
+            if (cat.Img05 != null)
+            {
+                oldCat.Img05 = cat.Img05;
+            }
+            
+            
+            
+            
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
