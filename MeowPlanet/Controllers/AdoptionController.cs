@@ -180,6 +180,7 @@ namespace MeowPlanet.Controllers
              .Select(x => new ViewModels.LikeAdopts()
              {
                  CatName = x.Cat.Name,
+                 MemberId=x.MemberId,
                  CatSex = x.Cat.Sex,
                  CatAge = x.Cat.Age,
                  BreedName = x.Cat.Breed.Name,
@@ -201,7 +202,8 @@ namespace MeowPlanet.Controllers
                  .Include(x => x.Member)
                  .Select(x => new ViewModels.LikeAdopts()
                  {
-                     CatId=x.CatId,
+                     MemberId = x.MemberId,
+                     CatId = x.CatId,
                      CatName = x.Cat.Name,
                      CatSex = x.Cat.Sex,
                      CatAge = x.Cat.Age,
@@ -218,11 +220,11 @@ namespace MeowPlanet.Controllers
         }
 
         [HttpPost]
-        public  JsonResult OwnerNo(int catid)
+        public  JsonResult OwnerNo(int catid , int memberid)
         {
      
             var ownerno = new Adopt();
-            var owner = _context.Adopts.Where(x => x.CatId == catid).FirstOrDefault();
+            var owner = _context.Adopts.Where(x => x.CatId == catid && x.MemberId == memberid).FirstOrDefault();
         
             owner.DateOver= DateTime.Today;
             owner.Status = 1;

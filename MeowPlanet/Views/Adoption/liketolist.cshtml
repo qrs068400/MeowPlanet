@@ -92,8 +92,8 @@
                             <td class="table-dark">
                             @if (@item.Status == 0)
                             {                               
-                                    <button id="@item.CatId" class="btn btn-outline-secondary no"><i class="fa-solid fa-xmark"></i></button>
-                                    <button id="@item.CatId" class="btn btn-outline-secondary yes"><i class="fa-solid fa-check"></i></button>
+                                    <button id="@item.CatId" class="btn btn-outline-secondary no" value="@item.MemberId"><i class="fa-solid fa-xmark"></i></button>
+                                    <button id="@item.CatId" class="btn btn-outline-secondary yes" value="@item.MemberId"><i class="fa-solid fa-check"></i></button>
                             }
                             </td>
 
@@ -119,6 +119,7 @@
 
     $(".no").click(function() {
         var catid = $(this).attr("id")
+        var memberid = $(this).val();
         Swal.fire({
             title: "確定要拒絕申請嗎？",
             text: "拒絕申請後不可取消，請慎重考慮！",
@@ -137,7 +138,7 @@
                     $.ajax({
                         method: 'post',
                         url: '/Adoption/OwnerNo',
-                        data: { catid: catid },
+                        data: { catid: catid ,memberid:memberid},
                         dataType: 'json',
                         success: function(data) { 
                             @* //刷新狀態
