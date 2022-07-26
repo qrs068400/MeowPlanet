@@ -451,7 +451,9 @@ $(document).on('submit', '#clueForm', function (e) {
         success: function (data) {
 
             if (data == "OK") {
-                
+
+                $('#cancel-publish').trigger('click');
+
                 Swal.fire({
                     heightAuto: false,
                     position: 'center',
@@ -459,8 +461,6 @@ $(document).on('submit', '#clueForm', function (e) {
                     title: '線索提交成功',
                     showConfirmButton: false,
                     timer: 2500
-                }).then(() => {
-                    $('#cancel-publish').trigger('click');
                 })
             }
         }
