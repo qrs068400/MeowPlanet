@@ -363,8 +363,9 @@ function confirmPos() {
     })
 }
 
+//preview綁定事件
 $(document).on({
-    'click': () => $('#imgInput').trigger("click"),
+    'click': () => $('#imgInput').trigger("click"), //點擊照片觸發input點擊事件
     'dragover': (event) => event.preventDefault(),
     'drop': (event) => {
 
@@ -384,7 +385,8 @@ $(document).on({
     }
 }, '#imgPreview')
 
-$(document).on('change', '#imgInput', function () {
+//上傳預覽功能
+$(document).on('change', '#imgInput', function () {  
 
     let reader = new FileReader();
     reader.onload = function (e) {
@@ -399,7 +401,7 @@ $(document).on('change', '#imgInput', function () {
 $(document).on('click', '#provideClues', () => {    
 
     let windowContent =
-        '<form id="clueForm" enctype="multipart/form-data" style="width: 300px; height: 430px">' +
+        '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
             '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
             '<div class="form-group mt-3 text-center" style="height: 40%">' +
                 '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
@@ -413,7 +415,7 @@ $(document).on('click', '#provideClues', () => {
                 '<label for="witness-time" class="h6">其他描述 :</label>' +
                 '<input type="text" id="witness-time" class="form-control rounded-pill" name="Description" />' +
             '</div>' +
-            '<div class="d-flex mt-3 mb-1" style="justify-content: space-evenly">' +
+            '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
                 '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check mx-1"></i> 發布</button>' +
                 '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark mx-1"></i> 取消</button>' +
             '</div>' +
@@ -447,8 +449,19 @@ $(document).on('submit', '#clueForm', function (e) {
         contentType: false,
         processData: false,
         success: function (data) {
+
             if (data == "OK") {
-                $('#cancel-publish').trigger('click');
+                
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    icon: 'success',
+                    title: '線索提交成功',
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then(() => {
+                    $('#cancel-publish').trigger('click');
+                })
             }
         }
     })
