@@ -19,10 +19,10 @@
         <div id="map"></div>
         <input id="search-input" type="search" class="form-control rounded-pill" placeholder="搜尋 Google 地圖">
         <button id="pre-publish" class="btn btn-dark rounded-pill" style="border-color: white; width:180px">
-            <span class="h5"><i class="fa-solid fa-location-dot"></i> 刊登協尋</span>
+            <span class="h5"><i class="fa-solid fa-location-dot mx-1"></i> 刊登協尋</span>
         </button>
         <button id="cancel-publish" class="btn btn-danger rounded-pill d-none" style="border-color: white; width:180px">
-            <span class="h5"><i class="fa-solid fa-circle-xmark"></i> 取消刊登</span>
+            <span class="h5"><i class="fa-solid fa-xmark mx-1"></i>  取消刊登</span>
         </button>
     </div>
 </div>
@@ -43,13 +43,7 @@
     }
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="~/lib/datepicker/i18n/datepicker.zh-TW.min.js"></script>
-    <script>
-        //$(function() {
-        //    $.get("@Url.Action("GetItems", "Missings")", function(data) {
-        //        $('#div-items').html(data);
-        //    })
-        //})
-    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/map.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
@@ -66,4 +60,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <style>
+        body{
+            height: 100vh !important;
+        }
+    </style>
 }

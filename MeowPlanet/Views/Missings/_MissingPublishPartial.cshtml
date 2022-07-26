@@ -1,6 +1,12 @@
 ﻿@model Missing
 
-<div class="modal-dialog modal-dialog-centered text-black">
+<style>
+    form label{
+        color: black;
+    }
+</style>
+
+<div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <form method="post" asp-action="AddMissing" asp-controller="Missings" autocomplete="off">
             <div class="modal-header">
@@ -10,7 +16,7 @@
             <div class="modal-body">
                 <div class="form-group">
                     <label for="cat-id">貓貓id :</label>
-                    <input type="text" id="cat-id" class="form-control" asp-for="CatId">
+                    <input type="text" id="cat-id" class="form-control" asp-for="CatId" />
                     <span asp-validation-for="CatId" class="text-danger"></span>
                 </div>
                 <div class="form-group">
