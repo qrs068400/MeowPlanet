@@ -151,7 +151,6 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .gm-style-iw div{
     color: white !important;
-    background-color: rgb(27, 39, 53) !important;
 }
 
 .gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece{

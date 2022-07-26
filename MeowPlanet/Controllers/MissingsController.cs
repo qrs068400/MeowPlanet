@@ -15,25 +15,25 @@ namespace MeowPlanet.Models
     public class MissingsController : Controller
     {
         private readonly endtermContext _context;
-        private int? _memberId;
+        private readonly int? _memberId;
 
-        public MissingsController(endtermContext context)
+        public MissingsController(endtermContext context, IHttpContextAccessor contextAccessor)
         {
             _context = context;
 
+            if (contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid) != null)
+            {
+                _memberId = Convert.ToInt32(contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid).Value);
+            }
+            
         }
 
-
-
-        // GET: Missings
         public async Task<IActionResult> Index()
         {
             List<ItemsViewModel> itemList;
 
-            if (User.FindFirst(ClaimTypes.Sid) != null)
+            if (_memberId != null)
             {
-                _memberId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
-
                 var memberId = new SqlParameter("memberId", _memberId);
                 itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(clue.clue_id) AS ClueCount, MAX(witness_time) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 and cat.member_id != @memberId GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name", memberId).ToListAsync();
             }
@@ -47,7 +47,7 @@ namespace MeowPlanet.Models
         }
 
 
-        [HttpPost]
+        [HttpPost] //未完成
         public async Task<IActionResult> AddMissing(Missing missingCat)
         {
             _context.Missings.Add(missingCat);
@@ -65,7 +65,8 @@ namespace MeowPlanet.Models
 
             if (_memberId != null)
             {
-                catList = await _context.Missings.Include(x => x.Cat).Where(x => x.Cat.MemberId != _memberId).ToListAsync();
+                catList = await _context.Missings.Include(x => x.Cat)
+                    .Where(x => x.Cat.MemberId != _memberId && x.IsFound == false).ToListAsync();
             }
             else
             {
@@ -104,7 +105,7 @@ namespace MeowPlanet.Models
             return PartialView("_MissingDetailPartial" ,result);
         }
 
-        public ActionResult GetPublish()
+        public ActionResult GetPublish()  //未完成
         {            
             return PartialView("_MissingPublishPartial");
         }
@@ -118,7 +119,7 @@ namespace MeowPlanet.Models
                 WitnessLng = WitnessLng,
                 WitnessTime = WitnessTime,
                 Description = Description,
-                MemberId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value)
+                MemberId = (int)_memberId
             };
 
             Random random = new Random();
