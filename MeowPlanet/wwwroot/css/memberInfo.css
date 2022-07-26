@@ -191,12 +191,17 @@ textarea {
 }
 
 .cat-detail-btn {
-    width: 240px;
-    height: 83px;
-    border: 2px rgb(219, 232, 248) solid;
+    color: white;
+    font-size: 30px;
+    border-radius: 20px;
+    height: 70px;
+    width: 200px;
+    padding: 1rem;
+    border: 2px rgb(115, 244, 222) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
-    border-radius: 41.5px;
-    font-size: 40px;
-    color: white;
+    margin-top:8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
