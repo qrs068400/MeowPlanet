@@ -131,11 +131,26 @@ input[type="search"]::-webkit-search-cancel-button {
     transform: translate(-20px, -20px);
 }
 
-/*infowindoweµƒ”“…œΩ«x*/
+/*infowindow*/
 .gm-ui-hover-effect {
     display: none !important;
 }
 
+.gm-style-iw {
+    color: white !important;
+    background-color: rgb(27, 39, 53) !important;
+    border: 2px solid white !important;
+    border-radius: 25px !important;
+}
+
+.gm-style-iw button{
+    width:35%;
+    font-size:1.05rem;
+}
+
+.gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece{
+    display: none;
+}
 
 .cat-item div {
     color: white;
@@ -190,3 +205,13 @@ input[type="search"]::-webkit-search-cancel-button {
         background-color: #212529;
         border-color: #1a1e21;
     }
+
+.img-upload {
+    border: 2px rgb(85, 152, 162) dashed;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.w-85{
+    width:85%
+}

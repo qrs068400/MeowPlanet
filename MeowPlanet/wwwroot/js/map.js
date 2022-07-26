@@ -399,23 +399,23 @@ $(document).on('change', '#imgInput', function () {
 $(document).on('click', '#provideClues', () => {    
 
     let windowContent =
-        '<form id="clueForm" enctype="multipart/form-data" style="width: 300px; height: 400px">' +
+        '<form id="clueForm" enctype="multipart/form-data" style="width: 300px; height: 430px">' +
             '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
-            '<div class="form-group mt-3 text-center" style="height: 35%">' +
-                '<image id="imgPreview" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
+            '<div class="form-group mt-3 text-center" style="height: 40%">' +
+                '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
                 '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
             '</div>' +
-            '<div class="form-group mt-3">' +
-                '<label for="witness-time">目擊時間 :</label>' +
-                '<input type="text" id="witness-time" class="form-control" name="WitnessTime" />' +
+            '<div class="form-group mt-3 m-auto w-85">' +
+                '<label for="witness-time" class="h6">目擊時間 :</label>' +
+                '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
             '</div>' +
-            '<div class="form-group mt-3">' +
-                '<label for="witness-time">其他描述 :</label>' +
-                '<input type="text" id="witness-time" class="form-control" name="Description" />' +
+            '<div class="form-group mt-3 m-auto w-85">' +
+                '<label for="witness-time" class="h6">其他描述 :</label>' +
+                '<input type="text" id="witness-time" class="form-control rounded-pill" name="Description" />' +
             '</div>' +
-            '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-                '<button type="submit" class="btn btn-primary">發布</button>' +
-                '<button onclick="removeMarker();" class="btn btn-danger">取消</button>' +
+            '<div class="d-flex mt-3 mb-1" style="justify-content: space-evenly">' +
+                '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check mx-1"></i> 發布</button>' +
+                '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark mx-1"></i> 取消</button>' +
             '</div>' +
             '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
             `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +

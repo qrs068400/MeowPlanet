@@ -1,6 +1,12 @@
 ﻿@model Missing
 
-<div class="modal-dialog modal-dialog-centered text-black">
+<style>
+    form label{
+        color: black;
+    }
+</style>
+
+<div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
         <form method="post" asp-action="AddMissing" asp-controller="Missings" autocomplete="off">
             <div class="modal-header">
