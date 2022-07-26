@@ -44,7 +44,7 @@
 
                 </div>
                 <div class="col-9 memberright ms-3 row d-flex justify-content-center">
-                    <vc:missings-manage member-id="@User.FindFirst(ClaimTypes.Sid).Value" status="0"></vc:missings-manage>
+                    <vc:missings-manage member-id="@Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value)" status="0"></vc:missings-manage>
                     <div class="col-5 member-region d-none">
                         <div class="title"><p>會員資料</p></div>
                         <div class="my-4">

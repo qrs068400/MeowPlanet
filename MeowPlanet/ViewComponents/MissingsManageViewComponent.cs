@@ -2,13 +2,19 @@
 using MeowPlanet.Models;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace MeowPlanet.ViewComponents
 {
     public class MissingsManageViewComponent : ViewComponent
     {
-        
-        public IViewComponentResult Invoke(int memberId, int status, [FromServices] endtermContext _context)
+        private readonly endtermContext _context;
+
+        public MissingsManageViewComponent(endtermContext context)
+        {
+            _context = context;
+        }
+        public IViewComponentResult Invoke(int memberId, int status)
         {
             var result = _context.Clues.Include(c => c.Missing)
                 .Include(c => c.Missing.Cat)
