@@ -274,20 +274,6 @@ body {
     border-radius: 40px;
 }
 
-.dropZone1 {
-    padding: 1rem;
-    border: 2px rgb(115, 244, 222) dashed;
-    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-    background: rgba(0, 0, 0, .3);
-    border-radius: 40px;
-    width: 400px;
-    height: 250px;
-    margin: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 .dropZone {
     padding: 1rem;
     border: 2px rgb(115, 244, 222) dashed;
@@ -300,6 +286,10 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.dropZone:hover {
+    background: rgba(0, 0, 0, .7);
 }
 
 .dropImg {
