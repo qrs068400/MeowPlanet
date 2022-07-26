@@ -34,10 +34,10 @@
 <div class="container" style="margin:auto;width:40%;color:antiquewhite">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">領養</button>
+            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">送養</button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">送養</button>
+            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">領養</button>
         </li>
     </ul>
     <div class="tab-content" id="myTabContent">
@@ -47,68 +47,58 @@
                     <tr>
                         <th scope="col"></th>
                         <th scope="col">貓貓</th>
-                        <th scope="col">品種</th>
-                        <th scope="col">年齡</th>
-                        <th scope="col">性別</th>
-                        
+                        <th scope="col">品種</th>                    
+                        <th scope="col">申請人手機</th>
                         <th scope="col">申請日期</th>
                         <th scope="col">狀態</th>
+                        <th scope="col"></th>
                     </tr>
                 </thead>
-                @foreach (var item in Model)
-                {
-                    <tr class="table-dark">
-                        <td class="table-dark">
-                            @if (@item.CatImg1 != null)
-                            {
-                                <img src="@Url.Content(@item.CatImg1)">
-                            }
-                            else
-                            {
-
-                            }
-                        </td>
-                        <td class="table-dark">
-                            @item.CatName
-                        </td>
-                        <td class="table-dark">
-                            @item.BreedName
-                        </td>
-                        <td class="table-dark">
-                            @item.CatAge 歲
-                        </td>
-                        <td class="table-dark">
-                            @if (@item.CatSex == false)
-                            {
-                                <i class="fa-solid fa-venus" style="color:#FF8EFF;font-size:1.3rem"></i>
-                            }
-                            else
-                            {
-                                <i class="fa-solid fa-mars" style="color:#99b8d4;font-size:1.3rem"></i>
-                            }
-                        </td>
-                           <td class="table-dark">
+              @foreach (var item in @ViewBag.owner)
+                    {
+                        <tr class="table-dark">
+                            <td class="table-dark">                            
+                                <img src="@Url.Content(@item.CatImg1)">                     
+                            </td>
+                            <td class="table-dark">
+                                @item.CatName
+                            </td>
+                            <td class="table-dark">
+                                @item.BreedName
+                            </td>
+                        
+                           
+                            <td class="table-dark">
+                                @item.Phone
+                            </td>
+                               <td class="table-dark">
                             @item.DateStart.ToShortDateString()
-                        </td>
-                        <td class="table-dark">
+                            </td>
+                            <td class="table-darkd">
+                                @if (@item.Status == 0)
+                                {
+                                    status = "等待中";
+                                }
+                                else if (@item.Status == 1)
+                                {
+                                    status = "已拒絕";
+                                }
+                                else
+                                {
+                                    status = "已同意";
+                                }
+                                @status
+                            </td>
+                            <td class="table-dark">
                             @if (@item.Status == 0)
-                            {
-                                status = "等待中";
+                            {                               
+                                    <button id="@item.CatId" class="btn btn-outline-secondary no"><i class="fa-solid fa-xmark"></i></button>
+                                    <button id="@item.CatId" class="btn btn-outline-secondary yes"><i class="fa-solid fa-check"></i></button>
                             }
-                            else if (@item.Status == 1)
-                            {
-                                status = "已拒絕";
+                            </td>
 
-                            }
-                            else
-                            {
-                                status = "已同意";
-                            }
-                            @status
-                        </td>
-
-                    </tr>
-                }
+                        </tr>
+                    }
             </table>
         </div>
 
@@ -120,5 +110,87 @@
 </div>
 
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.9/sweetalert2.all.min.js"
+        integrity="sha512-IZ95TbsPTDl3eT5GwqTJH/14xZ2feLEGJRbII6bRKtE/HC6x3N4cHye7yyikadgAsuiddCY2+6gMntpVHL1gHw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+
+    $(".no").click(function() {
+        var catid = $(this).attr("id")
+        Swal.fire({
+            title: "確定要拒絕申請嗎？",
+            text: "拒絕申請後不可取消，請慎重考慮！",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#B99668',
+            cancelButtonColor: '#4B5461',
+            confirmButtonText: '拒絕'
+        }).then(function(result) {
+            if (result.value) {
+                Swal.fire(
+                    '已拒絕申請！',
+                    '',
+                    'success'
+                ).then(function(result) {                       
+                    $.ajax({
+                        method: 'post',
+                        url: '/Adoption/OwnerNo',
+                        data: { catid: catid },
+                        dataType: 'json',
+                        success: function(data) { 
+                            @* //刷新狀態
+                             $("."+catid).empty();
+                             $("#"+catid).empty();
+                             $("."+catid).html(data);*@
+                             window.location.reload();
+                        },
+                        error: function() {
+                     
+                        }
+                    });
+                }
+                )
+            }
+        });
+    });
+
+     $(".yes").click(function() {
+        var catid = $(this).attr("id")
+        Swal.fire({
+            title: "確定要同意申請嗎？",
+            text: "同意申請後不可取消，請慎重考慮！",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#B99668',
+            cancelButtonColor: '#4B5461',
+            confirmButtonText: '同意'
+        }).then(function(result) {
+            if (result.value) {
+                Swal.fire(
+                    '已同意申請！',
+                    '',
+                    'success'
+                ).then(function(result) {                       
+                    $.ajax({
+                        method: 'post',
+                        url: '/Adoption/OwnerNo',
+                        data: { catid: catid },
+                        dataType: 'json',
+                        success: function(data) { 
+                           window.location.reload();
+                        },
+                        error: function() {
+                     
+                        }
+                    });
+                }
+                )
+            }
+        });
+    });
 
 
+
+</script>

@@ -100,14 +100,25 @@ namespace MeowPlanet.Controllers
 
         public List<CatsDto> GetCatsDto(string? city, int breedId, bool? catSex)
         {
-            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            var LoginId = 0;
+            if (User.FindFirst(ClaimTypes.Sid) != null)
+            {
+                LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            }
             var memberid = LoginId;
             var catBreeds = _context.CatBreeds.ToList();
             //頁面上呈現品種
             ViewBag.CatBreeds = catBreeds;
-            var adopt = _context.Adopts.Where(x => x.MemberId == memberid).ToList();
             var catDtoList = new List<CatsDto>();
-            var catList = _context.Cats.Where(x => x.MemberId != memberid && x.IsAdoptable == true).ToList();
+            var catList =new List<Cat>();
+            var adopt = new List<Adopt>(); 
+            if (memberid == 0) {
+                 catList = _context.Cats.Where(x => x.IsAdoptable == true).ToList();
+            }
+            else{
+                 catList = _context.Cats.Where(x => x.MemberId != memberid && x.IsAdoptable == true).ToList();
+                 adopt = _context.Adopts.Where(x => x.MemberId == memberid).ToList();
+            }
 
             #region 搜尋條件判斷
             if (breedId != 0)
@@ -161,6 +172,7 @@ namespace MeowPlanet.Controllers
             //申請領養列表
             var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
             var memberid = LoginId;
+            ViewBag.MemberId = memberid;
             var likeadopts = _context.Adopts
              .Where(x => x.MemberId == memberid)
              .Include(x => x.Cat)
@@ -176,7 +188,7 @@ namespace MeowPlanet.Controllers
                  DateOver = x.DateOver,
                  Status = x.Status,
                  Owner = x.owner,
-             }).ToList();
+             }).OrderByDescending(x =>x.DateStart).ToList();
 
             //送養列表
             var owner = _context.Adopts.Where(x => x.owner == memberid).ToList();
@@ -199,7 +211,7 @@ namespace MeowPlanet.Controllers
                      DateOver = x.DateOver,
                      Status = x.Status,
                      Phone = x.Member.Phone,
-                 }).ToList();
+                 }).OrderByDescending(x => x.DateStart).ToList();
                    ViewBag.owner = ownerlist;
             }
               return View(likeadopts);
@@ -217,7 +229,40 @@ namespace MeowPlanet.Controllers
 
             _context.Entry(owner).State= EntityState.Modified;
             _context.SaveChanges();
-            return null;
+
+            var state = "";
+            if (owner.Status == 1)
+            {
+                state = "已拒絕";
+            }
+            else if(owner.Status==2)
+            {
+                state = "已同意";
+            }
+            return Json(state);
+        }
+
+        [HttpPost]
+        public JsonResult OwnerYes(int catid)
+        {
+
+            var ownerno = new Adopt();
+            var owner = _context.Adopts.Where(x => x.CatId == catid).FirstOrDefault();
+
+            owner.DateOver = DateTime.Today;
+            owner.Status = 2;
+
+            _context.Entry(owner).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            //變更貓咪主人
+            var cats = _context.Cats.Where(x => x.CatId == catid).FirstOrDefault();
+            cats.MemberId = owner.MemberId;
+            cats.IsAdoptable = false;
+            _context.Entry(cats).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Json(null);
         }
 
 
