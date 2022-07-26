@@ -33,11 +33,11 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
-        // 登入判定Email是否存在
+        // 登入判定Email及密碼是否正確
         [HttpGet]
-        public ActionResult EmailExist(string email)
+        public ActionResult LoginCheck(string email, string password)
         {
-            var count = _context.Members.Count(x => x.Email == email);
+            var count = _context.Members.Count(x => x.Email == email && x.Password == password);
 
             if(count > 0)
             {
@@ -45,7 +45,7 @@ namespace MeowPlanet.Controllers
             }
             else
             {
-                return Content("此信箱不存在");
+                return Content("Email或密碼錯誤");
             }
         }
 
@@ -82,7 +82,7 @@ namespace MeowPlanet.Controllers
             }
             else
             {
-                return Content("信箱或密碼錯誤");
+                return NoContent();
             }
 
         }
