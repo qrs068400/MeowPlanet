@@ -13,7 +13,6 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using System.Net.Mail;
 
-
 namespace MeowPlanet.Controllers
 {
     public class LoginController : Controller
@@ -45,13 +44,26 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        // 重置密碼
+        [HttpGet]
+        public async Task<IActionResult> DoPwdReset(string email, string password)
+        {
+
+            var UserInfo = _context.Members.FirstOrDefault(x => x.Email == email);
+
+            UserInfo.Password = password;
+
+            await _context.SaveChangesAsync();
+            return Content("修改完成");
+        }
+
         // 登入判定Email及密碼是否正確
         [HttpGet]
         public ActionResult LoginCheck(string email, string password)
         {
             var count = _context.Members.Count(x => x.Email == email && x.Password == password);
 
-            if(count > 0)
+            if (count > 0)
             {
                 return Content("");
             }
@@ -88,7 +100,7 @@ namespace MeowPlanet.Controllers
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                         new ClaimsPrincipal(claimsIdentity));
 
-                
+
 
                 return RedirectToAction("Index", "Member");
             }
@@ -103,7 +115,7 @@ namespace MeowPlanet.Controllers
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         // 註冊判定Email是否可使用
@@ -111,16 +123,16 @@ namespace MeowPlanet.Controllers
         public ActionResult EmailCheck(string email)
         {
 
-                var count = _context.Members.Count(x => x.Email == email);
+            var count = _context.Members.Count(x => x.Email == email);
 
-                if(count > 0)
-                {
-                    return Content("此信箱已註冊");
-                }
-                else
-                {
-                    return Content("此信箱可使用");
-                }
+            if (count > 0)
+            {
+                return Content("此信箱已註冊");
+            }
+            else
+            {
+                return Content("此信箱可使用");
+            }
         }
 
         // 註冊
@@ -148,8 +160,7 @@ namespace MeowPlanet.Controllers
             msg.Subject = "重新設定您在 MeowPlanet 的密碼";
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
             msg.Body = "這是 MeowPlanet 喵屋星球 的密碼重置信，若你不曾要求重設密碼，請忽略這封信<br />" +
-                "<a href=\"https://localhost:44394/Login\">請點擊此連結重置密碼</a>" +
-                "<br /><br />MeowPlanet 喵屋星球";
+                "<a href='" + "https://localhost:44394/Login/ResetPassword" + "?Email=" + Email + "'>請點擊此連結重置密碼</a>" + "<br /><br />MeowPlanet 喵屋星球";
             msg.BodyEncoding = System.Text.Encoding.UTF8;
             msg.IsBodyHtml = true;
 

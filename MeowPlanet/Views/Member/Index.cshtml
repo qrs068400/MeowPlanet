@@ -53,6 +53,12 @@
     <script>
         $('.nav-item a').eq(3).addClass('nav-item-active');
 
+        $(function() {
+            $.get("@Url.Action("GetAccountInfo", "Member")", { MemberId: @Model.MemberId}, function(data) {
+                $("#member-right-region").html(data)
+            })
+        })
+
         function showAccount() {
             $.get("@Url.Action("GetAccountInfo", "Member")", { MemberId: @Model.MemberId}, function(data) {
                 $("#member-right-region").html(data)

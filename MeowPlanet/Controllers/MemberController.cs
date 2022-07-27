@@ -36,6 +36,10 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        public IActionResult CreateSitter()
+        {
+            return View();
+        }
 
         // 回應MyAccountPartial
         [HttpGet]

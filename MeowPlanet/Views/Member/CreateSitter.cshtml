@@ -1,0 +1,215 @@
+﻿@using System.Security.Claims;
+
+@{
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+
+<link href="~/css/createsitter.css" rel="stylesheet" />
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 left-reg h-100 d-flex align-items-center">
+            <img class="img-logo" src="@Href("~/Images/LOGO2.png")" alt="">
+            <div class="div-left-p mx-5" id="p1">
+                <p>一起成為貓貓的守護者</p>
+            </div>
+
+            <div class="div-left-p mx-5" id="p2">
+                <p>請介紹一下您的服務名稱及摘要</p>
+            </div>
+
+            <div class="div-left-p mx-5" id="p3">
+                <p>請選擇您的照顧條件</p>
+            </div>
+
+            <div class="div-left-p mx-5" id="p4">
+                <p>是否供餐及同時照顧數量</p>
+            </div>
+
+            <div class="div-left-p mx-5" id="p5">
+                <p>請提供您的服務地點</p>
+            </div>
+
+            <div class="div-left-p mx-5" id="p6">
+                <p>請選擇您的照顧特色</p>
+            </div>
+
+            <div class="div-left-p mx-5" id="p7">
+                <p>最後請提供貓咪的相關照片</p>
+            </div>
+
+        </div>
+        <div class="col-6 right-reg h-100 d-flex justify-content-center align-items-center">
+
+            <div class="div-right-form text-center" id="f1">
+                <p>依簡單步驟輸入資訊</p>
+                <p>讓我們認識您的服務</p>
+                <button class="btn btn-light c-btn" id="f1-b1">馬上開始!</button>
+                <a class="btn btn-dark r-btn" asp-controller="Member" asp-action="Index">返回</a>
+            </div>
+
+            @*<form method="post" asp-action="AddCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">*@
+
+            <div class="div-right-form text-center" id="f2">
+
+                <div class="d-flex align-items-center">
+                    <div class="w-100">
+                        <p class="text-start">名稱</p>
+                        <input type="text" class="text-center w-100" id="name-in" />
+                    </div>
+                </div>
+                <div>
+                    <p class="text-start">保姆摘要</p>
+                    <textarea type="text" rows="8" cols="35" class="p-4" id="intro-in"></textarea>
+                </div>
+
+                <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
+                <button type="button" class="btn btn-light ct-b" id="f2-b4">下一步</button>
+            </div>
+
+            <div class="div-right-form text-center" id="f3">
+
+                <p class="text-start">證照</p>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-light con-b" value="true">有證照</button>
+                    <button type="button" class="btn btn-light con-b" value="False">無證照</button>
+                </div>
+                <p class="text-start">籠子</p>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-light con-b" value="true">不關籠</button>
+                    <button type="button" class="btn btn-light con-b" value="False">需關籠</button>
+                </div>
+                <p class="text-start">監視器</p>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-light con-b" value="true">有監視器</button>
+                    <button type="button" class="btn btn-light con-b" value="False">無監視器</button>
+                </div>
+
+                <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
+                <button type="button" class="btn btn-light ct-b" id="f3-b2">下一步</button>
+
+            </div>
+
+            <div class="div-right-form text-center" id="f4">
+
+                <p class="text-start">供餐</p>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-light con-b" value="true">附一餐</button>
+                    <button type="button" class="btn btn-light con-b" value="False">附二餐</button>
+
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-light con-b" value="true">附三餐</button>
+                    <button type="button" class="btn btn-light con-b" value="False">無附餐</button>
+                </div>
+
+                <p class="text-start">照顧數量</p>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-light con-b" value="true">一對一</button>
+                    <button type="button" class="btn btn-light con-b" value="False">一對二</button>
+
+                </div>
+                <div class="d-flex justify-content-between">
+                    <button type="button" class="btn btn-light con-b" value="true">一對三</button>
+                    <button type="button" class="btn btn-light con-b" value="False">一對多</button>
+                </div>
+
+                <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
+                <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
+            </div>
+
+            <div class="div-right-form text-center" id="f5">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="text-start">年齡</p>
+                        @*<input type="text" asp-for="Age" class="text-center" id="age-in" />*@
+                    </div>
+                </div>
+                <div class="d-flex align-items-center location-div">
+                    <div>
+                        <p class="text-start">所在縣市</p>
+                        @*<input type="text" asp-for="City" class="text-center" id="city-in" />*@
+                    </div>
+                </div>
+
+                <span id="age-city-sp" class="in-sp"></span>
+
+                <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
+                <button type="button" class="btn btn-light ct-b" id="f5-b2">下一步</button>
+            </div>
+
+            <div class="div-right-form text-center" id="f6">
+                <div class="d-flex align-items-center">
+                    <div>
+                        <p class="text-start">貓咪介紹</p>
+                        <textarea type="text" rows="10" cols="50" class="p-4" id="intro-in"></textarea>
+                    </div>
+                </div>
+
+                <span id="intro-sp" class="in-sp"></span>
+
+                <button type="button" class="btn btn-dark re-b" id="f6-b1">返回</button>
+                <button type="button" class="btn btn-light ct-b" id="f6-b2">下一步</button>
+            </div>
+
+            <div class="div-right-form text-center" id="f7">
+
+                <div class="d-flex align-items-center ">
+                    <div id="dropZone1" class="dropZone" style="position: relative;">
+                        <img id="dropImg1" class="dropImg" />
+                        <p id="plus1">+</p>
+                        <input type="file" name="file1" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile1" />
+                    </div>
+                    <div class="hint-d">
+                        <p>請點擊圖框或拖曳加入</p>
+                        <p id="re-p">還剩5張可以選擇</p>
+                    </div>
+
+                </div>
+                <div class="d-flex align-items-center">
+                    <div id="dropZone2" class="dropZone" style="position: relative;">
+                        <img id="dropImg2" class="dropImg" />
+                        <p id="plus2">+</p>
+                        <input type="file" name="file2" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile2" />
+                    </div>
+                    <div id="dropZone3" class="dropZone" style="position: relative;">
+                        <img id="dropImg3" class="dropImg" />
+                        <p id="plus3">+</p>
+                        <input type="file" name="file3" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile3" />
+                    </div>
+                </div>
+                <div class="d-flex align-items-center">
+                    <div id="dropZone4" class="dropZone" style="position: relative;">
+                        <img id="dropImg4" class="dropImg" />
+                        <p id="plus4">+</p>
+                        <input type="file" name="file4" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile4" />
+                    </div>
+                    <div id="dropZone5" class="dropZone" style="position: relative;">
+                        <img id="dropImg5" class="dropImg" />
+                        <p id="plus5">+</p>
+                        <input type="file" name="file5" style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;" id="theFile5" />
+                    </div>
+                </div>
+
+                <button type="button" class="btn btn-dark re-b" id="f7-b1">返回</button>
+                <button type="submit" class="btn btn-light ct-b" id="f7-b2">完成</button>
+            </div>
+            @*</form>*@
+        </div>
+
+
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+<script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/js/createcat.js"></script>
+
+@{
+    await Html.RenderPartialAsync("_ValidationScriptsPartial");
+}
+
