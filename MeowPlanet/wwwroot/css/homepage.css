@@ -62,7 +62,7 @@ body {
     }
 
     .bgdiv #addbtn {
-        border: 2px /*#DDB178*/white solid;
+        border: 2px #DDB178 solid;
         box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
         background: rgba(0, 0, 0, .3);
         display: flex;
@@ -89,7 +89,7 @@ body {
     margin-top: 100px;
     color: white;
     padding: 1rem;
-    border: 2px rgb(0, 0, 0) solid;
+    border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
     height: 600px;
@@ -111,11 +111,6 @@ body {
     position: relative;
 }
 
-.f-pic p {
-    margin:0;
-    margin-left:20px;
-}
-
 #move-section1 {
     position: sticky;
     top: 0;
@@ -133,7 +128,7 @@ body {
 
 }
 
-.move-section .f-pic .move-div {
+.move-section .f-pic div {
     clip-path: inset(10% 5% round 5%);
     position: absolute;
     left: var(--lef);
@@ -159,7 +154,7 @@ body {
     --wid: 30%;
 }
 
-.move-section .f-pic .move-div p {
+.move-section .f-pic div p {
     margin-left: 10%;
     color: white;
 }
@@ -192,13 +187,6 @@ body {
     --wid: 30%;
 }
 
-.intro {
-    display: flex;
-    text-align: center;
-    font-size: 50px;
-
-}
-
 .f-pic .intro-p1 {
     color: white;
     font-size: 50px;
@@ -206,7 +194,10 @@ body {
     left: 10%;
     bottom: 10%;
     opacity: 0;
-    width:400px;
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .f-pic .intro-p2 {
@@ -216,8 +207,10 @@ body {
     left: 40%;
     bottom: 10%;
     opacity: 0;
-    width: 400px;
-}
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .f-pic .intro-p3 {
@@ -227,7 +220,10 @@ body {
     left: 70%;
     bottom: 10%;
     opacity: 0;
-    width: 400px;
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .f-pic .intro-p4 {
@@ -237,7 +233,10 @@ body {
     left: 10%;
     bottom: 10%;
     opacity: 0;
-    width: 400px;
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .f-pic .intro-p5 {
@@ -247,7 +246,10 @@ body {
     left: 40%;
     bottom: 10%;
     opacity: 0;
-    width: 400px;
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .f-pic .intro-p6 {
@@ -257,7 +259,10 @@ body {
     left: 70%;
     bottom: 10%;
     opacity: 0;
-    width: 400px;
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .f-pic .intro-p7 {
@@ -267,7 +272,10 @@ body {
     left: 10%;
     bottom: 10%;
     opacity: 0;
-    width: 400px;
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .f-pic .intro-p8 {
@@ -277,7 +285,10 @@ body {
     left: 40%;
     bottom: 10%;
     opacity: 0;
-    width: 400px;
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .f-pic .intro-p9 {
@@ -287,7 +298,10 @@ body {
     left: 70%;
     bottom: 10%;
     opacity: 0;
-    width: 400px;
+    border-radius: 10px;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
 }
 
 .p1 {
@@ -501,12 +515,13 @@ body {
 }
 
 #showcom img {
-    width: 400px;
-    height: 250px;
+    width: 300px;
+    height: 200px;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
     border-radius: 80px;
+    margin-bottom: 50px;
 }
 
 #showcom h2 {
@@ -537,6 +552,7 @@ body {
 }
 
 #catbanner p {
+    font-family: '·L³n¥¿¶ÂÅé';
     font-size: 16px;
     color: #FFF;
     /* position: absolute; */
@@ -653,9 +669,13 @@ body {
     margin: 0;
 }
 
-#car .carousel-inner {
-    padding-left: 15%;
-    padding-right: 15%;
+#car .carousel-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    margin-top: 0px;
 }
 
 #car img {
@@ -672,20 +692,9 @@ body {
 }
 
 #car .p-wrap {
-    width: 200px;
-    margin-left: 20px;
-}
-
-.w-p-wrap {
-    width: 600px;
-    height: 200px;
-    margin-left:50px;
-    color:white;
-    text-align: justify;
-}
-
-.w-p-wrap p {
-    margin:0;
+    width: 150px;
+    height: 80px;
+    margin: 20px;
 }
 
 html {
@@ -786,27 +795,18 @@ html {
     }
 }
 
-
-/*  scrollbar --------------------------------------------------------- */
-
-/* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 15px;
 }
 
-/* Track */
+::-webkit-scrollbar-thumb {
+    background-color: var(--project-primary-color);
+    border-radius: 15px;
+}
+
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: var(--project-primary-color);
-    border-radius: 10px;
-}
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #b996689c;
-    }

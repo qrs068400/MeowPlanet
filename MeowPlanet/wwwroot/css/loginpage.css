@@ -125,15 +125,10 @@ body {
     margin: 5%;
 }
 
-
-.form-check-input:checked {
-    background-color:brown;
-}
-
-.link-icon {
-    font-size: 40px;
+.link-icon img {
+    height: 50px;
+    width: 50px;
     margin-bottom: 5%;
-    color: white;
 }
 
 .re-a a {

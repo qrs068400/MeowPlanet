@@ -1,5 +1,9 @@
 ﻿@model IEnumerable<MeowPlanet.ViewModels.Missings.ItemsViewModel>
+@using System.Security.Claims;
 
+@{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
+}
 
 <div id="stars"></div>
 <div id="stars2"></div>
@@ -8,7 +12,7 @@
 
 
 
-<div  class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
+<div class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
     <div class="w-20" id="div-items" style="transition: all 1s ease; overflow-y: auto; min-width: 346px">
         @foreach (var item in Model)
         {
@@ -19,42 +23,39 @@
         <div id="map"></div>
         <input id="search-input" type="search" class="form-control rounded-pill" placeholder="搜尋 Google 地圖">
         <button id="pre-publish" class="btn btn-dark rounded-pill" style="border-color: white; width:180px">
-            <span class="h5"><i class="fa-solid fa-location-dot"></i> 刊登協尋</span>
+            <span class="h5"><i class="fa-solid fa-location-dot me-1"></i> 刊登協尋</span>
         </button>
         <button id="cancel-publish" class="btn btn-danger rounded-pill d-none" style="border-color: white; width:180px">
-            <span class="h5"><i class="fa-solid fa-circle-xmark"></i> 取消刊登</span>
+            <span class="h5"><i class="fa-solid fa-xmark me-1"></i> 取消刊登</span>
         </button>
     </div>
 </div>
 
 @*走失詳細資訊的彈出視窗*@
 <div class="modal fade" id="detailModal" tabindex="-1">
-
 </div>
 
 @*刊登協尋的彈出視窗*@
 <div class="modal fade" id="publishModal" tabindex="-1">
-    
 </div>
 
 @section Scripts{
+
+    <script>
+        $('.nav-item a').eq(1).addClass('nav-item-active');
+        var isLogin = '@isLogin';
+        var memberId = '@memberId';        
+    </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="~/lib/datepicker/i18n/datepicker.zh-TW.min.js"></script>
-    <script>
-        //$(function() {
-        //    $.get("@Url.Action("GetItems", "Missings")", function(data) {
-        //        $('#div-items').html(data);
-        //    })
-        //})
-    </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/map.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
     </script>
-    
 
 
 }
@@ -66,4 +67,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC&display=swap" rel="stylesheet">
+    <style>
+        body {
+            height: 100vh !important;
+        }
+    </style>
 }
