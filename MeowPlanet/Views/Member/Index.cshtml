@@ -1,5 +1,4 @@
 ﻿@model MeowPlanet.Models.Member
-
 @using System.Security.Claims;
 
 @{
@@ -13,78 +12,61 @@
 }
 
 
-<section id="member" class="d-flex align-items-center">
-    <div class="container">
-        <div class="row d-flex justify-content-center">
-            <div class="col-3 memberleft mx-3">
-                <div class="d-flex">
-                    <div class="col-7 img-wrap d-flex align-items-center justify-content-end">
-                        <img src="../images/ar.png" />
+    <section id="member" class="d-flex align-items-center">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-3 memberleft mx-3">
+                    <div class="d-flex">
+                        <div class="col-7 img-wrap d-flex align-items-center justify-content-end">
+                            <img src="../images/ar.png" />
+                        </div>
+                        <div class="col-5 p-wrap  d-flex align-items-center justify-content-center">
+                            <p>@Model.Name</p>
+                        </div>
+
                     </div>
-                    <div class="col-5 p-wrap  d-flex align-items-center justify-content-center">
-                        <p>@Model.Name</p>
+
+                    <div class="text-center my-5">
+                        <a onclick="showAccount()">我的帳戶</a>
                     </div>
+                    <div class="text-center my-5">
+                        <a>保姆服務</a>
+                    </div>
+                    <div class="text-center my-5">
+                        <a href="#" id="adoption">領養資訊</a>
+                    </div>
+                    <div class="text-center my-5">
+                        <a href="#" id="clues">協尋管理</a>
+                    </div>
+
 
                 </div>
-
-                <div class="text-center my-5">
-                    <a href="#">我的帳戶</a>
-                </div>
-                <div class="text-center my-5">
-                    <a href="#">保姆服務</a>
-                </div>
-                <div class="text-center my-5">
-                    <a href="#">領養資訊</a>
-                </div>
-                <div class="text-center my-5">
-                    <a href="#">協尋管理</a>
-                </div>
-
-
-            </div>
-            <div class="col-9 memberright ms-3 row d-flex justify-content-center">
-                <div class="col-5 member-region">
-                    <div class="title"><p>會員資料</p></div>
-                    <div class="my-3">
-                        <p>Email</p>
-                        <input type="text" value="@Model.Email" id="email-in" />
-                    </div>
-                    <div class="my-3">
-                        <p>密碼</p>
-                        <input type="text" value="@Model.Password"/>
-                    </div>
-                    <div class="my-3">
-                        <p>姓名</p>
-                        <input type="text" value="@Model.Name"/>
-                    </div>
-                    <div class="my-3">
-                        <p>電話</p>
-                        <input type="text" value="@Model.Phone"/>
-                    </div>
-
-                    <div class="d-flex justify-content-between">
-                        <button class="mem-btn">編輯</button>
-                        <button class="mem-btn">完成</button>
-                    </div>
-
-                </div>
-
-                <div class="col-6 cat-region">
-                    <div class="cat-region-title d-flex">
-                        <p>喵星人</p>
-                        <button class="btn">+建立</button>
-                    </div>
-                    <partial name="_CatsSelectParital" />
+                <div class="col-9 memberright mx-3 row d-flex justify-content-center" id="member-right-region">
                 </div>
             </div>
+
         </div>
 
-    </div>
+    </section>
 
-</section>
+    @section Scripts{
+    <script>
+        $('.nav-item a').eq(3).addClass('nav-item-active');
 
-@section Scripts{
+        function showAccount() {
+            $.get("@Url.Action("GetAccountInfo", "Member")", { MemberId: @Model.MemberId}, function(data) {
+                $("#member-right-region").html(data)
+            })
+        }
+        $(document).on('click', '#backToList', () => {
+            showAccount()
+        })
+        $('#adoption').click(() => {
+            $.get('/Adoption/LikeTolist', function(data) {
+                $('#member-right-region').html(data);
+            })
+        })
 
-
+    </script>
 
 }
