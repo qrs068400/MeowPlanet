@@ -795,27 +795,18 @@ html {
     }
 }
 
-
-/*  scrollbar --------------------------------------------------------- */
-
-/* width */
 ::-webkit-scrollbar {
-    width: 10px;
+    width: 15px;
 }
 
-/* Track */
+::-webkit-scrollbar-thumb {
+    background-color: var(--project-primary-color);
+    border-radius: 15px;
+}
+
 ::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
     border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: var(--project-primary-color);
-    border-radius: 10px;
-}
-
-    /* Handle on hover */
-    ::-webkit-scrollbar-thumb:hover {
-        background: #b996689c;
-    }

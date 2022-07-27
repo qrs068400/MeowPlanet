@@ -22,64 +22,62 @@
                             <img src="../images/ar.png" />
                         </div>
                         <div class="col-5 p-wrap  d-flex align-items-center justify-content-center">
-                                                  <p>@Model.Name</p>
-                        
+                            <p>@Model.Name</p>
                         </div>
 
                     </div>
 
                     <div class="text-center my-5">
-                        <a href="#">我的帳戶</a>
+                        <a onclick="showAccount()">我的帳戶</a>
                     </div>
                     <div class="text-center my-5">
-                        <a href="#">保姆服務</a>
+                        <a>保姆服務</a>
                     </div>
                     <div class="text-center my-5">
-                        <a href="#" id="adoption">
-                            領養資訊
-                        </a>
+                        <a >領養資訊</a>
                     </div>
                     <div class="text-center my-5">
-                        <a href="#">協尋管理</a>
+                        <a>協尋管理</a>
                     </div>
 
 
                 </div>
-                <div id="memberDetail" class="col-9 memberright ms-3 row d-flex justify-content-center">
-                     <div class="col-5 member-region">
+                <div class="col-9 memberright mx-3 row d-flex justify-content-center" id="member-right-region">
+                    @*                    <div class="col-5 member-region my-3">
+                <form method="post" asp-action="UpdateMember" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
+                <input type="text" value="@Model.MemberId" asp-for="MemberId" class="d-none" />
                 <div class="title"><p>會員資料</p></div>
-                <div class="my-3">
+                <div class="my-4">
                 <p>Email</p>
-                <input type="text" value="@Model.Email" id="email-in" />
+                <input type="email" value="@Model.Email" id="email-in" asp-for="Email" />
                 </div>
-                <div class="my-3">
+                <div class="my-4">
                 <p>密碼</p>
-                <input type="text" value="@Model.Password"/>
+                <input type="password" value="@Model.Password" asp-for="Password" />
                 </div>
-                <div class="my-3">
+                <div class="my-4">
                 <p>姓名</p>
-                <input type="text" value="@Model.Name"/>
+                <input type="text" value="@Model.Name" asp-for="Name" />
                 </div>
-                <div class="my-3">
+                <div class="my-4">
                 <p>電話</p>
-                <input type="text" value="@Model.Phone"/>
+                <input type="text" value="@Model.Phone" asp-for="Phone" />
                 </div>
 
-                <div class="d-flex justify-content-between">
-                <button class="mem-btn">編輯</button>
-                <button class="mem-btn">完成</button>
+                <div class="d-flex justify-content-center">
+                <button type="submit" class="btn cat-detail-btn my-5">修改資料</button>
+                </div>
+                </form>
                 </div>
 
-                </div>
-
-                <div class="col-6 cat-region">
+                <div class="col-6 cat-region my-3" id="cat-region">
                 <div class="cat-region-title d-flex">
                 <p>喵星人</p>
-                <button class="btn">+建立</button>
+                <a class="btn" asp-controller="Member" asp-action="CreateCat">+建立</a>
                 </div>
-                <partial name="_CatsSelectParital" />
+                <div class="cat-region-select" id="cat-region-select">
                 </div>
-
+                </div>*@
                 </div>
             </div>
 
@@ -88,6 +86,37 @@
     </section>
 
     @section Scripts{
+    <script>
+        function showAccount() {
+            $.get("@Url.Action("GetAccountInfo", "Member")", { MemberId: @Model.MemberId}, function(data) {
+                $("#member-right-region").html(data)
+            })
+        }
+        $(document).on('click', '#backToList', () => {
+            showAccount()
+        })
+
+
+        //$(function() {
+
+        //    $.get("@Url.Action("GetCatInfo", "Member")", function(data) {
+        //        $("#cat-region-select").html(data)
+        //    })
+
+        //})
+
+
+        //function ToDetail(id) {
+        //    $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
+        //        $("#cat-region-select").html(data)
+        //    })
+
+        //    $(".member-region").css("display", "none")
+
+        //    $("#cat-region").removeClass("col-6").css("width", "91.66%")
+        //}
+
+    </script>
 
     <script>
         $('#adoption').click(() => {

@@ -366,21 +366,65 @@ function CalendarControl() {
 
 
 //* 地圖
-function doFirst() {
-    let area = document.querySelector('.map');
-    const option = {
-        zoom: 14,
-        center: new google.maps.LatLng(22.664285, 120.343922),
-        mapTypeId: google.maps.MapTypeId.ROADMAP
-    }
-    let map = new google.maps.Map(area, option);
-
-    let marker = new google.maps.Marker({
-        position: new google.maps.LatLng(22.664285, 120.343922),
-        map: map,
-        icon: '',
-        title: '這是哪裡?',
+let map;
+let marker;
+let catList = [];
+function initMap() {
+    //初始化地圖
+    map = new google.maps.Map($('#map')[0], {
+        center: { lat: 22.629314218928563, lng: 120.29299528465663 },
+        zoom: 16,
+        // minZoom: 12,
+        // maxZoom: 17,
+        disableDefaultUI: true,
+        mapId: 'a5f4cec6781c8dda',
+        gestureHandling: 'cooperative'
     });
 
+    //保母位置marker
+    marker = new google.maps.Marker({
+        position: new google.maps.LatLng(22.629314218928563, 120.29299528465663),
+        map: map,
+        icon: {
+            url: "../../images/sitter/house_marker.png",
+            scaledSize: new google.maps.Size(50, 50),
+            //anchor: new google.maps.Point(25, 25) // anchor
+        },
+    });
+    marker.setMap(map);
+
+    //模糊圓圈
+    const blurCircle = new google.maps.Circle({
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        map,
+        center: new google.maps.LatLng(22.629314218928563, 120.29299528465663),
+        radius: 200,
+    });
+
+    //定位按鈕
+    const locationButton = document.createElement("button");
+    locationButton.innerHTML = '<i class="fa-solid fa-crosshairs fa-lg"></i>';
+    $(locationButton).addClass('btn btn-dark btn-location');
+    $(locationButton).css('border-radius', '10px');
+    $(locationButton).css('border-color', 'white');
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
+    $(locationButton).on('click', function () {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    let pos = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude,
+                    };
+                    map.setCenter(pos);
+                }
+            )
+        };
+    })
 }
-window.addEventListener('load', doFirst)
+
+window.initMap = initMap;
