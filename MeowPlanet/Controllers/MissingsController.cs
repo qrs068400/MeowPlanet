@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using MeowPlanet.ViewModels.Missings;
-
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace MeowPlanet.Models
 {
@@ -21,8 +22,10 @@ namespace MeowPlanet.Models
 
         // GET: Missings
         public ActionResult Index()
-        {           
-            return View();
+        {
+            var itemList = _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(clue.clue_id) AS ClueCount, MAX(witness_time) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name").ToList();
+
+            return View(itemList);
         }
 
 
@@ -30,6 +33,8 @@ namespace MeowPlanet.Models
         public async Task<IActionResult> AddMissing(Missing missingCat)
         {
             _context.Missings.Add(missingCat);
+            _context.Cats.Where(x => x.CatId == missingCat.CatId).First().IsMissing = true;
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -38,30 +43,76 @@ namespace MeowPlanet.Models
         [HttpGet]
         public ActionResult GetMissing()
         {
-            List<Missing> catList = new List<Missing>();
-            foreach (var item in _context.Missings)
-            {
-                Missing missingCat = new Missing
-                {
-                    MissingId = item.MissingId,
-                    CatId = item.CatId,
-                    Date = item.Date,
-                    Lat = item.Lat,
-                    Lng = item.Lng
-                };
-
-                catList.Add(missingCat);
-            }
+            var catList = _context.Missings.ToList();
 
             return Json(catList);
         }
 
-        public ActionResult GetItems()
-        {
-            var itemList = _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId,img_01 AS Image,cat.name AS Name,date AS MissingDate,cat_breed.name AS Breed,COUNT(clue.clue_id) AS ClueCount,MAX(witness_time) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id GROUP BY missing.missing_id, img_01, cat.name, date, cat_breed.name").ToList();
 
-            return PartialView("_MissingItemsPartial", itemList);
+
+
+        public ActionResult GetDetail(int missingId)
+        {
+            var result = _context.Missings
+                .Where(x => x.MissingId == missingId)
+                .Include(x => x.Cat)
+                .Include(x => x.Cat.Member)
+                .Include(x => x.Cat.Breed)
+                .Select(x => new DetailViewModel()
+                {                    
+                    Name = x.Cat.Name,                    
+                    Sex = x.Cat.Sex,
+                    Age = x.Cat.Age,
+                    Breed = x.Cat.Breed.Name,
+                    Date = x.Date,
+                    Img01 = x.Cat.Img01,
+                    Img02 = x.Cat.Img02,
+                    Img03 = x.Cat.Img03,
+                    Description = x.Description,
+                    MemberName = x.Cat.Member.Name,
+                    Photo = x.Cat.Member.Photo
+                })
+                .FirstOrDefault();
+
+            return PartialView("_MissingDetailPartial" ,result);
         }
 
+        public ActionResult GetPublish()
+        {
+            return PartialView("_MissingPublishPartial");
+        }
+
+        public string PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId, [FromServices] IWebHostEnvironment _webHostEnvironment)
+        {
+            var clue = new Clue
+            {
+                MissingId = MissingId,
+                WitnessLat = WitnessLat,
+                WitnessLng = WitnessLng,
+                WitnessTime = WitnessTime,
+                Description = Description,
+                MemberId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value)
+            };
+
+            Random random = new Random();
+            string? uniqueFileName;
+
+            if (Image != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/clue");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + Image.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    Image.CopyTo(fileStream);
+                }
+                clue.ImagePath = "/images/clue/" + uniqueFileName;
+            }
+
+            _context.Clues.Add(clue);
+            _context.SaveChanges();
+
+            return "OK";
+        }
     }
 }

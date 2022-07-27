@@ -1,0 +1,48 @@
+﻿@model Missing
+
+<style>
+    form label{
+        color: black;
+    }
+</style>
+
+<div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+        <form method="post" asp-action="AddMissing" asp-controller="Missings" autocomplete="off">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">走失資訊</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="cat-id">貓貓id :</label>
+                    <input type="text" id="cat-id" class="form-control" asp-for="CatId" />
+                    <span asp-validation-for="CatId" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="datepicker">走失日期：</label>
+                    <input type="text" class="form-control" id="datepicker" asp-for="Date" />
+                    <span asp-validation-for="Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label>其他描述：</label>
+                    <input type="text" class="form-control" asp-for="Description" />
+                    <span asp-validation-for="Description" class="text-danger"></span>
+                </div>
+                <input type="hidden" id="lat" asp-for="Lat" />
+                <input type="hidden" id="lng" asp-for="Lng" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    $(function() {
+        $("#datepicker").datepicker($.datepicker.regional['tw']);
+    });
+
+</script>

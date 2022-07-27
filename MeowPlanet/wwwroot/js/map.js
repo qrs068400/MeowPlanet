@@ -13,9 +13,20 @@ function removeMarker() {
     }
 }
 
-
-
-
+//把地圖平移到目前位置
+function currentPos() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                let pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                map.setCenter(pos);
+            }
+        )
+    };
+}
 
 function initMap() {
 
@@ -30,6 +41,8 @@ function initMap() {
         gestureHandling: 'greedy'
     });
 
+    //currentPos();
+
     //定位按鈕
     const locationButton = document.createElement("button");
     locationButton.innerHTML = '<i class="fa-solid fa-crosshairs fa-lg"></i>';
@@ -38,91 +51,23 @@ function initMap() {
     $(locationButton).css('border-color', 'white');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
     $(locationButton).on('click', function () {
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    let pos = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude,
-                    };
-                    map.setCenter(pos);
-                }
-            )
-        };
+        currentPos();
     })
 
 
     //刊登協尋
     $('#pre-publish').on('click', function () {
 
-        google.maps.event.removeListener(listener);
+        let windowContent =
+            '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
+            '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+            '<button class="btn btn-primary" onclick="confirmPos()">' +
+            'Yes' +
+            '</button>' +
+            '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
+            '</div>';
 
-        //把頁面上圖標隱藏
-        for (var i = 0; i < showingCatList.length; i++) {
-            showingCatList[i].marker.setMap(null);
-        }
-
-        map.setOptions({ draggableCursor: 'url(../images/marker-cursor.png) 15 45, auto' });
-
-        $('#div-items').addClass('items-activate');
-        $('#div-map').addClass('map-activate');
-
-        let listenerHandle = map.addListener("click", (e) => {
-
-            removeMarker();
-
-            newMarker = new google.maps.Marker({
-                position: e.latLng,
-                map,
-                Draggable: true,
-                icon: {
-                    url: "images/marker.png",
-                    scaledSize: new google.maps.Size(40, 57)
-                }
-            });
-
-            map.panTo(newMarker.getPosition());
-
-            const contentString = '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' + '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-                '<button class="btn btn-primary" onclick="setMarkerPos()" data-bs-toggle="modal" data-bs-target="#exampleModal">' +
-                'Yes' + '</button>' + '<button onclick="removeMarker();" class="btn btn-danger">No</button>' + '</div>';
-
-            const infowindow = new google.maps.InfoWindow({
-                content: contentString,
-            });
-
-            infowindow.open({
-                anchor: newMarker,
-                map,
-                shouldFocus: false,
-            });
-        });
-
-
-
-        //切換刊登&取消刊登顯示
-        $(this).toggleClass('d-none');
-        $('#cancel-publish').toggleClass('d-none');
-
-        //取消刊登按鈕 綁定單次事件
-        $('#cancel-publish').one('click', function () {
-            map.setOptions({ draggableCursor: '' });
-            google.maps.event.removeListener(listenerHandle);
-            $(this).toggleClass('d-none');
-            $('#pre-publish').toggleClass('d-none');
-
-            $('#div-items').removeClass('items-activate');
-            $('#div-map').removeClass('map-activate');
-
-            removeMarker();
-
-            //把頁面上圖標顯示回來
-            for (var i = 0; i < showingCatList.length; i++) {
-                showingCatList[i].marker.setMap(map);
-            }
-
-            listener = map.addListener('idle', searchCat);
-        })
+        settingMode(windowContent);
     })
 
 
@@ -161,32 +106,95 @@ function initMap() {
 
 
     //綁定移動事件
-    var listener = map.addListener('idle', searchCat)
+    listener = map.addListener('idle', searchCat)
+}
+
+
+//設定位置模式
+function settingMode(windowContent, offset) {
+
+    google.maps.event.removeListener(listener);
+
+    //把頁面上圖標隱藏
+    setMarkerVisibility('hide');
+
+    map.setOptions({ draggableCursor: 'url(../images/marker-cursor.png) 15 45, auto' });
+
+    toggleMap()
+
+    let listenerHandle = map.addListener("click", (e) => {
+
+        removeMarker();
+
+        newMarker = new google.maps.Marker({
+            position: e.latLng,
+            map,
+            Draggable: true,
+            icon: {
+                url: "images/marker.png",
+                scaledSize: new google.maps.Size(40, 57)
+            }
+        });
+
+
+        map.setZoom(16);
+        if (offset == true) {
+
+            map.panTo({
+                lat: newMarker.getPosition().lat() + 0.005,
+                lng: newMarker.getPosition().lng()
+            });
+        }
+        else {
+            map.panTo(newMarker.getPosition());
+        }
+
+
+        const infowindow = new google.maps.InfoWindow({
+            content: windowContent
+        });
+
+        infowindow.open({
+            anchor: newMarker,
+            map,
+            shouldFocus: false,
+        });
+    });
+
+    //切換刊登&取消刊登顯示
+    $('#pre-publish').toggleClass('d-none');
+    $('#cancel-publish').toggleClass('d-none');
+
+    //取消刊登按鈕 綁定單次事件
+    $('#cancel-publish').one('click', function () {
+
+        map.setOptions({ draggableCursor: '' });
+        google.maps.event.removeListener(listenerHandle);
+
+        $('#cancel-publish').toggleClass('d-none');
+        $('#pre-publish').toggleClass('d-none');
+
+        toggleMap();
+
+        removeMarker();
+
+        //把頁面上圖標顯示回來
+        setMarkerVisibility('show');
+
+        listener = map.addListener('idle', searchCat);
+    })
 }
 
 
 
-//日期選擇框
-$(function () {
-    $("#datepicker").datepicker($.datepicker.regional['tw']);    
-});
 
-
-
-//把marker位置寫進資料庫
-function setMarkerPos() {
-    $('#lat').val(newMarker.getPosition().lat());
-    $('#lng').val(newMarker.getPosition().lng());
-}
-
-
-
+let missingId;
 let showingWindow;
 
 //把所有走失貓咪抓進catList
 $(function () {
-    $.get('Missings/GetMissing', function (data, status) {
-        data.forEach((value, index) => {
+    $.get('Missings/GetMissing', function (data) {
+        data.forEach((value) => {
             let cat = value;
             let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
             let marker = new google.maps.Marker({
@@ -197,43 +205,59 @@ $(function () {
                 }
             });
 
-            //貓貓詳細資訊
-            let catWindow = new google.maps.InfoWindow({
-                content: `貓貓id = ${cat.catId}`
-            });
-
             //綁定此marker點擊事件
-            marker.addListener('click', function () {              
+            marker.addListener('click', function () {
 
-                removeWindow(catWindow);
-                catWindow.open({
-                    anchor: marker,
-                    map,
-                    shouldFocus: false
-                });
-
+                //地圖中心移動到圖標位置
                 map.setZoom(16);
                 map.panTo({
-                    lat: this.getPosition().lat() + 0.005,
-                    lng: this.getPosition().lng() 
+                    lat: this.getPosition().lat(), //+ 0.005
+                    lng: this.getPosition().lng()
+                })
+
+                //發送AJAX取得資料
+                $.get('Missings/GetDetail', { 'missingId': cat.missingId }, function (data) {
+                    $('#detailModal').html(data);
+                    $('#detailModal').modal('show');
+                })
+
+                missingId = cat.missingId;
+            })
+
+            //綁定此marker hover事件
+            marker.addListener('mouseover', function () {
+                const id = cat.missingId;
+                catList.filter(x => x.missingId == id)[0].marker.setAnimation(google.maps.Animation.BOUNCE);
+                showingCatList.filter(x => x.missingId != id).forEach((cat) => {
+                    cat.marker.setOptions({ 'opacity': 0.35 })
                 })
             })
-            
-            cat.window = catWindow;
+
+            marker.addListener('mouseout', function () {
+                const id = cat.missingId;
+                catList.filter(x => x.missingId == id)[0].marker.setAnimation(null);
+                catList.forEach((cat) => {
+                    cat.marker.setOptions({ 'opacity': 1 })
+                })
+            })
+
             cat.marker = marker;
-            cat.missingId = cat.missingId;
             catList.push(cat);
         })
-
-        searchCat();
     })
+
+        .then(function () {
+            searchCat();
+        })
+
 })
 
 let showingCatList = [];
+
 //搜尋中心點附近貓貓
 function searchCat() {
 
-    catList.forEach((cat, index) => {
+    catList.forEach((cat) => {
         let marker = cat.marker;
         let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
         let center = map.getCenter();
@@ -243,7 +267,7 @@ function searchCat() {
         //距離小於1公里就加入圖標 & 顯示在左邊item列
         if (distance < 1000) {
 
-            marker.setMap(map);            
+            marker.setMap(map);
 
             if (!showingCatList.includes(cat)) {
                 showingCatList.push(cat);
@@ -253,7 +277,7 @@ function searchCat() {
         }
         else {
 
-            marker.setMap(null);            
+            marker.setMap(null);
 
             if (showingCatList.includes(cat)) {
                 showingCatList.splice(showingCatList.indexOf(cat), 1);
@@ -261,9 +285,19 @@ function searchCat() {
             }
         }
     })
-
 }
 
+// 顯示/隱藏圖標
+function setMarkerVisibility(option) {
+    for (var i = 0; i < showingCatList.length; i++) {
+        if (option == 'show') {
+            showingCatList[i].marker.setMap(map);
+        }
+        else if (option == 'hide') {
+            showingCatList[i].marker.setMap(null);
+        }
+    }
+}
 
 
 //關掉前一個貓貓視窗
@@ -279,33 +313,159 @@ function removeWindow(clickedWindow) {
 function itemClicked(item) {
 
     let id = $(item).data('id');
+    missingId = id;
     let clickedCat = catList.filter(x => x.missingId == id)[0];
 
     map.setZoom(16);
     map.panTo({
-        lat: clickedCat.marker.getPosition().lat() + 0.005,
+        lat: clickedCat.marker.getPosition().lat(),
         lng: clickedCat.marker.getPosition().lng()
     });
 
-
-    removeWindow(clickedCat.window)
-    clickedCat.window.open({
-        anchor: clickedCat.marker,
-        map,
-        shouldFocus: false
-    });
-
+    //發送AJAX取得資料
+    $.get('Missings/GetDetail', { 'missingId': id }, function (data) {
+        $('#detailModal').html(data);
+        $('#detailModal').modal('show')
+    })
 }
 
 function itemActive(item) {
     let id = $(item).data('id');
     catList.filter(x => x.missingId == id)[0].marker.setAnimation(google.maps.Animation.BOUNCE);
+    showingCatList.filter(x => x.missingId != id).forEach((cat) => {
+        cat.marker.setOptions({ 'opacity': 0.35 })
+    })
 }
 
 function itemInactive(item) {
     let id = $(item).data('id');
     catList.filter(x => x.missingId == id)[0].marker.setAnimation(null);
+    catList.forEach((cat) => {
+        cat.marker.setOptions({ 'opacity': 1 })
+    })
 }
 
+//切換地圖區塊布局
+function toggleMap() {
+    $('#div-items').toggleClass('items-activate');
+    $('#div-map').toggleClass('map-activate');
+}
 
-window.initMap = initMap;
+//確定貓咪在此遺失
+function confirmPos() {
+
+    $.get('Missings/GetPublish', (data) => {
+        $('#publishModal').html(data);
+        $('#publishModal').modal('show');
+
+        $('#lat').val(newMarker.getPosition().lat());
+        $('#lng').val(newMarker.getPosition().lng());
+    })
+}
+
+//preview綁定事件
+$(document).on({
+    'click': () => $('#imgInput').trigger("click"), //點擊照片觸發input點擊事件
+    'dragover': (event) => event.preventDefault(),
+    'drop': (event) => {
+
+        event.preventDefault();
+
+        let file = event.originalEvent.dataTransfer.files[0];
+        let reader = new FileReader()
+
+        reader.readAsDataURL(file);
+        reader.onload = function(e) {
+            $('#imgPreview').attr('src', e.target.result)
+        }
+
+        let dt = new DataTransfer();
+        dt.items.add(file);
+        $('#imgInput')[0].files = dt.files
+    }
+}, '#imgPreview')
+
+//上傳預覽功能
+$(document).on('change', '#imgInput', function () {  
+
+    let reader = new FileReader();
+    reader.onload = function (e) {
+        $('#imgPreview').attr('src', e.target.result);
+    }
+
+    reader.readAsDataURL($('#imgInput')[0].files[0])
+})
+
+
+//提供線索
+$(document).on('click', '#provideClues', () => {    
+
+    let windowContent =
+        '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
+            '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
+            '<div class="form-group mt-3 text-center" style="height: 40%">' +
+                '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
+                '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
+            '</div>' +
+            '<div class="form-group mt-3 m-auto w-85">' +
+                '<label for="witness-time" class="h6">目擊時間 :</label>' +
+                '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
+            '</div>' +
+            '<div class="form-group mt-3 m-auto w-85">' +
+                '<label for="witness-time" class="h6">其他描述 :</label>' +
+                '<input type="text" id="witness-time" class="form-control rounded-pill" name="Description" />' +
+            '</div>' +
+            '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
+                '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check mx-1"></i> 發布</button>' +
+                '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark mx-1"></i> 取消</button>' +
+            '</div>' +
+            '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
+            `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
+        '</form>';
+
+    $('#detailModal').modal('hide');
+
+    settingMode(windowContent, true);
+
+    $('#cancel-publish').one('click', () => {
+        $('#detailModal').modal('show');
+    })
+
+})
+
+//提供線索表單
+$(document).on('submit', '#clueForm', function (e) {
+
+    $('#WitnessLat').val(newMarker.getPosition().lat())
+    $('#WitnessLng').val(newMarker.getPosition().lng())
+
+    let formData = new FormData($('#clueForm')[0])
+
+    $.ajax({
+
+        url: '/Missings/PostClue',
+        type: 'POST',
+        data: formData,
+        contentType: false,
+        processData: false,
+        success: function (data) {
+
+            if (data == "OK") {
+                
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    icon: 'success',
+                    title: '線索提交成功',
+                    showConfirmButton: false,
+                    timer: 2500
+                }).then(() => {
+                    $('#cancel-publish').trigger('click');
+                })
+            }
+        }
+    })
+
+    e.preventDefault();
+
+})

@@ -5,67 +5,12 @@
 }
 
 body {
-    font-family: '·L³n¥¿¶ÂÅé';
     font-size: 20px;
     background-color: #171b20;
     overflow-x: hidden;
     background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%);
     position: absolute;
     width: 100%;
-}
-
-.modal-footer {
-    height: 100px;
-    justify-content: center;
-}
-
-.modal-header {
-    height: 100px;
-    justify-content: flex-end;
-    border: none;
-}
-
-.modal-content {
-    background-color: #171b20;
-    border-radius: 50px;
-    border: 1px rgb(219, 232, 248) solid;
-    box-shadow: 0 0 1rem rgba(134, 171, 190, 0.5) inset;
-}
-
-.modal-header h3 {
-    font-size: 30px;
-    color: white;
-    position: absolute;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.modal-header button {
-    font-size: 20px;
-    color: white;
-    background: none;
-    border: none;
-}
-
-.modal-body form .account,
-.modal-body form .password {
-    margin: 10px;
-    width: 60%;
-    border-radius: 20px;
-}
-
-.modal-body form .form-control {
-    display: inline;
-}
-
-.modal-body form .form-group {
-    font-size: 20px;
-    color: white;
-}
-
-.modal-body form {
-    text-align: center;
 }
 
 
@@ -180,6 +125,7 @@ body {
     top: var(--top);
     transform: translate(-(var(--lef)), -var(--top));
     width: var(--wid);
+
 }
 
 .move-section .f-pic div {
@@ -554,11 +500,6 @@ body {
     background-position: center;
 }
 
-.bg-dark2 {
-    color: white;
-    background: rgba(0, 0, 0, 1);
-    box-shadow: 0 0 1rem rgba(134, 171, 190, 0.5) inset;
-}
 
 #showcom .container-fluid {
     height: 500px;
@@ -756,12 +697,12 @@ body {
     margin: 20px;
 }
 
-
-
 html {
     height: 100%;
     background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
 }
+
+
 
 #stars {
     width: 1px;
@@ -852,4 +793,20 @@ html {
     #stars3:after {
         top: 500px;
     }
+}
+
+::-webkit-scrollbar {
+    width: 15px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--project-primary-color);
+    border-radius: 15px;
+}
+
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

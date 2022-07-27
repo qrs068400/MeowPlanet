@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MeowPlanet.Models
 {
@@ -14,6 +15,8 @@ namespace MeowPlanet.Models
 
         public int CatId { get; set; }
         public int MemberId { get; set; }
+
+        [Required]
         public int BreedId { get; set; }
         public bool IsSitting { get; set; }
         public bool IsMissing { get; set; }
