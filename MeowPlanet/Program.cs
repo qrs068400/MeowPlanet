@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 var appConnectString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -41,6 +42,9 @@ builder.Services.AddSession(option =>
     option.Cookie.IsEssential = true;
     option.Cookie.HttpOnly = true;
 });
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
 

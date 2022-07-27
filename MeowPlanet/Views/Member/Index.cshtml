@@ -1,5 +1,4 @@
 ﻿@model MeowPlanet.Models.Member
-
 @using System.Security.Claims;
 
 @{
@@ -37,7 +36,7 @@
                         <a href="#" id="adoption">領養資訊</a>
                     </div>
                     <div class="text-center my-5">
-                        <a>協尋管理</a>
+                        <a href="#" id="clues">協尋管理</a>
                     </div>
 
 
@@ -87,6 +86,8 @@
 
     @section Scripts{
     <script>
+        $('.nav-item a').eq(3).addClass('nav-item-active');
+
         function showAccount() {
             $.get("@Url.Action("GetAccountInfo", "Member")", { MemberId: @Model.MemberId}, function(data) {
                 $("#member-right-region").html(data)
@@ -106,7 +107,6 @@
         //    $.get("@Url.Action("GetCatInfo", "Member")", function(data) {
         //        $("#cat-region-select").html(data)
         //    })
-
         //})
 
 
@@ -114,9 +114,7 @@
         //    $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
         //        $("#cat-region-select").html(data)
         //    })
-
         //    $(".member-region").css("display", "none")
-
         //    $("#cat-region").removeClass("col-6").css("width", "91.66%")
         //}
 
