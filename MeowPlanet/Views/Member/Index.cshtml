@@ -78,7 +78,6 @@
                 <div class="cat-region-select" id="cat-region-select">
                 </div>
                 </div>*@
-
                 </div>
             </div>
 
@@ -119,6 +118,13 @@
 
     </script>
 
+    <script>
+        $('#adoption').click(() => {
+            $.get('/Adoption/LikeTolist', function(data) {
+                $('#memberDetail').html(data);
+            })
+        })
 
+    </script>
 
 }

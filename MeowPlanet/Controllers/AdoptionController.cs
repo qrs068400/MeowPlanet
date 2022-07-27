@@ -8,6 +8,8 @@ using MeowPlanet.ViewModels.Adopts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using System.Security.Claims;
+
 
 namespace MeowPlanet.Controllers
 {
@@ -18,13 +20,15 @@ namespace MeowPlanet.Controllers
 
         public AdoptionController(endtermContext context)
         {
+
             _context = context;
+
         }
 
         public ActionResult Index()
         {
             var catDtoList = new List<CatsDto>();
-            catDtoList = GetCatsDto(null,0,null); //初始值: city=null, breedId=0, Sex=null
+            catDtoList = GetCatsDto(null, 0, null); //初始值: city=null, breedId=0, Sex=null
             var cats = catDtoList.OrderBy(x => Guid.NewGuid()).ToList();
             if (catDtoList.Count() > 0)
             {
@@ -41,14 +45,15 @@ namespace MeowPlanet.Controllers
             if ((!string.IsNullOrEmpty(city) && city != "全部") || breedId != 0 || catSex != null)
             {
                 //查詢條件
-                catDtoList = GetCatsDto(city, breedId, catSex).OrderBy(x => Guid.NewGuid()).ToList(); 
+                catDtoList = GetCatsDto(city, breedId, catSex).OrderBy(x => Guid.NewGuid()).ToList();
                 //暫存查詢條件
-                ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? catDtoList[0].CatCity:"全部";
+                ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? catDtoList[0].CatCity : "全部";
                 ViewBag.breedId = (breedId != 0) ? catDtoList[0].BreedId : 0;
-                ViewBag.catSex = (catSex != null)? catDtoList[0].CatSex : null;
+                ViewBag.catSex = (catSex != null) ? catDtoList[0].CatSex : null;
 
             }
-            else {
+            else
+            {
                 catDtoList = GetCatsDto(null, 0, null).OrderBy(x => Guid.NewGuid()).ToList(); //初始值: city=null, breedId=0, Sex=null
             }
             ViewBag.catid = catDtoList[0].CatId;
@@ -61,42 +66,60 @@ namespace MeowPlanet.Controllers
         [HttpPost]
         public JsonResult Like(Adopt adopt, int catid)
         {
-            var memberid = 1;
+            //主人ID
+            var owner = _context.Cats
+            .Where(x => x.CatId == adopt.CatId).Select(x => x.MemberId).FirstOrDefault();
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            var memberid = LoginId;
             adopt.MemberId = memberid;
             adopt.CatId = catid;
             adopt.DateStart = DateTime.Today;
             adopt.DateOver = null;
             adopt.Status = 0;
+            adopt.Owner = owner;
+
             _context.Adopts.Add(adopt);
             _context.SaveChanges();
             return null;
         }
 
 
-        public ActionResult Search(string? city_Utf8, int breedId,bool? catSex)
+        public ActionResult Search(string? city_Utf8, int breedId, bool? catSex)
         {
-            var city = HttpUtility.UrlDecode(city_Utf8);
+            var city = HttpUtility.UrlDecode(city_Utf8); //解碼unicode
             var catDtoList = new List<CatsDto>();
             var CatsDto = GetCatsDto(city, breedId, catSex).OrderBy(x => Guid.NewGuid()).ToList(); //排序及查詢條件
 
             //暫存查詢條件
             ViewBag.catid = CatsDto[0].CatId;
-            ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ?CatsDto[0].CatCity:"全部";
+            ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? CatsDto[0].CatCity : "全部";
             ViewBag.breedId = (breedId != 0) ? CatsDto[0].BreedId : 0;
-            ViewBag.catSex = (catSex != null)? CatsDto[0].CatSex : null;
+            ViewBag.catSex = (catSex != null) ? CatsDto[0].CatSex : null;
 
             return PartialView("_CardPartial", CatsDto);
         }
 
         public List<CatsDto> GetCatsDto(string? city, int breedId, bool? catSex)
         {
-            var memberid = 1;
+            var LoginId = 0;
+            if (User.FindFirst(ClaimTypes.Sid) != null)
+            {
+                LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            }
+            var memberid = LoginId;
             var catBreeds = _context.CatBreeds.ToList();
             //頁面上呈現品種
             ViewBag.CatBreeds = catBreeds;
-            var adopt = _context.Adopts.Where(x => x.MemberId == memberid).ToList();
             var catDtoList = new List<CatsDto>();
-            var catList = _context.Cats.Where(x => x.MemberId != memberid && x.IsAdoptable == true).ToList();
+            var catList =new List<Cat>();
+            var adopt = new List<Adopt>(); 
+            if (memberid == 0) {
+                 catList = _context.Cats.Where(x => x.IsAdoptable == true).ToList();
+            }
+            else{
+                 catList = _context.Cats.Where(x => x.MemberId != memberid && x.IsAdoptable == true).ToList();
+                 adopt = _context.Adopts.Where(x => x.MemberId == memberid).ToList();
+            }
 
             #region 搜尋條件判斷
             if (breedId != 0)
@@ -140,12 +163,111 @@ namespace MeowPlanet.Controllers
                         CatCity = catList[i].City,
                     };
                     catDtoList.Add(catDto);
-
                 }
             }
             return catDtoList;
-
         }
+
+        public ActionResult LikeTolist()
+        {
+            //申請領養列表
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            var memberid = LoginId;
+            ViewBag.MemberId = memberid;
+            var likeadopts = _context.Adopts
+             .Where(x => x.MemberId == memberid)
+             .Include(x => x.Cat)
+             .Include(x => x.Cat.Breed)
+             .Select(x => new ViewModels.LikeAdopts()
+             {
+                 CatName = x.Cat.Name,
+                 MemberId=x.MemberId,
+                 CatSex = x.Cat.Sex,
+                 CatAge = x.Cat.Age,
+                 BreedName = x.Cat.Breed.Name,
+                 CatImg1 = x.Cat.Img01,
+                 DateStart = x.DateStart,
+                 DateOver = x.DateOver,
+                 Status = x.Status,
+                 Owner = x.Owner,
+             }).OrderByDescending(x =>x.DateStart).ToList();
+
+            //送養列表
+            var owner = _context.Adopts.Where(x => x.Owner == memberid).ToList();
+            var owners = new List<ViewModels.LikeAdopts>();
+
+            for (int i = 0; i <= owner.Count(); i++)
+            {
+                var ownerlist = _context.Adopts
+                 .Where(x => x.Owner == memberid)
+                 .Include(x => x.Member)
+                 .Select(x => new ViewModels.LikeAdopts()
+                 {
+                     MemberId = x.MemberId,
+                     CatId = x.CatId,
+                     CatName = x.Cat.Name,
+                     CatSex = x.Cat.Sex,
+                     CatAge = x.Cat.Age,
+                     BreedName = x.Cat.Breed.Name,
+                     CatImg1 = x.Cat.Img01,
+                     DateStart = x.DateStart,
+                     DateOver = x.DateOver,
+                     Status = x.Status,
+                     Phone = x.Member.Phone,
+                 }).OrderByDescending(x => x.DateStart).ToList();
+                   ViewBag.owner = ownerlist;
+            }
+              return PartialView("_AdoptListPartial", likeadopts);
+        }
+
+        [HttpPost]
+        public  JsonResult OwnerNo(int catid , int memberid)
+        {
+     
+            var ownerno = new Adopt();
+            var owner = _context.Adopts.Where(x => x.CatId == catid && x.MemberId == memberid).FirstOrDefault();
+        
+            owner.DateOver= DateTime.Today;
+            owner.Status = 1;
+
+            _context.Entry(owner).State= EntityState.Modified;
+            _context.SaveChanges();
+
+            var state = "";
+            if (owner.Status == 1)
+            {
+                state = "已拒絕";
+            }
+            else if(owner.Status==2)
+            {
+                state = "已同意";
+            }
+            return Json(state);
+        }
+
+        [HttpPost]
+        public JsonResult OwnerYes(int catid)
+        {
+
+            var ownerno = new Adopt();
+            var owner = _context.Adopts.Where(x => x.CatId == catid).FirstOrDefault();
+
+            owner.DateOver = DateTime.Today;
+            owner.Status = 2;
+
+            _context.Entry(owner).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            //變更貓咪主人
+            var cats = _context.Cats.Where(x => x.CatId == catid).FirstOrDefault();
+            cats.MemberId = owner.MemberId;
+            cats.IsAdoptable = false;
+            _context.Entry(cats).State = EntityState.Modified;
+            _context.SaveChanges();
+
+            return Json(null);
+        }
+
 
     }
 }
