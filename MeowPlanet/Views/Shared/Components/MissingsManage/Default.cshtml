@@ -3,29 +3,116 @@
 <style>
 
     div.clue-item {
+        height: 30%;
         border-radius: 25px;
         box-shadow: 0 0 3rem rgb(134 171 190 / 30%) inset !important;
         background-color: rgb(27, 39, 53);
-        margin-top: 3rem !important;
+        margin-top: 1.5rem !important;
+        font-size: 1.15rem;
     }
 
-    div:first-of-type.clue-item{
+    div:first-of-type.clue-item {
         margin-top: 0.5rem !important;
     }
 
 
     .clue-item img {
-        height: 125px;
-        width: 150px;
+        height: 140px;
+        width: 180px;
         object-fit: cover;
         border-radius: 20px
     }
+
+    #clue-detail img {
+        height: 60px;
+        width: 60px;
+        object-fit: cover;
+        border-radius: 50%;
+    }
+
+    .speech-bubble {
+        position: relative;
+        background: #c9c9c9;
+        border-radius: 15px;
+        height: 140px;
+        width: 200px;
+        color: black;
+        bottom: 0;
+        left: 0;
+        border: 2px solid black;
+    }
+
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 70%;
+            width: 0;
+            height: 0;
+            border: 14px solid transparent;
+            border-right-color: #c9c9c9;
+            border-left: 0;
+            border-bottom: 0;
+            margin-top: -7px;
+            margin-left: -14px;
+        }
+
+    .btn-pin {
+        border: 2px solid black;
+        font-size: 1.1rem;
+        color: white;
+        background-color: black;
+        padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+    }
+
+        .btn-pin:hover {
+            color: white;
+            background-color: black;
+        }
+
+    .btn-remove {
+        border: 2px solid white;
+        width: 15%;
+        font-size: 1.1rem;
+        color: black;
+        background-color: white;
+        padding: 0.4rem;
+    }
+
+        .btn-remove:hover {
+            color: white;
+            background-color: black;
+        }
+
 </style>
 
 @foreach (var item in Model)
 {
-    <div class="clue-item p-3 me-3">
-        <img src="@item.ImagePath" />
+    <div class="clue-item p-3 me-3 d-flex justify-content-between">
+        <div class="col-3">
+            <img src="@item.ImagePath" />
+        </div>
+        <div class="col-9 d-flex">
+            <div class="col-4 d-flex flex-column justify-content-between" id="clue-detail">
+                <div>
+                    相遇日期 : @Html.DisplayFor(x => item.WitnessTime)
+                </div>
+                <div>
+                    距離走失地 @item.Distance 公尺
+                </div>
+                <div>
+                    <img src="@item.ProviderPhoto" /> @item.ProviderName 的留言
+                </div>
+            </div>
+            <div class="col-8 position-relative">
+                <div class="speech-bubble position-absolute">
+                    <div class="overflow-auto h-100 w-100 py-2 px-4" style="word-break:break-all">
+                        @item.Description
+                    </div>
+                </div>
+                <button class="position-absolute btn rounded-pill mx-3 btn-pin" style="right:0">釘選此線索</button>
+            </div>
+        </div>
     </div>
 
 }
