@@ -39,11 +39,11 @@
                     <h5>摘要</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Summary)</p>
                     <h5>寵物晚上睡覺的地方</h5>
-                    <p>@Html.DisplayFor(model => model.sitter.Sleep)</p>
+                    <p>@Html.DisplayFor(model => model.sitter.Licence)</p>
                     <h5>我家的類型</h5>
-                    <p>@Html.DisplayFor(model => model.sitter.House)</p>
+                    <p>@Html.DisplayFor(model => model.sitter.Cage)</p>
                     <h5>我的戶外區域大小</h5>
-                    <p>@Html.DisplayFor(model => model.sitter.Outdoor)</p>
+                    <p>@Html.DisplayFor(model => model.sitter.Monitor)</p>
                     <h5>貓需要的室內設施</h5>
                         @for(int i = 0 ; i< Model.sitterfeatureList.Count; i++)
                         {
@@ -152,10 +152,9 @@
             <div class="row pt-5 pb-5">
                 <div class="h3">保母位置</div>
 
-                <div class="map">
+                <div class="map" id="map">
 
                 </div>
-
             </div>
         </location>
         <hr>
@@ -166,51 +165,44 @@
 
     @section Scripts{
     <script src="~/js/sitter-detail.js"></script>
-
-    @*彈出更多評論*@
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5GLU-Md1jCttuMgYGiLngvDh0nELvLjM&callback=initMap&libraries=places,geometry&v=weekly"></script>
     <script>
+        //sweetalert 更多評論
         $(".more-comment, .comment-num").click(function () {
-        Swal.fire(
-        {
-            title: '',
-            width: 1000,
-            padding: '2em',
-            color: '#fff',
-            background: "#171B20",
-            showConfirmButton: false,
-            showCloseButton: true,
-            backdrop: `rgba(0,0,0,0.4)`,
-            html: `<div class="pop-star h2">
-                        <i class="fa-solid fa-star"></i>
-                        <span class="star-txt">4.9</span>
-                        <span class="">@Html.DisplayFor(model => model.OrderCommentList.Count)則評價</span>
-                    </div>
-                    
-                    @for(int i = 0 ; i < 4;i++){
-
-                    <div class="pop-comment-area">
-                        <div class="pop-one-comment">
-                            <div class="pop-user-info">
-                                <div class="d-flex">
-                                    <img class="user-pic" src="/images/sitter/cat.jpg">
-                                    <div class="user-detail">
-                                        <div class="user-name">@Html.DisplayFor(model => model.OrderCommentList[0].MemberId)</div>
-                                        <div class="comment-time">@Html.DisplayFor(model => model.OrderCommentList[0].DateOver)</div>
+            Swal.fire(
+            {
+                title: '',
+                width: 1000,
+                padding: '2em',
+                color: '#fff',
+                background: "#171B20",
+                showConfirmButton: false,
+                showCloseButton: true,
+                backdrop: `rgba(0,0,0,0.4)`,
+                html: `<div class="pop-star h2">
+                            <i class="fa-solid fa-star"></i>
+                            <span class="star-txt">4.9</span>
+                            <span class="">@Html.DisplayFor(model => model.OrderCommentList.Count)則評價</span>
+                        </div>
+                            <div class="pop-comment-area">
+                        @for(int i = 0 ; i < 4;i++){
+                                <div class="pop-one-comment">
+                                    <div class="pop-user-info">
+                                        <div class="d-flex">
+                                            <img class="user-pic" src="/images/sitter/cat.jpg">
+                                            <div class="user-detail">
+                                                <div class="user-name">@Html.DisplayFor(model => model.OrderCommentList[0].MemberId)</div>
+                                                <div class="comment-time">@Html.DisplayFor(model => model.OrderCommentList[0].DateOver)</div>
+                                            </div>
+                                        </div>
+                                        <div class="user-comment">
+                                            @Html.DisplayFor(model => model.OrderCommentList[0].Comment)
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="user-comment">
-                                    @Html.DisplayFor(model => model.OrderCommentList[0].Comment)
-                                </div>
-                            </div>
-                        </div>
-                        
-                    </div>
-                    }`
-                    ,
-        });
-})
+                        }
+                        </div>`,
+            });
+        })
     </script>
-    
 }
-   
-    
