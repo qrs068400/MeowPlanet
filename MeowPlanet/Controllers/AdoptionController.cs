@@ -66,7 +66,7 @@ namespace MeowPlanet.Controllers
             adopt.CatId = catid;
             adopt.DateStart = DateTime.Today;
             adopt.DateOver = null;
-            adopt.Status = false;
+            adopt.Status = 0;
             _context.Adopts.Add(adopt);
             _context.SaveChanges();
             return null;
