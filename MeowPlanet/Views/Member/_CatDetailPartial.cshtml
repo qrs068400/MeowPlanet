@@ -1,18 +1,18 @@
 ﻿@model MeowPlanet.ViewModels.MemberInfo.CatDetailViewModel
 
 <form method="post" asp-action="UpdateCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
-<div class="row">
-    
+    <div class="row">
+
         <input type="text" asp-for="CatId" class="d-none" value="@Model.CatId" />
         <div class="col-1"></div>
         <div class="col-4">
             <div class="my-3">
                 <p>名稱</p>
-                <input type="text" value="@Model.Name" asp-for="Name"/>
+                <input type="text" value="@Model.Name" asp-for="Name" />
             </div>
             <div class="my-3">
                 <p>品種</p>
-                <input type="text" value="@Model.Breed" disabled/>
+                <input type="text" value="@Model.Breed" disabled />
             </div>
             <div class="my-3">
                 <p>性別</p>
@@ -24,11 +24,11 @@
             </div>
             <div class="my-3">
                 <p>年齡</p>
-                <input type="text" value="@Model.Age" asp-for="Age"/>
+                <input type="text" value="@Model.Age" asp-for="Age" />
             </div>
             <div class="my-3">
                 <p>所在地</p>
-                <input type="text" value="@Model.City" asp-for="City"/>
+                <input type="text" value="@Model.City" asp-for="City" />
             </div>
             <div class="my-3">
                 <p>介紹</p>
@@ -64,7 +64,7 @@
 
             <div class="text-center" style="margin:16px;">
                 <img src="@Model.Img01" style="width:250px;height:180px;border-radius:30px;" id="imgPreview1">
-                <input id="imgInput1" type="file" class="d-none" name="file1"/>
+                <input id="imgInput1" type="file" class="d-none" name="file1" />
             </div>
 
 
@@ -72,11 +72,11 @@
 
                 <div>
                     <img src="@Model.Img02" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview2">
-                    <input id="imgInput2" type="file" class="d-none" name="file2"/>
+                    <input id="imgInput2" type="file" class="d-none" name="file2" />
                 </div>
                 <div>
                     <img src="@Model.Img03" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview3">
-                    <input id="imgInput3" type="file" class="d-none" name="file3"/>
+                    <input id="imgInput3" type="file" class="d-none" name="file3" />
                 </div>
 
             </div>
@@ -85,11 +85,11 @@
 
                 <div>
                     <img src="@Model.Img04" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview4">
-                    <input id="imgInput4" type="file" class="d-none" name="file4"/>
+                    <input id="imgInput4" type="file" class="d-none" name="file4" />
                 </div>
                 <div>
                     <img src="@Model.Img05" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview5">
-                    <input id="imgInput5" type="file" class="d-none" name="file5"/>
+                    <input id="imgInput5" type="file" class="d-none" name="file5" />
                 </div>
 
             </div>
@@ -102,24 +102,15 @@
                 <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center">修改資料</button>
             </div>
             <div class="my-5 d-flex justify-content-center">
-                <button class="btn cat-detail-btn d-flex align-items-center justify-content-center" onclick="returnList()">返回列表</button>
+                <button type="button" id="backToList" class="btn cat-detail-btn d-flex align-items-center justify-content-center">返回列表</button>
             </div>
         </div>
 
-    
-</div>
+
+    </div>
 </form>
 
 <script>
-
-    function returnList() {
-        $.get("@Url.Action("GetCatInfo", "Member")", function(data) {
-            $("#cat-region-select").html(data)
-        })
-        $(".member-region").css("display", "block")
-
-        $("#cat-region").css("width", "").addClass("col-6")
-    }
 
     var sex = '@Model.Sex';
     var adoptable = '@Model.IsAdoptable';

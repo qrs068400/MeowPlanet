@@ -36,6 +36,18 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+
+        // 回應MyAccountPartial
+        [HttpGet]
+        public ActionResult GetAccountInfo(int MemberId)
+        {
+            var MemberInfo = _context.Members.FirstOrDefault(p => p.MemberId == MemberId);
+            
+            return PartialView("_MyAccountPartial", MemberInfo);
+        }
+
+
+
         // 建立貓咪資料
         [HttpPost]
         public async Task<IActionResult> AddCat(Cat cat, IFormFile file1 , IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
@@ -134,12 +146,14 @@ namespace MeowPlanet.Controllers
         [HttpGet]
         public ActionResult GetCatDetail(int CatId)
         {
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
 
             var CatDetail = _context.Cats.Where(x => x.CatId == CatId).Join(_context.CatBreeds,
                 c => c.BreedId,
                 s => s.BreedId,
                 (c, s) => new CatDetailViewModel
                 {
+                    MemberId = LoginId,
                     CatId = c.CatId,
                     Name = c.Name,
                     Breed = s.Name,
@@ -238,11 +252,30 @@ namespace MeowPlanet.Controllers
             oldCat.IsAdoptable = cat.IsAdoptable;
             oldCat.IsSitting = cat.IsSitting;
             oldCat.IsMissing = cat.IsMissing;
-            oldCat.Img01 = cat.Img01;
-            oldCat.Img02 = cat.Img02;
-            oldCat.Img03 = cat.Img03;
-            oldCat.Img04 = cat.Img04;
-            oldCat.Img05 = cat.Img05;
+            if(cat.Img01 != null)
+            {
+                oldCat.Img01 = cat.Img01;
+            }
+            if(cat.Img02 != null)
+            {
+                oldCat.Img02 = cat.Img02;
+            }
+            if (cat.Img03 != null)
+            {
+                oldCat.Img03 = cat.Img03;
+            }
+            if (cat.Img04 != null)
+            {
+                oldCat.Img04 = cat.Img04;
+            }
+            if (cat.Img05 != null)
+            {
+                oldCat.Img05 = cat.Img05;
+            }
+            
+            
+            
+            
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
@@ -261,5 +294,6 @@ namespace MeowPlanet.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
     }
 }
