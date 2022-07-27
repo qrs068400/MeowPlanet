@@ -117,6 +117,9 @@ body {
     border-radius: 30px;
     font-size: 20px;
     color: white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
 }
 
 .cat-region {
@@ -185,4 +188,20 @@ textarea {
     font-size: 25px;
     width: 100%;
     padding: 0 1rem;
+}
+
+.cat-detail-btn {
+    color: white;
+    font-size: 30px;
+    border-radius: 20px;
+    height: 70px;
+    width: 200px;
+    padding: 1rem;
+    border: 2px rgb(115, 244, 222) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    margin-top:8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
