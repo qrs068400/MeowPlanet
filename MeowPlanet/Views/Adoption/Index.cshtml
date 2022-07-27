@@ -1,8 +1,13 @@
 ﻿@model IEnumerable<MeowPlanet.ViewModels.Adopts.CatsDto>
 
+@using System.Security.Claims;
+
+
 @{
     ViewData["Title"] = "C";
     var x = 0;
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
+
 }
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
@@ -100,7 +105,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消</button>
-                        <button type="button" id="search" class="btn btn-primary"data-bs-dismiss="modal">確認</button>
+                        <button type="button" id="search" class="btn btn-primary" data-bs-dismiss="modal">確認</button>
                     </div>
                 </div>
             </div>
@@ -122,56 +127,56 @@
                 <div class="box1 bounce-in-top2">
                     @foreach (var item in Model)
                     {
-                            <div class="autoplay col-12">
+                        <div class="autoplay col-12">
                             @if (@item.CatImg1 != null)
                             {
-                                        <div class="slide-1"><img src="@Url.Content(@item.CatImg1)"></div>
+                                <div class="slide-1"><img src="@Url.Content(@item.CatImg1)"></div>
                             }
                             @if (@item.CatImg2 != null)
                             {
-                                        <div class="slide-2"><img src="@Url.Content(@item.CatImg2)"></div>
+                                <div class="slide-2"><img src="@Url.Content(@item.CatImg2)"></div>
                             }
                             @if (@item.CatImg3 != null)
                             {
-                                        <div class="slide-3"><img src="@Url.Content(@item.CatImg3)"></div>
+                                <div class="slide-3"><img src="@Url.Content(@item.CatImg3)"></div>
                             }
                             @if (@item.CatImg4 != null)
                             {
-                                        <div class="slide-4"><img src="@Url.Content(@item.CatImg4)"></div>
+                                <div class="slide-4"><img src="@Url.Content(@item.CatImg4)"></div>
                             }
                             @if (@item.CatImg5 != null)
                             {
-                                        <div class="slide-5"><img src="@Url.Content(@item.CatImg5)"></div>
+                                <div class="slide-5"><img src="@Url.Content(@item.CatImg5)"></div>
                             }
 
-                            </div>
+                        </div>
 
-                            <div class="context trun front col-12">
-                                <div class="title">@item.CatName</div>
-                                <div class="a1">
-                                    <span>@item.BreedName</span>
+                        <div class="context trun front col-12">
+                            <div class="title">@item.CatName</div>
+                            <div class="a1">
+                                <span>@item.BreedName</span>
                                 @if (@item.CatSex == false)
                                 {
-                                            <i class="fa-solid fa-venus" style="color:#FF8EFF;font-size:1.3rem"></i>
+                                    <i class="fa-solid fa-venus" style="color:#FF8EFF;font-size:1.3rem"></i>
                                 }
                                 else if (@item.CatSex == true)
                                 {
-                                            <i class="fa-solid fa-mars" style="color:#99b8d4;font-size:1.3rem"></i>
+                                    <i class="fa-solid fa-mars" style="color:#99b8d4;font-size:1.3rem"></i>
                                 }
-                                    <p class="age">@item.CatAge 歲</p>
-                                    <p>@item.CatCity </p>
-                                    <p class="introduce">@item.CatIntroduce </p>
-                                </div>
+                                <p class="age">@item.CatAge 歲</p>
+                                <p>@item.CatCity </p>
+                                <p class="introduce">@item.CatIntroduce </p>
                             </div>
+                        </div>
 
-                            <div class="like" style="text-align:center; ">
-                                <button id="like" onclick='checklike()' type="button" class="btn btn-outline-danger buzz-pri pulsate-bck">
-                                    <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
-                                    </svg> 認養
-                                </button>
-                                <button id="pass" type="button" class="btn btn-outline-secondary buzz">PASS</button>
-                            </div>
+                        <div class="like" style="text-align:center; ">
+                            <button id="like" onclick='checklike()' type="button" class="btn btn-outline-danger buzz-pri pulsate-bck">
+                                <svg xmlns="http://www.w3.org/2000/svg" style="padding-bottom:3px;" width="18" height="18" fill="currentColor" class="bi bi-heart-fill " viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z" />
+                                </svg> 認養
+                            </button>
+                            <button id="pass" type="button" class="btn btn-outline-secondary buzz">PASS</button>
+                        </div>
                         break;
                     }
                 </div>
@@ -193,26 +198,27 @@
     //nav-item效果
     $('.nav-item a').eq(2).addClass('nav-item-active');
 
-//---------------------Start Event-------------------------------------
-    
+    //---------------------Start Event-------------------------------------
+    var isLogin = '@isLogin';
+    var memberId = '@memberId';
     //pass事件
     $('#pass').click(function() {
-        
+
         //回傳PartialView
         $.get("@Url.Action("Next", "Adoption")", function(data) {
             $(".cardbox").empty();
             $('.cardbox').html(data);
         })
     })
-    
+
     //search事件
     $('#search').click(function() {
-        var breedId = $("#inputState").val();    
+        var breedId = $("#inputState").val();
         var catSex = document.querySelector('input[name="inlineRadioOptions"]:checked').value;
         var catCity = $("#city").val();
-        
+
         //傳送資料到後端,回傳PartialView
-        $.get("@Url.Action("Search", "Adoption")"+"?city_Utf8="+ escape(catCity) + "&breedId=" + escape(breedId) + "&catSex=" + escape(catSex)  , function(data) {
+        $.get("@Url.Action("Search", "Adoption")" + "?city_Utf8=" + escape(catCity) + "&breedId=" + escape(breedId) + "&catSex=" + escape(catSex), function(data) {
             $(".cardbox").empty();
             $('.cardbox').html(data);
         })
@@ -227,48 +233,78 @@
     });
 
 
-//---------------------End Event-------------------------------------
+    //---------------------End Event-------------------------------------
 
 
-//---------------------Start Function-------------------------------------
+    //---------------------Start Function-------------------------------------
 
     //like事件
     function checklike() {
-        Swal.fire({
-            title: "確認要領養貓貓嗎？",
-            text: "確認申請領養後不可取消，請慎重考慮！",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#B99668',
-            cancelButtonColor: '#4B5461',
-            confirmButtonText: '申請'
-        }).then(function(result) {
-            if (result.value) {
-                Swal.fire(
-                    '已申請領養！',
-                    '請等候貓貓主人確認申請',
-                    'success'
-                ).then(function(result) {
-                    $.ajax({
-                        method: 'post',
-                        url: '/Adoption/Like',
-                        data: { catid: @ViewBag.catid},
-                        dataType: 'json',
-                        success: function(data) {
-                            window.location.reload();
-                        },
-                        error: function() {
-                            window.location.reload();
-                        }
-                    });
+        checkLogin(() => {
+            Swal.fire({
+                title: "確認要領養貓貓嗎？",
+                text: "確認申請領養後不可取消，請慎重考慮！",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#B99668',
+                cancelButtonColor: '#4B5461',
+                confirmButtonText: '申請'
+            }).then(function(result) {
+                if (result.value) {
+                    Swal.fire(
+                        '已申請領養！',
+                        '請等候貓貓主人確認申請',
+                        'success'
+                    ).then(function(result) {
+                        $.ajax({
+                            method: 'post',
+                            url: '/Adoption/Like',
+                            data: { catid: @ViewBag.catid},
+                            dataType: 'json',
+                            success: function(data) {
+                                window.location.reload();
+                            },
+                            error: function() {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                    )
                 }
-                )
-            }
-        });
+            })
+        })
+
+
     }
 
 
- //---------------------End Function-------------------------------------
+    //檢查登入
+    function checkLogin(action) {
+
+        if (isLogin == "False") {
+            Swal.fire({
+                title: '請登入會員以執行此操作',
+                text: '是否要前往登入頁面?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '前往登入',
+                cancelButtonText: '下次一定',
+                heightAuto: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/Login/Index";
+                }
+                else {
+                    return false
+                }
+            })
+        }
+        else {
+            action();
+        }
+    }
+
+     //---------------------End Function-------------------------------------
 
 </script>
 

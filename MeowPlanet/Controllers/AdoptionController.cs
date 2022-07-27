@@ -242,7 +242,9 @@ namespace MeowPlanet.Controllers
             {
                 state = "已同意";
             }
-            return Json(state);
+
+
+            return Json(null);
         }
 
         [HttpPost]

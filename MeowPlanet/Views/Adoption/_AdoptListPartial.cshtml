@@ -11,27 +11,46 @@
 }
 
 <style>
-     .table img {
-        width: 50%;
-        height: 70px;
-        border-radius: 50%;
-    }
 
-    table {
-        padding: 0px;
-        text-align: center;
-    }
 
-    td {
-        vertical-align: middle;
-    }
 
     .btn-outline-secondary {
         border: 0px solid;
     }
+
+    .nav-tabs {
+        border: 0px solid;
+    }
+
+    div.clue-item {
+        border-radius: 25px;
+        box-shadow: 0 0 3rem rgb(134 171 190 / 30%) inset !important;
+        background-color: rgb(27, 39, 53);
+        margin-top: 3rem !important;
+    }
+
+    div:first-of-type.clue-item {
+        margin-top: 0.5rem !important;
+    }
+
+    .clue-item img {
+        height: 125px;
+        width: 150px;
+        object-fit: cover;
+        border-radius: 20px
+    }
+
+    .fa-solid {
+        padding-left: 10px;
+    }
+
+    #myTabContent {
+        height: 600px;
+        overflow: auto;
+    }
 </style>
 
-<div class="container" style="width:100%;color:antiquewhite">
+<div class="container" style="width:100%;color:antiquewhite"id="a">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">送養</button>
@@ -42,68 +61,55 @@
     </ul>
     <div class="tab-content" id="myTabContent">
         <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
-            <table class="table table-dark table-hover">
-                <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">貓貓</th>
-                        <th scope="col">品種</th>                    
-                        <th scope="col">申請人手機</th>
-                        <th scope="col">申請日期</th>
-                        <th scope="col">狀態</th>
-                        <th scope="col"></th>
-                    </tr>
-                </thead>
-              @foreach (var item in @ViewBag.owner)
-                    {
-                        <tr class="table-dark">
-                            <td class="table-dark">                            
-                                <img src="@Url.Content(@item.CatImg1)">                     
-                            </td>
-                            <td class="table-dark">
-                                @item.CatName
-                            </td>
-                            <td class="table-dark">
-                                @item.BreedName
-                            </td>
-                        
-                           
-                            <td class="table-dark">
-                                @item.Phone
-                            </td>
-                               <td class="table-dark">
-                            @item.DateStart.ToShortDateString()
-                            </td>
-                            <td class="table-darkd">
-                                @if (@item.Status == 0)
-                                {
-                                    status = "等待中";
-                                }
-                                else if (@item.Status == 1)
-                                {
-                                    status = "已拒絕";
-                                }
-                                else
-                                {
-                                    status = "已同意";
-                                }
-                                @status
-                            </td>
-                            <td class="table-dark">
-                            @if (@item.Status == 0)
-                            {                               
-                                    <button id="@item.CatId" class="btn btn-outline-secondary no" value="@item.MemberId"><i class="fa-solid fa-xmark"></i></button>
-                                    <button id="@item.CatId" class="btn btn-outline-secondary yes" value="@item.MemberId"><i class="fa-solid fa-check"></i></button>
-                            }
-                            </td>
 
-                        </tr>
-                    }
-            </table>
+            @foreach (var item in @ViewBag.owner)
+            {
+                <div class="row clue-item p-3 me-3">
+                    <div class="col-3">
+                        <img src="@Url.Content(@item.CatImg1)">
+                    </div>
+                    <div class="col-5">
+                        <p>@item.CatName</p>
+                        <p>
+                            @item.BreedName
+                        </p>
+                        <p>
+                            申請人手機:@item.Phone
+                        </p>
+                        <p>
+                            申請日期:@item.DateStart.ToShortDateString()
+                        </p>
+                        <p>
+                            狀態:
+                            @if (@item.Status == 0)
+                            {
+                                status = "等待中";
+                            }
+                            else if (@item.Status == 1)
+                            {
+                                status = "已拒絕";
+                            }
+                            else
+                            {
+                                status = "已同意";
+                            }
+                            @status
+                        </p>
+                    </div>
+
+                    <div class="col-1" style="padding-left:280px;">
+                        @if (@item.Status == 0)
+                        {
+                            <button id="@item.CatId" class="btn btn-outline-secondary no" value="@item.MemberId"><i class="fa-solid fa-xmark"></i></button>
+                            <button id="@item.CatId" class="btn btn-outline-secondary yes" value="@item.MemberId"><i class="fa-solid fa-check"></i></button>
+                        }
+                    </div>
+                </div>
+            }
         </div>
 
         <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
-          <partial name="_OwnerPartial" />
+            <partial name="_OwnerPartial" />
 
         </div>
     </div>
@@ -134,21 +140,21 @@
                     '已拒絕申請！',
                     '',
                     'success'
-                ).then(function(result) {                       
+                ).then(function(result) {
                     $.ajax({
                         method: 'post',
                         url: '/Adoption/OwnerNo',
-                        data: { catid: catid ,memberid:memberid},
+                        data: { catid: catid, memberid: memberid },
                         dataType: 'json',
-                        success: function(data) { 
-                            @* //刷新狀態
-                             $("."+catid).empty();
-                             $("#"+catid).empty();
-                             $("."+catid).html(data);*@
-                             window.location.reload();
-                        },
+                        success: function(data) {
+                            $('#a').empty();
+                            $.get('/Adoption/LikeTolist', function(data) {
+                                $('#a').html(data);
+                            })
+   
+                            },
                         error: function() {
-                     
+
                         }
                     });
                 }
@@ -156,8 +162,11 @@
             }
         });
     });
-
-     $(".yes").click(function() {
+     @* //刷新狀態
+                                $("."+catid).empty();
+                                $("#"+catid).empty();
+                                $("."+catid).html(data);*@
+    $(".yes").click(function() {
         var catid = $(this).attr("id")
         Swal.fire({
             title: "確定要同意申請嗎？",
@@ -173,17 +182,17 @@
                     '已同意申請！',
                     '',
                     'success'
-                ).then(function(result) {                       
+                ).then(function(result) {
                     $.ajax({
                         method: 'post',
                         url: '/Adoption/OwnerNo',
                         data: { catid: catid },
                         dataType: 'json',
-                        success: function(data) { 
-                           window.location.reload();
+                        success: function(data) {
+                            window.location.reload();
                         },
                         error: function() {
-                     
+
                         }
                     });
                 }
