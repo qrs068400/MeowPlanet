@@ -36,6 +36,18 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+
+        // 回應MyAccountPartial
+        [HttpGet]
+        public ActionResult GetAccountInfo(int MemberId)
+        {
+            var MemberInfo = _context.Members.FirstOrDefault(p => p.MemberId == MemberId);
+            
+            return PartialView("_MyAccountPartial", MemberInfo);
+        }
+
+
+
         // 建立貓咪資料
         [HttpPost]
         public async Task<IActionResult> AddCat(Cat cat, IFormFile file1 , IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
@@ -134,12 +146,14 @@ namespace MeowPlanet.Controllers
         [HttpGet]
         public ActionResult GetCatDetail(int CatId)
         {
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
 
             var CatDetail = _context.Cats.Where(x => x.CatId == CatId).Join(_context.CatBreeds,
                 c => c.BreedId,
                 s => s.BreedId,
                 (c, s) => new CatDetailViewModel
                 {
+                    MemberId = LoginId,
                     CatId = c.CatId,
                     Name = c.Name,
                     Breed = s.Name,
@@ -280,5 +294,6 @@ namespace MeowPlanet.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
+
     }
 }
