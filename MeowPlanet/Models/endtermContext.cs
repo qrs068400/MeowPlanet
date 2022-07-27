@@ -32,8 +32,6 @@ namespace MeowPlanet.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Data Source=114.35.243.117,49172;Initial Catalog=endterm;Persist Security Info=True;User ID=endterm;Password=iii-fourth");
             }
         }
 
@@ -56,8 +54,6 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.DateStart)
                     .HasColumnType("date")
                     .HasColumnName("date_start");
-
-                entity.Property(e => e.Owner).HasColumnName("owner");
 
                 entity.Property(e => e.Status).HasColumnName("status");
 
@@ -362,13 +358,9 @@ namespace MeowPlanet.Models
                     .HasColumnType("decimal(2, 1)")
                     .HasColumnName("avg_star");
 
-                entity.Property(e => e.Cage)
+                entity.Property(e => e.House)
                     .HasMaxLength(50)
-                    .HasColumnName("cage");
-
-                entity.Property(e => e.CatNumber)
-                    .HasMaxLength(50)
-                    .HasColumnName("cat_number");
+                    .HasColumnName("house");
 
                 entity.Property(e => e.Img01)
                     .HasMaxLength(100)
@@ -392,23 +384,15 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.IsService).HasColumnName("is_service");
 
-                entity.Property(e => e.Licence)
-                    .HasMaxLength(50)
-                    .HasColumnName("licence");
-
-                entity.Property(e => e.Meal)
-                    .HasMaxLength(50)
-                    .HasColumnName("meal");
-
                 entity.Property(e => e.MemberId).HasColumnName("member_id");
-
-                entity.Property(e => e.Monitor)
-                    .HasMaxLength(50)
-                    .HasColumnName("monitor");
 
                 entity.Property(e => e.Name)
                     .HasMaxLength(50)
                     .HasColumnName("name");
+
+                entity.Property(e => e.Outdoor)
+                    .HasMaxLength(50)
+                    .HasColumnName("outdoor");
 
                 entity.Property(e => e.Pay).HasColumnName("pay");
 
@@ -419,6 +403,10 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.PosLng)
                     .HasColumnType("decimal(11, 8)")
                     .HasColumnName("pos_lng");
+
+                entity.Property(e => e.Sleep)
+                    .HasMaxLength(50)
+                    .HasColumnName("sleep");
 
                 entity.Property(e => e.Summary).HasColumnName("summary");
 
