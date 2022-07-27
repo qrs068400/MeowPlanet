@@ -34,7 +34,7 @@
                         <a>保姆服務</a>
                     </div>
                     <div class="text-center my-5">
-                        <a >領養資訊</a>
+                        <a href="#" id="adoption">領養資訊</a>
                     </div>
                     <div class="text-center my-5">
                         <a>協尋管理</a>
@@ -95,7 +95,11 @@
         $(document).on('click', '#backToList', () => {
             showAccount()
         })
-
+        $('#adoption').click(() => {
+            $.get('/Adoption/LikeTolist', function(data) {
+                $('#member-right-region').html(data);
+            })
+        })
 
         //$(function() {
 
@@ -115,15 +119,6 @@
 
         //    $("#cat-region").removeClass("col-6").css("width", "91.66%")
         //}
-
-    </script>
-
-    <script>
-        $('#adoption').click(() => {
-            $.get('/Adoption/LikeTolist', function(data) {
-                $('#memberDetail').html(data);
-            })
-        })
 
     </script>
 
