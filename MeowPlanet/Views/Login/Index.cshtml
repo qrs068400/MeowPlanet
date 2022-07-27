@@ -44,7 +44,7 @@
                             <div class="form-check form-switch cbox my-3">
                                 <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
                                 <label class="form-check-label" for="flexSwitchCheckChecked">記住我</label>
-                                <a href="#" id="forgot-password">忘記密碼?</a>
+                                <a id="forgot-password" asp-controller="Login" asp-action="Password">忘記密碼?</a>
                             </div>
 
                             <div class="d-flex align-items-center">
@@ -54,7 +54,8 @@
                         <p class="or-p text-center">———————&ensp;&ensp;&ensp;或者&ensp;&ensp;&ensp;———————</p>
 
                         <div class="d-flex justify-content-center link-icon">
-                            <img src="@Href("~/Images/googleplus.png")">
+                            @*<img src="@Href("~/Images/googleplus.png")">*@
+                            <i class="fa-brands fa-google-plus"></i>
                         </div>
 
                         <div class="text-center re-a">

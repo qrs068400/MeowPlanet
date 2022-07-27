@@ -6,6 +6,7 @@
 
 html,
 body {    
+    height: 100vh;
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -19,8 +20,8 @@ body {
 }
 
 #div-map, #div-items {
-    border: 2px rgb(219, 232, 248) solid !important;
-    box-shadow: 0 0 3rem rgb(134 171 190 / 50%) inset !important;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgb(134 171 190 / 50%) inset;
     background: rgba(0, 0, 0, .3);
     border-radius: 20px;
     height: 100%;
@@ -86,9 +87,7 @@ a[href^="http://maps.google.com/maps"] {
 a[href^="https://maps.google.com/maps"] {
     display: none !important
 }
-.gm-style{
-    font: inherit;
-}
+
 .gmnoprint a,
 .gmnoprint span,
 .gm-style-cc {
@@ -130,32 +129,11 @@ input[type="search"]::-webkit-search-cancel-button {
     transform: translate(-20px, -20px);
 }
 
-/*infowindow*/
+/*infowindoweµƒ”“…œΩ«x*/
 .gm-ui-hover-effect {
     display: none !important;
 }
 
-.gm-style-iw {
-    color: white !important;
-    background-color: rgb(27, 39, 53) !important;
-    border: 2px solid white !important;
-    border-radius: 25px !important;
-    box-shadow: 0 0 3rem rgb(134 171 190 / 50%) inset !important;    
-}
-
-.gm-style-iw button{
-    width:35%;
-    font-size:1.05rem;
-    border: 1px solid white;
-}
-
-.gm-style-iw div{
-    color: white !important;
-}
-
-.gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece{
-    display: none;
-}
 
 .cat-item div {
     color: white;
@@ -210,25 +188,3 @@ input[type="search"]::-webkit-search-cancel-button {
         background-color: #212529;
         border-color: #1a1e21;
     }
-
-.img-upload {
-    border: 2px rgb(85, 152, 162) dashed;
-    border-radius: 10px;
-    overflow: hidden;
-}
-
-.w-85{
-    width:85%
-}
-
-.modal-content {
-    border: 2px solid white;
-    border-radius: 25px;
-    box-shadow: 0 0 3rem rgb(134 171 190 / 50%) inset !important;
-}
-
-
-.swal-size {
-    width: 100%;
-    height: 50%;
-}
