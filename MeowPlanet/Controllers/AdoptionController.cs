@@ -216,7 +216,7 @@ namespace MeowPlanet.Controllers
                  }).OrderByDescending(x => x.DateStart).ToList();
                    ViewBag.owner = ownerlist;
             }
-              return View(likeadopts);
+              return PartialView("_AdoptListPartial", likeadopts);
         }
 
         [HttpPost]
