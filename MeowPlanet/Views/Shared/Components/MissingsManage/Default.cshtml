@@ -1,7 +1,31 @@
-﻿@model IEnumerable<MeowPlanet.Models.Clue>
+﻿@model IEnumerable<MeowPlanet.ViewModels.Missings.ClueViewModel>
 
+<style>
+
+    div.clue-item {
+        border-radius: 25px;
+        box-shadow: 0 0 3rem rgb(134 171 190 / 30%) inset !important;
+        background-color: rgb(27, 39, 53);
+        margin-top: 3rem !important;
+    }
+
+    div:first-of-type.clue-item{
+        margin-top: 0.5rem !important;
+    }
+
+
+    .clue-item img {
+        height: 125px;
+        width: 150px;
+        object-fit: cover;
+        border-radius: 20px
+    }
+</style>
 
 @foreach (var item in Model)
 {
-    <div>@item.ClueId</div>
+    <div class="clue-item p-3 me-3">
+        <img src="@item.ImagePath" />
+    </div>
+
 }

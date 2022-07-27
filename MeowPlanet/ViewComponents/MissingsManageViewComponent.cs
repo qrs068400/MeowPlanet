@@ -3,6 +3,8 @@ using MeowPlanet.Models;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
+using GeoCoordinatePortable;
+using MeowPlanet.ViewModels.Missings;
 
 namespace MeowPlanet.ViewComponents
 {
@@ -16,11 +18,25 @@ namespace MeowPlanet.ViewComponents
         }
         public IViewComponentResult Invoke(int memberId, int status)
         {
+
+
             var result = _context.Clues.Include(c => c.Missing)
                 .Include(c => c.Missing.Cat)
                 .Where(c => c.Missing.Cat.MemberId == memberId && c.Missing.Cat.IsMissing == true)
                 .Where(c => c.Missing.CatId == c.Missing.Cat.CatId)
-                .Where(c => c.Missing.MissingId == c.MissingId && c.Status == status).ToList();
+                .Where(c => c.Missing.MissingId == c.MissingId && c.Status == status)
+                .Select(c => new ClueViewModel
+                {
+                    ClueId = c.ClueId,
+                    WitnessTime = c.WitnessTime,
+                    Status = c.Status,
+                    ImagePath = c.ImagePath,
+                    Description = c.Description,
+                    ProviderName = c.Member.Name,
+                    ProviderPhoto = c.Member.Photo,
+                    Distance = (int)new GeoCoordinate((double)c.WitnessLat, (double)c.WitnessLng).GetDistanceTo(new GeoCoordinate((double)c.Missing.Lat, (double)c.Missing.Lng))
+                })
+                .ToList();
 
 
             return View(result);

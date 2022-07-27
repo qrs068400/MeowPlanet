@@ -142,5 +142,11 @@ namespace MeowPlanet.Models
 
             return "OK";
         }
+
+        [HttpGet]
+        public IActionResult GetClues()
+        {
+            return PartialView("_MissingCluePartial");
+        }
     }
 }

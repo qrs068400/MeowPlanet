@@ -1,6 +1,4 @@
 ﻿@model MeowPlanet.Models.Member
-@addTagHelper *, MeowPlanet
-
 @using System.Security.Claims;
 
 @{
@@ -38,14 +36,13 @@
                         <a href="#">領養資訊</a>
                     </div>
                     <div class="text-center my-5">
-                        <a href="#">協尋管理</a>
+                        <a href="#" id="clues">協尋管理</a>
                     </div>
 
 
                 </div>
                 <div class="col-9 memberright ms-3 row d-flex justify-content-center">
-                    <vc:missings-manage member-id="@Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value)" status="0"></vc:missings-manage>
-                    <div class="col-5 member-region d-none">
+                    <div class="col-5 member-region">
                         <div class="title"><p>會員資料</p></div>
                         <div class="my-4">
                             <p>Email</p>
@@ -70,7 +67,7 @@
 
                     </div>
 
-                    <div class="col-6 cat-region d-none" id="cat-region">
+                    <div class="col-6 cat-region" id="cat-region">
                         <div class="cat-region-title d-flex">
                             <p>喵星人</p>
                             <a class="btn" asp-controller="Member" asp-action="CreateCat">+建立</a>
@@ -97,15 +94,21 @@
 
         })
 
-        function ToDetail(id){
+        function ToDetail(id) {
             $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
                 $("#cat-region-select").html(data)
             })
 
-            $(".member-region").css("display","none")
+            $(".member-region").css("display", "none")
 
-            $("#cat-region").removeClass("col-6").css("width","91.66%")
+            $("#cat-region").removeClass("col-6").css("width", "91.66%")
         }
+
+        $('#clues').click(() => {
+            $.get('/Missings/GetClues', (data) => {
+                $('.memberright').html(data);
+            })
+        })
     </script>
 
 

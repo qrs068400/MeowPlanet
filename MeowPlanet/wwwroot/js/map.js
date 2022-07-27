@@ -449,8 +449,8 @@ $(document).on('click', '#provideClues', () => {
             '<input type="text" id="witness-time" class="form-control rounded-pill" name="Description" />' +
             '</div>' +
             '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
-            '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check mx-1"></i> 發布</button>' +
-            '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark mx-1"></i> 取消</button>' +
+            '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check me-1"></i> 發布</button>' +
+            '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark me-1"></i> 取消</button>' +
             '</div>' +
             '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
             `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
