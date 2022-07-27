@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
+using System.Net.Mail;
 
 namespace MeowPlanet.Controllers
 {
@@ -29,6 +30,16 @@ namespace MeowPlanet.Controllers
         }
 
         public IActionResult Register()
+        {
+            return View();
+        }
+
+        public IActionResult Password()
+        {
+            return View();
+        }
+
+        public IActionResult ResetPassword()
         {
             return View();
         }
@@ -123,6 +134,52 @@ namespace MeowPlanet.Controllers
             }
 
             return RedirectToAction("Register");
+        }
+
+        // 寄驗證信
+        public ActionResult SendEmailMsg(string Email)
+        {
+            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+            msg.To.Add(Email);
+
+            msg.From = new MailAddress("meowplanet04@gmail.com", "喵屋星球", System.Text.Encoding.UTF8);
+
+            msg.Subject = "重新設定您在 MeowPlanet 的密碼";
+            msg.SubjectEncoding = System.Text.Encoding.UTF8;
+            msg.Body = "這是 MeowPlanet 喵屋星球 的密碼重置信，若你不曾要求重設密碼，請忽略這封信<br />" +
+                "<a href=\"https://localhost:44394/Login\">請點擊此連結重置密碼</a>" +
+                "<br /><br />MeowPlanet 喵屋星球";
+            msg.BodyEncoding = System.Text.Encoding.UTF8;
+            msg.IsBodyHtml = true;
+
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new System.Net.NetworkCredential("meowplanet04@gmail.com", "cbqjonjcosbrqnnv");
+            client.Host = "smtp.gmail.com";
+            client.Port = 25;
+            client.EnableSsl = true;
+            client.Send(msg);
+            client.Dispose();
+            msg.Dispose();
+
+            return NoContent();
+        }
+
+        [HttpGet]
+        public ActionResult ForgetPassword(string ForgetEmail)
+        {
+            var count = _context.Members.Count(x => x.Email == ForgetEmail);
+
+            if(count > 0)
+            {
+                SendEmailMsg(ForgetEmail);
+
+                return Content("驗證信已寄出");
+            }
+            else
+            {
+                return Content("此信箱不存在");
+            }
+
         }
     }
 }
