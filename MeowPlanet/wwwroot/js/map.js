@@ -38,8 +38,7 @@ function initMap() {
         maxZoom: 17,
         disableDefaultUI: true,
         mapId: 'a5f4cec6781c8dda',
-        gestureHandling: 'greedy',
-        clickableIcons: false
+        gestureHandling: 'greedy'
     });
 
     //currentPos();
@@ -59,19 +58,16 @@ function initMap() {
     //刊登協尋
     $('#pre-publish').on('click', function () {
 
-        checkLogin(() => {
-            let windowContent =
-                '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
-                '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-                '<button class="btn btn-primary" onclick="confirmPos()">' +
-                'Yes' +
-                '</button>' +
-                '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
-                '</div>';
+        let windowContent =
+            '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
+            '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+            '<button class="btn btn-primary" onclick="confirmPos()">' +
+            'Yes' +
+            '</button>' +
+            '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
+            '</div>';
 
-            settingMode(windowContent);
-        })
-    
+        settingMode(windowContent);
     })
 
 
@@ -111,33 +107,6 @@ function initMap() {
 
     //綁定移動事件
     listener = map.addListener('idle', searchCat)
-}
-
-
-//檢查登入
-function checkLogin(action) {
-
-    if (isLogin == "False") {
-        Swal.fire({
-            title: '請登入會員以執行此操作',
-            text: '是否要前往登入頁面?',
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonText: '前往登入',
-            cancelButtonText: '下次一定',
-            heightAuto: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                window.location.href = "/Login/Index";
-            }
-            else {
-                return false
-            }
-        })
-    }
-    else {
-        action();
-    }
 }
 
 
@@ -219,7 +188,7 @@ function settingMode(windowContent, offset) {
 
 
 
-let missingId;
+
 let showingWindow;
 
 //把所有走失貓咪抓進catList
@@ -252,7 +221,6 @@ $(function () {
                     $('#detailModal').modal('show');
                 })
 
-                missingId = cat.missingId;
             })
 
             //綁定此marker hover事件
@@ -273,6 +241,7 @@ $(function () {
             })
 
             cat.marker = marker;
+            cat.missingId = cat.missingId;
             catList.push(cat);
         })
     })
@@ -344,7 +313,6 @@ function removeWindow(clickedWindow) {
 function itemClicked(item) {
 
     let id = $(item).data('id');
-    missingId = id;
     let clickedCat = catList.filter(x => x.missingId == id)[0];
 
     map.setZoom(16);
@@ -394,113 +362,24 @@ function confirmPos() {
     })
 }
 
-//preview綁定事件
-$(document).on({
-    'click': () => $('#imgInput').trigger("click"), //點擊照片觸發input點擊事件
-    'dragover': (event) => event.preventDefault(),
-    'drop': (event) => {
-
-        event.preventDefault();
-
-        let file = event.originalEvent.dataTransfer.files[0];
-        let reader = new FileReader()
-
-        reader.readAsDataURL(file);
-        reader.onload = function(e) {
-            $('#imgPreview').attr('src', e.target.result)
-        }
-
-        let dt = new DataTransfer();
-        dt.items.add(file);
-        $('#imgInput')[0].files = dt.files
-    }
-}, '#imgPreview')
-
-//上傳預覽功能
-$(document).on('change', '#imgInput', function () {  
-
-    let reader = new FileReader();
-    reader.onload = function (e) {
-        $('#imgPreview').attr('src', e.target.result);
-    }
-
-    reader.readAsDataURL($('#imgInput')[0].files[0])
-})
-
 
 //提供線索
-$(document).on('click', '#provideClues', () => {    
+$(document).on('click', '#provideClues', () => {
 
-    checkLogin(() => {
-
-        let windowContent =
-            '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
-            '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
-            '<div class="form-group mt-3 text-center" style="height: 40%">' +
-            '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
-            '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
+    let windowContent =
+        '<form>' +
+            '<span class="h5 my-3">請輸入線索詳細資訊</span>' +
+            '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
+            '<button class="btn btn-primary" onclick="">發布</button>' +
+            '<button onclick="removeMarker();" class="btn btn-danger">取消</button>' +
             '</div>' +
-            '<div class="form-group mt-3 m-auto w-85">' +
-            '<label for="witness-time" class="h6">目擊時間 :</label>' +
-            '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
-            '</div>' +
-            '<div class="form-group mt-3 m-auto w-85">' +
-            '<label for="witness-time" class="h6">其他描述 :</label>' +
-            '<input type="text" id="witness-time" class="form-control rounded-pill" name="Description" />' +
-            '</div>' +
-            '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
-            '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check me-1"></i> 發布</button>' +
-            '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark me-1"></i> 取消</button>' +
-            '</div>' +
-            '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
-            `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
-            '</form>';
+        '</form>';
 
-        $('#detailModal').modal('hide');
+    $('#detailModal').modal('hide');
 
-        settingMode(windowContent, true);
-
-        $('#cancel-publish').one('click', () => {
-            $('#detailModal').modal('show');
-        })
-
-    })    
-
-})
-
-//提供線索表單
-$(document).on('submit', '#clueForm', function (e) {
-
-    $('#WitnessLat').val(newMarker.getPosition().lat())
-    $('#WitnessLng').val(newMarker.getPosition().lng())
-
-    let formData = new FormData($('#clueForm')[0])
-
-    $.ajax({
-
-        url: '/Missings/PostClue',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-
-            if (data == "OK") {
-
-                $('#cancel-publish').trigger('click');
-
-                Swal.fire({
-                    heightAuto: false,
-                    position: 'center',
-                    icon: 'success',
-                    title: '線索提交成功',
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            }
-        }
+    settingMode(windowContent, true);
+    $('#cancel-publish').one('click', () => {
+        $('#detailModal').modal('show');
     })
-
-    e.preventDefault();
 
 })

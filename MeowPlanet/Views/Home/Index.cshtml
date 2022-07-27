@@ -5,234 +5,380 @@
 @section Styles{
     <link href="~/css/homepage.css" rel="stylesheet" />
 }
-<div class="starsky1">
-    <div id="stars"></div>
-    <div id="stars2"></div>
-</div>
-
-<section id="web">
-
-    <section id="ti">
-        <div class="container-fluid">
-
-        </div>
-        <div class="img-bg1"></div>
-        <div class="bgdiv">
-            <p>在各方面為您的貓咪著想</p>
-            <a class="btn navbar-brand" asp-controller="Login" asp-action="Register" id="addbtn">成為會員</a>
-        </div>
-    </section>
-
-    <section id="stroll-intro">
-        <div class="move-section" id="move-section1">
-            <div class="f-pic">
-
-                <a asp-controller="Sitter" asp-action="Index" id="sitterLink">
-                <div id="img4">
-                    <p class="p1">保母</p>
-                </div>
-                </a>
-
-                <a asp-controller="Adoption" asp-action="Index" id="adoptionLink">
-                <div id="img5">
-                    <p class="p1">領養</p>
-                </div>
-                </a>
-
-                <a asp-controller="Missings" asp-action="Index" id="missingLink">
-                <div id="img6">
-                    <p class="p1">協尋</p>
-                </div>
-                </a>
-
-                <p class="intro-p1">搭配地圖搜尋</p>
-                <p class="intro-p2">保姆地址保護</p>
-                <p class="intro-p3">用戶使用評價</p>
-
-                <p class="intro-p4">抽卡方式配對</p>
-                <p class="intro-p5">客製化篩選器</p>
-                <p class="intro-p6">許多可愛貓貓</p>
-
-                <p class="intro-p7">地圖建立點位</p>
-                <p class="intro-p8">線索審核機制</p>
-                <p class="intro-p9">尋獲獎金功能</p>
-
-            </div>
-        </div>
-        <div class="starsky2">
-            <div id="stars"></div>
-            <div id="stars3"></div>
-        </div>
-        <div class="move-section" id="move-section2">
-
-        </div>
-        <div class="move-section" id="move-section3">
-
-        </div>
-        <div class="move-section" id="move-section4">
-
-        </div>
-    </section>
-
-
-    <section id="feregion">
-        <div class="fediv">
-            <div class="febg"></div>
-            <div class="fetitle">
-                <p>找到最適合您的貓咪服務</p>
-            </div>
-            <div class="fetext1-wrap">
-                <img src="@Href("~/Images/sittericon.png")" alt="">
-                <p>
-                    為孤單在家的貓咪<br>
-                    找個專業保姆陪伴
-                </p>
-            </div>
-            <div class="fetext2-wrap">
-                <img src="@Href("~/Images/homeicon.png")" alt="">
-                <p>
-                    找到適合您的貓咪<br>
-                    讓他有個溫暖的家
-                </p>
-            </div>
-            <div class="fetext3-wrap">
-                <img src="@Href("~/Images/findicon.png")" alt="">
-                <p>
-                    幫忙走失無助的貓咪<br>
-                    找到回家的路
-                </p>
-            </div>
-            <div class="feimg1-wrap feimg1"></div>
-            <div class="feimg2-wrap feimg2"></div>
-            <div class="feimg3-wrap feimg3"></div>
-        </div>
-    </section>
-    <section id="showcom">
-        <div class="container-fluid">
-            <h2>用戶評價</h2>
-            <div class="row">
-                <div class="col-4">
-                    <img src="@Href("~/Images/comment1.jpg")" alt="">
-                    <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動</p>
-                </div>
-                <div class="col-4">
-                    <img src="@Href("~/Images/comment2.jpg")" alt="">
-                    <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動</p>
-                </div>
-                <div class="col-4">
-                    <img src="@Href("~/Images/comment3.jpg")" alt="">
-                    <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動</p>
-                </div>
-            </div>
-        </div>
-    </section>
-</section>
-
-<section id="mob">
-    <section id="catbanner">
-        <div class="container d-flex">
-            <div class="row">
-                <p>
-                    在各方面為您的貓咪著想
-                </p>
-                <a class="btn d-flex">
-                    成為會員
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <div class="sec d-flex">
-        <p>功 能 選 擇</p>
+    <div class="starsky1">
+        <div id="stars"></div>
+        <div id="stars2"></div>
     </div>
 
-    <section>
-        <div class="sitter d-flex">
-            <p>貓 咪 保 姆</p>
-        </div>
-        <div class="adopt d-flex">
-            <p>領 養</p>
-        </div>
-        <div class="find d-flex">
-            <p>協 尋</p>
-        </div>
+    <section id="web">
+
+        <section id="ti">
+            <div class="container-fluid">
+            </div>
+            <div class="img-bg1"></div>
+            <div class="bgdiv">
+                <p>在各方面為您的貓咪著想</p>
+                <a class="btn navbar-brand" asp-controller="Login" asp-action="Register" id="addbtn">成為會員</a>
+            </div>
+        </section>
+
+        <section id="stroll-intro">
+            <div class="move-section" id="move-section1">
+                <div class="f-pic">
+
+                    <a asp-controller="Sitter" asp-action="Index" id="sitterLink">
+                        <div id="img4" class="move-div">
+                            <p class="p1">保母</p>
+                        </div>
+                    </a>
+
+                    <a asp-controller="Adoption" asp-action="Index" id="adoptionLink">
+                        <div id="img5" class="move-div">
+                            <p class="p1">領養</p>
+                        </div>
+                    </a>
+
+                    <a asp-controller="Missings" asp-action="Index" id="missingLink">
+                        <div id="img6" class="move-div">
+                            <p class="p1">協尋</p>
+                        </div>
+                    </a>
+
+                    <div class="intro-p1 d-flex align-items-center">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <p>搭配地圖搜尋</p>
+                    </div>
+
+                    <div class="intro-p2 d-flex align-items-center">
+                        <i class="fa-solid fa-location-pin-lock"></i>
+                        <p>保姆地址保護</p>
+                    </div>
+
+                    <div class="intro-p3 d-flex align-items-center">
+                        <i class="fa-solid fa-star-half-stroke"></i>
+                        <p>用戶使用評價</p>
+                    </div>
+
+
+                    <div class="intro-p4 d-flex align-items-center">
+                        <i class="fa-solid fa-heart"></i>
+                        <p>抽卡方式配對</p>
+                    </div>
+
+                    <div class="intro-p5 d-flex align-items-center">
+                        <i class="fa-solid fa-filter"></i>
+                        <p>客製化篩選器</p>
+                    </div>
+
+
+                    <div class="intro-p6 d-flex align-items-center">
+                        <i class="fa-solid fa-shield-cat"></i>
+                        <p>許多可愛貓貓</p>
+                    </div>
+
+                    <div class="intro-p7 d-flex align-items-center">
+                        <i class="fa-solid fa-map-pin"></i>
+                        <p>地圖建立點位</p>
+                    </div>
+
+                    <div class="intro-p8 d-flex align-items-center">
+                        <i class="fa-solid fa-clipboard-check"></i>
+                        <p>線索審核機制</p>
+                    </div>
+
+                    <div class="intro-p9 d-flex align-items-center">
+                        <i class="fa-solid fa-magnifying-glass-dollar"></i>
+                        <p>尋獲獎金功能</p>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="starsky2">
+                <div id="stars"></div>
+                <div id="stars3"></div>
+            </div>
+            <div class="move-section" id="move-section2">
+            </div>
+            <div class="move-section" id="move-section3">
+            </div>
+            <div class="move-section" id="move-section4">
+            </div>
+        </section>
+
+        @*<section id="showcom">
+            <div class="container-fluid">
+                <h2>用戶評價</h2>
+
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@Href("~/Images/comment1.jpg")" alt="...">
+                                <div class="w-p-wrap d-flex align-items-center">
+                                    <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動，是個充滿溫暖和快樂的寄宿家庭，下次有機會還會想讓Pocky過去玩~</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@Href("~/Images/comment2.jpg")" alt="...">
+                                <div class="w-p-wrap d-flex align-items-center">
+                                    <p>我家貓很膽小，幸好有這樣的服務，才能讓我們短期回南部看長輩。兩次餵食跟貓砂清潔很快速的完成，貓也沒有到非常緊張，很感謝！</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@Href("~/Images/comment3.jpg")" alt="...">
+                                <div class="w-p-wrap d-flex align-items-center">
+                                    <p>家裡24小時有人，環境很適合我們家毛孩，令人安心。隨時聯繫得到保母，會發照片告知狀況。以後出遠門還會把我們家毛孩送來 Julia 家</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+
+        </section>*@
+
+
+        <section id="feregion">
+            <div class="fediv">
+                <div class="febg"></div>
+                <div class="fetitle">
+                    <p>找到最適合您的貓咪服務</p>
+                </div>
+                <div class="fetext1-wrap">
+                    <img src="@Href("~/Images/sittericon.png")" alt="">
+                    <p>
+                        為孤單在家的貓咪<br>
+                        找個專業保姆陪伴
+                    </p>
+                </div>
+                <div class="fetext2-wrap">
+                    <img src="@Href("~/Images/homeicon.png")" alt="">
+                    <p>
+                        找到適合您的貓咪<br>
+                        讓他有個溫暖的家
+                    </p>
+                </div>
+                <div class="fetext3-wrap">
+                    <img src="@Href("~/Images/findicon.png")" alt="">
+                    <p>
+                        幫忙走失無助的貓咪<br>
+                        找到回家的路
+                    </p>
+                </div>
+                <div class="feimg1-wrap feimg1"></div>
+                <div class="feimg2-wrap feimg2"></div>
+                <div class="feimg3-wrap feimg3"></div>
+            </div>
+        </section>
+
+        <section id="showcom">
+            <div class="container-fluid">
+                <h2>用戶評價</h2>
+
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@Href("~/Images/comment1.jpg")" alt="...">
+                                <div class="w-p-wrap d-flex align-items-center">
+                                    <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動，是個充滿溫暖和快樂的寄宿家庭，下次有機會還會想讓Pocky過去玩~</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@Href("~/Images/comment2.jpg")" alt="...">
+                                <div class="w-p-wrap d-flex align-items-center">
+                                    <p>我家貓很膽小，幸好有這樣的服務，才能讓我們短期回南部看長輩。兩次餵食跟貓砂清潔很快速的完成，貓也沒有到非常緊張，很感謝！</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@Href("~/Images/comment3.jpg")" alt="...">
+                                <div class="w-p-wrap d-flex align-items-center">
+                                    <p>家裡24小時有人，環境很適合我們家毛孩，令人安心。隨時聯繫得到保母，會發照片告知狀況。以後出遠門還會把我們家毛孩送來 Julia 家</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+
+
+        </section>
     </section>
 
-    <div class="third d-flex">
-        <p>為您提供最專業的貓咪服務</p>
-    </div>
-
-    <section id="service">
-        <div class="container">
-            <div class="row">
-                <div class="col">
-                    <img class="ml-4" src="@Href("~/Images/service1.jpg")">
-                </div>
-                <div class="col">
-                    <p class="mr-4">為孤單在家的貓咪<br>找個專業保姆陪伴</p>
+    <section id="mob">
+        <section id="catbanner">
+            <div class="container d-flex">
+                <div class="row">
+                    <p>
+                        在各方面為您的貓咪著想
+                    </p>
+                    <a class="btn d-flex">
+                        成為會員
+                    </a>
                 </div>
             </div>
-            <div class="row">
-                <div class="col">
-                    <p class="ml-4">幫忙走失無助的貓<br>咪找到回家的路</p>
-                </div>
-                <div class="col">
-                    <img class="mr-4" src="@Href("~/Images/service2.jpg")">
-                </div>
+        </section>
+
+        <div class="sec d-flex">
+            <p>功 能 選 擇</p>
+        </div>
+
+        <section>
+            <div class="sitter d-flex">
+                <p>貓 咪 保 姆</p>
             </div>
-            <div class="row">
-                <div class="col">
-                    <img class="ml-4" src="@Href("~/Images/service3.jpg")">
-                </div>
-                <div class="col">
-                    <p class="mr-4">找到適合您的貓咪<br>讓他有個溫暖的家</p>
-                </div>
+            <div class="adopt d-flex">
+                <p>領 養</p>
             </div>
-    </section>
+            <div class="find d-flex">
+                <p>協 尋</p>
+            </div>
+        </section>
 
+        <div class="third d-flex">
+            <p>為您提供最專業的貓咪服務</p>
+        </div>
 
-    
-    
-    <div class="third d-flex">
-        <p>用戶評價</p>
-    </div>
-
-    <section id="car">
-        <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="@Href("~/Images/comment1.jpg")" alt="...">
-                    <div class="p-wrap">
-                        <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動</p>
+        <section id="service">
+            <div class="container">
+                <div class="row">
+                    <div class="col">
+                        <img class="ml-4" src="@Href("~/Images/service1.jpg")">
+                    </div>
+                    <div class="col">
+                        <p class="mr-4">為孤單在家的貓咪<br>找個專業保姆陪伴</p>
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="@Href("~/Images/comment2.jpg")" alt="...">
-                    <div class="p-wrap">
-                        <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動</p>
+                <div class="row">
+                    <div class="col">
+                        <p class="ml-4">幫忙走失無助的貓<br>咪找到回家的路</p>
+                    </div>
+                    <div class="col">
+                        <img class="mr-4" src="@Href("~/Images/service2.jpg")">
                     </div>
                 </div>
-                <div class="carousel-item">
-                    <img src="@Href("~/Images/comment3.jpg")" alt="...">
-                    <div class="p-wrap">
-                        <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動</p>
+                <div class="row">
+                    <div class="col">
+                        <img class="ml-4" src="@Href("~/Images/service3.jpg")">
+                    </div>
+                    <div class="col">
+                        <p class="mr-4">找到適合您的貓咪<br>讓他有個溫暖的家</p>
                     </div>
                 </div>
             </div>
-            <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="sr-only">Previous</span>
-            </a>
-            <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="sr-only">Next</span>
-            </a>
-        </div>
-    </section>
-    </div>
-</section>
+        </section>
 
-@section Scripts{
+        <div class="third d-flex">
+            <p>用戶評價</p>
+        </div>
+
+        <section id="car">
+
+                <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@Href("~/Images/comment1.jpg")" alt="...">
+                                <div class="p-wrap d-flex align-items-center">
+                                    <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動，是個充滿溫暖和快樂的寄宿家庭，下次有機會還會想讓Pocky過去玩~</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="d-flex justify-content-center align-items-center d-block w-100">
+                                <img src="@Href("~/Images/comment2.jpg")" alt="...">
+                                <div class="p-wrap d-flex align-items-center">
+                                    <p>我家貓很膽小，幸好有這樣的服務，才能讓我們短期回南部看長輩。兩次餵食跟貓砂清潔很快速的完成，貓也沒有到非常緊張，很感謝！</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="d-flex justify-content-center align-items-center d-block w-100">
+                                <img src="@Href("~/Images/comment3.jpg")" alt="...">
+                                <div class="p-wrap d-flex align-items-center">
+                                    <p>家裡24小時有人，環境很適合我們家毛孩，令人安心。隨時聯繫得到保母，會發照片告知狀況。以後出遠門還會把我們家毛孩送來 Julia 家</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+
+@*            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="@Href("~/Images/comment1.jpg")" alt="...">
+                            <div class="p-wrap">
+                                <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動，是個充滿溫暖和快樂的寄宿家庭，下次有機會還會想讓Pocky過去玩~</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="@Href("~/Images/comment2.jpg")" alt="...">
+                            <div class="p-wrap">
+                                <p>我家貓很膽小，幸好有這樣的服務，才能讓我們短期回南部看長輩。兩次餵食跟貓砂清潔很快速的完成，貓也沒有到非常緊張，很感謝！</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="@Href("~/Images/comment3.jpg")" alt="...">
+                            <div class="p-wrap">
+                                <p>家裡24小時有人，環境很適合我們家毛孩，令人安心。隨時聯繫得到保母，會發照片告知狀況。以後出遠門還會把我們家毛孩送來 Julia 家</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>*@
+        </section>
+    </section>
+
+    @section Scripts{
     <script src="~/js/homepage.js"></script>
 
 }
