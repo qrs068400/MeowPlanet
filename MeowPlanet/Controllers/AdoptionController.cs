@@ -77,6 +77,7 @@ namespace MeowPlanet.Controllers
             adopt.DateOver = null;
             adopt.Status = 0;
             adopt.Owner = owner;
+
             _context.Adopts.Add(adopt);
             _context.SaveChanges();
             return null;

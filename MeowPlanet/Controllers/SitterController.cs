@@ -5,7 +5,6 @@ using MeowPlanet.Models;
 using MeowPlanet.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.CodeAnalysis;
-using GoogleMaps.LocationServices;
 
 namespace MeowPlanet.Controllers
 {
