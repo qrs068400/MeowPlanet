@@ -76,7 +76,7 @@ namespace MeowPlanet.Controllers
             adopt.DateStart = DateTime.Today;
             adopt.DateOver = null;
             adopt.Status = 0;
-            adopt.owner = owner;
+            adopt.Owner = owner;
             _context.Adopts.Add(adopt);
             _context.SaveChanges();
             return null;
@@ -188,17 +188,17 @@ namespace MeowPlanet.Controllers
                  DateStart = x.DateStart,
                  DateOver = x.DateOver,
                  Status = x.Status,
-                 Owner = x.owner,
+                 Owner = x.Owner,
              }).OrderByDescending(x =>x.DateStart).ToList();
 
             //送養列表
-            var owner = _context.Adopts.Where(x => x.owner == memberid).ToList();
+            var owner = _context.Adopts.Where(x => x.Owner == memberid).ToList();
             var owners = new List<ViewModels.LikeAdopts>();
 
             for (int i = 0; i <= owner.Count(); i++)
             {
                 var ownerlist = _context.Adopts
-                 .Where(x => x.owner == memberid)
+                 .Where(x => x.Owner == memberid)
                  .Include(x => x.Member)
                  .Select(x => new ViewModels.LikeAdopts()
                  {

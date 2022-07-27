@@ -11,7 +11,7 @@ namespace MeowPlanet.Models
         public DateTime DateStart { get; set; }
         public DateTime? DateOver { get; set; }
         public int Status { get; set; }
-        public int owner { get; set; }
+        public int Owner { get; set; }
 
 
         public virtual Cat Cat { get; set; } = null!;
