@@ -9,6 +9,7 @@
 
 @{
     string status = "";
+    string date = "";
 }
 
 
@@ -40,7 +41,15 @@
                             申請人手機:@item.Phone
                         </p>
                         <p>
-                            申請日期:@item.DateStart.ToShortDateString()
+                            @if (@item.DateOver == null)
+                            {
+                                date = "申請日期:" + @item.DateStart.ToShortDateString();
+                            }
+                            else
+                            {
+                                date = "結束日期:" + @item.DateOver.ToShortDateString();
+                            }
+                            @date
                         </p>
                         <p>
                             狀態:
