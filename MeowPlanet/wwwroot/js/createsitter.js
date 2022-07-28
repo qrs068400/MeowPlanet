@@ -17,16 +17,10 @@ $('#f1-b1').click(function () {
 
 
 $('#f2-b4').click(function () {
-
-    if ($('#ad-in').attr('value') == '') {
-        $('#ado-sp').text('請選擇');
-    }
-    else {
-        $('#p2').css('display', 'none');
-        $('#p3').css('display', 'block');
-        $('#f2').css('display', 'none');
-        $('#f3').css('display', 'block');
-    }
+    $('#p2').css('display', 'none');
+    $('#p3').css('display', 'block');
+    $('#f2').css('display', 'none');
+    $('#f3').css('display', 'block');
 })
 
 $('#f2-b3').click(function () {
@@ -44,16 +38,10 @@ $('#f3-b1').click(function () {
 })
 
 $('#f3-b2').click(function () {
-    if ($('#bre-in').attr('value') == '') {
-        $('#bre-sp').text('請選擇');
-    }
-    else {
-        $('#p3').css('display', 'none');
-        $('#p4').css('display', 'block');
-        $('#f3').css('display', 'none');
-        $('#f4').css('display', 'block');
-    }
-
+    $('#p3').css('display', 'none');
+    $('#p4').css('display', 'block');
+    $('#f3').css('display', 'none');
+    $('#f4').css('display', 'block');
 })
 
 $('#f4-b1').click(function () {
@@ -64,17 +52,10 @@ $('#f4-b1').click(function () {
 })
 
 $('#f4-b2').click(function () {
-
-    if (($('#name-in').val() == '') || ($('#sex-in').attr('value') == '')) {
-        $('#name-sex-sp').text('請填寫及選擇');
-    } else {
-        $('#p4').css('display', 'none');
-        $('#p5').css('display', 'block');
-        $('#f4').css('display', 'none');
-        $('#f5').css('display', 'block');
-    }
-
-
+    $('#p4').css('display', 'none');
+    $('#p5').css('display', 'block');
+    $('#f4').css('display', 'none');
+    $('#f5').css('display', 'block');
 })
 
 $('#f5-b1').click(function () {
@@ -85,12 +66,10 @@ $('#f5-b1').click(function () {
 })
 
 $('#f5-b2').click(function () {
-
     $('#p5').css('display', 'none');
     $('#p6').css('display', 'block');
     $('#f5').css('display', 'none');
     $('#f6').css('display', 'block');
-
 })
 
 $('#f6-b1').click(function () {
@@ -99,55 +78,6 @@ $('#f6-b1').click(function () {
     $('#f6').css('display', 'none');
     $('#f5').css('display', 'block');
 })
-
-$('#f6-b2').click(function () {
-
-    if ($('#intro-in').val() == '') {
-        $('#intro-sp').text('請填寫');
-    } else {
-        $('#p6').css('display', 'none');
-        $('#p7').css('display', 'block');
-        $('#f6').css('display', 'none');
-        $('#f7').css('display', 'block');
-    }
-
-
-})
-
-$('#f7-b1').click(function () {
-    $('#p7').css('display', 'none');
-    $('#p6').css('display', 'block');
-    $('#f7').css('display', 'none');
-    $('#f6').css('display', 'block');
-})
-
-//品種輸入
-$('.bre-btn').click(function () {
-
-    $('.bre-btn').removeClass('b-press');
-    $(this).addClass('b-press');
-
-    $('#bre-in').attr('value', this.value);
-})
-
-//性別輸入
-$('.sex-b').click(function () {
-
-    $('.sex-btn').removeClass('b-press');
-    $(this).addClass('b-press');
-
-    $('#sex-in').attr('value', this.value);
-})
-
-//領養輸入
-$('.st-b').click(function () {
-
-    $('.st-b').removeClass('b-press');
-    $(this).addClass('b-press');
-
-    $('#ad-in').attr('value', this.value);
-})
-
 
 let inputList = [] // 放input dom的list
 let imgList = [] //放img dom的list
