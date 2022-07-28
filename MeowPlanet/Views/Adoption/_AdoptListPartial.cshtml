@@ -5,53 +5,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
       integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link href="~/css/adoptpartial.css" rel="stylesheet" />
 
 @{
     string status = "";
 }
 
-<style>
 
 
-
-    .btn-outline-secondary {
-        border: 0px solid;
-    }
-
-    .nav-tabs {
-        border: 0px solid;
-    }
-
-    div.clue-item {
-        border-radius: 25px;
-        box-shadow: 0 0 3rem rgb(134 171 190 / 30%) inset !important;
-        background-color: rgb(27, 39, 53);
-        margin-top: 3rem !important;
-    }
-
-    div:first-of-type.clue-item {
-        margin-top: 0.5rem !important;
-    }
-
-    .clue-item img {
-        height: 125px;
-        width: 150px;
-        object-fit: cover;
-        border-radius: 20px
-    }
-
-    .fa-solid {
-        padding-left: 10px;
-    }
-
-    #myTabContent {
-        height: 600px;
-        overflow: auto;
-    }
-</style>
-
-<div class="container" style="width:100%;color:antiquewhite"id="a">
-    <ul class="nav nav-tabs" id="myTab" role="tablist">
+<div class="container" style="width:100%;color:antiquewhite" id="adoptlist">
+    <ul class="nav nav-tabs d-flex justify-content-center" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
             <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">送養</button>
         </li>
@@ -68,7 +31,7 @@
                     <div class="col-3">
                         <img src="@Url.Content(@item.CatImg1)">
                     </div>
-                    <div class="col-5">
+                    <div class="col-5 detail">
                         <p>@item.CatName</p>
                         <p>
                             @item.BreedName
@@ -97,7 +60,7 @@
                         </p>
                     </div>
 
-                    <div class="col-1" style="padding-left:280px;">
+                    <div class="col-1" style="padding-left:150px;">
                         @if (@item.Status == 0)
                         {
                             <button id="@item.CatId" class="btn btn-outline-secondary no" value="@item.MemberId"><i class="fa-solid fa-xmark"></i></button>
@@ -147,49 +110,11 @@
                         data: { catid: catid, memberid: memberid },
                         dataType: 'json',
                         success: function(data) {
-                            $('#a').empty();
+                            $('#adoptlist').empty();
                             $.get('/Adoption/LikeTolist', function(data) {
-                                $('#a').html(data);
+                                $('#adoptlist').html(data);
                             })
-   
-                            },
-                        error: function() {
 
-                        }
-                    });
-                }
-                )
-            }
-        });
-    });
-     @* //刷新狀態
-                                $("."+catid).empty();
-                                $("#"+catid).empty();
-                                $("."+catid).html(data);*@
-    $(".yes").click(function() {
-        var catid = $(this).attr("id")
-        Swal.fire({
-            title: "確定要同意申請嗎？",
-            text: "同意申請後不可取消，請慎重考慮！",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#B99668',
-            cancelButtonColor: '#4B5461',
-            confirmButtonText: '同意'
-        }).then(function(result) {
-            if (result.value) {
-                Swal.fire(
-                    '已同意申請！',
-                    '',
-                    'success'
-                ).then(function(result) {
-                    $.ajax({
-                        method: 'post',
-                        url: '/Adoption/OwnerNo',
-                        data: { catid: catid },
-                        dataType: 'json',
-                        success: function(data) {
-                            window.location.reload();
                         },
                         error: function() {
 
@@ -200,6 +125,48 @@
             }
         });
     });
+    @* //刷新狀態
+        $("."+catid).empty();
+        $("#"+catid).empty();
+        $("."+catid).html(data);*@
+        $(".yes").click(function() {
+            var catid = $(this).attr("id")
+            var memberid = $(this).val();
+            Swal.fire({
+                title: "確定要同意申請嗎？",
+                text: "同意申請後不可取消，請慎重考慮！",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#B99668',
+                cancelButtonColor: '#4B5461',
+                confirmButtonText: '同意'
+            }).then(function(result) {
+                if (result.value) {
+                    Swal.fire(
+                        '已同意申請！',
+                        '',
+                        'success'
+                    ).then(function(result) {
+                        $.ajax({
+                            method: 'post',
+                            url: '/Adoption/OwnerYes',
+                            data: { catid: catid, memberid: memberid },
+                            dataType: 'json',
+                            success: function(data) {
+                                $('#adoptlist').empty();
+                                $.get('/Adoption/LikeTolist', function(data) {
+                                    $('#adoptlist').html(data);
+                                })
+                            },
+                            error: function() {
+
+                            }
+                        });
+                    }
+                    )
+                }
+            });
+        });
 
 
 

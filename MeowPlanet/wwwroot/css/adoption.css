@@ -17,7 +17,17 @@ body {
     overflow: hidden;
 }
 
-:root {
+.modal-content {
+outline: 0;
+border-radius: 25px;
+box-shadow: 0 0 3rem rgb(134 171 190 / 30%) inset !important;
+background-color: rgb(27, 39, 53);
+margin-top: 3rem !important;
+color: white;
+border: 2px solid;
+}
+
+: root {
     --project-bg-color: #171B20;
     --project-primary-color: #B99668;
     --project-primary-color-buzz: rgba(185, 150, 104, 0.5);
@@ -75,7 +85,7 @@ body {
 }
 
     .autoplay img {
-        max-width: 100%;
+        max-width: 87%;
         border-radius: 5%;
         height: 190px;
         margin: auto;
