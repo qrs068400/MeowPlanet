@@ -289,7 +289,6 @@ namespace MeowPlanet.Controllers
             //    }
             //}
 
-
             ////變更狀態為同意
             //var owner = _context.Adopts.Where(x => x.CatId == catid && x.MemberId == memberid).FirstOrDefault();
             //owner.DateOver = DateTime.Today;
