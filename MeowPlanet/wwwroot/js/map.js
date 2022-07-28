@@ -6,6 +6,8 @@ let newMarker;
 //從資料庫撈到的所有貓咪物件
 let catList = [];
 
+let detalModal;
+
 
 function removeMarker() {
     if (newMarker != null) {
@@ -61,12 +63,18 @@ function initMap() {
 
         checkLogin(() => {
             let windowContent =
+                '<div class="px-3 pt-2 pb-1">'+
                 '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
-                '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-                '<button class="btn btn-primary" onclick="confirmPos()">' +
-                'Yes' +
+                '<div class="d-flex mt-3 mb-1 justify-content-between">' +
+                '<button class="btn btn-dark rounded-pill" onclick="confirmPos()">' +
+                '<i class="fa-solid fa-check me-2"></i>' +
+                '確認' +
                 '</button>' +
-                '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
+                '<button onclick="removeMarker();" class="btn btn-danger rounded-pill">' +
+                '<i class="fa-solid fa-xmark me-2"></i>' +
+                '取消' +
+                '</button>' +
+                '</div>' +
                 '</div>';
 
             settingMode(windowContent);
@@ -248,6 +256,7 @@ $(function () {
 
                 //發送AJAX取得資料
                 $.get('Missings/GetDetail', { 'missingId': cat.missingId }, function (data) {
+                    detalModal = data;
                     $('#detailModal').html(data);
                     $('#detailModal').modal('show');
                 })
@@ -355,6 +364,8 @@ function itemClicked(item) {
 
     //發送AJAX取得資料
     $.get('Missings/GetDetail', { 'missingId': id }, function (data) {
+
+        detalModal = data;
         $('#detailModal').html(data);
         $('#detailModal').modal('show')
     })
@@ -461,6 +472,7 @@ $(document).on('click', '#provideClues', () => {
         settingMode(windowContent, true);
 
         $('#cancel-publish').one('click', () => {
+            $('#detailModal').html(detalModal);
             $('#detailModal').modal('show');
         })
 

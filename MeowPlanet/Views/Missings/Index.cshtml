@@ -42,6 +42,10 @@
 @section Scripts{
 
     <script>
+        $('.modal').on('hidden.bs.modal', function(){
+            $(this).html('');
+        })
+
         $('.nav-item a').eq(1).addClass('nav-item-active');
         var isLogin = '@isLogin';
         var memberId = '@memberId';        
@@ -51,7 +55,6 @@
     }
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="~/lib/datepicker/i18n/datepicker.zh-TW.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/map.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">

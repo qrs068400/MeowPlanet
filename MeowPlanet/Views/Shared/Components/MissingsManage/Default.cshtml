@@ -58,32 +58,36 @@
         }
 
     .btn-pin {
-        border: 2px solid black;
+        border: 2px solid white;
         font-size: 1.1rem;
         color: white;
         background-color: black;
         padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+        right: 0;
+        top: 10%;
     }
 
-        .btn-pin:hover {
-            color: white;
-            background-color: black;
-        }
+    .btn-pin-hover {
+        border-color: black;
+        color: black;
+        background-color: white;
+    }
 
     .btn-remove {
         border: 2px solid white;
-        width: 15%;
         font-size: 1.1rem;
-        color: black;
-        background-color: white;
-        padding: 0.4rem;
+        color: white;
+        padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+        right: 0;
+        bottom: 10%;
     }
 
-        .btn-remove:hover {
-            color: white;
-            background-color: black;
-        }
-
+    button:disabled {
+        pointer-events: all !important;
+        cursor: not-allowed !important;
+        opacity: 0.3 !important;
+        border: none !important;
+    }
 </style>
 
 @foreach (var item in Model)
@@ -106,13 +110,73 @@
             </div>
             <div class="col-8 position-relative">
                 <div class="speech-bubble position-absolute">
-                    <div class="overflow-auto h-100 w-100 py-2 px-4" style="word-break:break-all">
+                    <div class="overflow-auto h-100 w-100 py-2 px-3" style="word-break:break-all">
                         @item.Description
                     </div>
                 </div>
-                <button class="position-absolute btn rounded-pill mx-3 btn-pin" style="right:0">釘選此線索</button>
+                <button data-clue-id="@item.ClueId" class="position-absolute rounded-pill mx-2 btn-pin"><i class="fa-solid fa-circle-check me-2"></i>釘選此線索</button>
+                <button data-clue-id="@item.ClueId" class="position-absolute btn-danger rounded-pill mx-2 btn-remove"><i class="fa-solid fa-trash-can me-2"></i>移除此線索</button>
             </div>
         </div>
     </div>
 
 }
+
+
+<script>
+    $('.btn-pin').hover(function() {
+        $(this).addClass('btn-pin-hover')
+    }, function() {
+        $(this).removeClass('btn-pin-hover')
+    })
+
+    $('.btn-pin').click(function() {
+
+        let btn = $(this);
+        let clueId = $(this).data('clueId');
+        let newStatus = 1;
+
+        $.post('/Missings/EditClue', { clueId, newStatus }, function(data) {
+            
+            btn.closest('.clue-item').remove();
+
+            Swal.fire({
+                heightAuto: false,
+                icon: 'success',
+                title: data,
+                showConfirmButton: false,
+                timer: 2000
+            })
+        })
+    })
+
+    $('.btn-remove').click(function() {
+
+        let btn = $(this);
+        let clueId = btn.data('clueId');
+        let newStatus = 2;
+
+        $.post('/Missings/EditClue', { clueId, newStatus }, function(data) {
+            
+            btn.closest('.clue-item').remove();
+
+            Swal.fire({
+                heightAuto: false,
+                icon: 'success',
+                title: data,
+                showConfirmButton: false,
+                timer: 2000
+            })
+        })
+    })
+
+    if ('@ViewBag.Status' == '1') {
+
+        $('.btn-pin').off('hover')
+        $('.btn-pin').prop('disabled', true)
+    }
+    else if ('@ViewBag.Status' == '2') {
+        $('.btn-remove').prop('disabled', true)
+    }
+
+</script>

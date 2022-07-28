@@ -18,7 +18,7 @@ namespace MeowPlanet.ViewComponents
         }
         public IViewComponentResult Invoke(int memberId, int status)
         {
-
+            ViewBag.Status = status;
 
             var result = _context.Clues.Include(c => c.Missing)
                 .Include(c => c.Missing.Cat)

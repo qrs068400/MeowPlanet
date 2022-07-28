@@ -6,7 +6,7 @@
 
 <style>
     .btn-tab {
-        border: 2px solid white;
+        border: 2px solid black;
         width: 15%;
         font-size: 1.1rem;
         color: black;
@@ -15,18 +15,19 @@
     }
 
         .btn-tab:hover, .btn-tab-active {
+            border-color: white;
             color: white;
             background-color: black;
         }
 </style>
 
 <div class="px-5 pt-2 pb-4 h-100 w-100">
-    <div >
-        <button class="rounded-pill mx-3 btn-tab"><i class="fa-solid fa-circle-question me-2"></i>待審核</button>
+    <div>
+        <button class="rounded-pill mx-3 btn-tab btn-tab-active"><i class="fa-solid fa-circle-question me-2"></i>待審核</button>
         <button class="rounded-pill mx-3 btn-tab"><i class="fa-solid fa-circle-check me-2"></i>已釘選</button>
         <button class="rounded-pill mx-3 btn-tab"><i class="fa-solid fa-trash-can me-2"></i>已移除</button>
     </div>
-    <div style="height: 92.5%; overflow: auto; margin-top: 1rem">
+    <div id="clue-list" style="height: 92.5%; overflow: auto; margin-top: 1rem">
         <vc:missings-manage member-id="@memberId" status="0"></vc:missings-manage>
     </div>
 </div>
@@ -34,11 +35,21 @@
 
 
 <script>
+    var memberId = '@memberId'
 
     $('.btn-tab').click(function() {
         $('.btn-tab').removeClass('btn-tab-active');
         $(this).addClass('btn-tab-active');
     })
 
+    $('.btn-tab').eq(0).click(() => {
+        $('#clue-list').load("/Missings/GetCluesComponent", { memberId, status : 0})
+    })
+    $('.btn-tab').eq(1).click(() => {
+        $('#clue-list').load("/Missings/GetCluesComponent", { memberId, status : 1})
+    })
+    $('.btn-tab').eq(2).click(() => {
+        $('#clue-list').load("/Missings/GetCluesComponent", { memberId, status : 2})
+    })
 
 </script>

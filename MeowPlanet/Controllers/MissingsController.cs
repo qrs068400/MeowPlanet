@@ -148,5 +148,21 @@ namespace MeowPlanet.Models
         {
             return PartialView("_MissingCluePartial");
         }
+
+        public IActionResult GetCluesComponent(int memberId, int status)
+        {
+            return ViewComponent("MissingsManage", new { memberId, status });
+        }
+
+        [HttpPost]
+        public IActionResult EditClue(int clueId, int newStatus)
+        {
+            string respond = newStatus == 1 ? "已釘選此線索" : "已移除此線索";
+
+            _context.Clues.FirstOrDefault(x => x.ClueId == clueId).Status = newStatus;
+            _context.SaveChanges();
+
+            return Content(respond);
+        }
     }
 }
