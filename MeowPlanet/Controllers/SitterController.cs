@@ -25,7 +25,7 @@ namespace MeowPlanet.Controllers
                 SitterViewModels model = new SitterViewModels()
                 {
                     sitter = item,
-                    sitterfeatureList = _context.SitterFeatures.Where(m => m.ServiceId == item.ServiceId).ToList(),
+                    sitterfeatureList = _context.SitterFeatures.Include(x => x.Feature).Where(m => m.ServiceId == item.ServiceId).Select(x => x.Feature.Name).ToList(),
                     OrderCommentList = _context.Orderlists.Where(m => m.ServiceId == item.ServiceId).ToList(),
                     memberPhoto = _context.Members.FirstOrDefault(m => m.MemberId == item.MemberId).Photo,
 
@@ -45,7 +45,7 @@ namespace MeowPlanet.Controllers
                 SitterViewModels model = new SitterViewModels()
                 {
                     sitter = item,
-                    sitterfeatureList = _context.SitterFeatures.Where(m => m.ServiceId == item.ServiceId).ToList(),
+                    sitterfeatureList = _context.SitterFeatures.Include(x => x.Feature).Where(m => m.ServiceId == item.ServiceId).Select(x => x.Feature.Name).ToList(),
                     OrderCommentList = _context.Orderlists.Where(m => m.ServiceId == item.ServiceId).ToList(),
                     memberPhoto = _context.Members.FirstOrDefault(m => m.MemberId == item.MemberId).Photo,
 
@@ -71,7 +71,7 @@ namespace MeowPlanet.Controllers
             SitterViewModels model = new SitterViewModels()
             {
                 sitter = await _context.Sitters.FirstOrDefaultAsync(m => m.ServiceId == id),
-                sitterfeatureList = await _context.SitterFeatures.Where(m => m.ServiceId == id).ToListAsync(),
+                sitterfeatureList = await _context.SitterFeatures.Include(x => x.Feature).Where(m => m.ServiceId == id).Select(x => x.Feature.Name).ToListAsync(),
                 OrderCommentList = await _context.Orderlists.Where(m => m.ServiceId == id).ToListAsync(),
 
             };

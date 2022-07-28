@@ -370,9 +370,29 @@ let map;
 let marker;
 let catList = [];
 function initMap() {
+    
+    //偏移地圖
+    let seed = model.sitter.serviceId % 4;
+    let part = model.sitter.serviceId % 10;
+    let latlng;
+    switch (seed) {
+        case 0:
+            latlng = new google.maps.LatLng(model.sitter.posLat + 0.002 * (part / 10), model.sitter.posLng + 0.002 * (part / 10));
+            break;
+        case 1:
+            latlng = new google.maps.LatLng(model.sitter.posLat + 0.002 * (part / 10), model.sitter.posLng - 0.002 * (part / 10));
+            break;
+        case 2:
+            latlng = new google.maps.LatLng(model.sitter.posLat - 0.002 * (part / 10), model.sitter.posLng - 0.002 * (part / 10));
+            break;
+        case 3:
+            latlng = new google.maps.LatLng(model.sitter.posLat - 0.002 * (part / 10), model.sitter.posLng + 0.002 * (part / 10));
+            break;
+    }
+
     //初始化地圖
     map = new google.maps.Map($('#map')[0], {
-        center: { lat: 22.629314218928563, lng: 120.29299528465663 },
+        center: latlng,
         zoom: 16,
         // minZoom: 12,
         // maxZoom: 17,
@@ -383,15 +403,23 @@ function initMap() {
 
     //保母位置marker
     marker = new google.maps.Marker({
-        position: new google.maps.LatLng(22.629314218928563, 120.29299528465663),
+        position: latlng,
         map: map,
         icon: {
             url: "../../images/sitter/house_marker.png",
             scaledSize: new google.maps.Size(50, 50),
-            //anchor: new google.maps.Point(25, 25) // anchor
+            anchor: new google.maps.Point(25, 25) // anchor
         },
     });
-    marker.setMap(map);
+    marker = new google.maps.Marker({
+        position: latlng,
+        map: map,
+        icon: {
+            url: "../../images/sitter/house_marker.png",
+            scaledSize: new google.maps.Size(50, 50),
+            anchor: new google.maps.Point(25, 25) // anchor
+        },
+    });
 
     //模糊圓圈
     const blurCircle = new google.maps.Circle({
@@ -401,8 +429,8 @@ function initMap() {
         fillColor: "#FF0000",
         fillOpacity: 0.35,
         map,
-        center: new google.maps.LatLng(22.629314218928563, 120.29299528465663),
-        radius: 200,
+        center: latlng,
+        radius: 300,
     });
 
     //定位按鈕
