@@ -5,6 +5,8 @@
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
 }
 
+
+
 <div id="stars"></div>
 <div id="stars2"></div>
 <div id="stars3"></div>
@@ -12,7 +14,7 @@
 
 
 
-<div class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
+<div id="missingIndex" class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
     <div class="w-20" id="div-items" style="transition: all 1s ease; overflow-y: auto; min-width: 346px">
         @foreach (var item in Model)
         {
