@@ -26,7 +26,7 @@ namespace MeowPlanet.Controllers
 
             var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
 
-            
+
 
             return View(LoginInfo);
         }
@@ -46,21 +46,21 @@ namespace MeowPlanet.Controllers
         public ActionResult GetAccountInfo(int MemberId)
         {
             var MemberInfo = _context.Members.FirstOrDefault(p => p.MemberId == MemberId);
-            
+
             return PartialView("_MyAccountPartial", MemberInfo);
         }
 
         // 建立貓咪資料
         [HttpPost]
-        public async Task<IActionResult> AddCat(Cat cat, IFormFile file1 , IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
+        public async Task<IActionResult> AddCat(Cat cat, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
         {
             Random random = new Random();
-            string? uniqueFileName = null; 
+            string? uniqueFileName = null;
 
             if (file1 != null)  //handle iformfile
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
-                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000,9999).ToString() + file1.FileName;
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file1.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
@@ -124,7 +124,7 @@ namespace MeowPlanet.Controllers
 
         // 建立保姆資料
         [HttpPost]
-        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
+        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5, int[] sitterfeature)
         {
             Random random = new Random();
             string? uniqueFileName = null;
@@ -190,7 +190,20 @@ namespace MeowPlanet.Controllers
             }
 
             _context.Sitters.Add(sitter);
-            await _context.SaveChangesAsync();
+
+            for (int i = 0; i < sitterfeature.Length; i++)
+            {
+                SitterFeature sitter_feature = new()
+                {
+                    ServiceId = sitter.ServiceId,
+                    FeatureId = sitterfeature[i]
+                };
+
+                _context.SitterFeatures.Add(sitter_feature);
+                await _context.SaveChangesAsync();
+
+            }
+
             return RedirectToAction("Index", "Member");
         }
 
@@ -211,7 +224,7 @@ namespace MeowPlanet.Controllers
                     Sex = c.Sex,
                     Img01 = c.Img01
 
-                }).ToList();                           
+                }).ToList();
 
             return PartialView("_CatSelectPartial", CatInfo);
         }
@@ -326,11 +339,11 @@ namespace MeowPlanet.Controllers
             oldCat.IsAdoptable = cat.IsAdoptable;
             oldCat.IsSitting = cat.IsSitting;
             oldCat.IsMissing = cat.IsMissing;
-            if(cat.Img01 != null)
+            if (cat.Img01 != null)
             {
                 oldCat.Img01 = cat.Img01;
             }
-            if(cat.Img02 != null)
+            if (cat.Img02 != null)
             {
                 oldCat.Img02 = cat.Img02;
             }
@@ -346,10 +359,10 @@ namespace MeowPlanet.Controllers
             {
                 oldCat.Img05 = cat.Img05;
             }
-            
-            
-            
-            
+
+
+
+
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

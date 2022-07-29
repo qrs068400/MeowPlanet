@@ -201,7 +201,6 @@ function getlatlng() {
 
 // 照顧條件選擇
 $('.con-b').click(function () {
-
     $(this).toggleClass('active').blur();
 })
 
@@ -251,3 +250,29 @@ $('.con3-b').click(function () {
 
     $('#num-in').attr('value', this.value);
 })
+
+var feature = [];
+
+Array.prototype.remove = function (value) {
+    this.splice(this.indexOf(value), 1);
+}
+
+$('.con4-b').click(function () {
+    $(this).toggleClass('active').blur();
+
+    if ($(this).hasClass('active')) {
+        s = 1;
+    } else {
+        s = 0;
+    }
+
+    if (s == 1) {      
+        feature.push($(this).val());
+    } else {
+        feature.remove($(this).val());
+    }
+
+    $('#feature').attr('value', feature);
+
+})
+
