@@ -237,7 +237,6 @@ input[type="search"]::-webkit-search-cancel-button {
 
 .btn-dark {
     color: #fff;
-    background-color: #000 ;
     border-color: #212529;
 }
 
