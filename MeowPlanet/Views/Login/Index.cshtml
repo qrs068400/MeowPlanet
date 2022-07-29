@@ -15,7 +15,7 @@
                 <div class="col-6 bg-img">
                 </div>
                 <div class="col-6 loginform">
-                    <form id="account" method="post" asp-action="Login">
+                    <form id="account" method="post" asp-action="Login" autocomplete="off">
                         <div class="text-center">
                             <h2>登入喵星球</h2>
                         </div>
@@ -37,7 +37,7 @@
 
 
                             <div class="d-flex align-items-center">
-                                <input type="password" asp-for="Password" class="form-control login-sp" autocomplete="current-password" aria-required="true" />
+                                <input type="password" asp-for="Password" class="form-control login-sp" aria-required="true" />
                                 <span asp-validation-for="Password" class="text-danger ms-1"></span>
                             </div>
 
@@ -79,9 +79,12 @@
         $('#login-submit').click(function() {
 
             $.get("Login/LoginCheck", { email: $('input[type=email]').val(), password: $('input[type=password]').val() }, function(data) {
-                
+
                 if (data == "Email或密碼錯誤") {
                     $('#alert').html(data).css('color', '#2A483A')
+                } else {
+                    alert("登入成功")
+
                 }
 
 

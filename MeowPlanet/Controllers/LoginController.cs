@@ -88,7 +88,6 @@ namespace MeowPlanet.Controllers
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                         new ClaimsPrincipal(claimsIdentity));
 
-                
 
                 return RedirectToAction("Index", "Member");
             }
