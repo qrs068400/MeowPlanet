@@ -499,8 +499,8 @@ $(document).on('click', '#provideClues', () => {
             '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
             '</div>' +
             '<div class="form-group mt-3 m-auto w-85">' +
-            '<label for="witness-time" class="h6">其他描述 :</label>' +
-            '<input type="text" id="witness-time" class="form-control rounded-pill" name="Description" />' +
+            '<label for="other-description" class="h6">其他描述 :</label>' +
+            '<input type="text" id="other-description" class="form-control rounded-pill" name="Description" />' +
             '</div>' +
             '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
             '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check me-1"></i> 發布</button>' +
@@ -514,6 +514,7 @@ $(document).on('click', '#provideClues', () => {
 
         settingMode(windowContent, true);
 
+
         $('#cancel-publish').one('click', () => {
             $('#detailModal').html(detalModal);
             $('#detailModal').modal('show');
@@ -522,6 +523,16 @@ $(document).on('click', '#provideClues', () => {
     })
 
 })
+
+$(function () {
+    $(document).on('focus', '#witness-time', function () {
+        $(this).datepicker($.datepicker.regional['tw']);
+        $(this).keypress(function (e) {
+            e.preventDefault();
+        });
+    })
+})
+
 
 //提供線索表單
 $(document).on('submit', '#clueForm', function (e) {
