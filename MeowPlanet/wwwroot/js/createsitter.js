@@ -205,4 +205,49 @@ $('.con-b').click(function () {
     $(this).toggleClass('active').blur();
 })
 
-$('#licence-btn').click
+$('#licence-btn').click(function () {
+    if ($(this).val() == "無證照") {
+        $('#licence-in').attr('value', "有證照");
+        $(this).attr('value', "有證照");
+    } else {
+        $('#licence-in').attr('value', "無證照");
+        $(this).attr('value', "無證照");
+    }
+})
+
+$('#cage-btn').click(function () {
+    if ($(this).val() == "不關籠") {
+        $('#cage-in').attr('value', "需關籠");
+        $(this).attr('value', "需關籠");
+    } else {
+        $('#cage-in').attr('value', "不關籠");
+        $(this).attr('value', "不關籠");
+    }
+})
+
+
+$('#monitor-btn').click(function () {
+    if ($(this).val() == "無監視器") {
+        $('#monitor-in').attr('value', "有監視器");
+        $(this).attr('value', "有監視器");
+    } else {
+        $('#monitor-in').attr('value', "無監視器");
+        $(this).attr('value', "無監視器");
+    }
+})
+
+$('.con2-b').click(function () {
+
+    $('.con2-b').removeClass('b-press');
+    $(this).addClass('b-press');
+
+    $('#meal-in').attr('value', this.value);
+})
+
+$('.con3-b').click(function () {
+
+    $('.con3-b').removeClass('b-press');
+    $(this).addClass('b-press');
+
+    $('#num-in').attr('value', this.value);
+})

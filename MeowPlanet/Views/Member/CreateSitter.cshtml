@@ -51,7 +51,7 @@
             <form method="post" asp-action="AddSitter" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
 
             <input type="text" asp-for="IsService" class="d-none" value="true" />
-            <input type="text" asp-for="MemberId" class="d-none" value="1" />
+            <input type="text" asp-for="MemberId" class="d-none" value="@User.FindFirst(ClaimTypes.Sid).Value" />
             <div class="div-right-form text-center" id="f2">
 
                 <div class="d-flex align-items-center">
@@ -85,18 +85,18 @@
 
                 <p class="text-start">證照</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con-b" id="licence-btn">有證照</button>
-                    <input type="text" asp-for="Licence" class="d-none" id="licence-in" />
+                    <button type="button" class="btn btn-light con-b" id="licence-btn" value="無證照">有證照</button>
+                    <input type="text" asp-for="Licence" class="d-none" id="licence-in" value="無證照"/>
                 </div>
                 <p class="text-start">籠子</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con-b">需關籠</button>
-                    <input type="text" asp-for="Cage" class="d-none" id="cage-in" />
+                    <button type="button" class="btn btn-light con-b" id="cage-btn" value="不關籠">需關籠</button>
+                    <input type="text" asp-for="Cage" class="d-none" id="cage-in" value="不關籠"/>
                 </div>
                 <p class="text-start">監視器</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con-b">有監視器</button>
-                    <input type="text" asp-for="Monitor" class="d-none" id="monitor-in" />
+                    <button type="button" class="btn btn-light con-b" id="monitor-btn" value="無監視器">有監視器</button>
+                    <input type="text" asp-for="Monitor" class="d-none" id="monitor-in" value="無監視器"/>
                 </div>
 
                 <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
@@ -121,16 +121,16 @@
 
                 <p class="text-start">照顧數量</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con2-b" value="一對一">一對一</button>
-                    <button type="button" class="btn btn-light con2-b" value="一對二">一對二</button>
+                    <button type="button" class="btn btn-light con3-b" value="一對一">一對一</button>
+                    <button type="button" class="btn btn-light con3-b" value="一對二">一對二</button>
 
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con2-b" value="一對三">一對三</button>
-                    <button type="button" class="btn btn-light con2-b" value="一對多">一對多</button>
+                    <button type="button" class="btn btn-light con3-b" value="一對三">一對三</button>
+                    <button type="button" class="btn btn-light con3-b" value="一對多">一對多</button>
                 </div>
 
-                <input type="text" asp-for="CatNumber" class="d-none" id="meal-in" />
+                <input type="text" asp-for="CatNumber" class="d-none" id="num-in" />
 
                 <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                 <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>

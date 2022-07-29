@@ -124,7 +124,7 @@ namespace MeowPlanet.Controllers
 
         // 建立保姆資料
         [HttpPost]
-        public async Task<IActionResult> AddCat(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
+        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
         {
             Random random = new Random();
             string? uniqueFileName = null;
@@ -191,7 +191,7 @@ namespace MeowPlanet.Controllers
 
             _context.Sitters.Add(sitter);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return RedirectToAction("Index", "Member");
         }
 
         // 取得選擇貓咪資料
