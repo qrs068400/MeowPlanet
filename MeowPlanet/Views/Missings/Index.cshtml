@@ -44,13 +44,13 @@
 @section Scripts{
 
     <script>
-        $('.modal').on('hidden.bs.modal', function(){
+        $('.modal').on('hidden.bs.modal', function() {
             $(this).html('');
         })
 
         $('.nav-item a').eq(1).addClass('nav-item-active');
         var isLogin = '@isLogin';
-        var memberId = '@memberId';        
+        var memberId = '@memberId';
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
@@ -66,6 +66,7 @@
 }
 
     @section Styles{
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/ui-darkness/jquery-ui.css">
     <link rel="stylesheet" href="~/css/missing.css" />
     <link rel="stylesheet" href="~/css/stars.css" />

@@ -47,14 +47,14 @@ namespace MeowPlanet.Models
         }
 
 
-        [HttpPost] //未完成
+        [HttpPost]
         public async Task<IActionResult> AddMissing(Missing missingCat)
         {
             _context.Missings.Add(missingCat);
             _context.Cats.Where(x => x.CatId == missingCat.CatId).First().IsMissing = true;
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return Content("OK");
         }
 
 
@@ -105,8 +105,11 @@ namespace MeowPlanet.Models
             return PartialView("_MissingDetailPartial" ,result);
         }
 
-        public ActionResult GetPublish()  //未完成
-        {            
+        public ActionResult GetPublish()
+        {
+            List<Cat> cats = _context.Cats.Where(x => x.MemberId == _memberId).ToList();
+            ViewData["cats"] = cats;
+
             return PartialView("_MissingPublishPartial");
         }
 
@@ -146,7 +149,19 @@ namespace MeowPlanet.Models
         [HttpGet]
         public IActionResult GetClues()
         {
-            return PartialView("_MissingCluePartial");
+            var missingCat = _context.Cats.FirstOrDefault(x => x.MemberId == _memberId && x.IsMissing == true);
+
+            if (missingCat != null)
+            {
+                ViewBag.CatName = missingCat.Name;
+
+                return PartialView("_MissingCluePartial");
+            }
+            else
+            {
+                return Content("False");
+            }
+            
         }
 
         public IActionResult GetCluesComponent(int memberId, int status)
@@ -163,6 +178,41 @@ namespace MeowPlanet.Models
             _context.SaveChanges();
 
             return Content(respond);
+        }
+
+        [HttpGet]
+        public IActionResult CheckCats()
+        {
+            var catCount = _context.Cats.Count(x => x.MemberId == _memberId);
+            var missingCount = _context.Cats.Count(x => x.MemberId == _memberId && x.IsMissing == true);
+
+            if (catCount == 0)
+            {
+                return Content("0"); //名下沒有任何貓咪
+            }
+            else if (missingCount > 0)
+            {
+                return Content("1"); //名下已有走失貓咪
+            }
+            else
+            {
+                return Content("2"); //符合刊登條件
+            }
+            
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CatFound()
+        {
+            var missingCat = _context.Cats.FirstOrDefault(x => x.MemberId == _memberId && x.IsMissing == true);
+            var missingCatId = missingCat.CatId;
+
+            missingCat.IsMissing = false;
+            _context.Missings.FirstOrDefault(x => x.CatId == missingCatId).IsFound = true;
+
+            await _context.SaveChangesAsync();
+
+            return Content("OK");
         }
     }
 }

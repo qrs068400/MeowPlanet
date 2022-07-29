@@ -62,24 +62,28 @@ function initMap() {
     $('#pre-publish').on('click', function () {
 
         checkLogin(() => {
-            let windowContent =
-                '<div class="px-3 pt-2 pb-1">'+
-                '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
-                '<div class="d-flex mt-3 mb-1 justify-content-between">' +
-                '<button class="btn btn-dark rounded-pill" onclick="confirmPos()">' +
-                '<i class="fa-solid fa-check me-2"></i>' +
-                '確認' +
-                '</button>' +
-                '<button onclick="removeMarker();" class="btn btn-danger rounded-pill">' +
-                '<i class="fa-solid fa-xmark me-2"></i>' +
-                '取消' +
-                '</button>' +
-                '</div>' +
-                '</div>';
 
-            settingMode(windowContent);
+            checkCats(() => {
+
+                let windowContent =
+                    '<div class="px-3 pt-2 pb-1">' +
+                    '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
+                    '<div class="d-flex mt-3 mb-1 justify-content-between">' +
+                    '<button class="btn btn-dark rounded-pill" onclick="confirmPos()">' +
+                    '<i class="fa-solid fa-check me-2"></i>' +
+                    '確認' +
+                    '</button>' +
+                    '<button onclick="removeMarker();" class="btn btn-danger rounded-pill">' +
+                    '<i class="fa-solid fa-xmark me-2"></i>' +
+                    '取消' +
+                    '</button>' +
+                    '</div>' +
+                    '</div>';
+
+                settingMode(windowContent);
+            })
         })
-    
+
     })
 
 
@@ -121,6 +125,45 @@ function initMap() {
     listener = map.addListener('idle', searchCat)
 }
 
+//刊登協尋 檢查名下是否有貓&&是否已有刊登
+function checkCats(callback) {
+    $.get('/Missings/CheckCats', function (data) {
+        if (data == "0") {
+            Swal.fire({
+                title: '您尚未登記任何貓咪',
+                text: '是否要前往登記頁面?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '前往登記',
+                cancelButtonText: '下次一定',
+                heightAuto: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/Member/CreateCat";
+                }
+                else {
+                    return false
+                }
+            })
+        }
+
+        else if (data == "1") {
+
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '每位會員僅限刊登一筆協尋',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+
+        else {
+            callback();
+        }
+    })
+}
 
 //檢查登入
 function checkLogin(action) {
@@ -232,7 +275,7 @@ let showingWindow;
 
 //把所有走失貓咪抓進catList
 $(function () {
-    $.get('Missings/GetMissing', function (data) {
+    $.get('/Missings/GetMissing', function (data) {
         data.forEach((value) => {
             let cat = value;
             let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
@@ -255,7 +298,7 @@ $(function () {
                 })
 
                 //發送AJAX取得資料
-                $.get('Missings/GetDetail', { 'missingId': cat.missingId }, function (data) {
+                $.get('/Missings/GetDetail', { 'missingId': cat.missingId }, function (data) {
                     detalModal = data;
                     $('#detailModal').html(data);
                     $('#detailModal').modal('show');
@@ -363,7 +406,7 @@ function itemClicked(item) {
     });
 
     //發送AJAX取得資料
-    $.get('Missings/GetDetail', { 'missingId': id }, function (data) {
+    $.get('/Missings/GetDetail', { 'missingId': id }, function (data) {
 
         detalModal = data;
         $('#detailModal').html(data);
@@ -396,7 +439,7 @@ function toggleMap() {
 //確定貓咪在此遺失
 function confirmPos() {
 
-    $.get('Missings/GetPublish', (data) => {
+    $.get('/Missings/GetPublish', (data) => {
         $('#publishModal').html(data);
         $('#publishModal').modal('show');
 
@@ -417,7 +460,7 @@ $(document).on({
         let reader = new FileReader()
 
         reader.readAsDataURL(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             $('#imgPreview').attr('src', e.target.result)
         }
 
@@ -428,7 +471,7 @@ $(document).on({
 }, '#imgPreview')
 
 //上傳預覽功能
-$(document).on('change', '#imgInput', function () {  
+$(document).on('change', '#imgInput', function () {
 
     let reader = new FileReader();
     reader.onload = function (e) {
@@ -440,7 +483,7 @@ $(document).on('change', '#imgInput', function () {
 
 
 //提供線索
-$(document).on('click', '#provideClues', () => {    
+$(document).on('click', '#provideClues', () => {
 
     checkLogin(() => {
 
@@ -476,7 +519,7 @@ $(document).on('click', '#provideClues', () => {
             $('#detailModal').modal('show');
         })
 
-    })    
+    })
 
 })
 
