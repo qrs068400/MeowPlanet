@@ -525,12 +525,15 @@ $(document).on('click', '#provideClues', () => {
 })
 
 $(function () {
-    $(document).on('focus', '#witness-time', function () {
-        $(this).datepicker($.datepicker.regional['tw']);
-        $(this).keypress(function (e) {
+    $(document).on({
+        'focus': function () {
+            $(this).datepicker($.datepicker.regional['tw']);
+        },
+        'keypress': function (e) {
             e.preventDefault();
-        });
-    })
+        }
+    }, '#witness-time'
+    )
 })
 
 

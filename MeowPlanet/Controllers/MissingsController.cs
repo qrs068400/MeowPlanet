@@ -70,7 +70,7 @@ namespace MeowPlanet.Models
             }
             else
             {
-                catList = await _context.Missings.ToListAsync();
+                catList = await _context.Missings.Where(x => x.IsFound == false).ToListAsync();
             }
 
             return Json(catList);
