@@ -106,7 +106,7 @@ $(".dropZone, .dropZone1").on({
 
         let fileList = event.originalEvent.dataTransfer.files;  //把滑鼠抓住的若干檔案assign進去
 
-        for (let i = 0; i < fileList.length; i++) {   
+        for (let i = 0; i < fileList.length; i++) {
 
             let file = fileList[i];          //把fileList拆分成單獨file跑迴圈
 
@@ -120,8 +120,8 @@ $(".dropZone, .dropZone1").on({
                     //如果該img為空則把該圖片的url assign進去
                     if (imgList[i].src == '') {
                         imgList[i].src = event.target.result;
-                        $(`#plus${i+1}`).css('display', 'none')
-                        $(`#dropZone${i+1}`).css('border', '2px rgb(115, 244, 222) solid')
+                        $(`#plus${i + 1}`).css('display', 'none')
+                        $(`#dropZone${i + 1}`).css('border', '2px rgb(115, 244, 222) solid')
                         remainNum -= 1;
                         $('#re-p').text(`還剩${remainNum}張可以選擇`)
                         break;  //跳脫出for迴圈
@@ -141,8 +141,8 @@ $(".dropZone, .dropZone1").on({
                     break;
                 }
             }
-        }       
-        
+        }
+
     }
 })
 
@@ -151,7 +151,7 @@ $(function () {
     $('#theFile1').change(function () {
         fileChange(1);
     })
-    $('#theFile2').change(function() {
+    $('#theFile2').change(function () {
         fileChange(2);
     })
     $('#theFile3').change(function () {
@@ -163,6 +163,8 @@ $(function () {
     $('#theFile5').change(function () {
         fileChange(5);
     })
+
+
 })
 
 function fileChange(num) {
@@ -177,3 +179,30 @@ function fileChange(num) {
     $(`#plus${num}`).css('display', 'none')
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
+
+// 地址轉經緯度
+var geocoder;
+
+function initMap() {
+    geocoder = new google.maps.Geocoder();
+}
+
+function getlatlng() {
+    var address = $('#address').val();
+
+    geocoder.geocode({
+        'address': address
+    }, function (result) {
+        $('#lat').attr('value',result[0].geometry.location.lat());
+        $('#lng').attr('value', result[0].geometry.location.lng());
+    })
+
+}
+
+// 照顧條件選擇
+$('.con-b').click(function () {
+
+    $(this).toggleClass('active').blur();
+})
+
+$('#licence-btn').click

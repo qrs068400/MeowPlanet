@@ -1,4 +1,5 @@
-﻿@using System.Security.Claims;
+﻿@model MeowPlanet.Models.Sitter;
+@using System.Security.Claims;
 
 @{
     Layout = null;
@@ -30,14 +31,10 @@
             </div>
 
             <div class="div-left-p mx-5" id="p5">
-                <p>請提供您的服務地點</p>
+                <p>您所提供的設施及服務價格</p>
             </div>
 
             <div class="div-left-p mx-5" id="p6">
-                <p>請選擇您所提供的設施</p>
-            </div>
-
-            <div class="div-left-p mx-5" id="p7">
                 <p>最後請提供您的相關照片</p>
             </div>
 
@@ -51,25 +48,33 @@
                 <a class="btn btn-dark r-btn" asp-controller="Member" asp-action="Index">返回</a>
             </div>
 
+            <form method="post" asp-action="AddSitter" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
+
+            <input type="text" asp-for="IsService" class="d-none" value="true" />
+            <input type="text" asp-for="MemberId" class="d-none" value="1" />
             <div class="div-right-form text-center" id="f2">
 
                 <div class="d-flex align-items-center">
                     <div class="w-100">
                         <p class="text-start">服務名稱</p>
-                        <input type="text" class="text-center w-100" id="name-in" />
+                        <input type="text" asp-for="Name" class="text-center w-100" />
                     </div>
                 </div>
 
                 <div class="d-flex align-items-center">
                     <div class="w-100">
                         <p class="text-start">照顧地點</p>
-                        <input type="text" class="text-center w-100" id="name-in" />
+                        <input type="text" class="text-center w-100" id="address" onchange="getlatlng()" />
                     </div>
+
                 </div>
+
+                <input type="text" class="d-none" asp-for="PosLat" id="lat" />
+                <input type="text" class="d-none" asp-for="PosLng" id="lng" />
 
                 <div>
                     <p class="text-start">保姆自介</p>
-                    <textarea type="text" rows="5" cols="35" class="p-4" id="intro-in"></textarea>
+                    <textarea type="text" asp-for="Summary" rows="5" cols="35" class="p-4" id="intro-in"></textarea>
                 </div>
 
                 <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
@@ -80,15 +85,18 @@
 
                 <p class="text-start">證照</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con-b" value="true">有證照</button>
+                    <button type="button" class="btn btn-light con-b" id="licence-btn">有證照</button>
+                    <input type="text" asp-for="Licence" class="d-none" id="licence-in" />
                 </div>
                 <p class="text-start">籠子</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con-b" value="False">需關籠</button>
+                    <button type="button" class="btn btn-light con-b">需關籠</button>
+                    <input type="text" asp-for="Cage" class="d-none" id="cage-in" />
                 </div>
                 <p class="text-start">監視器</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con-b" value="true">有監視器</button>
+                    <button type="button" class="btn btn-light con-b">有監視器</button>
+                    <input type="text" asp-for="Monitor" class="d-none" id="monitor-in" />
                 </div>
 
                 <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
@@ -100,25 +108,29 @@
 
                 <p class="text-start">供餐</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con2-b" value="true">附一餐</button>
-                    <button type="button" class="btn btn-light con2-b" value="False">附二餐</button>
+                    <button type="button" class="btn btn-light con2-b" value="附一餐">附一餐</button>
+                    <button type="button" class="btn btn-light con2-b" value="附二餐">附二餐</button>
 
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con2-b" value="true">附三餐</button>
-                    <button type="button" class="btn btn-light con2-b" value="False">無附餐</button>
+                    <button type="button" class="btn btn-light con2-b" value="附三餐">附三餐</button>
+                    <button type="button" class="btn btn-light con2-b" value="無附餐">無附餐</button>
                 </div>
+
+                <input type="text" asp-for="Meal" class="d-none" id="meal-in" />
 
                 <p class="text-start">照顧數量</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con2-b" value="true">一對一</button>
-                    <button type="button" class="btn btn-light con2-b" value="False">一對二</button>
+                    <button type="button" class="btn btn-light con2-b" value="一對一">一對一</button>
+                    <button type="button" class="btn btn-light con2-b" value="一對二">一對二</button>
 
                 </div>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light con2-b" value="true">一對三</button>
-                    <button type="button" class="btn btn-light con2-b" value="False">一對多</button>
+                    <button type="button" class="btn btn-light con2-b" value="一對三">一對三</button>
+                    <button type="button" class="btn btn-light con2-b" value="一對多">一對多</button>
                 </div>
+
+                <input type="text" asp-for="CatNumber" class="d-none" id="meal-in" />
 
                 <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                 <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
@@ -130,6 +142,11 @@
                 <div><button type="button" class="btn btn-light con-b" value="2">貓抓板</button></div>
                 <div><button type="button" class="btn btn-light con-b" value="3">逗貓棒</button></div>
                 <div><button type="button" class="btn btn-light con-b" value="4">跑步機</button></div>
+
+                <div class="w-100">
+                    <p class="text-start">服務價格</p>
+                    <input type="text" asp-for="Pay" class="text-center w-100" />
+                </div>
 
                 <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
                 <button type="button" class="btn btn-light ct-b" id="f5-b2">下一步</button>
@@ -177,16 +194,20 @@
                 <button type="button" class="btn btn-dark re-b" id="f6-b1">返回</button>
                 <button type="submit" class="btn btn-light ct-b" id="f6-b2">完成</button>
             </div>
+
+            </form>
         </div>
 
 
     </div>
 </div>
-
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
 <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
 <script src="~/js/createsitter.js"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBtnea2CBLJCdjjhDcn_BmZkxVCN8I7wuI&libraries=geometry&callback=initMap">
+</script>
 
 @{
     await Html.RenderPartialAsync("_ValidationScriptsPartial");
