@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using MeowPlanet.ViewModels.MemberInfo;
-
+using System.Collections;
 
 namespace MeowPlanet.Controllers
 {
@@ -124,7 +124,7 @@ namespace MeowPlanet.Controllers
 
         // 建立保姆資料
         [HttpPost]
-        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5, int[] sitterfeature)
+        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
         {
             Random random = new Random();
             string? uniqueFileName = null;
@@ -189,22 +189,24 @@ namespace MeowPlanet.Controllers
                 sitter.Img05 = "/images/userUpload/" + uniqueFileName;
             }
             _context.Sitters.Add(sitter);
-
-            //for (int i = 0; i < sitterfeature.Length; i++)
-            //{
-
-
-            //}
-            SitterFeature sitterFeature = new SitterFeature();
-
-            sitterFeature.ServiceId = sitter.MemberId;
-            sitterFeature.FeatureId = sitterfeature[0];
-
-            _context.SitterFeatures.Add(sitterFeature);
-
-            
             await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Member");
+        }
+
+        // 儲存sitterfeature資料
+        [HttpPost]
+        public async Task<IActionResult> AddSitterFeature (List<int> sitterfeature,int serviceid)
+        {
+            SitterFeature sitter_feature = new SitterFeature
+            {
+                ServiceId = serviceid,
+                FeatureId = sitterfeature[0]
+            };
+
+            _context.SitterFeatures.Add(sitter_feature);
+
+            await _context.SaveChangesAsync();
+            return Content("完成");
         }
 
         // 取得選擇貓咪資料

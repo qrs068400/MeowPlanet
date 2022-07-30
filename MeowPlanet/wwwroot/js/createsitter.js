@@ -275,3 +275,23 @@ $('.con4-b').click(function () {
     $('#feature').attr('value', feature);
 
 })
+
+
+$('#f5-b2').on('click',function () {
+
+    $.post("/Member/AddSitterFeature", { sitterfeature: feature, serviceid: $('#memberid').val() }, function (data) {
+
+        if (data == "完成") {
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                icon: 'success',
+                title: '設施選擇成功',
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+
+    })
+
+})

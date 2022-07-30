@@ -51,7 +51,7 @@
             <form method="post" asp-action="AddSitter" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
 
             <input type="text" asp-for="IsService" class="d-none" value="true" />
-            <input type="text" asp-for="MemberId" class="d-none" value="@User.FindFirst(ClaimTypes.Sid).Value" iid="memberid"/>
+            <input type="text" asp-for="MemberId" class="d-none" value="@User.FindFirst(ClaimTypes.Sid).Value" id="memberid"/>
             <div class="div-right-form text-center" id="f2">
 
                 <div class="d-flex align-items-center">
