@@ -257,6 +257,18 @@ body {
     margin-bottom:40px;
 }
 
+#f3 input {
+    color: white;
+    font-size: 30px;
+    padding: 1rem;
+    border: 2px rgb(115, 244, 222) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 40px;
+    text-align: left;
+    margin-bottom: 40px;
+}
+
 #f2 p {
     margin-bottom: 10px;
     font-size: 30px;

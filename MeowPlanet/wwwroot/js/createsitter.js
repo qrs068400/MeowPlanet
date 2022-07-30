@@ -65,13 +65,6 @@ $('#f5-b1').click(function () {
     $('#f4').css('display', 'block');
 })
 
-//$('#f5-b2').click(function () {
-//    $('#p5').css('display', 'none');
-//    $('#p6').css('display', 'block');
-//    $('#f5').css('display', 'none');
-//    $('#f6').css('display', 'block');
-//})
-
 
 let inputList = [] // 放input dom的list
 let imgList = [] //放img dom的list
