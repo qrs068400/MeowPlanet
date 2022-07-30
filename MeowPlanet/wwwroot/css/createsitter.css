@@ -119,17 +119,15 @@ body {
 }
 
 #f5 {
-    width: 500px;
+    
     display: none;
 }
 
 #f6 {
+    width: 500px;
     display: none;
 }
 
-#f7 {
-    display: none;
-}
 
 .st-b {
     color: white;
@@ -305,7 +303,7 @@ body {
     max-height: 100%;
 }
 
-#f6 {
+#f5 {
     padding-bottom: 10%;
 }
 

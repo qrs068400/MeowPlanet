@@ -65,19 +65,13 @@ $('#f5-b1').click(function () {
     $('#f4').css('display', 'block');
 })
 
-$('#f5-b2').click(function () {
-    $('#p5').css('display', 'none');
-    $('#p6').css('display', 'block');
-    $('#f5').css('display', 'none');
-    $('#f6').css('display', 'block');
-})
+//$('#f5-b2').click(function () {
+//    $('#p5').css('display', 'none');
+//    $('#p6').css('display', 'block');
+//    $('#f5').css('display', 'none');
+//    $('#f6').css('display', 'block');
+//})
 
-$('#f6-b1').click(function () {
-    $('#p6').css('display', 'none');
-    $('#p5').css('display', 'block');
-    $('#f6').css('display', 'none');
-    $('#f5').css('display', 'block');
-})
 
 let inputList = [] // 放input dom的list
 let imgList = [] //放img dom的list
@@ -277,21 +271,28 @@ $('.con4-b').click(function () {
 })
 
 
-$('#f5-b2').on('click',function () {
+$('#sitterform').on('submit',function (e) {
+    e.preventDefault();
+    let data = $(this).serialize();
 
-    $.post("/Member/AddSitterFeature", { sitterfeature: feature, serviceid: $('#memberid').val() }, function (data) {
+    $.post("/Member/AddSitter",data, function (data) {
 
-        if (data == "完成") {
+        if (data == "服務建立完成") {
             Swal.fire({
                 heightAuto: false,
                 position: 'center',
                 icon: 'success',
-                title: '設施選擇成功',
+                title: '服務建立完成',
                 showConfirmButton: false,
                 timer: 2500
             })
         }
 
+    }).then(function () {
+        $('#p5').css('display', 'none');
+        $('#p6').css('display', 'block');
+        $('#f5').css('display', 'none');
+        $('#f6').css('display', 'block');
     })
 
 })

@@ -190,23 +190,34 @@ namespace MeowPlanet.Controllers
             }
             _context.Sitters.Add(sitter);
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index", "Member");
+            return Content("服務建立完成");
         }
 
         // 儲存sitterfeature資料
         [HttpPost]
-        public async Task<IActionResult> AddSitterFeature (List<int> sitterfeature,int serviceid)
+        public async Task<IActionResult> AddSitterFeature(string sitterfeature, int memberId)
         {
-            SitterFeature sitter_feature = new SitterFeature
-            {
-                ServiceId = serviceid,
-                FeatureId = sitterfeature[0]
-            };
 
-            _context.SitterFeatures.Add(sitter_feature);
+            string[] sitterfeatureArray = sitterfeature.Split(',');
+
+            var sitterInfo = _context.Sitters.Where(x => x.MemberId == memberId).OrderBy(x => x.ServiceId).LastOrDefault();
+
+            var serviceid = sitterInfo.ServiceId;
+
+
+            for (int i = 0; i < sitterfeatureArray.Length; i++)
+            {
+
+                SitterFeature sitter_feature = new SitterFeature();
+                sitter_feature.ServiceId = serviceid;
+                sitter_feature.FeatureId = Convert.ToInt32(sitterfeatureArray[i]);
+                _context.SitterFeatures.Add(sitter_feature);
+
+            }
 
             await _context.SaveChangesAsync();
-            return Content("完成");
+
+            return RedirectToAction("Index", "Member");
         }
 
         // 取得選擇貓咪資料
