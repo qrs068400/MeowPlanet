@@ -42,8 +42,6 @@ builder.Services.AddSession(option =>
     option.Cookie.HttpOnly = true;
 });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddControllers().AddJsonOptions(x =>
-                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 var app = builder.Build();
 

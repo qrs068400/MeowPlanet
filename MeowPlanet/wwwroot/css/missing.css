@@ -19,6 +19,7 @@ body {
 }
 
 #div-map, #div-items {
+    overflow-x: hidden;
     border: 2px rgb(219, 232, 248) solid !important;
     box-shadow: 0 0 3rem rgb(134 171 190 / 50%) inset !important;
     background: rgba(0, 0, 0, .3);
@@ -36,6 +37,8 @@ body {
 .cat-item {
     animation: leftFadeIn 1s ease;
 }
+
+
 
 @keyframes topFadeIn {
     0% {

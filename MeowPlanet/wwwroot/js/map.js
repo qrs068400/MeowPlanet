@@ -364,7 +364,7 @@ function searchCat() {
 
             if (showingCatList.includes(cat)) {
                 showingCatList.splice(showingCatList.indexOf(cat), 1);
-                $(`#missing-${cat.missingId}`).fadeOut(600);
+                $(`#missing-${cat.missingId}`).animate({ marginLeft: "200px", opacity: 0 }, 800, 'swing', function () { $(this).hide().css({'margin-left': '0', 'opacity': '1'}) });
             }
         }
     })
