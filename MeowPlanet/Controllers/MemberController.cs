@@ -188,22 +188,22 @@ namespace MeowPlanet.Controllers
                 }
                 sitter.Img05 = "/images/userUpload/" + uniqueFileName;
             }
-
             _context.Sitters.Add(sitter);
 
-            for (int i = 0; i < sitterfeature.Length; i++)
-            {
-                SitterFeature sitter_feature = new()
-                {
-                    ServiceId = sitter.ServiceId,
-                    FeatureId = sitterfeature[i]
-                };
+            //for (int i = 0; i < sitterfeature.Length; i++)
+            //{
 
-                _context.SitterFeatures.Add(sitter_feature);
-                await _context.SaveChangesAsync();
 
-            }
+            //}
+            SitterFeature sitterFeature = new SitterFeature();
 
+            sitterFeature.ServiceId = sitter.MemberId;
+            sitterFeature.FeatureId = sitterfeature[0];
+
+            _context.SitterFeatures.Add(sitterFeature);
+
+            
+            await _context.SaveChangesAsync();
             return RedirectToAction("Index", "Member");
         }
 
