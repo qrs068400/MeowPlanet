@@ -76,14 +76,26 @@
 
     <script>
 
-        $('#login-submit').click(function() {
+        $('#login-submit').click(function(e) {
+            e.preventDefault();
+            var form = $(this).parents('form');
 
             $.get("Login/LoginCheck", { email: $('input[type=email]').val(), password: $('input[type=password]').val() }, function(data) {
-                
+
                 if (data == "Email或密碼錯誤") {
                     $('#alert').html(data).css('color', '#2A483A')
+                } else {
+                    Swal.fire({
+                        heightAuto: false,
+                        position: 'center',
+                        icon: 'success',
+                        title: '登入成功',
+                        showConfirmButton: false,
+                        timer: 2500
+                    }).then(function() {
+                        form.submit();
+                    })
                 }
-
 
             })
         })
