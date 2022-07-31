@@ -197,26 +197,26 @@ namespace MeowPlanet.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSitterFeature(string sitterfeature, int memberId)
         {
-
-            string[] sitterfeatureArray = sitterfeature.Split(',');
-
-            var sitterInfo = _context.Sitters.Where(x => x.MemberId == memberId).OrderBy(x => x.ServiceId).LastOrDefault();
-
-            var serviceid = sitterInfo.ServiceId;
-
-
-            for (int i = 0; i < sitterfeatureArray.Length; i++)
+            if(sitterfeature != null)
             {
+                string[] sitterfeatureArray = sitterfeature.Split(',');
 
-                SitterFeature sitter_feature = new SitterFeature();
-                sitter_feature.ServiceId = serviceid;
-                sitter_feature.FeatureId = Convert.ToInt32(sitterfeatureArray[i]);
-                _context.SitterFeatures.Add(sitter_feature);
+                var sitterInfo = _context.Sitters.Where(x => x.MemberId == memberId).OrderBy(x => x.ServiceId).LastOrDefault();
 
+                var serviceid = sitterInfo.ServiceId;
+
+
+                for (int i = 0; i < sitterfeatureArray.Length; i++)
+                {
+
+                    SitterFeature sitter_feature = new SitterFeature();
+                    sitter_feature.ServiceId = serviceid;
+                    sitter_feature.FeatureId = Convert.ToInt32(sitterfeatureArray[i]);
+                    _context.SitterFeatures.Add(sitter_feature);
+
+                }
             }
-
             await _context.SaveChangesAsync();
-
             return RedirectToAction("Index", "Member");
         }
 

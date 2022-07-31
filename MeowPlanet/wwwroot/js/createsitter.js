@@ -17,10 +17,15 @@ $('#f1-b1').click(function () {
 
 
 $('#f2-b4').click(function () {
-    $('#p2').css('display', 'none');
-    $('#p3').css('display', 'block');
-    $('#f2').css('display', 'none');
-    $('#f3').css('display', 'block');
+    if ($('#name-in').val() == '' || $('#address').val() == '' || $('#intro-in').val() == '') {
+        $('#f2-sp').text('請填寫');
+    } else {
+        $('#p2').css('display', 'none');
+        $('#p3').css('display', 'block');
+        $('#f2').css('display', 'none');
+        $('#f3').css('display', 'block');
+    }
+
 })
 
 $('#f2-b3').click(function () {
@@ -31,17 +36,23 @@ $('#f2-b3').click(function () {
 })
 
 $('#f3-b1').click(function () {
+
     $('#p3').css('display', 'none');
     $('#p2').css('display', 'block');
     $('#f3').css('display', 'none');
     $('#f2').css('display', 'block');
+
 })
 
 $('#f3-b2').click(function () {
-    $('#p3').css('display', 'none');
-    $('#p4').css('display', 'block');
-    $('#f3').css('display', 'none');
-    $('#f4').css('display', 'block');
+    if ($('#licence-in').val() == '' || $('#cage-in').val() == '' || $('#monitor-in').val() == '' || $('#pay-in').val() == '') {
+        $('#f3-sp').text('請選填');
+    } else {
+        $('#p3').css('display', 'none');
+        $('#p4').css('display', 'block');
+        $('#f3').css('display', 'none');
+        $('#f4').css('display', 'block');
+    }
 })
 
 $('#f4-b1').click(function () {
@@ -52,10 +63,14 @@ $('#f4-b1').click(function () {
 })
 
 $('#f4-b2').click(function () {
-    $('#p4').css('display', 'none');
-    $('#p5').css('display', 'block');
-    $('#f4').css('display', 'none');
-    $('#f5').css('display', 'block');
+    if ($('#meal-in').val() == '' || $('#num-in').val() == '') {
+        $('#f4-sp').text('請選擇');
+    } else {
+        $('#p4').css('display', 'none');
+        $('#p5').css('display', 'block');
+        $('#f4').css('display', 'none');
+        $('#f5').css('display', 'block');
+    }
 })
 
 $('#f5-b1').click(function () {
@@ -180,7 +195,7 @@ function getlatlng() {
     geocoder.geocode({
         'address': address
     }, function (result) {
-        $('#lat').attr('value',result[0].geometry.location.lat());
+        $('#lat').attr('value', result[0].geometry.location.lat());
         $('#lng').attr('value', result[0].geometry.location.lng());
     })
 
@@ -253,7 +268,7 @@ $('.con4-b').click(function () {
         s = 0;
     }
 
-    if (s == 1) {      
+    if (s == 1) {
         feature.push($(this).val());
     } else {
         feature.remove($(this).val());
@@ -264,11 +279,11 @@ $('.con4-b').click(function () {
 })
 
 
-$('#sitterform').on('submit',function (e) {
+$('#sitterform').on('submit', function (e) {
     e.preventDefault();
     let data = $(this).serialize();
 
-    $.post("/Member/AddSitter",data, function (data) {
+    $.post("/Member/AddSitter", data, function (data) {
 
         if (data == "服務建立完成") {
             Swal.fire({
@@ -288,4 +303,20 @@ $('#sitterform').on('submit',function (e) {
         $('#f6').css('display', 'block');
     })
 
+})
+
+$('#f6-b1').click(function (e) {
+    e.preventDefault();
+    var form = $(this).parents('form');
+
+    Swal.fire({
+        heightAuto: false,
+        position: 'center',
+        icon: 'success',
+        title: '設施設定完成',
+        showConfirmButton: false,
+        timer: 2500
+    }).then(function () {
+        form.submit();
+    })
 })

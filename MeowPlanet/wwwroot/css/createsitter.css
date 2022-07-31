@@ -179,6 +179,25 @@ body {
     right: 2%;
 }
 
+.ct-b2 {
+    color: white;
+    font-size: 30px;
+    border-radius: 20px;
+    height: 70px;
+    width: 200px;
+    padding: 1rem;
+    border: 2px rgb(115, 244, 222) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 2%;
+    right: 25%;
+    transform: translate(50%);
+}
+
 .con-b {
     color: white;
     font-size: 25px;

@@ -57,7 +57,7 @@
                     <div class="d-flex align-items-center">
                         <div class="w-100">
                             <p class="text-start">服務名稱</p>
-                            <input type="text" asp-for="Name" class="text-center w-100" />
+                            <input type="text" asp-for="Name" class="text-center w-100" id="name-in"/>
                         </div>
                     </div>
 
@@ -66,7 +66,6 @@
                             <p class="text-start">照顧地點</p>
                             <input type="text" class="text-center w-100" id="address" onchange="getlatlng()" />
                         </div>
-
                     </div>
 
                     <input type="text" class="d-none" asp-for="PosLat" id="lat" />
@@ -76,6 +75,8 @@
                         <p class="text-start">保姆自介</p>
                         <textarea type="text" asp-for="Summary" rows="5" cols="35" class="p-4" id="intro-in"></textarea>
                     </div>
+
+                    <span id="f2-sp" class="in-sp"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f2-b4">下一步</button>
@@ -101,8 +102,10 @@
 
                     <div class="w-100">
                         <p class="text-start">服務價格</p>
-                        <input type="text" asp-for="Pay" class="text-center w-100" />
+                        <input type="text" asp-for="Pay" class="text-center w-100" id="pay-in"/>
                     </div>
+
+                    <span id="f3-sp" class="in-sp"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f3-b2">下一步</button>
@@ -136,6 +139,8 @@
                     </div>
 
                     <input type="text" asp-for="CatNumber" class="d-none" id="num-in" />
+
+                    <span id="f4-sp" class="in-sp"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
@@ -186,7 +191,7 @@
                 </div>
             </form>
 
-            <form method="post" asp-action="AddSitterFeature" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
+            <form method="post" asp-action="AddSitterFeature" asp-controller="Member" enctype='multipart/form-data' autocomplete="off" id="featureform">
 
                 <input type="text" class="d-none" value="@User.FindFirst(ClaimTypes.Sid).Value" name="memberId"/>
 
