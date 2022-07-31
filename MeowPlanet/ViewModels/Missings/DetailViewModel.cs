@@ -4,6 +4,7 @@ namespace MeowPlanet.ViewModels.Missings
 {
     public class DetailViewModel
     {
+        public int? MissingId { get; set; }
         public string? Name { get; set; }
         public bool? Sex { get; set; }
         public int? Age { get; set; }

@@ -8,6 +8,8 @@ let catList = [];
 
 let detalModal;
 
+let clickedMarker;
+
 
 function removeMarker() {
     if (newMarker != null) {
@@ -272,6 +274,7 @@ function settingMode(windowContent, offset) {
 
 let missingId;
 let showingWindow;
+let cluesMarker = [];
 
 //把所有走失貓咪抓進catList
 $(function () {
@@ -289,6 +292,8 @@ $(function () {
 
             //綁定此marker點擊事件
             marker.addListener('click', function () {
+
+                clickedMarker = marker;
 
                 //地圖中心移動到圖標位置
                 map.setZoom(16);
@@ -398,6 +403,8 @@ function itemClicked(item) {
     let id = $(item).data('id');
     missingId = id;
     let clickedCat = catList.filter(x => x.missingId == id)[0];
+    clickedMarker = clickedCat.marker;
+
 
     map.setZoom(16);
     map.panTo({

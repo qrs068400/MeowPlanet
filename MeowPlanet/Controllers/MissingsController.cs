@@ -25,7 +25,7 @@ namespace MeowPlanet.Models
             {
                 _memberId = Convert.ToInt32(contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid).Value);
             }
-            
+
         }
 
         public async Task<IActionResult> Index()
@@ -35,13 +35,13 @@ namespace MeowPlanet.Models
             if (_memberId != null)
             {
                 var memberId = new SqlParameter("memberId", _memberId);
-                itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(clue.clue_id) AS ClueCount, MAX(witness_time) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 and cat.member_id != @memberId GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name", memberId).ToListAsync();
+                itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(CASE WHEN clue.status = 1 THEN 1 ELSE NULL END) AS ClueCount, MAX(CASE WHEN status = 1 THEN witness_time ELSE NULL END) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 and cat.member_id != @memberId GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name", memberId).ToListAsync();
             }
             else
             {
-                itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(clue.clue_id) AS ClueCount, MAX(witness_time) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name").ToListAsync();
+                itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(CASE WHEN clue.status = 1 THEN 1 ELSE NULL END) AS ClueCount, MAX(CASE WHEN status = 1 THEN witness_time ELSE NULL END) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name").ToListAsync();
             }
-                        
+
 
             return View(itemList);
         }
@@ -88,6 +88,7 @@ namespace MeowPlanet.Models
                 .Include(x => x.Cat.Breed)
                 .Select(x => new DetailViewModel()
                 {
+                    MissingId = missingId,
                     Name = x.Cat.Name,
                     Sex = x.Cat.Sex,
                     Age = x.Cat.Age,
@@ -102,7 +103,7 @@ namespace MeowPlanet.Models
                 })
                 .FirstOrDefaultAsync();
 
-            return PartialView("_MissingDetailPartial" ,result);
+            return PartialView("_MissingDetailPartial", result);
         }
 
         public ActionResult GetPublish()
@@ -161,7 +162,7 @@ namespace MeowPlanet.Models
             {
                 return Content("False");
             }
-            
+
         }
 
         public IActionResult GetCluesComponent(int memberId, int status)
@@ -198,7 +199,7 @@ namespace MeowPlanet.Models
             {
                 return Content("2"); //符合刊登條件
             }
-            
+
         }
 
         [HttpPost]
@@ -214,5 +215,22 @@ namespace MeowPlanet.Models
 
             return Content("OK");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> SetCluesMarker(int missingId)
+        {
+            var result = await _context.Clues.Where(x => x.MissingId == missingId && x.Status == 1).OrderBy(x => x.WitnessTime).ToListAsync();
+
+            return Json(result);
+        }
+
+        [HttpGet]
+        public int CheckCluesCount(int missingId)
+        {
+            var result = _context.Clues.Count(x => x.MissingId == missingId && x.Status == 1);
+
+            return result;
+        }
+
     }
 }

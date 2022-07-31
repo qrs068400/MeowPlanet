@@ -102,7 +102,7 @@ body {
     color: white;
 }
 
-#pre-publish, #cancel-publish {
+#pre-publish, #cancel-publish, #backToDetail {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
