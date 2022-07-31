@@ -224,13 +224,5 @@ namespace MeowPlanet.Models
             return Json(result);
         }
 
-        [HttpGet]
-        public int CheckCluesCount(int missingId)
-        {
-            var result = _context.Clues.Count(x => x.MissingId == missingId && x.Status == 1);
-
-            return result;
-        }
-
     }
 }
