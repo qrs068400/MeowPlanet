@@ -273,6 +273,7 @@ function settingMode(windowContent, offset) {
 
 
 let missingId;
+let clueCount;
 let showingWindow;
 let cluesMarker = [];
 
@@ -310,6 +311,7 @@ $(function () {
                 })
 
                 missingId = cat.missingId;
+                clueCount = $(`#missing-${missingId}`).data('clueCount');
             })
 
             //綁定此marker hover事件
@@ -402,6 +404,7 @@ function itemClicked(item) {
 
     let id = $(item).data('id');
     missingId = id;
+    clueCount = $(item).data('clueCount');
     let clickedCat = catList.filter(x => x.missingId == id)[0];
     clickedMarker = clickedCat.marker;
 
