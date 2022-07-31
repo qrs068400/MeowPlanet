@@ -91,6 +91,20 @@
             })
         })
 
+        $('#login-submit').click(function() {
+            $.get("Login/LoginCheck", {
+                email: $('input[type=email]').val(), password: $('input[type=password]')
+
+                        if(data == "Email或密碼錯誤") {
+                swal.fire({
+                    title:
+                        })
+            }
+
+        })
+                })
+
+
 
     </script>
 
