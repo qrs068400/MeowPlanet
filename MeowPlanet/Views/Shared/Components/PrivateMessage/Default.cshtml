@@ -1,0 +1,61 @@
+﻿<style>
+
+    #message-open {
+        position: fixed;
+        right: 0;
+        bottom: 50px;
+    }
+
+    #message-close {
+        transform: translate(calc(-100% - 10px), 20%);
+    }
+
+    .message-btn {
+        width: 40px;
+        background-color: wheat;
+        padding: 10px;
+        border-bottom-left-radius: 10px;
+        border-top-left-radius: 10px;
+    }
+
+    #message-body {
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+        z-index: 50000;
+        background-color: #c9c9c9;
+        height: 300px;
+        width: 600px;
+        position: fixed;
+        right: 0;
+        bottom: 50px;
+        padding: 10px;
+    }
+
+    #message-content {
+        display: inline-block;
+        border-bottom-left-radius: 20px;
+        border-top-left-radius: 20px;
+        width: 60%;
+        margin-right: 10px;
+        background-color: whitesmoke;
+        height: 100%;
+    }
+
+    #message-user {
+        display: inline-block;
+        width: calc(40% - 15px);
+        background-color: whitesmoke;
+        height: 100%;
+    }
+</style>
+
+
+<button id="message-open" class="btn message-btn" data-bs-toggle="collapse" data-bs-target="#message-body"><i class="fa-solid fa-comment-dots"></i> 即時通訊</button>
+<div class="collapse" id="message-body">
+    <button id="message-close" class="btn message-btn position-absolute" data-bs-toggle="collapse" data-bs-target="#message-body"><i class="fa-solid fa-xmark"></i> 關閉</button>
+    <div id="message-content">
+
+    </div>
+    <div id="message-user">
+    </div>
+</div>

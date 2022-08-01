@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<MeowPlanet.ViewModels.Missings.ItemsViewModel>
 @using System.Security.Claims;
+@addTagHelper *, MeowPlanet
 
 @{
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
@@ -33,8 +34,9 @@
         <button id="backToDetail" class="btn btn-danger rounded-pill d-none" style="border-color: white; width:180px">
             <span class="h5"><i class="fa-solid fa-circle-left me-1"></i> 返回協尋</span>
         </button>
-    </div>
+    </div>    
 </div>
+
 
 @*走失詳細資訊的彈出視窗*@
 <div class="modal fade" id="detailModal" tabindex="-1">
