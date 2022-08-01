@@ -371,7 +371,7 @@ function searchCat() {
 
             if (showingCatList.includes(cat)) {
                 showingCatList.splice(showingCatList.indexOf(cat), 1);
-                $(`#missing-${cat.missingId}`).animate({ marginLeft: "200px", opacity: 0 }, 800, 'swing', function () { $(this).hide().css({'margin-left': '0', 'opacity': '1'}) });
+                $(`#missing-${cat.missingId}`).animate({ marginLeft: "200px", opacity: 0 }, 800, 'swing', function () { $(this).hide().css({ 'margin-left': '0', 'opacity': '1' }) });
             }
         }
     })
@@ -497,38 +497,52 @@ $(document).on('click', '#provideClues', () => {
 
     checkLogin(() => {
 
-        let windowContent =
-            '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
-            '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
-            '<div class="form-group mt-3 text-center" style="height: 40%">' +
-            '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
-            '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
-            '</div>' +
-            '<div class="form-group mt-3 m-auto w-85">' +
-            '<label for="witness-time" class="h6">目擊時間 :</label>' +
-            '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
-            '</div>' +
-            '<div class="form-group mt-3 m-auto w-85">' +
-            '<label for="other-description" class="h6">其他描述 :</label>' +
-            '<input type="text" id="other-description" class="form-control rounded-pill" name="Description" />' +
-            '</div>' +
-            '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
-            '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check me-1"></i> 發布</button>' +
-            '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark me-1"></i> 取消</button>' +
-            '</div>' +
-            '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
-            `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
-            '</form>';
+        if (memberId == $('#provideClues').data('memberId')) {
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '您無法對您發布的協尋提供線索',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+        else {
 
-        $('#detailModal').modal('hide');
+            let windowContent =
+                '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
+                '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
+                '<div class="form-group mt-3 text-center" style="height: 40%">' +
+                '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
+                '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
+                '</div>' +
+                '<div class="form-group mt-3 m-auto w-85">' +
+                '<label for="witness-time" class="h6">目擊時間 :</label>' +
+                '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
+                '</div>' +
+                '<div class="form-group mt-3 m-auto w-85">' +
+                '<label for="other-description" class="h6">其他描述 :</label>' +
+                '<input type="text" id="other-description" class="form-control rounded-pill" name="Description" />' +
+                '</div>' +
+                '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
+                '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check me-1"></i> 發布</button>' +
+                '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark me-1"></i> 取消</button>' +
+                '</div>' +
+                '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
+                `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
+                '</form>';
 
-        settingMode(windowContent, true);
+            $('#detailModal').modal('hide');
+
+            settingMode(windowContent, true);
 
 
-        $('#cancel-publish').one('click', () => {
-            $('#detailModal').html(detalModal);
-            $('#detailModal').modal('show');
-        })
+            $('#cancel-publish').one('click', () => {
+                $('#detailModal').html(detalModal);
+                $('#detailModal').modal('show');
+            })
+
+        }
 
     })
 

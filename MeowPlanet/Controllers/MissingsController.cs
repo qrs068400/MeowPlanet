@@ -30,17 +30,9 @@ namespace MeowPlanet.Models
 
         public async Task<IActionResult> Index()
         {
-            List<ItemsViewModel> itemList;
 
-            if (_memberId != null)
-            {
-                var memberId = new SqlParameter("memberId", _memberId);
-                itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(CASE WHEN clue.status = 1 THEN 1 ELSE NULL END) AS ClueCount, MAX(CASE WHEN status = 1 THEN witness_time ELSE NULL END) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 and cat.member_id != @memberId GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name", memberId).ToListAsync();
-            }
-            else
-            {
-                itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(CASE WHEN clue.status = 1 THEN 1 ELSE NULL END) AS ClueCount, MAX(CASE WHEN status = 1 THEN witness_time ELSE NULL END) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name").ToListAsync();
-            }
+            var itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(CASE WHEN clue.status = 1 THEN 1 ELSE NULL END) AS ClueCount, MAX(CASE WHEN status = 1 THEN witness_time ELSE NULL END) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name").ToListAsync();
+
 
 
             return View(itemList);
@@ -61,17 +53,9 @@ namespace MeowPlanet.Models
         [HttpGet]
         public async Task<IActionResult> GetMissing()
         {
-            List<Missing> catList;
 
-            if (_memberId != null)
-            {
-                catList = await _context.Missings.Include(x => x.Cat)
-                    .Where(x => x.Cat.MemberId != _memberId && x.IsFound == false).ToListAsync();
-            }
-            else
-            {
-                catList = await _context.Missings.Where(x => x.IsFound == false).ToListAsync();
-            }
+            var catList = await _context.Missings.Where(x => x.IsFound == false).ToListAsync();
+
 
             return Json(catList);
         }
@@ -98,6 +82,7 @@ namespace MeowPlanet.Models
                     Img02 = x.Cat.Img02,
                     Img03 = x.Cat.Img03,
                     Description = x.Description,
+                    MemberId = x.Cat.Member.MemberId,
                     MemberName = x.Cat.Member.Name,
                     Photo = x.Cat.Member.Photo
                 })

@@ -18,6 +18,7 @@ namespace MeowPlanet.ViewModels.Missings
         public string? Img03 { get; set; }
 
         public string? Description { get; set; }
+        public int MemberId { get; set; }
         public string? MemberName { get; set; }
         public string? Photo { get; set; }
 
