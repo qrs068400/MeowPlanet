@@ -75,7 +75,7 @@ namespace MeowPlanet.Controllers
 
         // 登入
         [HttpPost]
-        public IActionResult Login(Member member)
+        public IActionResult Login(Member member,string rememberme)
         {
             var count = _context.Members.Count(p => p.Email == member.Email && p.Password == member.Password);
 
@@ -97,8 +97,14 @@ namespace MeowPlanet.Controllers
                 var claimsIdentity = new ClaimsIdentity(
                            claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
+                var properties = new AuthenticationProperties
+                {
+                    IsPersistent = Convert.ToBoolean(rememberme),
+                    ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
+                };
+
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                                        new ClaimsPrincipal(claimsIdentity));
+                                        new ClaimsPrincipal(claimsIdentity),properties);
 
 
 
