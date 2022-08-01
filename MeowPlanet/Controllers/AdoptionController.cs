@@ -242,25 +242,41 @@ namespace MeowPlanet.Controllers
             {
                 state = "已同意";
             }
-            return Json(state);
+
+
+            return Json(null);
         }
 
         [HttpPost]
-        public JsonResult OwnerYes(int catid)
+        public JsonResult OwnerYes(int catid, int memberid)
         {
-
+            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+            var owerid = LoginId;
             var ownerno = new Adopt();
-            var owner = _context.Adopts.Where(x => x.CatId == catid).FirstOrDefault();
+            //把狀態等待中的都改成拒絕
+            var clearadoptlist = _context.Adopts.Where(x => x.CatId == catid && x.Owner == owerid).ToList();
+            for(int i=0;i< clearadoptlist.Count(); i++)
+            {
+                if (clearadoptlist[i].DateOver == null) { 
+                clearadoptlist[i].DateOver = DateTime.Today;
+                clearadoptlist[i].Status = 1;
+                _context.Entry(clearadoptlist[i]).State = EntityState.Modified;
+                _context.SaveChanges();
+                }
+            }
+           
 
+            //變更狀態為同意
+            var owner = _context.Adopts.Where(x => x.CatId == catid && x.MemberId == memberid).FirstOrDefault();
             owner.DateOver = DateTime.Today;
             owner.Status = 2;
-
             _context.Entry(owner).State = EntityState.Modified;
             _context.SaveChanges();
 
+         
             //變更貓咪主人
             var cats = _context.Cats.Where(x => x.CatId == catid).FirstOrDefault();
-            cats.MemberId = owner.MemberId;
+            cats.MemberId = memberid;
             cats.IsAdoptable = false;
             _context.Entry(cats).State = EntityState.Modified;
             _context.SaveChanges();

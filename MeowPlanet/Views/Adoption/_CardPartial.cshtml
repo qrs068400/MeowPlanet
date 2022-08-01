@@ -1,4 +1,10 @@
 ﻿@model IEnumerable<MeowPlanet.ViewModels.Adopts.CatsDto>
+@using System.Security.Claims;
+
+
+@{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
+}
 
 <div class="box1 rotate-vert-center">
     @foreach (var item in Model)
@@ -94,40 +100,68 @@
 
     //like事件
     function checklike2() {
-        Swal.fire({
-            title: "確認要領養貓貓嗎？",
-            text: "確認申請領養後不可取消，請慎重考慮！",
-            icon: 'question',
-            showCancelButton: true,
-            confirmButtonColor: '#B99668',
-            cancelButtonColor: '#4B5461',
-            confirmButtonText: '申請'
-        }).then(function(result) {
-            if (result.value) {
-                Swal.fire(
-                    '已申請領養！',
-                    '請等候貓貓主人確認申請',
-                    'success'
-                ).then(function(result) {
-                    $.ajax({
-                        method: 'post',
-                        url: '/Adoption/Like',
-                        data: { catid: @ViewBag.catid},
-                        dataType: 'json',
-                        success: function(data) {
-                            window.location.reload();
-                        },
-                        error: function() {
-                            window.location.reload();
-                        }
-                    });
+        checkLogin(() => {
+            Swal.fire({
+                title: "確認要領養貓貓嗎？",
+                text: "確認申請領養後不可取消，請慎重考慮！",
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#B99668',
+                cancelButtonColor: '#4B5461',
+                confirmButtonText: '申請'
+            }).then(function(result) {
+                if (result.value) {
+                    Swal.fire(
+                        '已申請領養！',
+                        '請等候貓貓主人確認申請',
+                        'success'
+                    ).then(function(result) {
+                        $.ajax({
+                            method: 'post',
+                            url: '/Adoption/Like',
+                            data: { catid: @ViewBag.catid},
+                            dataType: 'json',
+                            success: function(data) {
+                                window.location.reload();
+                            },
+                            error: function() {
+                                window.location.reload();
+                            }
+                        });
+                    }
+                    )
                 }
-                )
-            }
-        });
+            })
+        })
+
+
     }
 
+        //檢查登入
+    function checkLogin(action) {
 
+        if (isLogin == "False") {
+            Swal.fire({
+                title: '請登入會員以執行此操作',
+                text: '是否要前往登入頁面?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '前往登入',
+                cancelButtonText: '下次一定',
+                heightAuto: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/Login/Index";
+                }
+                else {
+                    return false
+                }
+            })
+        }
+        else {
+            action();
+        }
+    }
  //---------------------End Function-------------------------------------
 
     

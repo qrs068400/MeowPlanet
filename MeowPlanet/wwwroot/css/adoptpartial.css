@@ -1,0 +1,71 @@
+﻿
+.btn-outline-secondary {
+    border: 0px solid;
+}
+
+.nav-tabs {
+    border: 0px solid;
+}
+
+div.clue-item {
+    width: 90%;
+    border-radius: 25px;
+    box-shadow: 0 0 3rem rgb(134 171 190 / 30%) inset !important;
+    background-color: rgb(27, 39, 53);
+    margin-top: 3rem !important;
+    margin-left: 40px;
+}
+
+div:first-of-type.clue-item {
+    margin-top: 0.5rem !important;
+}
+
+.clue-item img {
+    height: 155px;
+    width: 180px;
+    object-fit: cover;
+    border-radius: 20px;
+    margin-top: 8px;
+}
+
+.fa-solid {
+    padding-left: 10px;
+}
+
+#myTabContent {
+    height: 600px;
+    overflow: auto;
+    margin-top: 15px;
+}
+
+.memberright p {
+    font-size: 1.3rem;
+}
+
+.detail {
+    margin-left: 80px;
+    text-align: center;
+}
+
+.nav-tabs .nav-link {
+    border-radius: 20px;
+}
+
+    .nav-tabs .nav-item.show .nav-link, .nav-tabs .nav-link.active {
+        font-weight: bold;
+        font-size: 1.5rem;
+        border-radius: 20px;
+        width: 100px;
+    }
+
+.nav-link {
+    color: #fff;
+    width: 100px;
+    font-size: 1.5rem;
+    border-radius: 20px;
+}
+
+    .nav-link:focus, .nav-link:hover {
+        color: #FFF;
+    }
+
