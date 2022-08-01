@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using MeowPlanet.Hubs;
+using Microsoft.AspNetCore.SignalR;
+using MeowPlanet;
 
 var builder = WebApplication.CreateBuilder(args);
 var appConnectString = builder.Configuration.GetConnectionString("ApplicationDbContextConnection") ?? throw new InvalidOperationException("Connection string 'ApplicationDbContextConnection' not found.");
@@ -25,6 +27,7 @@ builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.Requ
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddSignalR();
+builder.Services.AddSingleton<IUserIdProvider, UserIdProvider>();
 
 builder.Services.AddControllers().AddJsonOptions(x =>
                 x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);

@@ -18,8 +18,12 @@ namespace MeowPlanet.ViewComponents
             _context = context;
         }
 
-        public IViewComponentResult Invoke()
+        public IViewComponentResult Invoke(int memberId)
         {
+
+
+
+
             return View();
         }
 

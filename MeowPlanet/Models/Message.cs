@@ -6,7 +6,6 @@ namespace MeowPlanet.Models
     public partial class Message
     {
         public int MessageId { get; set; }
-        public int RoomId { get; set; }
         public int SendId { get; set; }
         public int ReceivedId { get; set; }
         public string MessageContent { get; set; } = null!;

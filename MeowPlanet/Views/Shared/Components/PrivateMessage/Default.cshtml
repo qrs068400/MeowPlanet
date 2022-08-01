@@ -1,4 +1,9 @@
-﻿<style>
+﻿@using System.Security.Claims;
+@{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
+}
+
+<style>
 
     #message-open {
         position: fixed;
@@ -18,44 +23,96 @@
         border-top-left-radius: 10px;
     }
 
-    #message-body {
+    #message-box {
         border-bottom-left-radius: 20px;
         border-top-left-radius: 20px;
         z-index: 50000;
         background-color: #c9c9c9;
-        height: 300px;
+        height: 400px;
         width: 600px;
         position: fixed;
         right: 0;
         bottom: 50px;
-        padding: 10px;
+        padding: 10px
     }
 
-    #message-content {
+    #message-body {
         display: inline-block;
         border-bottom-left-radius: 20px;
         border-top-left-radius: 20px;
-        width: 60%;
+        width: 65%;
         margin-right: 10px;
         background-color: whitesmoke;
         height: 100%;
+        overflow-y: auto;
     }
 
     #message-user {
         display: inline-block;
-        width: calc(40% - 15px);
+        width: calc(35% - 10px);
         background-color: whitesmoke;
         height: 100%;
+        overflow-y: auto;
     }
+
+    #message-content {
+        flex-basis: 75%;
+    }
+
+    #message-input {
+        flex-basis: 25%;
+    }
+
+    textarea {
+        resize: none;
+    }
+
 </style>
 
-
-<button id="message-open" class="btn message-btn" data-bs-toggle="collapse" data-bs-target="#message-body"><i class="fa-solid fa-comment-dots"></i> 即時通訊</button>
-<div class="collapse" id="message-body">
-    <button id="message-close" class="btn message-btn position-absolute" data-bs-toggle="collapse" data-bs-target="#message-body"><i class="fa-solid fa-xmark"></i> 關閉</button>
-    <div id="message-content">
-
-    </div>
-    <div id="message-user">
+<button id="message-open" class="btn message-btn" data-bs-toggle="collapse" data-bs-target="#message-box"><i class="fa-solid fa-comment-dots"></i> 即時通訊</button>
+<div class="collapse collapse-horizontal" id="message-box">
+    <div class="d-flex h-100 w-100">
+        <button id="message-close" class="btn message-btn position-absolute" data-bs-toggle="collapse" data-bs-target="#message-box"><i class="fa-solid fa-xmark"></i> 關閉</button>
+        <div id="message-body" class="d-flex flex-column">
+            <div id="message-content"></div>
+            <textarea maxlength="50" class="form-control" id="message-input" placeholder="按Enter發送訊息"></textarea>
+            <input type="hidden" id="userId" />
+        </div>
+        <div id="message-user">
+        </div>
     </div>
 </div>
+
+
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/signalr/dist/browser/signalr.js"></script>
+<script>
+    var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    connection.start().then(function() {
+        console.log("Hub 連線完成");
+    }).catch(function(err) {
+        alert('連線錯誤: ' + err.toString());
+    });
+
+    connection.on("ReceiveMessage", function(msg) {
+        $("#message-content").append($("<li></li>").attr("class", "list-group-item").text(msg));
+    });
+
+
+
+    //按ENTER傳送訊息
+    $('#message').on('keyup', function(e) {
+
+        if (e.key === 'Enter' || e.keyCode === 13) {
+
+            let selfID = '@memberId';
+            let message = $('#message-input').val();
+            let userId = $('#userId').val();
+            connection.invoke("SendMessage", selfID, message, userId).catch(function(err) {
+                alert('傳送錯誤: ' + err.toString());
+            });
+        }
+    });
+
+</script>

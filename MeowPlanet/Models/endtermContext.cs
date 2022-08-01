@@ -278,8 +278,6 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.ReceivedId).HasColumnName("received_id");
 
-                entity.Property(e => e.RoomId).HasColumnName("room_id");
-
                 entity.Property(e => e.SendId).HasColumnName("send_id");
 
                 entity.Property(e => e.Time)
