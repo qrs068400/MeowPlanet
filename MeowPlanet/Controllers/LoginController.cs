@@ -61,32 +61,49 @@ namespace MeowPlanet.Controllers
         [HttpGet]
         public ActionResult LoginCheck(string email, string password)
         {
-            var count = _context.Members.Count(x => x.Email == email && x.Password == password);
+            if(!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+            {
+                var count = _context.Members.Count(x => x.Email == email);
+                
+                if(count > 0)
+                {
+                    var count2 = _context.Members.Count(x => x.Email == email && x.Password == password);
 
-            if (count > 0)
-            {
-                return Content("");
+                    if (count2 > 0)
+                    {
+                        return NoContent();
+                    }
+                    else
+                    {
+                        return Content("密碼錯誤");
+                    }
+                }
+                else
+                {
+                    return Content("此Email不存在");
+                }
+                
+
             }
-            else
-            {
-                return Content("Email或密碼錯誤");
-            }
+            return NoContent();
+
         }
 
         // 登入
         [HttpPost]
-        public IActionResult Login(Member member,string rememberme)
+        public ActionResult Login(Member member,string rememberme)
         {
             var count = _context.Members.Count(p => p.Email == member.Email && p.Password == member.Password);
 
             if (count > 0)
             {
-                var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == member.Email);
+                var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == member.Email); //整筆資料取出
 
                 var LoginId = LoginInfo.MemberId;
 
                 var LoginName = LoginInfo.Name;
-
+                
+                //cookie驗證
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Sid, LoginId.ToString()),
@@ -97,14 +114,16 @@ namespace MeowPlanet.Controllers
                 var claimsIdentity = new ClaimsIdentity(
                            claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
+                //記住我
                 var properties = new AuthenticationProperties
                 {
                     IsPersistent = Convert.ToBoolean(rememberme),
                     ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
                 };
 
+                //登入驗證存進cookie
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
-                                        new ClaimsPrincipal(claimsIdentity),properties);
+                                        new ClaimsPrincipal(claimsIdentity), properties);
 
 
 
@@ -128,17 +147,21 @@ namespace MeowPlanet.Controllers
         [HttpGet]
         public ActionResult EmailCheck(string email)
         {
-
-            var count = _context.Members.Count(x => x.Email == email);
-
-            if (count > 0)
+            if (!string.IsNullOrEmpty(email))
             {
-                return Content("此信箱已註冊");
+                var count = _context.Members.Count(x => x.Email == email);
+
+                if (count > 0)
+                {
+                    return Content("此信箱已註冊");
+                }
+                else
+                {
+                    return Content("此信箱可使用");
+                }
             }
-            else
-            {
-                return Content("此信箱可使用");
-            }
+
+            return NoContent();
         }
 
         // 註冊

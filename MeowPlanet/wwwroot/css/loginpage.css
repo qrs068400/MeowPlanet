@@ -61,6 +61,7 @@ body {
 
     .loginform .form-p {
         color: white;
+        margin:0;
     }
 
 .login-sp {
@@ -70,10 +71,20 @@ body {
     border: 1px rgb(219, 232, 248) solid;
     border-radius: 20px;
     color: white;
+    font-size: 20px;
     /*text-align: center;*/
     /*margin-bottom: 20px;*/
     display: block;
 }
+
+.err-msg-div {
+    height: 28px;
+}
+
+    .err-msg-div span {
+        font-size: 16px;
+        margin-top: 1px;
+    }
 
 .enter-form {
     margin-left: 18%;

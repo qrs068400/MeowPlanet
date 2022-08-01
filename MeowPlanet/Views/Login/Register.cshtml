@@ -18,21 +18,21 @@
                     </p>
                 </div>
 
-                <div class="col-6 mycontent-right py-5">
+                <div class="col-6 mycontent-right d-flex align-items-center justify-content-center">
 
                     <form method="post" asp-action="AddMember" asp-controller="Login" autocomplete="off">
-                        <div class="text-center">
-                            <h2>註冊喵會員</h2>
-                        </div>
                         <div class="regist-form">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">Email</p>
-                                <span id="alert"></span>
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="email" asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" />
-                                <span asp-validation-for="Email" class="text-danger ms-1" id="EmailValid"></span>
+
+                            </div>
+
+                            <div class="d-flex justify-content-start align-items-center err-msg-div">
+                                <span asp-validation-for="Email" class="text-danger" id="EmailValid"></span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
@@ -42,7 +42,11 @@
 
                             <div class="d-flex align-items-center">
                                 <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
-                                <span asp-validation-for="Password" class="text-danger ms-1"></span>
+
+                            </div>
+
+                            <div class="d-flex justify-content-start align-items-center err-msg-div">
+                                <span asp-validation-for="Password" class="text-danger"></span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
@@ -52,21 +56,38 @@
 
                             <div class="d-flex align-items-center">
                                 <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
-                                <span asp-validation-for="Name" class="text-danger ms-1"></span>
+
+                            </div>
+
+                            <div class="d-flex justify-content-start align-items-center err-msg-div">
+                                <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">連絡電話</p>
-
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="text" asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
-                                <span asp-validation-for="Phone" class="text-danger ms-1"></span>
+                                
                             </div>
+
+                            <div class="d-flex justify-content-start align-items-center err-msg-div">
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <p class="form-p">驗證碼</p>
+                            </div>
+
+                            <div class="d-flex align-items-center">
+                                <input type="text" class="form-control regist-send" autocomplete="current-password" aria-required="true" />
+                                <button type="button" class="btn btn-send">寄送驗證碼</button>
+                            </div>
+
                         </div>
                         <div class="d-flex justify-content-center">
-                            <button type="submit" class="btn regist-sp2 my-5" id="registerSubmit">註冊</button>
+                            <button type="submit" class="btn regist-sp2" id="registerSubmit">註冊</button>
                         </div>
 
                     </form>
@@ -88,19 +109,17 @@
 
             if ($('#EmailValid').text() == '') {
                 if ($('input[type=email]').val() == '') {
-                    $('#alert').css('display', 'none')
+                    $('#EmailValid').addClass('text-danger')
                 } else {
-                    $('#alert').css('display', 'block')
                     $.get("EmailCheck", { email: this.value }, function(data) {
                         if (data == "此信箱已註冊") {
-                            $('#alert').html(data).css('color', '#2A483A')
+                            $('#EmailValid').html(data).addClass('text-danger')
                         } else {
-                            $('#alert').html(data).css('color', '#FF8EFF')
+                           $('#EmailValid').html(data).removeClass('text-danger').css('color', '#FF8EFF')
                         }
                     })
                 }
             } else {
-                $('#alert').css('display', 'none')
             }
 
 
@@ -122,7 +141,9 @@
                     }).then(function() {
                         form.submit();
                     })
-                } 
+                } else {
+                    form.submit();
+                }
             })
         })
 
