@@ -61,6 +61,7 @@
         $(document).on('click', '#backToList', () => {
             showAccount()
         })
+        //領養資訊
         $('#adoption').click(() => {
             $.get('/Adoption/LikeTolist', function(data) {
                 $('#member-right-region').html(data);
