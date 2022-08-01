@@ -247,3 +247,4 @@ function fileChange(num) {
     $(`#plus${num}`).css('display', 'none')
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
+
