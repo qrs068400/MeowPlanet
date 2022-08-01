@@ -190,11 +190,18 @@
                 for (let i = 0; i < cluesMarker.length; i++) {
 
                     polylinePathPoints.push(cluesMarker[i].getPosition());
+                    if (i == 0) {
 
-                    setTimeout(() => {
-                        cluesMarker[i].setAnimation(google.maps.Animation.DROP)
-                        cluesMarker[i].setMap(map)
-                    }, i * 1000)
+                        setTimeout(() => {
+                            cluesMarker[i].setMap(map)
+                        }, i * 1000)
+                    }
+                    else {
+                        setTimeout(() => {
+                            cluesMarker[i].setAnimation(google.maps.Animation.DROP)
+                            cluesMarker[i].setMap(map)
+                        }, i * 1000)
+                    }
                 }
 
                 //折線動畫
@@ -224,10 +231,10 @@
                     setTimeout(() => {
                         polylinePath.setMap(map);
                         let step = 0;
-                        let numSteps = 1000;
-                        let timePerStep = 5;
+                        let numSteps = 1200;
+                        let timePerStep = 20;
                         let interval = setInterval(function() {
-                            step += 6;
+                            step += 20;
                             if (step > numSteps) {
                                 clearInterval(interval);
                             } else {

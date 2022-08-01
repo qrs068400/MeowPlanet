@@ -23,6 +23,7 @@ namespace MeowPlanet.Models
         public virtual DbSet<Favorite> Favorites { get; set; } = null!;
         public virtual DbSet<Feature> Features { get; set; } = null!;
         public virtual DbSet<Member> Members { get; set; } = null!;
+        public virtual DbSet<Message> Messages { get; set; } = null!;
         public virtual DbSet<Missing> Missings { get; set; } = null!;
         public virtual DbSet<Orderlist> Orderlists { get; set; } = null!;
         public virtual DbSet<Sitter> Sitters { get; set; } = null!;
@@ -41,7 +42,8 @@ namespace MeowPlanet.Models
         {
             modelBuilder.Entity<Adopt>(entity =>
             {
-                entity.HasKey(e => new { e.MemberId, e.CatId });
+                entity.HasKey(e => new { e.MemberId, e.CatId })
+                    .HasName("PK_adopt_1");
 
                 entity.ToTable("adopt");
 
@@ -262,6 +264,41 @@ namespace MeowPlanet.Models
                     .HasMaxLength(100)
                     .HasColumnName("photo")
                     .HasDefaultValueSql("(N'../images/defaultperson.png')");
+            });
+
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.ToTable("message");
+
+                entity.Property(e => e.MessageId).HasColumnName("message_id");
+
+                entity.Property(e => e.IsRead).HasColumnName("isRead");
+
+                entity.Property(e => e.MessageContent)
+                    .HasMaxLength(100)
+                    .HasColumnName("message_content");
+
+                entity.Property(e => e.ReceivedId).HasColumnName("received_id");
+
+                entity.Property(e => e.RoomId).HasColumnName("room_id");
+
+                entity.Property(e => e.SendId).HasColumnName("send_id");
+
+                entity.Property(e => e.Time)
+                    .HasColumnType("datetime")
+                    .HasColumnName("time");
+
+                entity.HasOne(d => d.Received)
+                    .WithMany(p => p.MessageReceiveds)
+                    .HasForeignKey(d => d.ReceivedId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_message_member1");
+
+                entity.HasOne(d => d.Send)
+                    .WithMany(p => p.MessageSends)
+                    .HasForeignKey(d => d.SendId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_message_member");
             });
 
             modelBuilder.Entity<Missing>(entity =>
