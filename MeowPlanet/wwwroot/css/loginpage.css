@@ -61,7 +61,6 @@ body {
 
     .loginform .form-p {
         color: white;
-        /*margin-left: 30%;*/
     }
 
 .login-sp {
@@ -127,7 +126,7 @@ body {
 
 
 .form-check-input:checked {
-    background-color: brown;
+    background-color: gray;
 }
 
 .link-icon {

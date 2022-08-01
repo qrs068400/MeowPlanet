@@ -568,7 +568,7 @@ body {
         color: #FFF;
         margin: 0;
         font-size: 14px;
-        border-bottom: 1px solid #FFF;
+        border-left: 1vh solid #DDB178;
     }
 
 .sitter {
@@ -629,7 +629,7 @@ body {
         color: #FFF;
         margin: 0;
         font-size: 14px;
-        border-bottom: 1px solid #FFF;
+        border-left: 1vh solid #DDB178;
     }
 
 #service .col {
