@@ -54,7 +54,7 @@ body {
 }
 
 .regist-sp {
-    width: 300px;
+    width: 100%;
     height: 40px;
     background: rgba(0, 0, 0, .3);
     border: 1px rgb(219, 232, 248) solid;
@@ -73,12 +73,40 @@ body {
     color: white;
     text-align: center;
     display: block;
-}
-
-.regist-form{
-    padding-left:17%;
+    margin-top: 3rem;
 }
 
 .regist-form p {
-    margin-top:16px;
+    margin:0;
+}
+
+.regist-send {
+    width: 210px;
+    height: 40px;
+    background: rgba(0, 0, 0, .3);
+    border: 1px rgb(219, 232, 248) solid;
+    border-radius: 20px;
+    color: white;
+    text-align: center;
+    display: block;
+}
+
+.btn-send {
+    margin-left:1rem;
+    height: 40px;
+    background: rgba(0, 0, 0, .3);
+    border: 1px rgb(219, 232, 248) solid;
+    border-radius: 10px;
+    color: white;
+    text-align: center;
+    display: block;
+}
+
+.err-msg-div{
+    height:28px;
+}
+
+.err-msg-div span{
+    font-size:16px;
+    margin-top:1px;
 }
