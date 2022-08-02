@@ -9,16 +9,9 @@ namespace MeowPlanet.Hubs
 {
     public class ChatHub : Hub
     {
-        private readonly endtermContext _context;
-
-        public ChatHub(endtermContext context)
+        public Task SendMessage(string userName, string userPhoto, string message, string receiveId)
         {
-            _context = context;
-        }
-        public Task SendMessage(string selfID, string message, string userId)
-        {
-
-            return Clients.User(userId).SendAsync("ReceiveMessage", message);
+            return Clients.User(receiveId).SendAsync("ReceiveMessage", userName, userPhoto, message);
         }
     }
 }
