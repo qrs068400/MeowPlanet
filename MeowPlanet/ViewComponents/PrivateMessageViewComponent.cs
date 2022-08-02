@@ -24,14 +24,15 @@ namespace MeowPlanet.ViewComponents
             var contactMembers = _context.Messages
                 .Where(x => x.ReceivedId == memberId || x.SendId == memberId)
                 .OrderBy(x => x.Time)
-                .Select(x => new { x.Send, x.Received })
-                .Distinct()
+                .Select(x => new { x.Send, x.Received })                
                 .Select(x => new ContactMembers
                 {
                     Id = x.Send.MemberId == memberId ? x.Received.MemberId : x.Send.MemberId,
                     Name = x.Send.MemberId == memberId ? x.Received.Name : x.Send.Name,
-                    unreadCount = _context.Messages.Count(m => m.IsRead == false && m.SendId == (x.Send.MemberId == memberId ? x.Received.MemberId : x.Send.MemberId))
+                    Photo = x.Send.MemberId == memberId ? x.Received.Photo : x.Send.Photo,
+                    UnreadCount = _context.Messages.Count(m => m.IsRead == false && m.SendId == (x.Send.MemberId == memberId ? x.Received.MemberId : x.Send.MemberId))
                 })
+                .Distinct()
                 .ToList();
                 
 

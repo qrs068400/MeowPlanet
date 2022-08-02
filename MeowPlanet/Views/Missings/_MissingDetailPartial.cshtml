@@ -1,5 +1,8 @@
 ﻿@model MeowPlanet.ViewModels.Missings.DetailViewModel
-
+@using System.Security.Claims;
+@{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int selfId);
+}
 @{
     string sex = Model.Sex == true ? "男生" : "女生";
 }
@@ -107,9 +110,9 @@
             <p>年齡 : @Model.Age 歲</p>
             <p>品種 : @Model.Breed</p>
             <p>走失日期 : @Html.DisplayFor(x => x.Date)</p>
-            <div class="mb-4" style="width:40%;">
-                <a asp-action=""><img src="@Model.Photo" class="rounded-circle" style="height:50px; width:50px;" /></a>
-                <a asp-action="">@Model.MemberName</a>
+            <div id="detail-member" class="mb-4" style="width:40%;">
+                <a asp-action="" data-member-id="@Model.MemberId"><img src="@Model.Photo" class="rounded-circle" style="height:50px; width:50px;" /></a>
+                <a asp-action="" data-member-id="@Model.MemberId">@Model.MemberName</a>
             </div>
             <div class="speech-bubble" style="height:30%; width:90%; color:black; ">
                 <div class="overflow-auto h-100 w-100 py-2 px-4" style="word-break:break-all">
@@ -127,6 +130,16 @@
 
 
 <script>
+
+    $('#detail-member a').on('click', function(e) {
+        e.preventDefault();
+
+        checkLogin(() => {
+            messageTo($(this).data('memberId'), '@selfId');
+        })
+    })
+
+
     $('#checkClues').click(function() {
 
         if (clueCount == 0) {

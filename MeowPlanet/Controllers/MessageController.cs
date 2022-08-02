@@ -1,6 +1,8 @@
-﻿using MeowPlanet.Models;
+﻿using MeowPlanet.ViewModels;
+using MeowPlanet.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 
 namespace MeowPlanet.Controllers
 {
@@ -27,12 +29,30 @@ namespace MeowPlanet.Controllers
                 SendId = _memberId,
                 MessageContent = message,
                 ReceivedId = receivedId,
-                Time = DateTime.UtcNow
+                Time = DateTime.Now
             });
 
             _context.SaveChanges();
 
             return Content("OK");
+        }
+
+        public async Task<IActionResult> GetHistory(int memberId)
+        {
+            var result = await _context.Messages.Include(x => x.Send).Include(x => x.Received)
+                         .Where(x => (x.SendId == memberId && x.ReceivedId == _memberId) || (x.SendId == _memberId && x.ReceivedId == memberId)).ToListAsync();
+            return PartialView("_HistoryMessagePartial", result);
+        }
+
+        public ActionResult searchMember(int memberId)
+        {
+            var result = _context.Members.Where(x => x.MemberId == memberId).Select(x => new
+            {
+                x.Name,
+                x.Photo
+            }).FirstOrDefault();
+
+            return Json(result);
         }
     }
 }
