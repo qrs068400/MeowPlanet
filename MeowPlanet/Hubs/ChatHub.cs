@@ -9,9 +9,10 @@ namespace MeowPlanet.Hubs
 {
     public class ChatHub : Hub
     {
-        public Task SendMessage(string userName, string userPhoto, string message, string receiveId)
+
+        public Task SendMessage(string userName, string userPhoto, string message, string receivedId)
         {
-            return Clients.User(receiveId).SendAsync("ReceiveMessage", userName, userPhoto, message);
+            return Clients.User(receivedId).SendAsync("ReceiveMessage", userName, userPhoto, message);
         }
     }
 }
