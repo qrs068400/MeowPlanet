@@ -49,10 +49,6 @@
 @section Scripts{
 
     <script>
-        $('.modal').on('shown.bs.modal', function(e) {
-            $(document).off('focusin.modal');
-        })
-
         $('.modal').on('hidden.bs.modal', function() {
             $(this).html('');
         })
