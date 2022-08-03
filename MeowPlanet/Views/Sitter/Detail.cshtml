@@ -1,7 +1,13 @@
-﻿@model MeowPlanet.ViewModels.SitterViewModels;
- @section Styles{
+﻿@model SitterViewModels;
+@using System.Security.Claims;
+@using MeowPlanet.ViewModels.Sitters;
+@{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
+}
+@section Styles{
     <link  href="~/css/sitter-detail.css" rel="stylesheet"/>
 }
+
 
 
     <div class="container">
@@ -65,15 +71,23 @@
                             <span class="comment-num">@Html.DisplayFor(model => model.OrderCommentList.Count) 則評價</span>
                         </div>
                     </div>
+
+                    
                     <div class="reserve-panel">
                         <div class="reserve-btn">
-
                             <div class="calender-rec buzz" style="display: none;">
                                 <div class="calender-header">
                                     <div class="night h3">選擇日期</div>
                                     <div>
                                         <span></span>-<span></span>
                                     </div>
+                                    <form id="confirmForm" method="post" asp-controller="Sitter" asp-action="ComfirmPay">
+                                        <input name="startDate" type="hidden"/>
+                                        <input name="endDate" type="hidden"/>
+                                        <input name="night" type="hidden"/>
+                                        <input name="catId" type="hidden"/>
+                                        <input name="serviceId" type="hidden"/>
+                                    </form>
                                 </div>
                                 <div class="calendar"></div>
                                 <div>
@@ -98,14 +112,24 @@
                             </div>
                         </div>
                         <button class="reserve-number-btn">
+                            <div class="pet-rec" style="display: none;">
+                                @for (int i = 0; i < @ViewBag.catList.Count; i++)
+                            {
+                                <div class="cat-card" data-index=@i>
+                                    <img src="@ViewBag.catList[i].Img01"/>
+                                    <span>@ViewBag.catList[i].Name</span>
+                                </div>
+                            }
+                            </div>
                             <div class="number-txt">哪一隻寵物</div>
                             <div class="number">
-                                咪咪
+                                請選擇一隻寵物...
                             </div>
                             <i class="icon fa-solid fa-angle-down"></i>
                         </button>
+                        
                     </div>
-                    <a asp-controller="Missings" asp-action="Index">
+                    <a id="comfirmPay">
                         <div class="btn btn-order">預定</div>
                     </a>
                 </div>
@@ -137,7 +161,7 @@
                             </div>
                         </div>
                     </div>
-                    if(i == 1){ break; }
+                    if(i == 9){ break; }
                 }
                     <button class="more-comment buzz">
                         顯示全部評價
@@ -165,7 +189,13 @@
 
 
     @section Scripts{
-     <script>var model = @Html.Raw(Json.Serialize(Model));</script>
+     <script>  
+         var viewBag_catList = @Html.Raw(Json.Serialize(ViewBag.catList));
+         var model = @Html.Raw(Json.Serialize(Model));
+         var isLogin = '@isLogin';
+         var memberId = '@memberId';
+         $('.nav-item a').eq(0).addClass('nav-item-active');
+     </script>
     <script src="~/js/sitter-detail.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5GLU-Md1jCttuMgYGiLngvDh0nELvLjM&callback=initMap&libraries=places,geometry&v=weekly"></script>
     <script>

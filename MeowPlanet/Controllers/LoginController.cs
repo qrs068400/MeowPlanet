@@ -76,9 +76,24 @@ namespace MeowPlanet.Controllers
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                         new ClaimsPrincipal(claimsIdentity));
 
-                
+                string controller = "";
+                string action = "";
+                string id = "";
 
-                return RedirectToAction("Index", "Member");
+                if (TempData.ContainsKey("Controller"))
+                    controller = TempData["Controller"].ToString();
+                if (TempData.ContainsKey("Action"))
+                    action = TempData["Action"].ToString();
+                if (TempData.ContainsKey("id"))
+                {
+                    id = TempData["id"].ToString();
+                    return RedirectToAction(action, controller, new { id = id });
+                }
+                else
+                {
+                    return RedirectToAction(action, controller);
+                }
+                //return RedirectToAction("Index", "Member");
             }
             else
             {

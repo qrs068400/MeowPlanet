@@ -178,7 +178,7 @@ body {
     .marker:hover {
         transition: 0.8s ease-in-out;
         background-color: var(--project-pink-color);
-        color: var(--project-txt-color)
+        color: var(--project-txt-color);
     }
 
 

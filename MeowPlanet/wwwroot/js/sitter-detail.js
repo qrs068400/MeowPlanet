@@ -4,15 +4,33 @@ $(document).ready(function () {
     const calendarControl = new CalendarControl()
 });
 $(".reserve-btn")[0].addEventListener("click", function (e) {
-    $(".calender-rec").show();
+    $(".calender-rec").slideDown();
 }, false);
 $(".calender-rec").click(function (e) {
     e.stopPropagation();
 })
 
-//* 日曆
+//點擊選擇寵物
+$(".reserve-number-btn")[0].addEventListener("click", function (e) {
+    $(".pet-rec").slideToggle();
+    $(".icon").toggleClass("rotate");
+}, false);
 
+//選擇貓咪在viewbag 裡的順位
+let index;
+$(".cat-card").on("click", function (e) {
+    index = e.target.dataset.index;
+    $(".number").html(viewBag_catList[index].name);
+    $(".number").attr("data-catid", `${viewBag_catList[index].catId}`)
+})
+
+
+
+
+//* 日曆
+// 儲存開始結束時間
 let startend = [];
+let night;
 function CalendarControl() {
     const calendar = new Date();
     let localDate = new Date();
@@ -33,7 +51,6 @@ function CalendarControl() {
             "10月",
             "11月",
             "12月"
-
         ],
         //format Date
         formatDate: function (date) {
@@ -242,14 +259,15 @@ function CalendarControl() {
                     ".calendar .calendar-body"
                 ).innerHTML +=
                     `<div class="number-item" >
-                                <a class="dateNumber" data-dateid="${calendar.getFullYear()}/${calendar.getMonth() + 1}/${count}">${count++}</a>
-                            </div>`;
+                        <a class="dateNumber" data-dateid="${calendar.getFullYear()}/${calendar.getMonth() + 1}/${count}">${count++}
+                        </a>
+                     </div>`;
             }
         },
         attachEvents: function () {
             let prevBtn = document.querySelector(".calendar .calendar-prev a");
             let nextBtn = document.querySelector(".calendar .calendar-next a");
-            let todayDate = document.querySelector(".calendar .calendar-today-date");
+            /*let todayDate = document.querySelector(".calendar .calendar-today-date");*/
             let dateNumber = document.querySelectorAll(".calendar .dateNumber");
             let clearSelect = document.querySelector(".clear-select");
             let closeCalendar = document.querySelector(".close-calendar");
@@ -279,7 +297,7 @@ function CalendarControl() {
 
             }
 
-            $(".calender-rec").hide();
+            $(".calender-rec").slideUp();
         },
         clearSelect: function (e) {
             let dateSelect = document.querySelectorAll(".number-item"); // div tag
@@ -298,6 +316,7 @@ function CalendarControl() {
 
         selectDate: function (e) {
             let selectDate = new Date(e.target.dataset.dateid);
+            //Mon Aug 08 2022 00:00:00 GMT+0800 (GMT+08:00)
             // 本日後才能點
             if (localDate.getTime() <= selectDate.getTime()) {
                 if (startend.length === 0) {
@@ -312,7 +331,7 @@ function CalendarControl() {
                         e.target.classList.add("calendar-today");
                         document.querySelector(".calender-header span:nth-child(2)").innerHTML = calendarControl.formatDate(selectDate);
                         console.log(startend[1], startend[0])
-                        let night = (startend[1] - startend[0]) / (1000 * 3600 * 24);
+                        night = (startend[1] - startend[0]) / (1000 * 3600 * 24);
                         document.querySelector(".night").innerHTML = `${night}晚`;
                         if (startend[0].getTime() > calendarControl.firstDay().getTime()) {
                             for (let i = 0; i < night + 1; i++) {
@@ -370,10 +389,9 @@ let map;
 let marker;
 let catList = [];
 function initMap() {
-    
-    //偏移地圖
+    //偏移保母位置
     let seed = model.sitter.serviceId % 4;
-    let part = model.sitter.serviceId % 10;
+    let part = model.sitter.serviceId % 10 + 1;
     let latlng;
     switch (seed) {
         case 0:
@@ -402,15 +420,6 @@ function initMap() {
     });
 
     //保母位置marker
-    marker = new google.maps.Marker({
-        position: latlng,
-        map: map,
-        icon: {
-            url: "../../images/sitter/house_marker.png",
-            scaledSize: new google.maps.Size(50, 50),
-            anchor: new google.maps.Point(25, 25) // anchor
-        },
-    });
     marker = new google.maps.Marker({
         position: latlng,
         map: map,
@@ -456,3 +465,25 @@ function initMap() {
 }
 
 window.initMap = initMap;
+
+//跳轉到ComfirmPay
+$('#comfirmPay').click(
+    () => {
+        checkLogin(() => {
+            if (startend.length === 2 && index !== null) {
+                $('#confirmForm input[name="startDate"]').val(startend[0].toJSON());
+                //2022-08-01T16:00:00.000Z
+                $('#confirmForm input[name="endDate"]').val(startend[1].toJSON());
+                $('#confirmForm input[name="night"]').val(night);
+                $('#confirmForm input[name="catId"]').val(viewBag_catList[index].catId);
+                $('#confirmForm input[name="serviceId"]').val(model.sitter.serviceId);
+                 /*alert($('#confirmForm input[name="sitter"]').val());*/
+                $('#confirmForm').submit();
+            } else {
+                alert("請先選擇入住退房日期及需保母寵物");
+            }
+            
+        });
+    }
+)
+
