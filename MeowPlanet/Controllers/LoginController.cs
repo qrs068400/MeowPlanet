@@ -62,11 +62,11 @@ namespace MeowPlanet.Controllers
         [HttpGet]
         public ActionResult LoginCheck(string email, string password)
         {
-            if(!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+            if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
             {
                 var count = _context.Members.Count(x => x.Email == email);
-                
-                if(count > 0)
+
+                if (count > 0)
                 {
                     var count2 = _context.Members.Count(x => x.Email == email && x.Password == password);
 
@@ -83,7 +83,7 @@ namespace MeowPlanet.Controllers
                 {
                     return Content("此Email不存在");
                 }
-                
+
 
             }
             return NoContent();
@@ -92,7 +92,7 @@ namespace MeowPlanet.Controllers
 
         // 登入
         [HttpPost]
-        public ActionResult Login(Member member,string rememberme)
+        public ActionResult Login(Member member, string rememberme)
         {
             var count = _context.Members.Count(p => p.Email == member.Email && p.Password == member.Password);
 
@@ -103,7 +103,7 @@ namespace MeowPlanet.Controllers
                 var LoginId = LoginInfo.MemberId;
 
                 var LoginName = LoginInfo.Name;
-                
+
                 //cookie驗證
                 var claims = new List<Claim>
                 {
@@ -241,12 +241,56 @@ namespace MeowPlanet.Controllers
             {
                 //驗證成功，取使用者資訊內容
                 ViewData["Msg"] = "驗證 Google 授權成功" + "<br>";
-                ViewData["Msg"] += "Email:" + payload.Email + "<br>";
-                ViewData["Msg"] += "Name:" + payload.Name + "<br>";
-                ViewData["Msg"] += "Picture:" + payload.Picture;
+
+                var count = _context.Members.Count(x => x.Email == payload.Email);
+
+                if (count > 0)
+                {
+                    var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == payload.Email); //整筆資料取出
+
+                    var LoginId = LoginInfo.MemberId;
+
+                    var LoginName = LoginInfo.Name;
+
+                    //cookie驗證
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Sid, LoginId.ToString()),
+                        new Claim(ClaimTypes.Name, LoginName),
+
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(
+                               claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    //記住我
+                    var properties = new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
+                    };
+
+                    //登入驗證存進cookie
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                            new ClaimsPrincipal(claimsIdentity), properties);
+
+
+
+                    return RedirectToAction("Index", "Member");
+
+                }
+                else
+                {
+                    
+
+
+                    return RedirectToAction("Register");
+                }
             }
 
-            return View("Register");
+
+
+            return NoContent();
         }
 
         public async Task<GoogleJsonWebSignature.Payload?> VerifyGoogleToken(string? formCredential, string? formToken, string? cookiesToken)

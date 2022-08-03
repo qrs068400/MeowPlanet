@@ -26,7 +26,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="email" asp-for="Email" class="form-control login-sp" aria-required="true" />
+                                <input type="email" asp-for="Email" class="form-control login-sp" aria-required="true" id="email"/>
 
                             </div>
 
@@ -40,7 +40,7 @@
 
 
                             <div class="d-flex align-items-center">
-                                <input type="password" asp-for="Password" class="form-control login-sp" aria-required="true" />
+                                <input type="password" asp-for="Password" class="form-control login-sp" aria-required="true" id="password"/>
 
                             </div>
 
@@ -64,7 +64,7 @@
                     <i class="fa-brands fa-google-plus"></i>
                     </div>*@
                         <div id="g_id_onload"
-                         data-client_id="my id is here"
+                         data-client_id="824506292381-98hjid099dhp06oqudugbjlj1bclr0u0.apps.googleusercontent.com"
                          data-login_uri="@Url.Action("ValidGoogleLogin","Login")"
                          data-auto_prompt="false">
                         </div>
@@ -150,6 +150,7 @@
             }
 
         })
+
 
 
     </script>
