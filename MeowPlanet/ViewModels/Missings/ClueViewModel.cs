@@ -1,8 +1,13 @@
-﻿namespace MeowPlanet.ViewModels.Missings
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace MeowPlanet.ViewModels.Missings
 {
     public class ClueViewModel
     {
         public int ClueId { get; set; }
+
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}")]
         public DateTime WitnessTime { get; set; }
         public int Status { get; set; }
         public string ImagePath { get; set; } = null!;
