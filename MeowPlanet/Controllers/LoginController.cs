@@ -257,7 +257,7 @@ namespace MeowPlanet.Controllers
                     {
                         new Claim(ClaimTypes.Sid, LoginId.ToString()),
                         new Claim(ClaimTypes.Name, LoginName),
-
+                        new Claim(ClaimTypes.Role, "google")
                     };
 
                     var claimsIdentity = new ClaimsIdentity(
@@ -281,10 +281,10 @@ namespace MeowPlanet.Controllers
                 }
                 else
                 {
-                    
 
 
-                    return RedirectToAction("Register");
+
+                    return RedirectToAction("Index", "Member");
                 }
             }
 

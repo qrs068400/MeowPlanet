@@ -12,15 +12,15 @@
         </div>
         <div class="my-4">
             <p>密碼</p>
-            <input type="password" value="@Model.Password" asp-for="Password" />
+            <input type="password" value="@Model.Password" id="password-in" asp-for="Password" />
         </div>
         <div class="my-4">
             <p>姓名</p>
-            <input type="text" value="@Model.Name" asp-for="Name" />
+            <input type="text" value="@Model.Name" id="name-in" asp-for="Name" />
         </div>
         <div class="my-4">
             <p>電話</p>
-            <input type="text" value="@Model.Phone" asp-for="Phone" />
+            <input type="text" value="@Model.Phone" id="phone-in" asp-for="Phone" />
         </div>
 
         <div class="d-flex justify-content-center">
@@ -45,8 +45,18 @@
             $("#cat-region-select").html(data)
         })
 
+
+
     })
 
+
+    if ("@User.FindFirst(ClaimTypes.Role).Value" == "google") {
+        $('#email-in').attr('disabled','disabled');
+        $('#password-in').attr('disabled','disabled');
+        $('#phone-in').attr('disabled','disabled');
+        $('#name-in').attr('disabled','disabled');
+        $('#member-update').attr('disabled','disabled');
+    }
 
     function ToDetail(id) {
         $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
