@@ -194,30 +194,26 @@ namespace MeowPlanet.Controllers
                  Owner = x.Owner,
              }).OrderByDescending(x => x.DateStart).ToList();
 
-            //送養列表
-            var owner = _context.Adopts.Where(x => x.Owner == memberid).ToList();
-            //var owners = new List<ViewModels.LikeAdopts>();
-            for (int i = 0; i <= owner.Count(); i++)
-            {
-                var ownerlist = _context.Adopts
-                 .Where(x => x.Owner == memberid)
-                 .Include(x => x.Member)
-                 .Select(x => new ViewModels.LikeAdopts()
-                 {
-                     MemberId = x.MemberId,
-                     CatId = x.CatId,
-                     CatName = x.Cat.Name,
-                     CatSex = x.Cat.Sex,
-                     CatAge = x.Cat.Age,
-                     BreedName = x.Cat.Breed.Name,
-                     CatImg1 = x.Cat.Img01,
-                     DateStart = x.DateStart,
-                     DateOver = x.DateOver,
-                     Status = x.Status,
-                     Phone = x.Member.Phone,
-                 }).OrderByDescending(x => x.DateStart).ToList();
-                ViewBag.owner = ownerlist;
-            }
+            //送養列表         
+            var ownerlist = _context.Adopts
+             .Where(x => x.Owner == memberid)
+             .Include(x => x.Member)
+             .Select(x => new ViewModels.LikeAdopts()
+             {
+                 MemberId = x.MemberId,
+                 CatId = x.CatId,
+                 CatName = x.Cat.Name,
+                 CatSex = x.Cat.Sex,
+                 CatAge = x.Cat.Age,
+                 BreedName = x.Cat.Breed.Name,
+                 CatImg1 = x.Cat.Img01,
+                 DateStart = x.DateStart,
+                 DateOver = x.DateOver,
+                 Status = x.Status,
+                 Name = x.Member.Name,
+             }).OrderByDescending(x => x.DateStart).ToList();
+            ViewBag.owner = ownerlist;
+
             return PartialView("_AdoptListPartial", likeadopts);
         }
 
