@@ -281,7 +281,45 @@ namespace MeowPlanet.Controllers
                 }
                 else
                 {
+                    Member member = new()
+                    {
+                        Email = payload.Email,
+                        Name = payload.Name,
+                        Password = "123456",
+                        Phone = "0900000000"
 
+                    };
+
+                    _context.Members.Add(member);
+                    _context.SaveChangesAsync();
+
+                    var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == payload.Email); //整筆資料取出
+
+                    var LoginId = LoginInfo.MemberId;
+
+                    var LoginName = LoginInfo.Name;
+
+                    //cookie驗證
+                    var claims = new List<Claim>
+                    {
+                        new Claim(ClaimTypes.Sid, LoginId.ToString()),
+                        new Claim(ClaimTypes.Name, LoginName),
+                        new Claim(ClaimTypes.Role, "google")
+                    };
+
+                    var claimsIdentity = new ClaimsIdentity(
+                               claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+                    //記住我
+                    var properties = new AuthenticationProperties
+                    {
+                        IsPersistent = true,
+                        ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
+                    };
+
+                    //登入驗證存進cookie
+                    HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                            new ClaimsPrincipal(claimsIdentity), properties);
 
 
                     return RedirectToAction("Index", "Member");
