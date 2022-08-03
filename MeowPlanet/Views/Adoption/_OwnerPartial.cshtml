@@ -7,74 +7,63 @@
 
 @{
     string status = "";
+    string date = "";
+
 }
 
- <table class="table table-dark table-hover owners">
-                 <thead>
-                    <tr>
-                        <th scope="col"></th>
-                        <th scope="col">貓貓</th>
-                        <th scope="col">品種</th>
-                        <th scope="col">年齡</th>
-                        <th scope="col">性別</th>
-                       
-                        <th scope="col">申請日期</th>
-                        <th scope="col">狀態</th>
-                    </tr>
-                </thead>
-                @foreach (var item in Model)
+
+@foreach (var item in Model)
+{
+    <div class="row clue-item p-3 me-3">
+        <div class="col-3">
+            <img src="@Url.Content(@item.CatImg1)">
+        </div>
+        <div class="col-5 detail">
+            <p>@item.CatName</p>
+            <p>
+                @item.BreedName
+                @if (@item.CatSex == false)
                 {
-                    <tr class="table-dark">
-                        <td class="table-dark">
-                            @if (@item.CatImg1 != null)
-                            {
-                                <img src="@Url.Content(@item.CatImg1)">
-                            }
-                            else
-                            {
-
-                            }
-                        </td>
-                        <td class="table-dark">
-                            @item.CatName
-                        </td>
-                        <td class="table-dark">
-                            @item.BreedName
-                        </td>
-                        <td class="table-dark">
-                            @item.CatAge 歲
-                        </td>
-                        <td class="table-dark">
-                            @if (@item.CatSex == false)
-                            {
-                                <i class="fa-solid fa-venus" style="color:#FF8EFF;font-size:1.3rem"></i>
-                            }
-                            else
-                            {
-                                <i class="fa-solid fa-mars" style="color:#99b8d4;font-size:1.3rem"></i>
-                            }
-                        </td>
-                           <td class="table-dark">
-                            @item.DateStart.ToShortDateString()
-                        </td>
-                        <td class="table-dark">
-                            @if (@item.Status == 0)
-                            {
-                                status = "等待中";
-                            }
-                            else if (@item.Status == 1)
-                            {
-                                status = "已拒絕";
-
-                            }
-                            else
-                            {
-                                status = "已同意";
-                            }
-                            @status
-                        </td>
-
-                    </tr>
+                    <i class="fa-solid fa-venus" style="color:#FF8EFF;font-size:1.3rem"></i>
                 }
-            </table>
-  
+                else if (@item.CatSex == true)
+                {
+                    <i class="fa-solid fa-mars" style="color:#99b8d4;font-size:1.3rem"></i>
+                }
+            </p>
+            <p>@item.CatAge 歲</p>
+
+            <p>
+                @if (@item.DateOver == null)
+                {
+                    date = "申請日期:" + @item.DateStart.ToShortDateString();
+                }
+                else
+                {
+                    date = "結束日期:" + @item.DateOver.Value.ToShortDateString();
+                }
+                @date
+            </p>
+            <p>
+                狀態:
+                @if (@item.Status == 0)
+                {
+                    status = "等待中";
+                }
+                else if (@item.Status == 1)
+                {
+                    status = "已拒絕";
+                }
+                else
+                {
+                    status = "已同意";
+                }
+                @status
+            </p>
+        </div>
+
+    </div>
+
+
+}
+

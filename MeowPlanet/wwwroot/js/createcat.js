@@ -86,14 +86,10 @@ $('#f5-b1').click(function () {
 
 $('#f5-b2').click(function () {
 
-    if (($('#age-in').val() == '') || ($('#city-in').val() == '')) {
-        $('#age-city-sp').text('請填寫');
-    } else {
-        $('#p5').css('display', 'none');
-        $('#p6').css('display', 'block');
-        $('#f5').css('display', 'none');
-        $('#f6').css('display', 'block');
-    }
+    $('#p5').css('display', 'none');
+    $('#p6').css('display', 'block');
+    $('#f5').css('display', 'none');
+    $('#f6').css('display', 'block');
 
 })
 
@@ -251,3 +247,4 @@ function fileChange(num) {
     $(`#plus${num}`).css('display', 'none')
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
+

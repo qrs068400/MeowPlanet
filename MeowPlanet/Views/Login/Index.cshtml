@@ -15,46 +15,54 @@
                 <div class="col-6 bg-img">
                 </div>
                 <div class="col-6 loginform">
-                    <form id="account" method="post" asp-action="Login">
+                    <form id="account" method="post" asp-action="Login" autocomplete="on">
                         <div class="text-center">
                             <h2>登入喵星球</h2>
                         </div>
                         <div class="enter-form">
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <p class="form-p my-3">Email</p>
-                                <span id="alert"></span>
+                                <p class="form-p">Email</p>
+                                @*<span id="alert"></span>*@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="email" asp-for="Email" class="form-control login-sp" autocomplete="username" aria-required="true" />
-                                <span asp-validation-for="Email" class="text-danger ms-1"></span>
+                                <input type="email" asp-for="Email" class="form-control login-sp" value="test@some.com" aria-required="true" />
+
+                            </div>
+
+                            <div class="d-flex justify-content-start align-items-center err-msg-div">
+                                <span asp-validation-for="Email" class="text-danger" id="email-err"></span>
                             </div>
 
                             <div class="d-flex justify-content-between align-items-center">
-                                <p class="form-p my-3">密碼</p>
+                                <p class="form-p">密碼</p>
                             </div>
 
 
                             <div class="d-flex align-items-center">
-                                <input type="password" asp-for="Password" class="form-control login-sp" autocomplete="current-password" aria-required="true" />
-                                <span asp-validation-for="Password" class="text-danger ms-1"></span>
+                                <input type="password" asp-for="Password" class="form-control login-sp" value="789" aria-required="true" />
+
+                            </div>
+
+                            <div class="d-flex justify-content-start align-items-center err-msg-div">
+                                <span asp-validation-for="Password" class="text-danger" id="password-err"></span>
                             </div>
 
                             <div class="form-check form-switch cbox my-3">
-                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked>
+                                <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked" checked name="rememberme" value="true">
                                 <label class="form-check-label" for="flexSwitchCheckChecked">記住我</label>
-                                <a href="#" id="forgot-password">忘記密碼?</a>
+                                <a id="forgot-password" asp-controller="Login" asp-action="Password">忘記密碼?</a>
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <button id="login-submit" type="submit" class="login-sp">登入</button>
+                                <button id="login-submit" type="submit" class="btn login-sp">登入</button>
                             </div>
                         </div>
                         <p class="or-p text-center">———————&ensp;&ensp;&ensp;或者&ensp;&ensp;&ensp;———————</p>
 
                         <div class="d-flex justify-content-center link-icon">
-                            <img src="@Href("~/Images/googleplus.png")">
+                            <i class="fa-brands fa-google-plus"></i>
                         </div>
 
                         <div class="text-center re-a">
@@ -75,16 +83,57 @@
 
     <script>
 
-        $('#login-submit').click(function() {
+        $('#login-submit').click(function(e) {
+            e.preventDefault();
+            var form = $(this).parents('form');
 
-            $.get("Login/LoginCheck", { email: $('input[type=email]').val(), password: $('input[type=password]').val() }, function(data) {
-                
-                if (data == "Email或密碼錯誤") {
-                    $('#alert').html(data).css('color', '#2A483A')
-                }
+            if ($('input[type=email]').val() != '' && $('input[type=password]').val() != '') {
 
 
-            })
+
+                $.get("Login/LoginCheck", { email: $('input[type=email]').val(), password: $('input[type=password]').val() }, function(data) {
+
+                    if (data == "密碼錯誤") {
+                        $('#password-err').html(data).css('color', '#2A483A')
+                    } else if (data == "此Email不存在") {
+                        $('#email-err').html(data).css('color', '#2A483A')
+                    }else {
+                        Swal.fire({
+                            heightAuto: false,
+                            position: 'center',
+                            icon: 'success',
+                            title: '登入成功',
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then(function() {
+                            form.submit();
+                        })
+                    }
+
+                })
+
+
+
+
+            } else {
+                form.submit();
+            }
+
+
+        })
+
+        //記住我判定
+        var rmcheck = 1;
+
+        $('#flexSwitchCheckChecked').click(function() {
+            if (rmcheck == 1) {
+                $(this).attr('value', false);
+                rmcheck = 0;
+            } else {
+                $(this).attr('value', true);
+                rmcheck = 1;
+            }
+
         })
 
 
