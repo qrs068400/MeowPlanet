@@ -1,7 +1,5 @@
 ﻿@model IEnumerable<MeowPlanet.ViewModels.Adopts.CatsDto>
-
 @using System.Security.Claims;
-
 
 @{
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);

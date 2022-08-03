@@ -18,12 +18,12 @@ namespace MeowPlanet.ViewComponents
         }
         public IViewComponentResult Invoke(int memberId, int status)
         {
-
+            ViewBag.Status = status;
 
             var result = _context.Clues.Include(c => c.Missing)
                 .Include(c => c.Missing.Cat)
                 .Where(c => c.Missing.Cat.MemberId == memberId && c.Missing.Cat.IsMissing == true)
-                .Where(c => c.Missing.CatId == c.Missing.Cat.CatId)
+                .Where(c => c.Missing.CatId == c.Missing.Cat.CatId && c.Missing.IsFound == false)
                 .Where(c => c.Missing.MissingId == c.MissingId && c.Status == status)
                 .Select(c => new ClueViewModel
                 {

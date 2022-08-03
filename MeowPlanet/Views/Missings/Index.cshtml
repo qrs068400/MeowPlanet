@@ -1,9 +1,12 @@
 ﻿@model IEnumerable<MeowPlanet.ViewModels.Missings.ItemsViewModel>
 @using System.Security.Claims;
+@addTagHelper *, MeowPlanet
 
 @{
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
 }
+
+
 
 <div id="stars"></div>
 <div id="stars2"></div>
@@ -12,7 +15,7 @@
 
 
 
-<div class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
+<div id="missingIndex" class="row h-100 flex-nowrap my mx-4" style="justify-content: space-evenly; overflow: hidden">
     <div class="w-20" id="div-items" style="transition: all 1s ease; overflow-y: auto; min-width: 346px">
         @foreach (var item in Model)
         {
@@ -28,8 +31,12 @@
         <button id="cancel-publish" class="btn btn-danger rounded-pill d-none" style="border-color: white; width:180px">
             <span class="h5"><i class="fa-solid fa-xmark me-1"></i> 取消刊登</span>
         </button>
+        <button id="backToDetail" class="btn btn-danger rounded-pill d-none" style="border-color: white; width:180px">
+            <span class="h5"><i class="fa-solid fa-circle-left me-1"></i> 返回協尋</span>
+        </button>
     </div>
 </div>
+
 
 @*走失詳細資訊的彈出視窗*@
 <div class="modal fade" id="detailModal" tabindex="-1">
@@ -42,16 +49,19 @@
 @section Scripts{
 
     <script>
+        $('.modal').on('hidden.bs.modal', function() {
+            $(this).html('');
+        })
+
         $('.nav-item a').eq(1).addClass('nav-item-active');
         var isLogin = '@isLogin';
-        var memberId = '@memberId';        
+        var memberId = '@memberId';
     </script>
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
     <script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
     <script src="~/lib/datepicker/i18n/datepicker.zh-TW.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="~/js/map.js"></script>
     <script async defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU26gdtCyFPCboOi3luDez0bJwBS0jgF0&libraries=places,geometry&callback=initMap">
@@ -61,6 +71,7 @@
 }
 
     @section Styles{
+
     <link rel="stylesheet" href="//code.jquery.com/ui/1.13.1/themes/ui-darkness/jquery-ui.css">
     <link rel="stylesheet" href="~/css/missing.css" />
     <link rel="stylesheet" href="~/css/stars.css" />
@@ -70,6 +81,10 @@
     <style>
         body {
             height: 100vh !important;
+        }
+
+        .ui-datepicker {
+            z-index: 100000 !important
         }
     </style>
 }
