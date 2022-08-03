@@ -16,12 +16,7 @@
 <link href="~/css/adoption.css" rel="stylesheet" />
 <link href="~/css/stars.css" rel="stylesheet" />
 
-<style>
-    select > option:hover {
-        color: #444645;
-        background: yellow;
-    }
-</style>
+
 
 <div id="all">
     <div id="stars"></div>
@@ -288,7 +283,7 @@
                 heightAuto: false,
             }).then((result) => {
                 if (result.isConfirmed) {
-                    window.location.href = "/Login/Index";
+                    window.location.href = "/Login";
                 }
                 else {
                     return false
