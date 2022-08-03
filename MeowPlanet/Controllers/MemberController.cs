@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using MeowPlanet.ViewModels.MemberInfo;
-
+using System.Collections;
 
 namespace MeowPlanet.Controllers
 {
@@ -26,7 +26,7 @@ namespace MeowPlanet.Controllers
 
             var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
 
-            
+
 
             return View(LoginInfo);
         }
@@ -36,29 +36,31 @@ namespace MeowPlanet.Controllers
             return View();
         }
 
+        public IActionResult CreateSitter()
+        {
+            return View();
+        }
 
         // 回應MyAccountPartial
         [HttpGet]
         public ActionResult GetAccountInfo(int MemberId)
         {
             var MemberInfo = _context.Members.FirstOrDefault(p => p.MemberId == MemberId);
-            
+
             return PartialView("_MyAccountPartial", MemberInfo);
         }
 
-
-
         // 建立貓咪資料
         [HttpPost]
-        public async Task<IActionResult> AddCat(Cat cat, IFormFile file1 , IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
+        public async Task<IActionResult> AddCat(Cat cat, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
         {
             Random random = new Random();
-            string? uniqueFileName = null; 
+            string? uniqueFileName = null;
 
             if (file1 != null)  //handle iformfile
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
-                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000,9999).ToString() + file1.FileName;
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file1.FileName;
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
@@ -120,6 +122,104 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Index");
         }
 
+        // 建立保姆資料
+        [HttpPost]
+        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
+        {
+            Random random = new Random();
+            string? uniqueFileName = null;
+
+            if (file1 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file1.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file1.CopyTo(fileStream);
+                }
+                sitter.Img01 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file2 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file2.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file2.CopyTo(fileStream);
+                }
+                sitter.Img02 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file3 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file3.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file3.CopyTo(fileStream);
+                }
+                sitter.Img03 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file4 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file4.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file4.CopyTo(fileStream);
+                }
+                sitter.Img04 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file5 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file5.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file5.CopyTo(fileStream);
+                }
+                sitter.Img05 = "/images/userUpload/" + uniqueFileName;
+            }
+            _context.Sitters.Add(sitter);
+            await _context.SaveChangesAsync();
+            return Content("服務建立完成");
+        }
+
+        // 儲存sitterfeature資料
+        [HttpPost]
+        public async Task<IActionResult> AddSitterFeature(string sitterfeature, int memberId)
+        {
+            if(sitterfeature != null)
+            {
+                string[] sitterfeatureArray = sitterfeature.Split(',');
+
+                var sitterInfo = _context.Sitters.Where(x => x.MemberId == memberId).OrderBy(x => x.ServiceId).LastOrDefault();
+
+                var serviceid = sitterInfo.ServiceId;
+
+
+                for (int i = 0; i < sitterfeatureArray.Length; i++)
+                {
+
+                    SitterFeature sitter_feature = new SitterFeature();
+                    sitter_feature.ServiceId = serviceid;
+                    sitter_feature.FeatureId = Convert.ToInt32(sitterfeatureArray[i]);
+                    _context.SitterFeatures.Add(sitter_feature);
+
+                }
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Member");
+        }
+
         // 取得選擇貓咪資料
         [HttpGet]
         public ActionResult GetCatInfo()
@@ -137,7 +237,7 @@ namespace MeowPlanet.Controllers
                     Sex = c.Sex,
                     Img01 = c.Img01
 
-                }).ToList();                           
+                }).ToList();
 
             return PartialView("_CatSelectPartial", CatInfo);
         }
@@ -252,11 +352,11 @@ namespace MeowPlanet.Controllers
             oldCat.IsAdoptable = cat.IsAdoptable;
             oldCat.IsSitting = cat.IsSitting;
             oldCat.IsMissing = cat.IsMissing;
-            if(cat.Img01 != null)
+            if (cat.Img01 != null)
             {
                 oldCat.Img01 = cat.Img01;
             }
-            if(cat.Img02 != null)
+            if (cat.Img02 != null)
             {
                 oldCat.Img02 = cat.Img02;
             }
@@ -272,10 +372,10 @@ namespace MeowPlanet.Controllers
             {
                 oldCat.Img05 = cat.Img05;
             }
-            
-            
-            
-            
+
+
+
+
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

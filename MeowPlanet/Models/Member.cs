@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace MeowPlanet.Models
 {
@@ -12,6 +11,8 @@ namespace MeowPlanet.Models
             Cats = new HashSet<Cat>();
             Clues = new HashSet<Clue>();
             Favorites = new HashSet<Favorite>();
+            MessageReceiveds = new HashSet<Message>();
+            MessageSends = new HashSet<Message>();
             Orderlists = new HashSet<Orderlist>();
             Sitters = new HashSet<Sitter>();
         }
@@ -27,6 +28,8 @@ namespace MeowPlanet.Models
         public virtual ICollection<Cat> Cats { get; set; }
         public virtual ICollection<Clue> Clues { get; set; }
         public virtual ICollection<Favorite> Favorites { get; set; }
+        public virtual ICollection<Message> MessageReceiveds { get; set; }
+        public virtual ICollection<Message> MessageSends { get; set; }
         public virtual ICollection<Orderlist> Orderlists { get; set; }
         public virtual ICollection<Sitter> Sitters { get; set; }
     }

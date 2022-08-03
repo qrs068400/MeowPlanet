@@ -1,4 +1,10 @@
-﻿<!DOCTYPE html>
+﻿@addTagHelper *, MeowPlanet
+@using System.Security.Claims;
+@{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -50,15 +56,35 @@
         </nav>
     </header>
     @RenderBody()
+    <vc:private-message member-id="memberId"></vc:private-message>
     <footer class="footer text-muted">
         <div class="container">
             &copy; 第四組 - MeowPlanet -
         </div>
     </footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     <script src="~/js/slick.js"></script>
+    <script>
+        $('#message-box').on('show.bs.collapse', (e) => {
+            if ('@isLogin' == 'False') {
+
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '請先登入會員',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2500
+                })
+
+                e.preventDefault();
+            }
+        })
+
+    </script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

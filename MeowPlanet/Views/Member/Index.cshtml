@@ -53,6 +53,12 @@
     <script>
         $('.nav-item a').eq(3).addClass('nav-item-active');
 
+        $(function() {
+            $.get("@Url.Action("GetAccountInfo", "Member")", { MemberId: @Model.MemberId}, function(data) {
+                $("#member-right-region").html(data)
+            })
+        })
+
         function showAccount() {
             $.get("@Url.Action("GetAccountInfo", "Member")", { MemberId: @Model.MemberId}, function(data) {
                 $("#member-right-region").html(data)
@@ -61,12 +67,58 @@
         $(document).on('click', '#backToList', () => {
             showAccount()
         })
+
         //領養資訊
         $('#adoption').click(() => {
             $.get('/Adoption/LikeTolist', function(data) {
                 $('#member-right-region').html(data);
             })
         })
+
+        $('#clues').click(() => {
+
+            $.get('/Missings/GetClues', function(data) {
+
+                if (data == "False") {
+                    Swal.fire({
+                        title: '您尚未有貓咪走失',
+                        text: '是否要前往刊登頁面?',
+                        icon: 'question',
+                        showCancelButton: true,
+                        confirmButtonText: '前往刊登',
+                        cancelButtonText: '下次一定',
+                        heightAuto: false,
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.href = "/Missings";
+                        }
+                        else {
+                            return false
+                        }
+                    })
+                }
+                else {
+
+                    $('#member-right-region').html(data);
+                }
+            })
+        })
+
+        //$(function() {
+
+        //    $.get("@Url.Action("GetCatInfo", "Member")", function(data) {
+        //        $("#cat-region-select").html(data)
+        //    })
+        //})
+
+
+        //function ToDetail(id) {
+        //    $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
+        //        $("#cat-region-select").html(data)
+        //    })
+        //    $(".member-region").css("display", "none")
+        //    $("#cat-region").removeClass("col-6").css("width", "91.66%")
+        //}
 
     </script>
 

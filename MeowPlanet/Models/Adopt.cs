@@ -5,7 +5,6 @@ namespace MeowPlanet.Models
 {
     public partial class Adopt
     {
-
         public int MemberId { get; set; }
         public int CatId { get; set; }
         public int Owner { get; set; }

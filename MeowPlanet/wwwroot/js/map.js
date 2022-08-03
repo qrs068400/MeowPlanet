@@ -6,6 +6,10 @@ let newMarker;
 //從資料庫撈到的所有貓咪物件
 let catList = [];
 
+let detalModal;
+
+let clickedMarker;
+
 
 function removeMarker() {
     if (newMarker != null) {
@@ -60,18 +64,28 @@ function initMap() {
     $('#pre-publish').on('click', function () {
 
         checkLogin(() => {
-            let windowContent =
-                '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
-                '<div class="d-flex mt-3 mb-1" style="justify-content: space-around">' +
-                '<button class="btn btn-primary" onclick="confirmPos()">' +
-                'Yes' +
-                '</button>' +
-                '<button onclick="removeMarker();" class="btn btn-danger">No</button>' +
-                '</div>';
 
-            settingMode(windowContent);
+            checkCats(() => {
+
+                let windowContent =
+                    '<div class="px-3 pt-2 pb-1">' +
+                    '<span class="h5 my-3">您的愛貓在這裡走失的嗎?</span>' +
+                    '<div class="d-flex mt-3 mb-1 justify-content-between">' +
+                    '<button class="btn btn-dark rounded-pill" onclick="confirmPos()">' +
+                    '<i class="fa-solid fa-check me-2"></i>' +
+                    '確認' +
+                    '</button>' +
+                    '<button onclick="removeMarker();" class="btn btn-danger rounded-pill">' +
+                    '<i class="fa-solid fa-xmark me-2"></i>' +
+                    '取消' +
+                    '</button>' +
+                    '</div>' +
+                    '</div>';
+
+                settingMode(windowContent);
+            })
         })
-    
+
     })
 
 
@@ -113,6 +127,45 @@ function initMap() {
     listener = map.addListener('idle', searchCat)
 }
 
+//刊登協尋 檢查名下是否有貓&&是否已有刊登
+function checkCats(callback) {
+    $.get('/Missings/CheckCats', function (data) {
+        if (data == "0") {
+            Swal.fire({
+                title: '您尚未登記任何貓咪',
+                text: '是否要前往登記頁面?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: '前往登記',
+                cancelButtonText: '下次一定',
+                heightAuto: false,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = "/Member/CreateCat";
+                }
+                else {
+                    return false
+                }
+            })
+        }
+
+        else if (data == "1") {
+
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '每位會員僅限刊登一筆協尋',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+
+        else {
+            callback();
+        }
+    })
+}
 
 //檢查登入
 function checkLogin(action) {
@@ -220,11 +273,13 @@ function settingMode(windowContent, offset) {
 
 
 let missingId;
+let clueCount;
 let showingWindow;
+let cluesMarker = [];
 
 //把所有走失貓咪抓進catList
 $(function () {
-    $.get('Missings/GetMissing', function (data) {
+    $.get('/Missings/GetMissing', function (data) {
         data.forEach((value) => {
             let cat = value;
             let LatLng = new google.maps.LatLng(cat.lat, cat.lng);
@@ -239,6 +294,8 @@ $(function () {
             //綁定此marker點擊事件
             marker.addListener('click', function () {
 
+                clickedMarker = marker;
+
                 //地圖中心移動到圖標位置
                 map.setZoom(16);
                 map.panTo({
@@ -247,12 +304,14 @@ $(function () {
                 })
 
                 //發送AJAX取得資料
-                $.get('Missings/GetDetail', { 'missingId': cat.missingId }, function (data) {
+                $.get('/Missings/GetDetail', { 'missingId': cat.missingId }, function (data) {
+                    detalModal = data;
                     $('#detailModal').html(data);
                     $('#detailModal').modal('show');
                 })
 
                 missingId = cat.missingId;
+                clueCount = $(`#missing-${missingId}`).data('clueCount');
             })
 
             //綁定此marker hover事件
@@ -312,7 +371,7 @@ function searchCat() {
 
             if (showingCatList.includes(cat)) {
                 showingCatList.splice(showingCatList.indexOf(cat), 1);
-                $(`#missing-${cat.missingId}`).fadeOut(600);
+                $(`#missing-${cat.missingId}`).animate({ marginLeft: "200px", opacity: 0 }, 800, 'swing', function () { $(this).hide().css({ 'margin-left': '0', 'opacity': '1' }) });
             }
         }
     })
@@ -345,7 +404,10 @@ function itemClicked(item) {
 
     let id = $(item).data('id');
     missingId = id;
+    clueCount = $(item).data('clueCount');
     let clickedCat = catList.filter(x => x.missingId == id)[0];
+    clickedMarker = clickedCat.marker;
+
 
     map.setZoom(16);
     map.panTo({
@@ -354,7 +416,9 @@ function itemClicked(item) {
     });
 
     //發送AJAX取得資料
-    $.get('Missings/GetDetail', { 'missingId': id }, function (data) {
+    $.get('/Missings/GetDetail', { 'missingId': id }, function (data) {
+
+        detalModal = data;
         $('#detailModal').html(data);
         $('#detailModal').modal('show')
     })
@@ -385,7 +449,7 @@ function toggleMap() {
 //確定貓咪在此遺失
 function confirmPos() {
 
-    $.get('Missings/GetPublish', (data) => {
+    $.get('/Missings/GetPublish', (data) => {
         $('#publishModal').html(data);
         $('#publishModal').modal('show');
 
@@ -406,7 +470,7 @@ $(document).on({
         let reader = new FileReader()
 
         reader.readAsDataURL(file);
-        reader.onload = function(e) {
+        reader.onload = function (e) {
             $('#imgPreview').attr('src', e.target.result)
         }
 
@@ -417,7 +481,7 @@ $(document).on({
 }, '#imgPreview')
 
 //上傳預覽功能
-$(document).on('change', '#imgInput', function () {  
+$(document).on('change', '#imgInput', function () {
 
     let reader = new FileReader();
     reader.onload = function (e) {
@@ -429,44 +493,73 @@ $(document).on('change', '#imgInput', function () {
 
 
 //提供線索
-$(document).on('click', '#provideClues', () => {    
+$(document).on('click', '#provideClues', () => {
 
     checkLogin(() => {
 
-        let windowContent =
-            '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
-            '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
-            '<div class="form-group mt-3 text-center" style="height: 40%">' +
-            '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
-            '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
-            '</div>' +
-            '<div class="form-group mt-3 m-auto w-85">' +
-            '<label for="witness-time" class="h6">目擊時間 :</label>' +
-            '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
-            '</div>' +
-            '<div class="form-group mt-3 m-auto w-85">' +
-            '<label for="witness-time" class="h6">其他描述 :</label>' +
-            '<input type="text" id="witness-time" class="form-control rounded-pill" name="Description" />' +
-            '</div>' +
-            '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
-            '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check me-1"></i> 發布</button>' +
-            '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark me-1"></i> 取消</button>' +
-            '</div>' +
-            '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
-            `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
-            '</form>';
+        if (memberId == $('#provideClues').data('memberId')) {
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '您無法對您發布的協尋提供線索',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+        else {
 
-        $('#detailModal').modal('hide');
+            let windowContent =
+                '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
+                '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
+                '<div class="form-group mt-3 text-center" style="height: 40%">' +
+                '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
+                '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
+                '</div>' +
+                '<div class="form-group mt-3 m-auto w-85">' +
+                '<label for="witness-time" class="h6">目擊時間 :</label>' +
+                '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
+                '</div>' +
+                '<div class="form-group mt-3 m-auto w-85">' +
+                '<label for="other-description" class="h6">其他描述 :</label>' +
+                '<input type="text" id="other-description" class="form-control rounded-pill" name="Description" />' +
+                '</div>' +
+                '<div class="d-flex mt-4 mb-1" style="justify-content: space-evenly">' +
+                '<button type="submit" class="btn btn-dark rounded-pill"><i class="fa-solid fa-check me-1"></i> 發布</button>' +
+                '<button onclick="removeMarker();" class="btn btn-danger rounded-pill"><i class="fa-solid fa-xmark me-1"></i> 取消</button>' +
+                '</div>' +
+                '<input name="WitnessLat" id="WitnessLat" type="hidden" />' + '<input name="WitnessLng" id="WitnessLng" type="hidden" />' +
+                `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
+                '</form>';
 
-        settingMode(windowContent, true);
+            $('#detailModal').modal('hide');
 
-        $('#cancel-publish').one('click', () => {
-            $('#detailModal').modal('show');
-        })
+            settingMode(windowContent, true);
 
-    })    
+
+            $('#cancel-publish').one('click', () => {
+                $('#detailModal').html(detalModal);
+                $('#detailModal').modal('show');
+            })
+
+        }
+
+    })
 
 })
+
+$(function () {
+    $(document).on({
+        'focus': function () {
+            $(this).datepicker($.datepicker.regional['tw']);
+        },
+        'keypress': function (e) {
+            e.preventDefault();
+        }
+    }, '#witness-time'
+    )
+})
+
 
 //提供線索表單
 $(document).on('submit', '#clueForm', function (e) {
