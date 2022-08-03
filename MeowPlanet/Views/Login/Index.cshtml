@@ -28,11 +28,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-<<<<<<< HEAD
-                                <input type="email" asp-for="Email" class="form-control login-sp" aria-required="true" />
-=======
                                 <input type="email" asp-for="Email" class="form-control login-sp" aria-required="true" id="email"/>
->>>>>>> ren12
 
                             </div>
 
@@ -46,11 +42,8 @@
 
 
                             <div class="d-flex align-items-center">
-<<<<<<< HEAD
-                                <input type="password" asp-for="Password" class="form-control login-sp" aria-required="true" />
-=======
+
                                 <input type="password" asp-for="Password" class="form-control login-sp" aria-required="true" id="password"/>
->>>>>>> ren12
 
                             </div>
 
@@ -70,9 +63,6 @@
                         </div>
                         <p class="or-p text-center">或者</p>
 
-                        @*                        <div class="d-flex justify-content-center link-icon">
-                    <i class="fa-brands fa-google-plus"></i>
-                    </div>*@
                         <div id="g_id_onload"
                          data-client_id="824506292381-98hjid099dhp06oqudugbjlj1bclr0u0.apps.googleusercontent.com"
                          data-login_uri="@Url.Action("ValidGoogleLogin","Login")"
@@ -121,11 +111,7 @@
                     if (data == "密碼錯誤") {
                         $('#password-err').html(data).css('color', '#ff0000')
                     } else if (data == "此Email不存在") {
-<<<<<<< HEAD
                         $('#email-err').html(data).css('color', '#ff0000')
-=======
-                        $('#email-err').html(data).css('color', '#2A483A')
->>>>>>> ren12
                     } else {
                         Swal.fire({
                             heightAuto: false,

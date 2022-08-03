@@ -224,8 +224,7 @@ namespace MeowPlanet.Controllers
 
         }
 
-<<<<<<< HEAD
-=======
+
         public IActionResult ValidGoogleLogin()
         {
             string? formCredential = Request.Form["credential"]; //回傳憑證
@@ -382,6 +381,5 @@ namespace MeowPlanet.Controllers
             }
             return payload;
         }
->>>>>>> ren12
     }
 }
