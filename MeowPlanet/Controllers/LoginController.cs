@@ -109,6 +109,7 @@ namespace MeowPlanet.Controllers
                 {
                     new Claim(ClaimTypes.Sid, LoginId.ToString()),
                     new Claim(ClaimTypes.Name, LoginName),
+                    new Claim(ClaimTypes.Role, "member")
 
                 };
 
@@ -294,13 +295,12 @@ namespace MeowPlanet.Controllers
                     _context.Members.Add(member);
                     _context.SaveChangesAsync();
 
-                    var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == payload.Email); //整筆資料取出
+                    var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == payload.Email);
 
                     var LoginId = LoginInfo.MemberId;
 
                     var LoginName = LoginInfo.Name;
 
-                    //cookie驗證
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Sid, LoginId.ToString()),
@@ -311,14 +311,12 @@ namespace MeowPlanet.Controllers
                     var claimsIdentity = new ClaimsIdentity(
                                claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    //記住我
                     var properties = new AuthenticationProperties
                     {
                         IsPersistent = true,
                         ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
                     };
 
-                    //登入驗證存進cookie
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                             new ClaimsPrincipal(claimsIdentity), properties);
 
