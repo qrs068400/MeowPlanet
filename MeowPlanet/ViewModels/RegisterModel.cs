@@ -12,6 +12,7 @@ namespace MeowPlanet.ViewModels
         [Required(ErrorMessage = "請輸入有效的密碼")]
         public string Password { get; set; } = null!;
         [Required(ErrorMessage = "請輸入有效的手機號碼")]
+        
         public string Phone { get; set; } = null!;
         [Required(ErrorMessage = "請輸入有效的名字")]
         public string Name { get; set; } = null!;
