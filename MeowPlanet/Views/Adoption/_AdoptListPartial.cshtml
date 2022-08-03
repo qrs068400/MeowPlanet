@@ -6,8 +6,10 @@
       integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
       crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href="~/css/adoptpartial.css" rel="stylesheet" />
+@using System.Security.Claims;
 
 @{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
     string status = "";
     string date = "";
 }
@@ -72,9 +74,11 @@
                     <div class="col-1" style="padding-left:150px;">
                         @if (@item.Status == 0)
                         {
-                            <button id="@item.CatId" class="btn btn-outline-secondary no" value="@item.MemberId"><i class="fa-solid fa-xmark"></i></button>
-                            <button id="@item.CatId" class="btn btn-outline-secondary yes" value="@item.MemberId"><i class="fa-solid fa-check"></i></button>
+                            <button id="@item.CatId" class="btn btn-outline-secondary no" value="@item.MemberId"><i class="fa-solid fa-xmark adoptclose"></i></button>
+                            <button id="@item.CatId" class="btn btn-outline-secondary yes" value="@item.MemberId" style="margin-left:-1px;"><i class="fa-solid fa-check adoptclose"></i></button>
                         }
+                        <button id="@item.MemberId" class="btn btn-outline-secondary messageTo" value="@item.MemberId" style="padding-left:15px;margin-top:40px;font-size:2rem"><i class="fa-regular fa-comment-dots"></i></button>
+
                     </div>
                 </div>
             }
@@ -87,9 +91,6 @@
     </div>
 </div>
 
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"
-        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.1.9/sweetalert2.all.min.js"
         integrity="sha512-IZ95TbsPTDl3eT5GwqTJH/14xZ2feLEGJRbII6bRKtE/HC6x3N4cHye7yyikadgAsuiddCY2+6gMntpVHL1gHw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -103,6 +104,7 @@
             text: "拒絕申請後不可取消，請慎重考慮！",
             icon: 'question',
             showCancelButton: true,
+            heightAuto: false,
             confirmButtonColor: '#B99668',
             cancelButtonColor: '#4B5461',
             confirmButtonText: '拒絕'
@@ -178,5 +180,10 @@
         });
 
 
+    $(".messageTo").click(function() {
+        let memberId = $(this).attr("id")
+        let selfId = parseInt('@memberId')
+        messageTo(memberId, selfId)
+    })
 
 </script>
