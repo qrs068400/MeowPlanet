@@ -44,7 +44,7 @@ namespace MeowPlanet.Controllers
             return PartialView("_HistoryMessagePartial", result);
         }
 
-        public ActionResult searchMember(int memberId)
+        public ActionResult SearchMember(int memberId)
         {
             var result = _context.Members.Where(x => x.MemberId == memberId).Select(x => new
             {
@@ -53,6 +53,17 @@ namespace MeowPlanet.Controllers
             }).FirstOrDefault();
 
             return Json(result);
+        }
+
+        public ActionResult MessageRead(int selfId, int memberId)
+        {
+            _context.Messages.Where(x => x.SendId == memberId && x.ReceivedId == selfId)
+                .ToList()
+                .ForEach(x => x.IsRead = true);
+
+            _context.SaveChanges();
+
+            return Content("OK");
         }
     }
 }

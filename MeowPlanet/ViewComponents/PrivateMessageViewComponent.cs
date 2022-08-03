@@ -23,16 +23,17 @@ namespace MeowPlanet.ViewComponents
 
             var contactMembers = _context.Messages
                 .Where(x => x.ReceivedId == memberId || x.SendId == memberId)
-                .OrderBy(x => x.Time)
-                .Select(x => new { x.Send, x.Received })                
+                .Select(x => new { x.Send, x.Received })
                 .Select(x => new ContactMembers
                 {
                     Id = x.Send.MemberId == memberId ? x.Received.MemberId : x.Send.MemberId,
                     Name = x.Send.MemberId == memberId ? x.Received.Name : x.Send.Name,
                     Photo = x.Send.MemberId == memberId ? x.Received.Photo : x.Send.Photo,
-                    UnreadCount = _context.Messages.Count(m => m.IsRead == false && m.SendId == (x.Send.MemberId == memberId ? x.Received.MemberId : x.Send.MemberId))
+                    LastTime = _context.Messages.Where(m => (m.SendId == (x.Send.MemberId == memberId ? x.Received.MemberId : x.Send.MemberId) && m.ReceivedId == memberId) || (m.SendId == memberId && m.ReceivedId == (x.Send.MemberId == memberId ? x.Received.MemberId : x.Send.MemberId))).Max(m => m.Time),
+                    UnreadCount = _context.Messages.Count(m => m.IsRead == false && (m.SendId == (x.Send.MemberId == memberId ? x.Received.MemberId : x.Send.MemberId) && m.ReceivedId == memberId))
                 })
                 .Distinct()
+                .OrderByDescending(x=> x.LastTime)
                 .ToList();
                 
 
@@ -47,7 +48,7 @@ namespace MeowPlanet.ViewComponents
 
 
             return View(result);
-        }
+        }        
 
     }
 }

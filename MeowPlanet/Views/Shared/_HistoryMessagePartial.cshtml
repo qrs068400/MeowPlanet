@@ -21,7 +21,7 @@
         <div class="message-left">
             <img class="me-2" src='@message.Send.Photo' />
             <div class="d-flex flex-column align-items-start">
-                <div class="text-end mb-2">@message.Send.Name <span class="time">@message.Time.ToString("tthh:dd")</span></div>
+                <div class="text-end mb-2">@message.Send.Name <span class="time">@message.Time.ToString("tthh:mm")</span></div>
                 <div class="message" style="border-top-left-radius: 0;">@message.MessageContent</div>
             </div>
         </div>
@@ -31,12 +31,17 @@
         <div class="message-right">
             <img class="ms-2" src='@message.Send.Photo' />
             <div class="d-flex flex-column align-items-end">
-                <div class="text-end mb-2"><span class="time">@message.Time.ToString("tthh:dd")</span> @message.Send.Name</div>
+                <div class="text-end mb-2"><span class="time">@message.Time.ToString("tthh:mm")</span> @message.Send.Name</div>
                 <div class="message" style="border-top-right-radius: 0;">@message.MessageContent</div>
             </div>
         </div>
     }
 
+}
+
+@if(DateTime.Compare(date.Date, DateTime.Now.Date) < 0)
+{
+    <div class="m-auto rounded-pill bg-secondary text-center my-2" style="width: 70px; color: white; font-size: 0.8rem">@DateTime.Now.ToString("M")</div>
 }
 
 

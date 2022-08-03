@@ -1,6 +1,7 @@
 ﻿@model MeowPlanet.ViewModels.MessageBoxModel
 @using System.Security.Claims;
 @{
+    DateTime today = DateTime.Now.Date;
     string userName = "";
     string userPhoto = "";
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
@@ -41,12 +42,13 @@
         }
 
     #message-box {
+        font-size: 1rem;
         border-bottom-left-radius: 20px;
         border-top-left-radius: 20px;
         z-index: 5000000000;
         background-color: #c9c9c9;
         height: 400px;
-        width: 600px;
+        width: 700px;
         position: fixed;
         right: 0;
         bottom: 50px;
@@ -57,7 +59,7 @@
         display: inline-block;
         border-bottom-left-radius: 25px;
         border-top-left-radius: 25px;
-        width: 65%;
+        width: 60%;
         margin-right: 10px;
         background-color: whitesmoke;
         height: 100%;
@@ -66,7 +68,7 @@
 
     #message-user {
         display: inline-block;
-        width: calc(35% - 10px);
+        width: calc(40% - 10px);
         background-color: whitesmoke;
         height: 100%;
         overflow-y: auto;
@@ -79,9 +81,6 @@
         overflow-y: auto;
     }
 
-        #message-content div {
-            font-size: 1rem;
-        }
 
         #message-content::-webkit-scrollbar, #message-user::-webkit-scrollbar {
             width: 6px;
@@ -111,6 +110,7 @@
     }
 
     #message-box textarea {
+        z-index: 10000000000;
         resize: none;
         box-shadow: none;
     }
@@ -164,6 +164,15 @@
         height: 50px;
         border-radius: 50%;
     }
+
+    .unread {
+        height: 25px;
+        width: 25px;
+        border-radius: 50%;
+        background-color: firebrick;
+        color: white;
+        text-align: center
+    }
 </style>
 
 <button id="message-open" class="message-btn" data-bs-toggle="collapse" data-bs-target="#message-box"><i class="fa-solid fa-comment-dots"></i> 即時通訊</button>
@@ -185,8 +194,36 @@
                             <img src="@member.Photo" />
                             @member.Name
                         </div>
-                        <div style="height: 25px; width: 25px; border-radius: 50%; background-color:firebrick;color:white; text-align:center">
-                            @member.UnreadCount
+                        <div class="d-flex flex-column justify-content-between align-items-end">
+                            <p style="font-size: 0.5rem;color: gray" class="last-time">
+                                @if (@member.LastTime.Date == today)
+                                {
+                                    @member.LastTime.ToString("tthh:mm")
+                                    ;
+                                }
+                                else if (@member.LastTime.Date == today.AddDays(-1))
+                                {
+                                    @Html.Display("昨天")
+                                }
+                                else
+                                {
+                                    @member.LastTime.ToString("M/dd")
+                                    ;
+                                }
+                            </p>
+                            @if (member.UnreadCount > 0)
+                            {
+                                <div class="unread">
+                                    @member.UnreadCount
+                                </div>
+
+                            }
+                            else
+                            {
+                                <div class="unread opacity-0">
+                                    0
+                                </div>
+                            }
                         </div>
                     </div>
                 }
@@ -200,7 +237,8 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
 <script>
-    let contactList = []
+    let contactList = [];
+    let clickedMemberId;
 
     $(function() {
         $('.contact').each(function() {
@@ -208,7 +246,7 @@
         })
     })
 
-
+    //連結到訊息接收人
     function messageTo(memberId, selfId) {
 
         if (memberId == selfId) {
@@ -232,29 +270,23 @@
 
                 contactList.push(memberId);
 
-                $.get('/Message/searchMember', { memberId }, function(data) {
-                    $('#message-user').prepend(`
-                                        <div class="d-flex contact justify-content-between align-items-center border-bottom p-2 mb-2" data-id="${memberId}">
-                                            <div>
-                                                <img src="${data.photo}" />
-                                                ${data.name}
-                                            </div>
-                                        </div>
-                        `)
+                $.get('/Message/SearchMember', { memberId }, function(data) {
+                    $('#message-user').prepend(
+                        
+                        `<div class="d-flex contact justify-content-between align-items-center border-bottom p-2 mb-2" data-id="${memberId}">
+                            <div>
+                                <img src="${data.photo}" />
+                                ${data.name}
+                            </div>
+                            <div class="d-flex flex-column justify-content-between align-items-end">
+                                <p style="font-size: 0.5rem;color: gray" class="last-time"></p>
+                                <div class="unread opacity-0"></div>
+                            </div>
+                        </div>`
+                                                    
+                    )
 
-                    $(`.contact[data-id="${memberId}"]`).click(function() {
-
-                        $('.contact').removeClass('contact-active');
-                        $(this).addClass('contact-active');
-                        $('#message-input').attr('disabled', false).focus();
-
-                        $('#userId').val(memberId);
-
-                        $('#message-content').load('/Message/GetHistory', { memberId }, () => {
-
-                            autoScroll();
-                        });
-                    }).trigger('click');
+                    $(`.contact[data-id="${memberId}"]`).trigger('click');
                 })
             }
         }
@@ -266,6 +298,8 @@
         }, 500);
     }
 
+
+    //連線
     var connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
     connection.start().then(function() {
         console.log("Hub 連線完成");
@@ -273,21 +307,56 @@
         alert('連線錯誤: ' + err.toString());
     });
 
-    connection.on("ReceiveMessage", function(userName, userPhoto, message) {
+    //收到訊息
+    connection.on("ReceiveMessage", function(userName, userPhoto, message, senderId) {
 
         let time = new Date().toLocaleTimeString().slice(0, -3);
 
-        let $messageLeft = $(`<div class="message-left">
-                                                                    <img class="me-2" src='${userPhoto}' />
-                                                                        <div class="d-flex flex-column align-items-start">
-                                                                            <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
-                                                                            <div class="message" style="border-top-left-radius: 0;">${message}</div>
-                                                                        </div>
-                                                                    </div>`
-        )
+        if (!contactList.includes(senderId)) {
+            $('#message-user').prepend(
+                `<div class="d-flex contact justify-content-between align-items-center border-bottom p-2 mb-2" data-id="${senderId}">
+                    <div>
+                        <img src="${userPhoto}" />
+                        ${userName}
+                    </div>
+                    <div class="d-flex flex-column justify-content-between align-items-end">
+                        <p style="font-size: 0.5rem;color: gray" class="last-time">${time}</p>
+                        <div class="unread">1</div>
+                    </div>
+                </div>`
+            )
 
-        $("#message-content").append($messageLeft);
-        autoScroll();
+            contactList.push(senderId);
+        }
+        else {
+            $(`.contact[data-id="${senderId}"] .last-time`).html(time);
+            $(`.contact[data-id="${senderId}"]`).prependTo('#message-user');
+
+            if (clickedMemberId == senderId) {
+
+                let $messageLeft = $(
+                    `<div class="message-left">
+                    <img class="me-2" src='${userPhoto}' />
+                        <div class="d-flex flex-column align-items-start">
+                            <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
+                            <div class="message" style="border-top-left-radius: 0;">${message}</div>
+                        </div>
+                    </div>`
+                )
+
+                $("#message-content").append($messageLeft);
+                autoScroll();
+            }
+
+            else{
+                $(`.contact[data-id="${senderId}"] .unread`).removeClass('opacity-0');
+
+                let unread = parseInt($(`.contact[data-id="${senderId}"] .unread`).html()) + 1;
+                $(`.contact[data-id="${senderId}"] .unread`).html(unread);
+            }
+
+        }
+
     });
 
 
@@ -308,23 +377,28 @@
 
                 let userName = '@userName';
                 let userPhoto = '@userPhoto';
-                let message = $('#message-input').val();
+                let senderId = parseInt('@memberId');
                 let receivedId = $('#userId').val();
-                connection.invoke("SendMessage", userName, userPhoto, message, receivedId);
+                let message = $('#message-input').val();
+                connection.invoke("SendMessage", userName, userPhoto, message, receivedId, senderId);
 
                 $(this).val('');
 
                 let time = new Date().toLocaleTimeString().slice(0, -3);
-                let $messageRight = $(`<div class="message-right">
-                                                                                <img class="ms-2" src='${userPhoto}' />
-                                                                                <div class="d-flex flex-column align-items-end">
-                                                                                    <div class="text-end mb-2"><span class="time">${time}</span> ${userName}</div>
-                                                                                    <div class="message" style="border-top-right-radius: 0;">${message}</div>
-                                                                                </div>
-                                                                            </div>`
+                let $messageRight = $(
+                    `<div class="message-right">
+                        <img class="ms-2" src='${userPhoto}' />
+                        <div class="d-flex flex-column align-items-end">
+                            <div class="text-end mb-2"><span class="time">${time}</span> ${userName}</div>
+                            <div class="message" style="border-top-right-radius: 0;">${message}</div>
+                        </div>
+                    </div>`
                 )
 
                 $("#message-content").append($messageRight);
+
+                $(`.contact[data-id="${receivedId}"]`).find('.last-time').text(time);
+                $(`.contact[data-id="${receivedId}"]`).prependTo('#message-user');
 
                 autoScroll();
 
@@ -336,20 +410,24 @@
     });
 
     //點擊聯絡人框觸發交談 並且載入歷史訊息
-
-    $('.contact').click(function() {
+    $('#message-box').on('click', '.contact', function() {
 
         $('.contact').removeClass('contact-active');
         $(this).addClass('contact-active');
+        $(this).find('.unread').html('0').addClass('opacity-0');
         $('#message-input').attr('disabled', false).focus();
 
         let memberId = $(this).data('id');
+        clickedMemberId = memberId;
         $('#userId').val(memberId);
 
         $('#message-content').load('/Message/GetHistory', { memberId }, () => {
 
             autoScroll();
         });
+
+        let selfId = parseInt('@memberId');
+        $.post('/Message/MessageRead', { selfId, memberId })
 
     })
 
