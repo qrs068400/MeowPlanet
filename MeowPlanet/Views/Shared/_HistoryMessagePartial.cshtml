@@ -3,12 +3,43 @@
 @{
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
     DateTime date = new DateTime(2000, 1, 1);
+    bool unreadAdded = false;
 }
 
+<style>
+    .separator {
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: firebrick;
+        font-size: 0.8rem;
+    }
+
+        .separator::before,
+        .separator::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid firebrick;
+        }
+
+        .separator:not(:empty)::before {
+            margin-right: .25em;
+        }
+
+        .separator:not(:empty)::after {
+            margin-left: .25em;
+        }
+</style>
 
 
 @foreach (var message in Model)
 {
+    if (unreadAdded == false && message.IsRead == false)
+    {
+        <div class="separator">新訊息</div>
+        unreadAdded = true;
+    }
+
     if (DateTime.Compare(date.Date, message.Time.Date) < 0)
     {
         <div class="m-auto rounded-pill bg-secondary text-center my-2" style="width: 70px; color: white; font-size: 0.8rem">@message.Time.ToString("M")</div>
@@ -39,7 +70,7 @@
 
 }
 
-@if(DateTime.Compare(date.Date, DateTime.Now.Date) < 0)
+@if (DateTime.Compare(date.Date, DateTime.Now.Date) < 0)
 {
     <div class="m-auto rounded-pill bg-secondary text-center my-2" style="width: 70px; color: white; font-size: 0.8rem">@DateTime.Now.ToString("M")</div>
 }

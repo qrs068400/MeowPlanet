@@ -4,11 +4,13 @@
     DateTime today = DateTime.Now.Date;
     string userName = "";
     string userPhoto = "";
+    bool hasUnread = false;
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
     if (isLogin == true)
     {
-        userName = @Model.userName;
-        userPhoto = @Model.userPhoto;
+        userName = @Model.UserName;
+        userPhoto = @Model.UserPhoto;
+        hasUnread = @Model.HasUnread;
     }
 }
 
@@ -173,6 +175,29 @@
         color: white;
         text-align: center
     }
+
+    @@keyframes newMessage {
+        0% {
+            background-color: wheat;
+            color: black;
+        }
+
+        50%{
+            background-color: #171b20;
+            color: whitesmoke;
+        }
+
+        100% {
+            background-color: wheat;
+            color: black;            
+        }
+    }
+
+    .newMessage{
+        animation: newMessage 1s infinite;
+    }
+
+    
 </style>
 
 <button id="message-open" class="message-btn" data-bs-toggle="collapse" data-bs-target="#message-box"><i class="fa-solid fa-comment-dots"></i> 即時通訊</button>
@@ -203,12 +228,11 @@
                                 }
                                 else if (@member.LastTime.Date == today.AddDays(-1))
                                 {
-                                    @Html.Display("昨天")
+                                    @Html.Raw("昨天")
                                 }
                                 else
                                 {
-                                    @member.LastTime.ToString("M/dd")
-                                    ;
+                                    @member.LastTime.ToString("M/dd")                                    
                                 }
                             </p>
                             @if (member.UnreadCount > 0)
@@ -239,15 +263,26 @@
 <script>
     let contactList = [];
     let clickedMemberId;
+    
 
-    $(function() {
+    $(function() {        
+            
+        if ('@hasUnread' == 'True') {
+                
+            $('#message-open').addClass('newMessage');
+        }            
+        
+
         $('.contact').each(function() {
             contactList.push($(this).data('id'));
         })
     })
 
     //連結到訊息接收人
-    function messageTo(memberId, selfId) {
+    function messageTo(Id, myId) {
+
+        let memberId = parseInt(Id);
+        let selfId = parseInt(myId);
 
         if (memberId == selfId) {
             Swal.fire({
@@ -272,7 +307,7 @@
 
                 $.get('/Message/SearchMember', { memberId }, function(data) {
                     $('#message-user').prepend(
-                        
+
                         `<div class="d-flex contact justify-content-between align-items-center border-bottom p-2 mb-2" data-id="${memberId}">
                             <div>
                                 <img src="${data.photo}" />
@@ -280,10 +315,10 @@
                             </div>
                             <div class="d-flex flex-column justify-content-between align-items-end">
                                 <p style="font-size: 0.5rem;color: gray" class="last-time"></p>
-                                <div class="unread opacity-0"></div>
+                                <div class="unread opacity-0">0</div>
                             </div>
                         </div>`
-                                                    
+
                     )
 
                     $(`.contact[data-id="${memberId}"]`).trigger('click');
@@ -293,9 +328,7 @@
     }
 
     function autoScroll() {
-        $('#message-content').animate({
-            scrollTop: $('#message-content').get(0).scrollHeight
-        }, 500);
+        $('#message-content').scrollTop($('#message-content')[0].scrollHeight);
     }
 
 
@@ -311,6 +344,10 @@
     connection.on("ReceiveMessage", function(userName, userPhoto, message, senderId) {
 
         let time = new Date().toLocaleTimeString().slice(0, -3);
+
+        if (clickedMemberId != senderId || $('#message-open').attr('aria-expanded') != 'true') {
+            $('#message-open').addClass('newMessage');
+        }
 
         if (!contactList.includes(senderId)) {
             $('#message-user').prepend(
@@ -329,6 +366,7 @@
             contactList.push(senderId);
         }
         else {
+
             $(`.contact[data-id="${senderId}"] .last-time`).html(time);
             $(`.contact[data-id="${senderId}"]`).prependTo('#message-user');
 
@@ -346,9 +384,12 @@
 
                 $("#message-content").append($messageLeft);
                 autoScroll();
+
+                let selfId = parseInt('@memberId');
+                $.post('/Message/MessageRead', { selfId, memberId: senderId })
             }
 
-            else{
+            else {
                 $(`.contact[data-id="${senderId}"] .unread`).removeClass('opacity-0');
 
                 let unread = parseInt($(`.contact[data-id="${senderId}"] .unread`).html()) + 1;
@@ -409,13 +450,17 @@
         }
     });
 
+    $('#message-input').on('blur', function() {
+        $('#message-content').find('.separator').remove();
+    })
+
     //點擊聯絡人框觸發交談 並且載入歷史訊息
     $('#message-box').on('click', '.contact', function() {
 
         $('.contact').removeClass('contact-active');
         $(this).addClass('contact-active');
         $(this).find('.unread').html('0').addClass('opacity-0');
-        $('#message-input').attr('disabled', false).focus();
+        $('#message-input').attr('disabled', false).trigger('focus');        
 
         let memberId = $(this).data('id');
         clickedMemberId = memberId;
@@ -427,8 +472,28 @@
         });
 
         let selfId = parseInt('@memberId');
-        $.post('/Message/MessageRead', { selfId, memberId })
+
+        $.post('/Message/MessageRead', { selfId, memberId }, function(respond) {
+            if (respond == "False") {
+                $('#message-open').removeClass('newMessage');
+            }
+        })
 
     })
 
+    $('#message-close').on('click', function() {
+
+        let hasUnread = false;
+
+        $('.contact .unread').each(function() {
+            
+            if (parseInt((this).text()) != 0) {
+                hasUnread = true;
+            }
+        })
+
+        if (hasUnread = false) {
+            $('#message-open').removeClass('newMessage');
+        }
+    })
 </script>

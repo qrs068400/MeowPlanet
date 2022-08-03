@@ -5,8 +5,9 @@ namespace MeowPlanet.ViewModels
 {
     public class MessageBoxModel
     {
-        public string userName { get; set; }
-        public string userPhoto { get; set; }
+        public string UserName { get; set; }
+        public string UserPhoto { get; set; }
+        public bool HasUnread { get; set; }
         public ICollection<ContactMembers> ContactMembers { get; set; }
 
     }

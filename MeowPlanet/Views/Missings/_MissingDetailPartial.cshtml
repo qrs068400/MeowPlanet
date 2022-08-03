@@ -71,6 +71,9 @@
         text-decoration: none;
         color: white;
     }
+    a:hover{
+        color: wheat;
+    }
 
     .mt-75 {
         margin-top: 0.75rem;
@@ -111,8 +114,7 @@
             <p>品種 : @Model.Breed</p>
             <p>走失日期 : @Html.DisplayFor(x => x.Date)</p>
             <div id="detail-member" class="mb-4" style="width:40%;">
-                <a asp-action="" data-member-id="@Model.MemberId"><img src="@Model.Photo" class="rounded-circle" style="height:50px; width:50px;" /></a>
-                <a asp-action="" data-member-id="@Model.MemberId">@Model.MemberName</a>
+                <a asp-action="" data-member-id="@Model.MemberId"><img src="@Model.Photo" class="rounded-circle me-2" style="height:50px; width:50px;" />@Model.MemberName<i class="fa-solid fa-comment-dots ms-2"></i></a>                
             </div>
             <div class="speech-bubble" style="height:30%; width:90%; color:black; ">
                 <div class="overflow-auto h-100 w-100 py-2 px-4" style="word-break:break-all">

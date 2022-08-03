@@ -39,8 +39,9 @@ namespace MeowPlanet.ViewComponents
 
             var result = _context.Members.Where(m => m.MemberId == memberId).Select(x => new MessageBoxModel
             {
-                userName = x.Name,
-                userPhoto = x.Photo,
+                UserName = x.Name,
+                UserPhoto = x.Photo,
+                HasUnread = _context.Messages.Where(x => x.ReceivedId == memberId).Select(x => x.IsRead).Contains(false),
                 ContactMembers = contactMembers
 
             }).FirstOrDefault();

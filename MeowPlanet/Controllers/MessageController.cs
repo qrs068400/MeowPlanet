@@ -57,13 +57,15 @@ namespace MeowPlanet.Controllers
 
         public ActionResult MessageRead(int selfId, int memberId)
         {
-            _context.Messages.Where(x => x.SendId == memberId && x.ReceivedId == selfId)
+            _context.Messages.Where(x => x.SendId == memberId && x.ReceivedId == selfId && x.IsRead == false)
                 .ToList()
                 .ForEach(x => x.IsRead = true);
 
             _context.SaveChanges();
 
-            return Content("OK");
+            var result = _context.Messages.Where(x => x.ReceivedId == selfId).Select(x => x.IsRead).Contains(false);
+
+            return Content(result.ToString());
         }
     }
 }
