@@ -5,7 +5,6 @@
 }
 
 body {
-    font-size: 20px;
     background-color: #171b20;
     overflow-x: hidden;
     background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%);
@@ -47,43 +46,42 @@ body {
     left: 10%;
     display: flex;
     position: relative;
-    /* z-index: 996; */
 }
 
-    .bgdiv p {
-        margin-left: 100px;
-        color: white;
-        font-size: 50px;
-        font-weight: 700;
-        display: block;
-        position: absolute;
-        bottom: 250px;
-        z-index: 998;
-    }
+.bgdiv p {
+    margin-left: 100px;
+    color: white;
+    font-size: 50px;
+    font-weight: 700;
+    display: block;
+    position: absolute;
+    bottom: 250px;
+    z-index: 998;
+}
 
-    .bgdiv #addbtn {
-        border: 2px /*#DDB178*/ white solid;
-        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-        background: rgba(0, 0, 0, .3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: white;
-        margin-left: 150px;
-        margin-top: 20px;
-        font-size: 30px;
-        font-weight: 700;
-        border-radius: 20px;
-        height: 70px;
-        width: 200px;
-        position: absolute;
-        bottom: 150px;
-        z-index: 998;
-    }
+.bgdiv #addbtn {
+    border: 2px /*#DDB178*/ white solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-left: 150px;
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: 700;
+    border-radius: 20px;
+    height: 70px;
+    width: 200px;
+    position: absolute;
+    bottom: 150px;
+    z-index: 998;
+}
 
-        .bgdiv #addbtn:hover {
-            background: rgba(0, 0, 0, 1);
-        }
+.bgdiv #addbtn:hover {
+    background: rgba(0, 0, 0, 1);
+}
 
 .bgdiv-p {
     margin-top: 100px;
@@ -98,7 +96,6 @@ body {
     left: 150px;
     display: none;
     position: relative;
-    /* z-index: 996; */
 }
 
 #stroll-intro .move-section {
@@ -320,17 +317,17 @@ body {
     justify-content: center;
 }
 
-    #iconregion .col img {
-        width: 150px;
-        height: 150px;
-        border-radius: 50px;
-    }
+#iconregion .col img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50px;
+}
 
-    #iconregion .col p {
-        font-size: 40px;
-        color: white;
-        margin-left: 20px;
-    }
+#iconregion .col p {
+    font-size: 40px;
+    color: white;
+    margin-left: 20px;
+}
 
 
 #feregion .fediv {
@@ -371,17 +368,17 @@ body {
     top: 300px;
 }
 
-    .fetext1-wrap p {
-        color: white;
-        font-size: 30px;
-        display: flex;
-        align-items: center;
-    }
+.fetext1-wrap p {
+    color: white;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+}
 
-    .fetext1-wrap img {
-        height: 100px;
-        width: 100px;
-    }
+.fetext1-wrap img {
+    height: 100px;
+    width: 100px;
+}
 
 .fetext2-wrap {
     display: flex;
@@ -390,17 +387,17 @@ body {
     top: 600px;
 }
 
-    .fetext2-wrap p {
-        color: white;
-        font-size: 30px;
-        display: flex;
-        align-items: center;
-    }
+.fetext2-wrap p {
+    color: white;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+}
 
-    .fetext2-wrap img {
-        height: 100px;
-        width: 100px;
-    }
+.fetext2-wrap img {
+    height: 100px;
+    width: 100px;
+}
 
 .fetext3-wrap {
     display: flex;
@@ -409,17 +406,17 @@ body {
     top: 650px;
 }
 
-    .fetext3-wrap p {
-        color: white;
-        font-size: 30px;
-        display: flex;
-        align-items: center;
-    }
+.fetext3-wrap p {
+    color: white;
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+}
 
-    .fetext3-wrap img {
-        height: 100px;
-        width: 100px;
-    }
+.fetext3-wrap img {
+    height: 100px;
+    width: 100px;
+}
 
 .feimg1-wrap {
     color: white;
@@ -513,8 +510,9 @@ body {
     margin-bottom: 50px;
 }
 
-#showcom .col-4 p {
+#showcom p {
     color: white;
+    font-size:20px;
 }
 
 #catbanner .container {

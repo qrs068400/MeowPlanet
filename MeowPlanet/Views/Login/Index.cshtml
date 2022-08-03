@@ -17,7 +17,7 @@
                 <div class="col-6 bg-img">
                 </div>
                 <div class="col-6 loginform">
-                    <form id="account" method="post" asp-action="Login" autocomplete="on">
+                    <form id="account" method="post" asp-action="Login">
                         <div class="text-center">
                             <h2>登入喵星球</h2>
                         </div>
@@ -25,11 +25,14 @@
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">Email</p>
-                                @*<span id="alert"></span>*@
                             </div>
 
                             <div class="d-flex align-items-center">
+<<<<<<< HEAD
                                 <input type="email" asp-for="Email" class="form-control login-sp" aria-required="true" />
+=======
+                                <input type="email" asp-for="Email" class="form-control login-sp" aria-required="true" id="email"/>
+>>>>>>> ren12
 
                             </div>
 
@@ -43,7 +46,11 @@
 
 
                             <div class="d-flex align-items-center">
+<<<<<<< HEAD
                                 <input type="password" asp-for="Password" class="form-control login-sp" aria-required="true" />
+=======
+                                <input type="password" asp-for="Password" class="form-control login-sp" aria-required="true" id="password"/>
+>>>>>>> ren12
 
                             </div>
 
@@ -63,9 +70,24 @@
                         </div>
                         <p class="or-p text-center">或者</p>
 
-                        <div class="d-flex justify-content-center link-icon">
-                            <i class="fa-brands fa-google-plus"></i>
+                        @*                        <div class="d-flex justify-content-center link-icon">
+                    <i class="fa-brands fa-google-plus"></i>
+                    </div>*@
+                        <div id="g_id_onload"
+                         data-client_id="824506292381-98hjid099dhp06oqudugbjlj1bclr0u0.apps.googleusercontent.com"
+                         data-login_uri="@Url.Action("ValidGoogleLogin","Login")"
+                         data-auto_prompt="false">
                         </div>
+                        <div class="g_id_signin"
+                         data-type="standard"
+                         data-size="large"
+                         data-theme="outline"
+                         data-text="sign_in_with"
+                         data-shape="rectangular"
+                         data-logo_alignment="left"
+                         data-auto_prompt="true">
+                        </div>
+
 
                         <div class="text-center re-a">
                             <a asp-controller="Login" asp-action="Register">還不是會員?</a>
@@ -82,6 +104,7 @@
 
     @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <script>
         
@@ -98,7 +121,11 @@
                     if (data == "密碼錯誤") {
                         $('#password-err').html(data).css('color', '#ff0000')
                     } else if (data == "此Email不存在") {
+<<<<<<< HEAD
                         $('#email-err').html(data).css('color', '#ff0000')
+=======
+                        $('#email-err').html(data).css('color', '#2A483A')
+>>>>>>> ren12
                     } else {
                         Swal.fire({
                             heightAuto: false,

@@ -62,10 +62,10 @@ body {
     font-size: 25px;
 }
 
-    .memberleft a:hover {
-        color: white;
-        text-shadow: 0 0 1px white,0 0 3px white,0 0 5px white,0 0 7px white;
-    }
+.memberleft a:hover {
+    color: white;
+    text-shadow: 0 0 1px white,0 0 3px white,0 0 5px white,0 0 7px white;
+}
 
 .memberright {
     color: white;
@@ -75,10 +75,6 @@ body {
     background: #4B5461;
     height: 700px;
     border-radius: 30px;
-}
-
-.title {
-    /*margin-left: 100px;*/
 }
 
 .memberright p {
@@ -127,7 +123,6 @@ body {
     height: 95%;
     border-radius: 25px;
     padding: 30px;
-    /*transition: 0.5s all ease;*/
 }
 
 .cat-region-title{
@@ -179,7 +174,7 @@ body {
     overflow-y: auto;
 }
 
-textarea {
+.cat-region textarea {
     color: white;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
