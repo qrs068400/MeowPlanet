@@ -180,7 +180,7 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Register");
         }
 
-        // 寄驗證信
+        // 寄密碼重置信
         public ActionResult SendEmailMsg(string Email)
         {
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
@@ -226,6 +226,8 @@ namespace MeowPlanet.Controllers
         }
 
 
+
+        // google登入
         public IActionResult ValidGoogleLogin()
         {
             string? formCredential = Request.Form["credential"]; //回傳憑證
