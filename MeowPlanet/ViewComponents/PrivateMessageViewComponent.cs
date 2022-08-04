@@ -18,10 +18,10 @@ namespace MeowPlanet.ViewComponents
             _context = context;
         }
 
-        public IViewComponentResult Invoke(int memberId)
+        public async Task<IViewComponentResult> InvokeAsync(int memberId)
         {
 
-            var contactMembers = _context.Messages
+            var contactMembers = await _context.Messages
                 .Where(x => x.ReceivedId == memberId || x.SendId == memberId)
                 .Select(x => new { x.Send, x.Received })
                 .Select(x => new ContactMembers
@@ -34,17 +34,17 @@ namespace MeowPlanet.ViewComponents
                 })
                 .Distinct()
                 .OrderByDescending(x=> x.LastTime)
-                .ToList();
+                .ToListAsync();
                 
 
-            var result = _context.Members.Where(m => m.MemberId == memberId).Select(x => new MessageBoxModel
+            var result = await _context.Members.Where(m => m.MemberId == memberId).Select( x => new MessageBoxModel
             {
                 UserName = x.Name,
                 UserPhoto = x.Photo,
                 HasUnread = _context.Messages.Where(x => x.ReceivedId == memberId).Select(x => x.IsRead).Contains(false),
                 ContactMembers = contactMembers
 
-            }).FirstOrDefault();
+            }).FirstOrDefaultAsync();
 
 
 
