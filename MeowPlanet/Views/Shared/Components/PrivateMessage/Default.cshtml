@@ -1,5 +1,6 @@
 ﻿@model MeowPlanet.ViewModels.MessageBoxModel
 @using System.Security.Claims;
+@using System.Globalization;
 @{
     DateTime today = DateTime.Now.Date;
     string userName = "";
@@ -222,7 +223,7 @@
                             <p style="font-size: 0.5rem;color: gray" class="last-time">
                                 @if (@member.LastTime.Date == today)
                                 {
-                                    @member.LastTime.ToString("tth:mm")
+                                    @member.LastTime.ToString("tth:mm", new CultureInfo("zh-tw"))
                                     ;
                                 }
                                 else if (@member.LastTime.Date == today.AddDays(-1))
@@ -231,7 +232,7 @@
                                 }
                                 else
                                 {
-                                    @member.LastTime.ToString("M/dd")
+                                    @member.LastTime.ToString("M/dd", new CultureInfo("zh-tw"))
                                 }
                             </p>
                             @if (member.UnreadCount > 0)

@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<Message>
 @using System.Security.Claims;
+@using System.Globalization;
 @{
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
     DateTime date = new DateTime(2000, 1, 1);
@@ -42,7 +43,7 @@
 
     if (DateTime.Compare(date.Date, message.Time.Date) < 0)
     {
-        <div class="m-auto rounded-pill bg-secondary text-center my-2" style="width: 70px; color: white; font-size: 0.8rem">@message.Time.ToString("M")</div>
+        <div class="m-auto rounded-pill bg-secondary text-center my-2" style="width: 70px; color: white; font-size: 0.8rem">@message.Time.ToString("M", new CultureInfo("zh-tw"))</div>
 
         date = message.Time;
     }
@@ -53,7 +54,7 @@
         <div class="message-left">
             <img class="me-2" src='@message.Send.Photo' />
             <div class="d-flex flex-column align-items-start">
-                <div class="text-end mb-2">@message.Send.Name <span class="time">@message.Time.ToString("tth:mm")</span></div>
+                <div class="text-end mb-2">@message.Send.Name <span class="time">@message.Time.ToString("tth:mm", new CultureInfo("zh-tw"))</span></div>
                 <div class="message" style="border-top-left-radius: 0;">
                     @if (message.MessageContent.Contains("/images/message/"))
                     {
@@ -72,7 +73,7 @@
         <div class="message-right">
             <img class="ms-2" src='@message.Send.Photo' />
             <div class="d-flex flex-column align-items-end">
-                <div class="text-end mb-2"><span class="time">@message.Time.ToString("tth:mm")</span> @message.Send.Name</div>
+                <div class="text-end mb-2"><span class="time">@message.Time.ToString("tth:mm", new CultureInfo("zh-tw"))</span> @message.Send.Name</div>
                 <div class="message" style="border-top-right-radius: 0;">
                     @if (message.MessageContent.Contains("/images/message/"))
                     {
@@ -90,6 +91,6 @@
 
 @if (DateTime.Compare(date.Date, DateTime.Now.Date) < 0)
 {
-    <div class="m-auto rounded-pill bg-secondary text-center my-2" style="width: 70px; color: white; font-size: 0.8rem">@DateTime.Now.ToString("M")</div>
+    <div class="m-auto rounded-pill bg-secondary text-center my-2" style="width: 70px; color: white; font-size: 0.8rem">@DateTime.Now.ToString("M", new CultureInfo("zh-tw"))</div>
 }
 
