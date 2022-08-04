@@ -492,7 +492,7 @@
                 document.getElementById('message-content').scrollTop = topPos - 10;
             }
             else {
-                autoScroll();
+                setTimeout(() => { autoScroll() },100);
 
             }
         });

@@ -10,10 +10,12 @@ namespace MeowPlanet.Controllers
     {
         private readonly endtermContext _context;
         private readonly int _memberId;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MessageController(endtermContext context, IHttpContextAccessor contextAccessor)
+        public MessageController(endtermContext context, IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
 
             if (contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid) != null)
             {
@@ -37,14 +39,14 @@ namespace MeowPlanet.Controllers
             return Content("OK");
         }
 
-        public async Task<IActionResult> SendImage(IFormFile image, int receivedId, [FromServices] IWebHostEnvironment _webHostEnvironment)
+        public async Task<IActionResult> SendImage(IFormFile image, int receivedId)
         {
             Random random = new Random();
             string uniqueFileName = "";
 
             if (image != null)
             {
-                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/message");
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/message");
                 uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + Path.GetExtension(image.FileName);
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
