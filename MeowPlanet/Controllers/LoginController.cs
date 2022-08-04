@@ -228,7 +228,7 @@ namespace MeowPlanet.Controllers
 
 
         // google登入
-        public IActionResult ValidGoogleLogin()
+        public async Task<IActionResult> ValidGoogleLogin()
         {
             string? formCredential = Request.Form["credential"]; //回傳憑證
             string? formToken = Request.Form["g_csrf_token"]; //回傳令牌
@@ -285,18 +285,20 @@ namespace MeowPlanet.Controllers
                 }
                 else
                 {
+                    // 建立google會員
                     Member member = new()
                     {
                         Email = payload.Email,
                         Name = payload.Name,
                         Password = "123456",
-                        Phone = "0900000000"
+                        Phone = " "
 
                     };
 
-                    _context.Members.Add(member);
-                    _context.SaveChangesAsync();
+                    await AddMember(member);
 
+
+                    // 登入
                     var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == payload.Email);
 
                     var LoginId = LoginInfo.MemberId;

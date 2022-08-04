@@ -24,7 +24,7 @@
             </div>
             <div class="my-3">
                 <p>年齡</p>
-                <input type="text" value="@Model.Age" asp-for="Age" />
+                <input type="text" value="@Model.Age 歲" asp-for="Age" />
             </div>
             <div class="my-3">
                 <p>所在地</p>
@@ -45,18 +45,16 @@
             <div class="my-3">
                 <p>保姆狀態</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light mem-btn sit-btn" value="true" id="sit1">被照顧中</button>
-                    <button type="button" class="btn btn-light mem-btn sit-btn" value="False" id="sit2">非照顧中</button>
+                    <input type="text" asp-for="IsSitting" id="sit-in" disabled/>
                 </div>
-                <input type="text" asp-for="IsSitting" class="d-none" id="sit-in" />
+                
             </div>
             <div class="my-3">
                 <p>是否走失</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light mem-btn mis-btn" value="true" id="mis1">走失中</button>
-                    <button type="button" class="btn btn-light mem-btn mis-btn" value="False" id="mis2">無走失</button>
+                    <input type="text" asp-for="IsMissing" id="mis-in" disabled/>
                 </div>
-                <input type="text" asp-for="IsMissing" class="d-none" id="mis-in" />
+                
             </div>
         </div>
         <div class="col-6">
@@ -132,15 +130,15 @@
         }
 
         if (sitting == "True") {
-            $('#sis1').addClass('active');
+            $('#sit-in').attr('value','被照顧中');
         } else {
-            $('#sit2').addClass('active');
+            $('#sit-in').attr('value','非照顧中');
         }
 
         if (missing == "True") {
-            $('#mis1').addClass('active');
+            $('#mis-in').attr('value','走失中');
         } else {
-            $('#mis2').addClass('active');
+            $('#mis-in').attr('value','無走失');
         }
     })
 
