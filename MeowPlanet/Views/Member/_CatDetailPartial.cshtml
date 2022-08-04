@@ -24,7 +24,7 @@
             </div>
             <div class="my-3">
                 <p>年齡</p>
-                <input type="text" value="@Model.Age" asp-for="Age" />
+                <input type="text" value="@Model.Age 歲" asp-for="Age" />
             </div>
             <div class="my-3">
                 <p>所在地</p>
@@ -45,37 +45,35 @@
             <div class="my-3">
                 <p>保姆狀態</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light mem-btn sit-btn" value="true" id="sit1">被照顧中</button>
-                    <button type="button" class="btn btn-light mem-btn sit-btn" value="False" id="sit2">非照顧中</button>
+                    <input type="text" asp-for="IsSitting" id="sit-in" disabled />
                 </div>
-                <input type="text" asp-for="IsSitting" class="d-none" id="sit-in" />
+
             </div>
             <div class="my-3">
                 <p>是否走失</p>
                 <div class="d-flex justify-content-between">
-                    <button type="button" class="btn btn-light mem-btn mis-btn" value="true" id="mis1">走失中</button>
-                    <button type="button" class="btn btn-light mem-btn mis-btn" value="False" id="mis2">無走失</button>
+                    <input type="text" asp-for="IsMissing" id="mis-in" disabled />
                 </div>
-                <input type="text" asp-for="IsMissing" class="d-none" id="mis-in" />
+
             </div>
         </div>
         <div class="col-6">
 
-
-            <div class="text-center" style="margin:16px;">
-                <img src="@Model.Img01" style="width:250px;height:180px;border-radius:30px;" id="imgPreview1">
-                <input id="imgInput1" type="file" class="d-none" name="file1" />
+            <div class="d-flex justify-content-center" style="margin:10px;">
+                <div>
+                    <img src="@Model.Img01" style="width:250px;height:180px;border-radius:30px; object-fit:cover" id="imgPreview1" class="dropZone">
+                    <input id="imgInput1" type="file" class="d-none" name="file1" />
+                </div>
             </div>
-
 
             <div class="d-flex justify-content-center" style="margin:10px;">
 
-                <div>
-                    <img src="@Model.Img02" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview2">
+                <div style="position: relative;">
+                    <img src="@Model.Img02" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview2" class="dropZone">
                     <input id="imgInput2" type="file" class="d-none" name="file2" />
                 </div>
-                <div>
-                    <img src="@Model.Img03" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview3">
+                <div style="position: relative;">
+                    <img src="@Model.Img03" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview3" class="dropZone">
                     <input id="imgInput3" type="file" class="d-none" name="file3" />
                 </div>
 
@@ -83,19 +81,19 @@
 
             <div class="d-flex justify-content-center" style="margin:10px;">
 
-                <div>
-                    <img src="@Model.Img04" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview4">
+                <div style="position: relative;">
+                    <img src="@Model.Img04" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview4" class="dropZone">
                     <input id="imgInput4" type="file" class="d-none" name="file4" />
                 </div>
-                <div>
-                    <img src="@Model.Img05" style="width:180px;height:140px;border-radius:30px;margin:10px;" id="imgPreview5">
+                <div style="position: relative;">
+                    <img src="@Model.Img05" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview5" class="dropZone">
                     <input id="imgInput5" type="file" class="d-none" name="file5" />
                 </div>
 
             </div>
 
             <div class="text-center">
-                <p style="font-size:25px; margin:20px;">可點擊或拖曳更換照片</p>
+                <p style="font-size:25px; margin:12px;">可點擊或拖曳更換照片</p>
             </div>
 
             <div class="my-5 d-flex justify-content-center">
@@ -132,16 +130,18 @@
         }
 
         if (sitting == "True") {
-            $('#sis1').addClass('active');
+            $('#sit-in').attr('value', '被照顧中');
         } else {
-            $('#sit2').addClass('active');
+            $('#sit-in').attr('value', '非照顧中');
         }
 
         if (missing == "True") {
-            $('#mis1').addClass('active');
+            $('#mis-in').attr('value', '走失中');
         } else {
-            $('#mis2').addClass('active');
+            $('#mis-in').attr('value', '無走失');
         }
+
+
     })
 
     $('.sex-btn').click(function() {
@@ -220,7 +220,8 @@
 
             let dt = new DataTransfer();
             dt.items.add(file);
-            $('#imgInput2')[0].files = dt.files
+            $('#imgInput2')[0].files = dt.files;
+            $('#plus2').css('display', 'none');
         }
     }, '#imgPreview2')
 
@@ -230,7 +231,7 @@
         reader.onload = function(e) {
             $('#imgPreview2').attr('src', e.target.result);
         }
-
+        $('#plus2').css('display', 'none');
         reader.readAsDataURL($('#imgInput2')[0].files[0])
     })
 

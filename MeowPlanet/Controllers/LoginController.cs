@@ -180,7 +180,7 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Register");
         }
 
-        // 寄驗證信
+        // 寄密碼重置信
         public ActionResult SendEmailMsg(string Email)
         {
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
@@ -226,7 +226,9 @@ namespace MeowPlanet.Controllers
         }
 
 
-        public IActionResult ValidGoogleLogin()
+
+        // google登入
+        public async Task<IActionResult> ValidGoogleLogin()
         {
             string? formCredential = Request.Form["credential"]; //回傳憑證
             string? formToken = Request.Form["g_csrf_token"]; //回傳令牌
@@ -283,18 +285,20 @@ namespace MeowPlanet.Controllers
                 }
                 else
                 {
+                    // 建立google會員
                     Member member = new()
                     {
                         Email = payload.Email,
                         Name = payload.Name,
                         Password = "123456",
-                        Phone = "0900000000"
+                        Phone = " "
 
                     };
 
-                    _context.Members.Add(member);
-                    _context.SaveChangesAsync();
+                    await AddMember(member);
 
+
+                    // 登入
                     var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == payload.Email);
 
                     var LoginId = LoginInfo.MemberId;

@@ -86,7 +86,18 @@ body {
     font-size: 24px;
 }
 
-.memberright input {
+.memberright .member-region input {
+    color: white;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 25px;
+    font-size: 25px;
+    width: 100%;
+    padding: 0 1rem;
+}
+
+.memberright .cat-region input {
     color: white;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
@@ -101,6 +112,7 @@ body {
     padding-left: 50px;
     padding-right: 50px;
     padding-top:30px;
+    position:relative;
 }
 
 
@@ -153,13 +165,13 @@ body {
     border-radius: 30px;
     margin-top: 15px;
     width: 100%;
-    height: 140px;
+    height: 155px;
     background-color: #CCCCCC;
 }
 
 .cat-region-select {
     margin-top: 15px;
-    height: 480px;
+    height: 520px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -199,4 +211,36 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.member-update-btn {
+    color: white;
+    font-size: 30px;
+    border-radius: 20px;
+    height: 70px;
+    width: 200px;
+    padding: 1rem;
+    border: 2px rgb(115, 244, 222) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position:absolute;
+    bottom:30px;
+}
+
+.member-div{
+    margin-top:35px;
+}
+
+.dropZone {
+    border: 2px rgb(115, 244, 222) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin:10px;
 }
