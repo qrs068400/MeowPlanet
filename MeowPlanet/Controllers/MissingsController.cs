@@ -16,8 +16,9 @@ namespace MeowPlanet.Models
     {
         private readonly endtermContext _context;
         private readonly int? _memberId;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MissingsController(endtermContext context, IHttpContextAccessor contextAccessor)
+        public MissingsController(endtermContext context, IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
 
@@ -25,7 +26,7 @@ namespace MeowPlanet.Models
             {
                 _memberId = Convert.ToInt32(contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid).Value);
             }
-
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -99,7 +100,7 @@ namespace MeowPlanet.Models
             return PartialView("_MissingPublishPartial");
         }
 
-        public string PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId, [FromServices] IWebHostEnvironment _webHostEnvironment)
+        public string PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId)
         {
             var clue = new Clue
             {
