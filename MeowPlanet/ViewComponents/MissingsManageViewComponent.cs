@@ -32,6 +32,7 @@ namespace MeowPlanet.ViewComponents
                     Status = c.Status,
                     ImagePath = c.ImagePath,
                     Description = c.Description,
+                    ProviderId = c.MemberId,
                     ProviderName = c.Member.Name,
                     ProviderPhoto = c.Member.Photo,
                     Distance = (int)new GeoCoordinate((double)c.WitnessLat, (double)c.WitnessLng).GetDistanceTo(new GeoCoordinate((double)c.Missing.Lat, (double)c.Missing.Lng))

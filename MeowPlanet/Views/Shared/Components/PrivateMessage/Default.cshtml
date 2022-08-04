@@ -4,11 +4,13 @@
     DateTime today = DateTime.Now.Date;
     string userName = "";
     string userPhoto = "";
+    bool hasUnread = false;
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
     if (isLogin == true)
     {
-        userName = @Model.userName;
-        userPhoto = @Model.userPhoto;
+        userName = @Model.UserName;
+        userPhoto = @Model.UserPhoto;
+        hasUnread = @Model.HasUnread;
     }
 }
 
@@ -128,7 +130,7 @@
         margin-bottom: 10px;
     }
 
-        .message-left img, .message-right img {
+        .message-left > img, .message-right > img {
             height: 50px;
             width: 50px;
             border-radius: 50%;
@@ -173,6 +175,28 @@
         color: white;
         text-align: center
     }
+
+    @@keyframes newMessage {
+        0% {
+            background-color: wheat;
+            color: black;
+        }
+
+        50% {
+            background-color: #171b20;
+            color: whitesmoke;
+        }
+
+        100% {
+            background-color: wheat;
+            color: black;
+        }
+    }
+
+    .newMessage {
+        animation: newMessage 1s infinite;
+    }
+
 </style>
 
 <button id="message-open" class="message-btn" data-bs-toggle="collapse" data-bs-target="#message-box"><i class="fa-solid fa-comment-dots"></i> 即時通訊</button>
@@ -181,7 +205,7 @@
         <button id="message-close" class="message-btn position-absolute" data-bs-toggle="collapse" data-bs-target="#message-box"><i class="fa-solid fa-xmark"></i> 關閉</button>
         <div id="message-body" class="d-flex flex-column">
             <div id="message-content"></div>
-            <textarea disabled maxlength="100" class="form-control" id="message-input" placeholder="按Enter發送訊息"></textarea>
+            <textarea disabled maxlength="100" class="form-control" id="message-input" placeholder="按Enter發送訊息 或在此貼上圖片"></textarea>
             <input type="hidden" id="userId" value="" />
         </div>
         <div id="message-user">
@@ -198,17 +222,16 @@
                             <p style="font-size: 0.5rem;color: gray" class="last-time">
                                 @if (@member.LastTime.Date == today)
                                 {
-                                    @member.LastTime.ToString("tthh:mm")
+                                    @member.LastTime.ToString("tth:mm")
                                     ;
                                 }
                                 else if (@member.LastTime.Date == today.AddDays(-1))
                                 {
-                                    @Html.Display("昨天")
+                                    @Html.Raw("昨天")
                                 }
                                 else
                                 {
                                     @member.LastTime.ToString("M/dd")
-                                    ;
                                 }
                             </p>
                             @if (member.UnreadCount > 0)
@@ -240,14 +263,25 @@
     let contactList = [];
     let clickedMemberId;
 
+
     $(function() {
+
+        if ('@hasUnread' == 'True') {
+
+            $('#message-open').addClass('newMessage');
+        }
+
+
         $('.contact').each(function() {
             contactList.push($(this).data('id'));
         })
     })
 
     //連結到訊息接收人
-    function messageTo(memberId, selfId) {
+    function messageTo(Id, myId) {
+
+        let memberId = parseInt(Id);
+        let selfId = parseInt(myId);
 
         if (memberId == selfId) {
             Swal.fire({
@@ -272,18 +306,18 @@
 
                 $.get('/Message/SearchMember', { memberId }, function(data) {
                     $('#message-user').prepend(
-                        
+
                         `<div class="d-flex contact justify-content-between align-items-center border-bottom p-2 mb-2" data-id="${memberId}">
-                            <div>
-                                <img src="${data.photo}" />
-                                ${data.name}
-                            </div>
-                            <div class="d-flex flex-column justify-content-between align-items-end">
-                                <p style="font-size: 0.5rem;color: gray" class="last-time"></p>
-                                <div class="unread opacity-0"></div>
-                            </div>
-                        </div>`
-                                                    
+                        <div>
+                            <img src="${data.photo}" />
+                            ${data.name}
+                        </div>
+                        <div class="d-flex flex-column justify-content-between align-items-end">
+                            <p style="font-size: 0.5rem;color: gray" class="last-time"></p>
+                            <div class="unread opacity-0">0</div>
+                        </div>
+                    </div>`
+
                     )
 
                     $(`.contact[data-id="${memberId}"]`).trigger('click');
@@ -293,9 +327,7 @@
     }
 
     function autoScroll() {
-        $('#message-content').animate({
-            scrollTop: $('#message-content').get(0).scrollHeight
-        }, 500);
+        $('#message-content').scrollTop($('#message-content')[0].scrollHeight);
     }
 
 
@@ -312,43 +344,71 @@
 
         let time = new Date().toLocaleTimeString().slice(0, -3);
 
+        if (clickedMemberId != senderId || $('#message-open').attr('aria-expanded') != 'true') {
+            $('#message-open').addClass('newMessage');
+        }
+
         if (!contactList.includes(senderId)) {
             $('#message-user').prepend(
                 `<div class="d-flex contact justify-content-between align-items-center border-bottom p-2 mb-2" data-id="${senderId}">
-                    <div>
-                        <img src="${userPhoto}" />
-                        ${userName}
-                    </div>
-                    <div class="d-flex flex-column justify-content-between align-items-end">
-                        <p style="font-size: 0.5rem;color: gray" class="last-time">${time}</p>
-                        <div class="unread">1</div>
-                    </div>
-                </div>`
+                        <div>
+                            <img src="${userPhoto}" />
+                            ${userName}
+                        </div>
+                        <div class="d-flex flex-column justify-content-between align-items-end">
+                            <p style="font-size: 0.5rem;color: gray" class="last-time">${time}</p>
+                            <div class="unread">1</div>
+                        </div>
+                    </div>`
             )
 
             contactList.push(senderId);
         }
         else {
+
             $(`.contact[data-id="${senderId}"] .last-time`).html(time);
             $(`.contact[data-id="${senderId}"]`).prependTo('#message-user');
 
             if (clickedMemberId == senderId) {
 
-                let $messageLeft = $(
-                    `<div class="message-left">
-                    <img class="me-2" src='${userPhoto}' />
-                        <div class="d-flex flex-column align-items-start">
-                            <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
-                            <div class="message" style="border-top-left-radius: 0;">${message}</div>
-                        </div>
-                    </div>`
-                )
+                let $messageLeft;
 
-                $("#message-content").append($messageLeft);
-                autoScroll();
+                if (message.includes('/images/message/')) {
+                    
+                    $messageLeft = $(
+                        `<div class="message-left">
+                            <img class="me-2" src='${userPhoto}' />
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
+                                <div class="message" style="border-top-left-radius: 0;">
+                                    <img src="${message}" style="max-width: 220px; max-height: 250px;object-fit: cover" />
+                                </div>                                
+                            </div>
+                        </div>`
+                    )
+                }
+
+                else {
+                    $messageLeft = $(
+                        `<div class="message-left">
+                            <img class="me-2" src='${userPhoto}' />
+                            <div class="d-flex flex-column align-items-start">
+                                <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
+                                <div class="message" style="border-top-left-radius: 0;">${message}</div>
+                            </div>
+                        </div>`
+                    )
+                }
+
+                $("#message-content").append($messageLeft);                
+                setTimeout(() => {
+                    autoScroll();
+                }, 100)
+                let selfId = parseInt('@memberId');
+                $.post('/Message/MessageRead', { selfId, memberId: senderId })
             }
 
-            else{
+            else {
                 $(`.contact[data-id="${senderId}"] .unread`).removeClass('opacity-0');
 
                 let unread = parseInt($(`.contact[data-id="${senderId}"] .unread`).html()) + 1;
@@ -409,13 +469,17 @@
         }
     });
 
+    $('#message-input').on('blur', function() {
+        $('#message-content').find('.separator').remove();
+    })
+
     //點擊聯絡人框觸發交談 並且載入歷史訊息
     $('#message-box').on('click', '.contact', function() {
 
         $('.contact').removeClass('contact-active');
         $(this).addClass('contact-active');
         $(this).find('.unread').html('0').addClass('opacity-0');
-        $('#message-input').attr('disabled', false).focus();
+        $('#message-input').attr('disabled', false).trigger('focus');
 
         let memberId = $(this).data('id');
         clickedMemberId = memberId;
@@ -423,12 +487,97 @@
 
         $('#message-content').load('/Message/GetHistory', { memberId }, () => {
 
-            autoScroll();
+            if (document.querySelector('.separator') != null) {
+                let topPos = document.querySelector('.separator').offsetTop;
+                document.getElementById('message-content').scrollTop = topPos - 10;
+            }
+            else {
+                autoScroll();
+
+            }
         });
 
         let selfId = parseInt('@memberId');
+
         $.post('/Message/MessageRead', { selfId, memberId })
 
     })
 
+    $('#message-close').on('click', function() {
+
+        let hasUnread = false;
+
+        $('.contact .unread').each(function() {
+
+            if (parseInt($(this).text()) != 0) {
+                hasUnread = true;
+            }
+        })
+
+        if (hasUnread == false) {
+            $('#message-open').removeClass('newMessage');
+        }
+    })
+
+    //貼上上傳圖片
+    $("#message-input").bind('paste', function(je) {
+
+        let e = je.originalEvent;
+        let userName = '@userName';
+        let userPhoto = '@userPhoto';
+        let senderId = parseInt('@memberId');
+        let receivedId = $('#userId').val();
+        let time = new Date().toLocaleTimeString().slice(0, -3);
+
+        for (var i = 0; i < e.clipboardData.items.length; i++) {
+
+            var item = e.clipboardData.items[i];
+
+            if (item.type.indexOf('image') != -1) {
+
+                let reader = new FileReader()
+
+                reader.onload = function(e) {
+
+                    let $messageRight = $(
+                        `<div class="message-right">
+                            <img class="ms-2" src='${userPhoto}' />
+                            <div class="d-flex flex-column align-items-end">
+                                <div class="text-end mb-2"><span class="time">${time}</span> ${userName}</div>
+                                <div class="message" style="border-top-right-radius: 0;">
+                                    <img src="${e.target.result}" style="max-width: 220px; max-height: 250px;object-fit: cover" />
+                                </div>
+                            </div>
+                        </div>`
+                    )
+
+                    $("#message-content").append($messageRight);                    
+                }
+
+                let file = item.getAsFile();
+                reader.readAsDataURL(file);
+
+                let formData = new FormData()
+                formData.append('image', file);
+                formData.append('receivedId', receivedId);
+
+                $.ajax({
+
+                    url: '/Message/SendImage',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+
+                        let message = data;
+                        connection.invoke("SendMessage", userName, userPhoto, message, receivedId, senderId);
+                        autoScroll();
+                    }
+                })
+
+                break;
+            }
+        }
+    });
 </script>

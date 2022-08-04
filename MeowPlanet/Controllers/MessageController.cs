@@ -37,10 +37,37 @@ namespace MeowPlanet.Controllers
             return Content("OK");
         }
 
+        public async Task<IActionResult> SendImage(IFormFile image, int receivedId, [FromServices] IWebHostEnvironment _webHostEnvironment)
+        {
+            Random random = new Random();
+            string uniqueFileName = "";
+
+            if (image != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "images/message");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + Path.GetExtension(image.FileName);
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    image.CopyTo(fileStream);
+                }
+                await _context.Messages.AddAsync(new Message
+                {
+                    SendId = _memberId,
+                    MessageContent = "/images/message/" + uniqueFileName,
+                    ReceivedId = receivedId,
+                    Time = DateTime.Now
+                });
+                await _context.SaveChangesAsync();
+            }            
+
+            return Content("/images/message/" + uniqueFileName);
+        }
+
         public async Task<IActionResult> GetHistory(int memberId)
         {
             var result = await _context.Messages.Include(x => x.Send).Include(x => x.Received)
-                         .Where(x => (x.SendId == memberId && x.ReceivedId == _memberId) || (x.SendId == _memberId && x.ReceivedId == memberId)).ToListAsync();
+                         .Where(x => (x.SendId == memberId && x.ReceivedId == _memberId) || (x.SendId == _memberId && x.ReceivedId == memberId)).OrderByDescending(x => x.Time).Take(50).Reverse().ToListAsync();
             return PartialView("_HistoryMessagePartial", result);
         }
 
@@ -57,7 +84,7 @@ namespace MeowPlanet.Controllers
 
         public ActionResult MessageRead(int selfId, int memberId)
         {
-            _context.Messages.Where(x => x.SendId == memberId && x.ReceivedId == selfId)
+            _context.Messages.Where(x => x.SendId == memberId && x.ReceivedId == selfId && x.IsRead == false)
                 .ToList()
                 .ForEach(x => x.IsRead = true);
 

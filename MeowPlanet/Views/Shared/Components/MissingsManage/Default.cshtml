@@ -1,4 +1,8 @@
 ﻿@model IEnumerable<MeowPlanet.ViewModels.Missings.ClueViewModel>
+@using System.Security.Claims;
+@{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
+}
 
 <style>
 
@@ -88,6 +92,15 @@
         opacity: 0.3 !important;
         border: none !important;
     }
+
+    .clue-item a {
+        text-decoration: none;
+        color: white;
+    }
+
+        .clue-item a:hover {
+            color: wheat;
+        }
 </style>
 
 @foreach (var item in Model)
@@ -105,7 +118,7 @@
                     距離走失地 @item.Distance 公尺
                 </div>
                 <div>
-                    <img src="@item.ProviderPhoto" /> @item.ProviderName 的留言
+                    <a asp-action="" data-id="@item.ProviderId" ><img src="@item.ProviderPhoto" /> @item.ProviderName<i class="fa-solid fa-comment-dots ms-2"></i></a>
                 </div>
             </div>
             <div class="col-8 position-relative">
@@ -124,6 +137,16 @@
 
 
 <script>
+    $('.clue-item a').on('click', function(e) {
+        e.preventDefault();
+
+        let Id = $(this).data('id');
+        let myId = '@memberId';
+
+        messageTo(Id, myId)
+    })
+
+
     $('.btn-pin').hover(function() {
         $(this).addClass('btn-pin-hover')
     }, function() {
@@ -137,7 +160,7 @@
         let newStatus = 1;
 
         $.post('/Missings/EditClue', { clueId, newStatus }, function(data) {
-            
+
             btn.closest('.clue-item').remove();
 
             Swal.fire({
@@ -157,7 +180,7 @@
         let newStatus = 2;
 
         $.post('/Missings/EditClue', { clueId, newStatus }, function(data) {
-            
+
             btn.closest('.clue-item').remove();
 
             Swal.fire({
