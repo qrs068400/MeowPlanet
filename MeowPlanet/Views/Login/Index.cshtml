@@ -10,7 +10,7 @@
 }
 
 
-    <section class="loginsection">
+    <section class="loginsection" style="overflow-y:hidden;">
         <div class="container d-flex justify-content-center">
             <div class="row w-75 animate__animated animate__fadeInUp" id="row1">
 
@@ -69,14 +69,15 @@
                              data-login_uri="@Url.Action("ValidGoogleLogin","Login")"
                              data-auto_prompt="false">
                             </div>
-                            <div class="g_id_signin"
+                            <div class="g_id_signin rounded-pill"
                              data-type="standard"
                              data-size="large"
-                             data-theme="outline"
-                             data-text="sign_in_with"
-                             data-shape="rectangular"
+                             data-theme="filled_black"
+                             data-text="signin_with"
+                             data-shape="circle"
                              data-logo_alignment="left"
-                             data-auto_prompt="true">
+                             data-auto_prompt="true"
+                             style="border:1px solid white">
                             </div>
                         </div>
 

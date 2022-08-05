@@ -138,11 +138,42 @@ namespace MeowPlanet.Controllers
 
         }
 
+        // 登出
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        // 寄送註冊驗證碼
+        public ActionResult SendRegistMail(string email)
+        {
+
+            Random random = new Random();
+            int verifycode = random.Next(10000, 99999);
+
+            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+            msg.To.Add(email);
+
+            msg.From = new MailAddress("meowplanet04@gmail.com", "喵屋星球", System.Text.Encoding.UTF8);
+
+            msg.Subject = "MeowPlanet 註冊驗證碼";
+            msg.SubjectEncoding = System.Text.Encoding.UTF8;
+            msg.Body = "這是 MeowPlanet 喵屋星球 的註冊驗證信，若你不曾要求註冊，請忽略這封信<br />" + "驗證碼:" + verifycode;
+            msg.BodyEncoding = System.Text.Encoding.UTF8;
+            msg.IsBodyHtml = true;
+
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new System.Net.NetworkCredential("meowplanet04@gmail.com", "cbqjonjcosbrqnnv");
+            client.Host = "smtp.gmail.com";
+            client.Port = 25;
+            client.EnableSsl = true;
+            client.Send(msg);
+            client.Dispose();
+            msg.Dispose();
+
+            return Content(verifycode.ToString());
         }
 
         // 註冊判定Email是否可使用
@@ -383,5 +414,7 @@ namespace MeowPlanet.Controllers
             }
             return payload;
         }
+
+
     }
 }
