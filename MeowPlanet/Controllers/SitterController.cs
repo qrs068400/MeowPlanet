@@ -33,17 +33,18 @@ namespace MeowPlanet.Controllers
             //發現第一圈花了2.X秒，其餘圈數都花<100ms左右而已
 
             //方法一
-            var result = new List<SitterViewModels>();
-            result = await _context.Sitters
-            .Include(c => c.SitterFeatures)
-            .Where(m => m.IsService == true)
-            .Select(m => new SitterViewModels
-            {
-                sitter = m,
-                memberPhoto = m.Member.Photo,
-                sitterfeatureList = m.SitterFeatures.Select(m => m.Feature.Name).ToList(),
-                OrderCommentList = m.Orderlists.ToList(),
-            }).ToListAsync();
+            var result = await _context.Sitters
+                .AsNoTracking()
+                //.AsNoTrackingWithIdentityResolution()
+                //.Include(c => c.SitterFeatures)
+                .Where(m => m.IsService == true)
+                .Select(m => new SitterViewModels
+                {
+                    sitter = m,
+                    memberPhoto = m.Member.Photo,
+                    sitterfeatureList = m.SitterFeatures.Select(m => m.Feature.Name).ToList(),
+                    OrderCommentList = m.Orderlists.ToList(),
+                }).ToListAsync();
 
             //方法二
             //var result = new List<Sitter>();
@@ -89,10 +90,6 @@ namespace MeowPlanet.Controllers
 
         public async Task<IActionResult> Detail(int? id)
         {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
             SitterViewModels model = new SitterViewModels()
             {
                 sitter = await _context.Sitters.FirstOrDefaultAsync(m => m.ServiceId == id),
@@ -100,10 +97,6 @@ namespace MeowPlanet.Controllers
                 OrderCommentList = await _context.Orderlists.Where(m => m.ServiceId == id).ToListAsync(),
 
             };
-            //if (model.sitter == null)
-            //{
-            //    return NotFound();
-            //}
             var catList = await _context.Cats
                 .Where(m => m.MemberId == _memberId)
                 .Select(m => new Cat
@@ -122,10 +115,10 @@ namespace MeowPlanet.Controllers
             ViewBag.catList = catList;
             TempData["controller"] = "Sitter";
             TempData["action"] = "Detail";
-            TempData["id"] = $"{id}";
+            TempData["ids"] = $"{id}";
             return View(model);
         }
-
+        //方法一
         // 使用 變數 來接收submit資料
         [HttpPost]
         public ActionResult ComfirmPay(string startDate, string endDate, int night, int catId, int serviceId)
@@ -162,13 +155,9 @@ namespace MeowPlanet.Controllers
                 Night = night,
                 Total = night * sitter.Pay,
             };
-
-
-            //string[] startend = { startDate, endDate };
-            //ViewBag.startend = startend;
             return View(result);
         }
-
+        //方法二
         // 使用 IFormCollection 來接收submit資料
         //[HttpPost]
         //public ActionResult ComfirmPay(IFormCollection form)
@@ -181,7 +170,8 @@ namespace MeowPlanet.Controllers
         //    ViewBag.end = endDate;
         //    return View();
         //}
-
+        
+        //送出訂單
         [HttpPost]
         public async Task<IActionResult> AddOrder(SitterComfirmPayViewModels sitterComfirmPay)
         {
@@ -199,6 +189,31 @@ namespace MeowPlanet.Controllers
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public ActionResult SitterViewMode()
+        {
+            var sitter = _context.Sitters
+            //要用theninclude 才看的到 feature
+             //.Include(x => x.SitterFeatures)
+             //.ThenInclude(x => x.Feature)
+             //直接 include 看不到 feature
+             //.Include(x => x.SitterFeatures.Feature)
+             .Where(x => x.MemberId == _memberId)
+             .Select(x => new SitterViewModels
+             {
+               sitter = x,
+               //實際測試 我根本不用上面的include就可以取到我要資料了，這串語法自帶LEFT JOIN 跟 INNER JOIN
+               sitterfeatureList = x.SitterFeatures.Select(x => x.Feature.Name).ToList(),
+             }).FirstOrDefault();
+            return PartialView("_SitterViewModePartial", sitter);
+        }
+
+        [HttpPost]
+        public ActionResult SitterEditMode([FromBody]SitterViewModels j)
+        {
+            return PartialView("_SitterEditModePartial", j);
         }
     }
 }

@@ -90,7 +90,8 @@ body {
     font-size: 24px;
 }
 
-.memberright input {
+.memberright .member-region input, 
+.memberright .cat-region input {
     color: white;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
@@ -100,6 +101,7 @@ body {
     width: 100%;
     padding: 0 1rem;
 }
+
 
 .member-region {
     padding-left: 50px;

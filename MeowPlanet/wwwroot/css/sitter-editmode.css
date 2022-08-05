@@ -1,0 +1,260 @@
+﻿/* 開關鈕 */
+.switch {
+    /*==設定開關鈕的長寬==*/
+    position: relative;
+    width: 65px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.switch-checkbox {
+    position: absolute;
+    display: none;
+}
+
+.switch-label {
+    display: block;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.switch-txt {
+    display: block;
+    width: 200%;
+    margin-left: -100%;
+    transition: margin 0.3s ease-in 0s;
+}
+
+    .switch-txt::before,
+    .switch-txt::after {
+        display: block;
+        float: right;
+        width: 50%;
+        font-size: 13px;
+        color: #fff;
+        font-weight: bold;
+        box-sizing: border-box;
+    }
+
+    /*==開關鈕底色(開啟時)==*/
+    .switch-txt::after {
+        content: attr(turnOn);
+        padding-left: 10px;
+        background: #1ba0ef;
+        color: #fff;
+    }
+
+    /*開關鈕底色(關閉時)*/
+    .switch-txt::before {
+        content: attr(turnOff);
+        padding-right: 10px;
+        background: #eee;
+        color: #ccc;
+        text-align: right;
+    }
+
+/*==開關鈕的顏色與大小==*/
+.switch-Round-btn {
+    position: absolute;
+    display: block;
+    width: 26px;
+    height: 26px;
+    margin: 2px;
+    background: #fff;
+    top: 0;
+    bottom: 0;
+    right: 35px;
+    border-radius: 13px;
+    transition: all 0.3s ease-in 0s;
+}
+
+.switch-checkbox:checked + .switch-label .switch-txt {
+    margin-left: 0;
+}
+
+.switch-checkbox:checked + .switch-label .switch-Round-btn {
+    right: 0;
+}
+/*---------------------*/
+/*網頁內容*/
+.div0 {
+    display: flex;
+}
+
+.div0-1 {
+    margin-left: 20px;
+}
+
+.div0-2 {
+    display: flex;
+    margin-top: 20px;
+}
+
+.div0-3 {
+    width: 600px;
+    height: 40px;
+    margin-left: 20px;
+    color: #FFF;
+    padding: 1rem;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 0.5rem rgb(134 171 190 / 50%) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 20px;
+}
+
+.div0-4 {
+    width: 150px;
+    height: 35px;
+    margin-left: 20px;
+    text-align: center;
+    /* 太空感  */
+    color: rgb(255, 255, 255);
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 0.5rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    /* but轉成DIV特性 */
+    display: block;
+}
+
+    .div0-4:hover {
+        box-shadow: 0 0 2rem rgba(134, 171, 190, 0.5) inset;
+    }
+
+.div0-4-1 {
+    color: #000;
+    background: #FFF;
+}
+
+
+.div0-5 {
+    margin-left: 15px;
+    margin-top: 10px;
+}
+
+.div1 {
+    height: 660px;
+    color: rgb(134, 171, 190, 0.5);
+    padding: 1rem;
+}
+
+.div2-1 {
+    width: 320px;
+    height: 50px;
+    font-size: 15px;
+    margin-top: 1px;
+    line-height: 5px;
+    font-weight: 900;
+    text-align: center;
+    color: rgb(255, 255, 255);
+    border: 2.5px rgba(0, 150, 209, 0.829) solid;
+    padding: 1rem;
+    box-shadow: 0 0 0.7rem rgba(0, 150, 209, 0.829) inset;
+    background: rgba(0, 0, 0, .3);
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.div3 {
+    width: 900px;
+    height: 590px;
+    margin: 0 auto;
+    padding: 20px;
+    color: rgb(255, 255, 255);
+    font-size: 20px;
+}
+
+/* 拖拉圖片 */
+.dropZone {
+    padding: 10px;
+    border: 2px rgb(115, 244, 222) dashed;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 20px;
+    width: 158px;
+    height: 130px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+
+    .dropZone:hover {
+        background: rgba(0, 0, 0, .7);
+    }
+
+.dropImg {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: 10px;
+}
+
+.div-right-form .hint-d p {
+    font-size: 20px;
+    margin: 0;
+}
+
+.in-sp {
+    position: absolute;
+    bottom: 1%;
+    right: 25%;
+    transform: translateX(50%);
+    color: #2A483A;
+}
+
+.b-press {
+    color: black;
+    background-color: white;
+}
+
+.div5 {
+    width: 660px;
+    height: 150px;
+    margin-left: 20px;
+    line-height: 30px;
+    font-size: 20px;
+    padding: 1rem;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 1rem rgb(134 171 190 / 50%) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 10px;
+    resize: none;
+}
+
+.div6-1 {
+    width: 180px;
+    height: 45px;
+    font-size: 15px;
+    margin: 10px 0px 10px 240px;
+    border-radius: 10px;
+    line-height: 5px;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+    padding: 1rem;
+    border: 2px rgb(142, 255, 212, 0.767) solid;
+    box-shadow: 0 0 0.5rem rgba(142, 255, 212, 0.767) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 20px;
+    /* but轉成DIV特性 */
+    display: block;
+}
+
+.div6-2 {
+    width: 180px;
+    height: 45px;
+    font-size: 15px;
+    margin: 10px 0px 10px 45px;
+    border-radius: 10px;
+    line-height: 5px;
+    font-weight: 800;
+    color: rgb(255, 255, 255);
+    padding: 1rem;
+    border: 2px rgba(0, 150, 209, 0.829) solid;
+    box-shadow: 0 0 0.5rem rgba(0, 150, 209, 0.829) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 20px;
+    /* but轉成DIV特性 */
+    display: block;
+}
