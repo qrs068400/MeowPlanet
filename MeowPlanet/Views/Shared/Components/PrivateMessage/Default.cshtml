@@ -261,7 +261,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
 <script>
-    (() => {
+    let messagebox = (() => {
         let contactList = [];
         let clickedMemberId;
 
@@ -582,6 +582,8 @@
                 }
             }
         });
+
+        return { "messageTo" : messageTo }
     })()
     
     
