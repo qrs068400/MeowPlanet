@@ -18,7 +18,7 @@
             <div class="img-bg1"></div>
             <div class="bgdiv">
                 <p>在各方面為您的貓咪著想</p>
-                <a class="btn navbar-brand" asp-controller="Login" asp-action="Register" id="addbtn">成為會員</a>
+                <button class="btn btn-light navbar-brand addbtn" asp-controller="Login" asp-action="Register">成為會員</button>
             </div>
         </section>
 
@@ -28,7 +28,7 @@
 
                     <a asp-controller="Sitter" asp-action="Index" id="sitterLink">
                         <div id="img4" class="move-div">
-                            <p class="p1">保母</p>
+                            <p class="p1">保姆</p>
                         </div>
                     </a>
 
@@ -38,7 +38,7 @@
                         </div>
                     </a>
 
-                    <a asp-controller="Missings" asp-action="Index" id="missingLink">
+                    <a asp-controller="Missings" asp-action="Index" id="missingsLink">
                         <div id="img6" class="move-div">
                             <p class="p1">協尋</p>
                         </div>
@@ -202,19 +202,27 @@
         </section>
 
         <div class="sec d-flex">
-            <p>功 能 選 擇</p>
+            <p class="func">功 能 選 擇</p>
         </div>
 
         <section>
+            <a asp-controller="Sitter" asp-action="Index" id="sitterLink">
             <div class="sitter d-flex">
-                <p>貓 咪 保 姆</p>
+                <p>保 姆</p>
             </div>
+            </a>
+
+            <a asp-controller="Adoption" asp-action="Index" id="adoptionLink">
             <div class="adopt d-flex">
                 <p>領 養</p>
             </div>
+            </a>
+
+            <a asp-controller="Missings" asp-action="Index" id="missingsLink">
             <div class="find d-flex">
                 <p>協 尋</p>
             </div>
+            </a>
         </section>
 
         <div class="third d-flex">

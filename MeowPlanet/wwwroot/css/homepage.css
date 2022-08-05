@@ -48,40 +48,40 @@ body {
     position: relative;
 }
 
-.bgdiv p {
-    margin-left: 100px;
-    color: white;
-    font-size: 50px;
-    font-weight: 700;
-    display: block;
-    position: absolute;
-    bottom: 250px;
-    z-index: 998;
-}
+    .bgdiv p {
+        margin-left: 100px;
+        color: white;
+        font-size: 50px;
+        font-weight: 700;
+        display: block;
+        position: absolute;
+        bottom: 250px;
+        z-index: 998;
+    }
 
-.bgdiv #addbtn {
-    border: 2px /*#DDB178*/ white solid;
-    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-    background: rgba(0, 0, 0, .3);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    margin-left: 150px;
-    margin-top: 20px;
-    font-size: 30px;
-    font-weight: 700;
-    border-radius: 20px;
-    height: 70px;
-    width: 200px;
-    position: absolute;
-    bottom: 150px;
-    z-index: 998;
-}
+    .addbtn {
+        border: 2px /*#DDB178*/ white solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        background: rgba(0, 0, 0, .3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        margin-left: 150px;
+        margin-top: 20px;
+        font-size: 30px;
+        font-weight: 700;
+        border-radius: 20px;
+        height: 70px;
+        width: 200px;
+        position: absolute;
+        bottom: 150px;
+        z-index: 998;
+    }
 
-.bgdiv #addbtn:hover {
-    background: rgba(0, 0, 0, 1);
-}
+        .addbtn:hover {
+            color: #DDB178;
+        }
 
 .bgdiv-p {
     margin-top: 100px;
@@ -286,7 +286,7 @@ body {
 }
 
 .p1 {
-    font-size: 80px;
+    font-size: 50px;
     margin: 30px;
     font-weight: 800;
 }
@@ -317,17 +317,17 @@ body {
     justify-content: center;
 }
 
-#iconregion .col img {
-    width: 150px;
-    height: 150px;
-    border-radius: 50px;
-}
+    #iconregion .col img {
+        width: 150px;
+        height: 150px;
+        border-radius: 50px;
+    }
 
-#iconregion .col p {
-    font-size: 40px;
-    color: white;
-    margin-left: 20px;
-}
+    #iconregion .col p {
+        font-size: 40px;
+        color: white;
+        margin-left: 20px;
+    }
 
 
 #feregion .fediv {
@@ -368,17 +368,17 @@ body {
     top: 300px;
 }
 
-.fetext1-wrap p {
-    color: white;
-    font-size: 30px;
-    display: flex;
-    align-items: center;
-}
+    .fetext1-wrap p {
+        color: white;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+    }
 
-.fetext1-wrap img {
-    height: 100px;
-    width: 100px;
-}
+    .fetext1-wrap img {
+        height: 100px;
+        width: 100px;
+    }
 
 .fetext2-wrap {
     display: flex;
@@ -387,17 +387,17 @@ body {
     top: 600px;
 }
 
-.fetext2-wrap p {
-    color: white;
-    font-size: 30px;
-    display: flex;
-    align-items: center;
-}
+    .fetext2-wrap p {
+        color: white;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+    }
 
-.fetext2-wrap img {
-    height: 100px;
-    width: 100px;
-}
+    .fetext2-wrap img {
+        height: 100px;
+        width: 100px;
+    }
 
 .fetext3-wrap {
     display: flex;
@@ -406,17 +406,17 @@ body {
     top: 650px;
 }
 
-.fetext3-wrap p {
-    color: white;
-    font-size: 30px;
-    display: flex;
-    align-items: center;
-}
+    .fetext3-wrap p {
+        color: white;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+    }
 
-.fetext3-wrap img {
-    height: 100px;
-    width: 100px;
-}
+    .fetext3-wrap img {
+        height: 100px;
+        width: 100px;
+    }
 
 .feimg1-wrap {
     color: white;
@@ -512,7 +512,7 @@ body {
 
 #showcom p {
     color: white;
-    font-size:20px;
+    font-size: 20px;
 }
 
 #catbanner .container {
@@ -562,11 +562,29 @@ body {
     height: 50px;
 }
 
-    .sec p {
-        color: #FFF;
-        margin: 0;
-        font-size: 14px;
-        border-left: 1vh solid #DDB178;
+.func {
+    color: #FFF;
+    margin: 0;
+    font-size: 14px;
+    position: relative;
+}
+
+    .func::before, .func::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        background: #aaa;
+        width: 20%;
+        height: 1px;
+    }
+
+    .func::before {
+        transform: translateX(-100%);
+        margin-left: -10px;
+    }
+
+    .func::after {
+        margin-left: 10px;
     }
 
 .sitter {
@@ -576,14 +594,20 @@ body {
     background-position: center;
     height: 12vh;
     align-items: center;
+    
 }
 
-    .sitter p {
-        margin: 0;
-        margin-left: 60px;
-        color: #FFF;
-        font-size: 14px;
-    }
+#sitterLink {
+    text-decoration: none;
+}
+
+.sitter p {
+    margin: 0;
+    margin-left: 60px;
+    color: #FFF;
+    font-size: 14px;
+    text-decoration: none;
+}
 
 .adopt {
     background: url('../images/intro2.jpg');
@@ -601,6 +625,10 @@ body {
         font-size: 14px;
     }
 
+#adoptionLink {
+    text-decoration: none;
+}
+
 .find {
     background: url('../images/intro3.jpg');
     background-repeat: no-repeat;
@@ -616,6 +644,10 @@ body {
         color: #FFF;
         font-size: 14px;
     }
+
+#missingsLink {
+    text-decoration: none;
+}
 
 .third {
     justify-content: center;
@@ -781,4 +813,3 @@ html {
         top: 500px;
     }
 }
-

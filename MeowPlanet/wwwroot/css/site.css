@@ -76,6 +76,13 @@ body {
     margin-right: 200px;
 }
 
+@media screen and (max-width: 992px) {
+    .navbar-brand {
+        margin-right: 0px;
+    }
+}
+
+
 .memberlogin btn{
     color:white;
 }
@@ -115,3 +122,4 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-thumb:hover {
     background: #b996689c;
 }
+
