@@ -261,23 +261,10 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/signalr/dist/browser/signalr.js"></script>
 <script>
+
     let messagebox = (() => {
         let contactList = [];
         let clickedMemberId;
-
-
-        $(function() {
-
-            if ('@hasUnread' == 'True') {
-
-                $('#message-open').addClass('newMessage');
-            }
-
-
-            $('.contact').each(function() {
-                contactList.push($(this).data('id'));
-            })
-        })
 
         //連結到訊息接收人
         function messageTo(Id, myId) {
@@ -296,7 +283,6 @@
                 })
             }
             else {
-
                 $('#message-box').collapse('show');
 
                 if (contactList.includes(memberId)) {
@@ -322,11 +308,26 @@
 
                         )
 
-                        $(`.contact[data-id="${memberId}"]`).trigger('click');
+                        $(`.contact[data-id="${memberId}"]`).trigger('click');                        
                     })
                 }
             }
         }
+
+
+        $(function() {
+
+            if ('@hasUnread' == 'True') {
+
+                $('#message-open').addClass('newMessage');
+            }
+
+
+            $('.contact').each(function() {
+                contactList.push($(this).data('id'));
+            })
+        })
+
 
         function autoScroll() {
             $('#message-content').scrollTop($('#message-content')[0].scrollHeight);
@@ -583,8 +584,7 @@
             }
         });
 
-        return { "messageTo" : messageTo }
+        return { messageTo };
     })()
-    
     
 </script>
