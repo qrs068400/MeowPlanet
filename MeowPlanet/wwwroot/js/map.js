@@ -38,7 +38,7 @@ function initMap() {
     map = new google.maps.Map($('#map')[0], {
         center: { lat: 22.629314218928563, lng: 120.29299528465663 },
         zoom: 16,
-        minZoom: 15,
+        minZoom: 14,
         maxZoom: 17,
         disableDefaultUI: true,
         mapId: 'a5f4cec6781c8dda',
@@ -46,7 +46,7 @@ function initMap() {
         clickableIcons: false
     });
 
-    //currentPos();
+    currentPos();
 
     //定位按鈕
     const locationButton = document.createElement("button");
@@ -54,6 +54,7 @@ function initMap() {
     $(locationButton).addClass('btn btn-dark btn-location');
     $(locationButton).css('border-radius', '10px');
     $(locationButton).css('border-color', 'white');
+    $(locationButton).css('padding-bottom', '10px');
     map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push(locationButton);
     $(locationButton).on('click', function () {
         currentPos();
@@ -122,10 +123,40 @@ function initMap() {
         map.fitBounds(bounds);
     });
 
-
+    map.addListener('zoom_changed', () => {
+        let zoom = map.getZoom();
+        switch (zoom) {
+            case 14:
+                scaledRange = 4000;
+                break;
+            case 15:
+                scaledRange = 2000;
+                break;
+            case 16:
+                scaledRange = 1000;
+                break;
+            case 17:
+                scaledRange = 500;
+                break;
+            default:
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    icon: 'warning',
+                    title: '搜尋的地區超出縮放範圍',
+                    text: '請執行重新搜尋',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+                break;
+                
+        }
+    })
     //綁定移動事件
-    listener = map.addListener('idle', searchCat)
+    listener = map.addListener('idle', () => { searchCat(scaledRange) })
 }
+
+let scaledRange = 1000;
 
 //刊登協尋 檢查名下是否有貓&&是否已有刊登
 function checkCats(callback) {
@@ -265,7 +296,7 @@ function settingMode(windowContent, offset) {
         //把頁面上圖標顯示回來
         setMarkerVisibility('show');
 
-        listener = map.addListener('idle', searchCat);
+        listener = map.addListener('idle', () => { searchCat(scaledRange) });
     })
 }
 
@@ -337,7 +368,7 @@ $(function () {
     })
 
         .then(function () {
-            searchCat();
+            searchCat(scaledRange);
         })
 
 })
@@ -345,7 +376,7 @@ $(function () {
 let showingCatList = [];
 
 //搜尋中心點附近貓貓
-function searchCat() {
+function searchCat(range) {
 
     catList.forEach((cat) => {
         let marker = cat.marker;
@@ -355,7 +386,7 @@ function searchCat() {
 
 
         //距離小於1公里就加入圖標 & 顯示在左邊item列
-        if (distance < 1000) {
+        if (distance < range) {
 
             marker.setMap(map);
 
@@ -371,7 +402,7 @@ function searchCat() {
 
             if (showingCatList.includes(cat)) {
                 showingCatList.splice(showingCatList.indexOf(cat), 1);
-                $(`#missing-${cat.missingId}`).animate({ marginLeft: "200px", opacity: 0 }, 800, 'swing', function () { $(this).hide().css({ 'margin-left': '0', 'opacity': '1' }) });
+                $(`#missing-${cat.missingId}`).animate({ marginLeft: "200px", opacity: 0 }, 500, 'swing', function () { $(this).hide().css({ 'margin-left': '0', 'opacity': '1' }) });
             }
         }
     })

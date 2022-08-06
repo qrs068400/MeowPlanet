@@ -210,15 +210,15 @@
                     polylinePathPoints.push(cluesMarker[i].getPosition());
                     if (i == 0) {
 
-                        setTimeout(() => {
+                        timeouts.push(setTimeout(() => {
                             cluesMarker[i].setMap(map)
-                        }, i * 1000)
+                        }, i * 1000))
                     }
                     else {
-                        setTimeout(() => {
+                        timeouts.push(setTimeout(() => {
                             cluesMarker[i].setAnimation(google.maps.Animation.DROP)
                             cluesMarker[i].setMap(map)
-                        }, i * 1000)
+                        }, i * 1000))
                     }
                 }
 
@@ -273,7 +273,7 @@
                 setMarkerVisibility('show');
                 $('#detailModal').html(detalModal);
                 $('#detailModal').modal('show');
-                listener = map.addListener('idle', searchCat);
+                listener = map.addListener('idle', () => { searchCat(scaledRange) });
 
                 cluesMarker.forEach((marker) => {
                     marker.setMap(null)
