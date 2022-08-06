@@ -272,15 +272,9 @@ body {
     text-align: center;
 }
 
-#f5 option {
-    color: white;
-    font-size: 30px;
-    height: 80px;
-    padding: 1rem;
-    border: 2px rgb(115, 244, 222) solid;
-    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-    background: rgba(0, 0, 0, .3);
-    text-align: center;
+#f5 select option {
+    padding: 0px;
+    background: rgba(0, 0, 0, .8);
 }
 
 #f6 p {
@@ -312,9 +306,9 @@ body {
     justify-content: center;
 }
 
-.dropZone:hover {
-    background: rgba(0, 0, 0, .7);
-}
+    .dropZone:hover {
+        background: rgba(0, 0, 0, .7);
+    }
 
 .dropImg {
     max-width: 100%;
@@ -325,13 +319,13 @@ body {
     padding-bottom: 10%;
 }
 
-.hint-d{
-    width:340px;
+.hint-d {
+    width: 340px;
 }
 
 .div-right-form .hint-d p {
     font-size: 25px;
-    margin-bottom:20px;
+    margin-bottom: 20px;
 }
 
 .in-sp {
@@ -346,3 +340,25 @@ body {
     color: black;
     background-color: white;
 }
+
+/* width */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 8px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #b99668;
+    border-radius: 8px;
+}
+
+    /* Handle on hover */
+    ::-webkit-scrollbar-thumb:hover {
+        background: #b996689c;
+    }

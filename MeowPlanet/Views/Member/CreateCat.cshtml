@@ -127,8 +127,7 @@
                     <div class="d-flex align-items-center location-div">
                         <div>
                             <p class="text-start">所在縣市</p>
-                            <select id="city" class="form-select">
-                                <option>全部</option>
+                            <select id="city" class="form-select" type="text" asp-for="City">
                                 <option>臺北市</option>
                                 <option>新北市</option>
                                 <option>基隆市</option>
@@ -147,7 +146,6 @@
                                 <option>嘉義縣</option>
                                 <option>屏東縣</option>
                             </select>
-                            <input type="text" asp-for="City" class="text-center d-none" id="city-in" />
                         </div>
                     </div>
 

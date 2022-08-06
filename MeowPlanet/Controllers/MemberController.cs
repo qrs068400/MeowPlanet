@@ -255,6 +255,7 @@ namespace MeowPlanet.Controllers
                 {
                     MemberId = LoginId,
                     CatId = c.CatId,
+                    BreedId = c.BreedId,
                     Name = c.Name,
                     Breed = s.Name,
                     Sex = c.Sex,
@@ -346,6 +347,7 @@ namespace MeowPlanet.Controllers
 
             oldCat.Name = cat.Name;
             oldCat.Age = cat.Age;
+            oldCat.BreedId = cat.BreedId;
             oldCat.Sex = cat.Sex;
             oldCat.City = cat.City;
             oldCat.Introduce = cat.Introduce;
@@ -372,10 +374,6 @@ namespace MeowPlanet.Controllers
             {
                 oldCat.Img05 = cat.Img05;
             }
-
-
-
-
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

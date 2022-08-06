@@ -1,5 +1,25 @@
 ﻿@model MeowPlanet.ViewModels.MemberInfo.CatDetailViewModel
 
+<style>
+    .cat-detail-select {
+        color: white;
+        padding: 0px;
+        font-size: 25px;
+        border: 2px rgb(115, 244, 222) solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        background: rgba(0, 0, 0, .3);
+        border-radius: 40px;
+        text-align: center;
+    }
+
+    .cat-detail-select option {
+        color: white;
+        font-size: 25px;
+        padding: 0px;
+        background: rgba(0, 0, 0, .8);
+    }
+</style>
+
 <form method="post" asp-action="UpdateCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
     <div class="row">
 
@@ -12,7 +32,15 @@
             </div>
             <div class="my-3">
                 <p>品種</p>
-                <input type="text" value="@Model.Breed" disabled />
+                <select class="form-select cat-detail-select" type="text" value="@Model.BreedId" asp-for="BreedId" id="breed">
+                    <option value="1">美國短毛貓</option>
+                    <option value="2">英國短毛貓</option>
+                    <option value="3">波斯貓</option>
+                    <option value="4">布偶貓</option>
+                    <option value="5">曼斥肯</option>
+                    <option value="6">米克斯</option>
+                    <option value="7">其他</option>
+                </select>
             </div>
             <div class="my-3">
                 <p>性別</p>
@@ -24,12 +52,32 @@
             </div>
             <div class="my-3">
                 <p>年齡</p>
-                <input type="text" value="@Model.Age" asp-for="Age" />
-                <span>歲</span>
+                <div class="d-flex align-items-center">
+                    <input type="text" value="@Model.Age" asp-for="Age" style="width:75%" />
+                    <span style="font-size:20px;" class="mx-auto">歲</span>
+                </div>
             </div>
             <div class="my-3">
                 <p>所在地</p>
-                <input type="text" value="@Model.City" asp-for="City" />
+                <select class="form-select cat-detail-select" type="text" value="@Model.City" asp-for="City" id="city">
+                    <option>臺北市</option>
+                    <option>新北市</option>
+                    <option>基隆市</option>
+                    <option>新竹市</option>
+                    <option>桃園市</option>
+                    <option>新竹縣</option>
+                    <option>宜蘭縣</option>
+                    <option>臺中市</option>
+                    <option>苗栗縣</option>
+                    <option>彰化縣</option>
+                    <option>南投縣</option>
+                    <option>雲林縣</option>
+                    <option>高雄市</option>
+                    <option>臺南市</option>
+                    <option>嘉義市</option>
+                    <option>嘉義縣</option>
+                    <option>屏東縣</option>
+                </select>
             </div>
             <div class="my-3">
                 <p>介紹</p>
@@ -110,7 +158,7 @@
 </form>
 
 <script>
-
+    var breed = '@Model.Breed';
     var sex = '@Model.Sex';
     var adoptable = '@Model.IsAdoptable';
     var sitting = '@Model.IsSitting';
