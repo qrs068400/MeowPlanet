@@ -97,7 +97,7 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">名稱</p>
-                            <input type="text" asp-for="Name" class="text-center" id="name-in"/>
+                            <input type="text" asp-for="Name" class="text-center" id="name-in" />
                         </div>
                     </div>
 
@@ -121,13 +121,31 @@
                     <div class="d-flex align-items-center">
                         <div>
                             <p class="text-start">年齡</p>
-                            <input type="text" asp-for="Age" class="text-center" id="age-in"/>
+                            <input type="text" asp-for="Age" class="text-center" id="age-in" />
                         </div>
                     </div>
                     <div class="d-flex align-items-center location-div">
                         <div>
                             <p class="text-start">所在縣市</p>
-                            <input type="text" asp-for="City" class="text-center" id="city-in"/>
+                            <select id="city" class="form-select" type="text" asp-for="City">
+                                <option>臺北市</option>
+                                <option>新北市</option>
+                                <option>基隆市</option>
+                                <option>新竹市</option>
+                                <option>桃園市</option>
+                                <option>新竹縣</option>
+                                <option>宜蘭縣</option>
+                                <option>臺中市</option>
+                                <option>苗栗縣</option>
+                                <option>彰化縣</option>
+                                <option>南投縣</option>
+                                <option>雲林縣</option>
+                                <option>高雄市</option>
+                                <option>臺南市</option>
+                                <option>嘉義市</option>
+                                <option>嘉義縣</option>
+                                <option>屏東縣</option>
+                            </select>
                         </div>
                     </div>
 
@@ -163,7 +181,7 @@
                             <p>請點擊圖框或拖曳加入</p>
                             <p id="re-p">還剩5張可以選擇</p>
                         </div>
-                        
+
                     </div>
                     <div class="d-flex align-items-center">
                         <div id="dropZone2" class="dropZone" style="position: relative;">
