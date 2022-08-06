@@ -467,6 +467,21 @@ $(document).on({
         event.preventDefault();
 
         let file = event.originalEvent.dataTransfer.files[0];
+
+        if (file.type.indexOf('image') == -1) {
+
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '請上傳正確的圖片格式',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2000
+            })
+
+            return
+        }
+
         let reader = new FileReader()
 
         reader.readAsDataURL(file);
@@ -481,7 +496,24 @@ $(document).on({
 }, '#imgPreview')
 
 //上傳預覽功能
-$(document).on('change', '#imgInput', function () {
+$(document).on('change', '#imgInput', function () {    
+
+    if ($(this)[0].files[0].type.indexOf('image') == -1) {
+
+        $(this).val('');
+
+        Swal.fire({
+            heightAuto: false,
+            position: 'center',
+            title: '請上傳正確的圖片格式',
+            icon: 'warning',
+            showConfirmButton: false,
+            timer: 2000
+        })
+
+        return
+    }
+
 
     let reader = new FileReader();
     reader.onload = function (e) {
@@ -504,7 +536,7 @@ $(document).on('click', '#provideClues', () => {
                 title: '您無法對您發布的協尋提供線索',
                 icon: 'warning',
                 showConfirmButton: false,
-                timer: 2500
+                timer: 2000
             })
         }
         else {
@@ -513,12 +545,12 @@ $(document).on('click', '#provideClues', () => {
                 '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
                 '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
                 '<div class="form-group mt-3 text-center" style="height: 40%">' +
-                '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%;" />' +
-                '<input id="imgInput" type="file" class="form-control d-none" name="Image" />' +
+                '<image id="imgPreview" class="img-upload" src="/images/addphoto.png" style="width: 80%;height: 100%; object-fit: cover;" />' +
+                '<input id="imgInput" type="file" class="form-control d-none" name="Image" accept="image/*" />' +
                 '</div>' +
                 '<div class="form-group mt-3 m-auto w-85">' +
                 '<label for="witness-time" class="h6">目擊時間 :</label>' +
-                '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" />' +
+                '<input type="text" id="witness-time" class="form-control rounded-pill" name="WitnessTime" readonly />' +
                 '</div>' +
                 '<div class="form-group mt-3 m-auto w-85">' +
                 '<label for="other-description" class="h6">其他描述 :</label>' +
@@ -532,6 +564,7 @@ $(document).on('click', '#provideClues', () => {
                 `<input name="MissingId" id="MissingId" type="hidden" value="${missingId}"/>` +
                 '</form>';
 
+            postClueId = missingId;
             $('#detailModal').modal('hide');
 
             settingMode(windowContent, true);
@@ -551,48 +584,70 @@ $(document).on('click', '#provideClues', () => {
 $(function () {
     $(document).on({
         'focus': function () {
-            $(this).datepicker($.datepicker.regional['tw']);
-        },
-        'keypress': function (e) {
-            e.preventDefault();
+            $(this).datepicker({ maxDate: 0 });
         }
     }, '#witness-time'
     )
 })
 
-
+let postClueId;
 //提供線索表單
 $(document).on('submit', '#clueForm', function (e) {
 
-    $('#WitnessLat').val(newMarker.getPosition().lat())
-    $('#WitnessLng').val(newMarker.getPosition().lng())
+    $('#WitnessLat').val(newMarker.getPosition().lat());
+    $('#WitnessLng').val(newMarker.getPosition().lng());
+    $('#MissingId').val(postClueId);
 
-    let formData = new FormData($('#clueForm')[0])
+    let formData = new FormData($('#clueForm')[0]);
+    let hasEmpty = false;
 
-    $.ajax({
+    if (formData.get('Image').size == 0) {
+        hasEmpty = true;
+    }
 
-        url: '/Missings/PostClue',
-        type: 'POST',
-        data: formData,
-        contentType: false,
-        processData: false,
-        success: function (data) {
-
-            if (data == "OK") {
-
-                $('#cancel-publish').trigger('click');
-
-                Swal.fire({
-                    heightAuto: false,
-                    position: 'center',
-                    icon: 'success',
-                    title: '線索提交成功',
-                    showConfirmButton: false,
-                    timer: 2500
-                })
-            }
+    for (let pair of formData.entries()) {
+        if (pair[1] == '') {
+            hasEmpty = true;
+            break;
         }
-    })
+    }
+
+    if (hasEmpty) {
+        Swal.fire({
+            heightAuto: false,
+            position: 'center',
+            icon: 'warning',
+            title: '您有未填的項目',
+            showConfirmButton: false,
+            timer: 2000
+        })
+    } else {
+        $.ajax({
+
+            url: '/Missings/PostClue',
+            type: 'POST',
+            data: formData,
+            contentType: false,
+            processData: false,
+            success: function (data) {
+
+                if (data == "OK") {
+
+                    $('#cancel-publish').trigger('click');
+
+                    Swal.fire({
+                        heightAuto: false,
+                        position: 'center',
+                        icon: 'success',
+                        title: '線索提交成功',
+                        showConfirmButton: false,
+                        timer: 2500
+                    })
+                }
+            }
+        })
+    }
+
 
     e.preventDefault();
 

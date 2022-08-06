@@ -195,7 +195,7 @@ namespace MeowPlanet.Models
             var missingCatId = missingCat.CatId;
 
             missingCat.IsMissing = false;
-            _context.Missings.FirstOrDefault(x => x.CatId == missingCatId).IsFound = true;
+            _context.Missings.FirstOrDefault(x => x.CatId == missingCatId && x.IsFound == false).IsFound = true;
 
             await _context.SaveChangesAsync();
 
