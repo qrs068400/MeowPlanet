@@ -207,19 +207,8 @@
 
         //傳送資料到後端,回傳PartialView
         $.get("@Url.Action("Search", "Adoption")" + "?city_Utf8=" + escape(catCity) + "&breedId=" + escape(breedId) + "&catSex=" + escape(catSex), function(data) {
-            if (data == null) {
-                Swal.fire({
-                    heightAuto: false,
-                    position: 'center',
-                    title: '無此貓貓',
-                    icon: 'error',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
-            } else {
-                $(".cardbox").empty();
-                $('.cardbox').html(data);
-            }
+            $(".cardbox").empty();
+            $('.cardbox').html(data);
         })
     })
 
@@ -303,7 +292,7 @@
         }
     }
 
-                 //---------------------End Function-------------------------------------
+         //---------------------End Function-------------------------------------
 
 </script>
 
