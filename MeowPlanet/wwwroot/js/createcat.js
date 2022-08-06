@@ -7,6 +7,7 @@
     });
 });
 
+
 // 畫面切換
 $('#f1-b1').click(function () {
     $('#p1').css('display', 'none');

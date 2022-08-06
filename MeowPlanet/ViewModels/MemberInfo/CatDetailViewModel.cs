@@ -4,6 +4,7 @@
     {
         public int MemberId { get; set; }
         public int CatId { get; set; }
+        public int BreedId { get; set; }
         public string? Breed { get; set; }
         public bool IsSitting { get; set; }
         public bool IsMissing { get; set; }

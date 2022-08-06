@@ -86,7 +86,7 @@ namespace MeowPlanet.Controllers
 
         public ActionResult Search(string? city_Utf8, int breedId, bool? catSex)
         {
-            try { 
+            try {
             var city = HttpUtility.UrlDecode(city_Utf8); //解碼unicode
             var catDtoList = new List<CatsDto>();
             var CatsDto = GetCatsDto(city, breedId, catSex).OrderBy(x => Guid.NewGuid()).ToList(); //排序及查詢條件
@@ -98,7 +98,8 @@ namespace MeowPlanet.Controllers
             ViewBag.catSex = (catSex != null) ? CatsDto[0].CatSex : null;
 
             return PartialView("_CardPartial", CatsDto);
-            }catch
+            }
+            catch
             {
                 return Json(null);
             }
