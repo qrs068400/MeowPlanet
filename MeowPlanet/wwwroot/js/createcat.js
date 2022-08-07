@@ -249,3 +249,19 @@ function fileChange(num) {
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
 
+$('#f7-b2').click(function (e) {
+    e.preventDefault();
+    var form = $(this).parents('form');
+
+    Swal.fire({
+        heightAuto: false,
+        position: 'center',
+        icon: 'success',
+        title: '貓咪建立完成',
+        showConfirmButton: false,
+        timer: 2500
+    }).then(function () {
+        form.submit();
+    })
+})
+

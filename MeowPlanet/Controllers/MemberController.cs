@@ -393,5 +393,29 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Index");
         }
 
+        // 修改會員頭像
+        [HttpPost]
+        public async Task<IActionResult> UpdatePhoto(IFormFile memberPhoto,int memberId)
+        {
+            var oldMember = _context.Members.FirstOrDefault(p => p.MemberId == memberId);
+
+            Random random = new Random();
+            string? uniqueFileName = null;
+
+            if (memberPhoto != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + memberPhoto.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    memberPhoto.CopyTo(fileStream);
+                }
+                oldMember.Photo = "/images/userUpload/" + uniqueFileName;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }
