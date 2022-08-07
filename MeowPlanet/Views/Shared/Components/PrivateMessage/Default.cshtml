@@ -408,7 +408,7 @@
                     $("#message-content").append($messageLeft);
                     setTimeout(() => {
                         autoScroll();
-                    }, 100)
+                    }, 200)
                     let selfId = parseInt('@memberId');
                     $.post('/Message/MessageRead', { selfId, memberId: senderId })
                 }
@@ -497,7 +497,7 @@
                     document.getElementById('message-content').scrollTop = topPos - 10;
                 }
                 else {
-                    setTimeout(() => { autoScroll() }, 100);
+                    autoScroll()                  
 
                 }
             });
@@ -586,7 +586,7 @@
             }
         });
 
-        return { messageTo };
+        return { messageTo, autoScroll };
     })()
 
 </script>
