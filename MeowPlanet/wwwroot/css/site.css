@@ -41,7 +41,8 @@ body {
 }
 
 #logo .img-p {
-    height: 50px;
+    height: 38px;
+    margin-right: 5px;
 }
 
 .nav-item a {
