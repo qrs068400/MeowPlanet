@@ -12,12 +12,12 @@
         text-align: center;
     }
 
-    .cat-detail-select option {
-        color: white;
-        font-size: 25px;
-        padding: 0px;
-        background: rgba(0, 0, 0, .8);
-    }
+        .cat-detail-select option {
+            color: white;
+            font-size: 25px;
+            padding: 0px;
+            background: rgba(0, 0, 0, .8);
+        }
 </style>
 
 <form method="post" asp-action="UpdateCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
@@ -143,14 +143,17 @@
             </div>
 
             <div class="text-center">
-                <p style="font-size:25px; margin:12px;">可點擊或拖曳更換照片</p>
+                <p style="font-size:25px; margin:0px;">可點擊或拖曳更換照片</p>
             </div>
 
-            <div class="my-5 d-flex justify-content-center">
+            <div class="my-4 d-flex justify-content-center">
                 <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-update">修改資料</button>
             </div>
-            <div class="my-5 d-flex justify-content-center">
-                <button type="button" id="backToList" class="btn cat-detail-btn d-flex align-items-center justify-content-center">返回列表</button>
+            <div class="my-4 d-flex justify-content-center">
+                <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-delete">刪除貓咪</button>
+            </div>
+            <div class="my-4 d-flex justify-content-center">
+                <button type="button" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="backToList">返回列表</button>
             </div>
         </div>
 
