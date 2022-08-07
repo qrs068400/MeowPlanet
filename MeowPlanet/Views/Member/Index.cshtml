@@ -20,7 +20,8 @@
                 <div class="col-3 memberleft mx-3">
                     <div class="d-flex">
                         <div class="col-7 img-wrap d-flex align-items-center justify-content-end">
-                            <img src="@Model.Photo" />
+                            <img src="@Model.Photo" id="photoPreview" />
+                            <input type="file" class="d-none" name="memberPhoto" id="photoInput" />
                         </div>
                         <div class="col-5 p-wrap  d-flex align-items-center justify-content-center">
                             <p class="text-center">@Model.Name</p>
@@ -29,16 +30,16 @@
                     </div>
 
                     <div class="text-center my-5">
-                        <a onclick="showAccount()">我的帳戶</a>
+                        <a onclick="showAccount()" style="cursor: pointer;">我的帳戶</a>
                     </div>
                     <div class="text-center my-5">
-                        <a>保姆服務</a>
+                        <a style="cursor: pointer;">保姆服務</a>
                     </div>
                     <div class="text-center my-5">
-                        <a href="#" id="adoption">領養資訊</a>
+                        <a href="#" id="adoption" style="cursor: pointer;">領養資訊</a>
                     </div>
                     <div class="text-center my-5">
-                        <a href="#" id="clues">協尋管理</a>
+                        <a href="#" id="clues" style="cursor: pointer;">協尋管理</a>
                     </div>
 
 
@@ -106,21 +107,34 @@
             })
         })
 
-                //$(function() {
 
-                //    $.get("@Url.Action("GetCatInfo", "Member")", function(data) {
-                //        $("#cat-region-select").html(data)
-                //    })
-                //})
+        $(document).on({
+            'click': () => $('#photoInput').trigger('click'),
+            'dragover': (event) => event.preventDefault(),
+            'drop': (event) => {
+                event.preventDefault();
+
+                let file = event.originalEvent.dataTransfer.files[0];
+                let reader = new FileReader(file);
+
+                reader.onload = function(e) {
+                    $('#photoPreview').attr('src', e.target.result);
+                }
+
+                let dt = new DataTransfer();
+                dt.items.add(file);
+                $('#photoInput')[0].files = dt.files;
+            }
+        })
 
 
-                //function ToDetail(id) {
-                //    $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
-                //        $("#cat-region-select").html(data)
-                //    })
-                //    $(".member-region").css("display", "none")
-                //    $("#cat-region").removeClass("col-6").css("width", "91.66%")
-                //}
+        $(document).on('change', 'photoInput', function() {
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $('#photoPreview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL($('#photoInput')[0].file[0])
+        })
 
     </script>
 

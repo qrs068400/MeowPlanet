@@ -246,6 +246,7 @@ body {
     font-size: 30px;
 }
 
+
 #f5 input {
     color: white;
     font-size: 30px;
@@ -255,7 +256,7 @@ body {
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
     border-radius: 40px;
-    width: 500px;
+    width: 350px;
     text-align: left;
 }
 
