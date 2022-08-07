@@ -92,15 +92,15 @@ namespace MeowPlanet.Models
             return PartialView("_MissingDetailPartial", result);
         }
 
-        public ActionResult GetPublish()
+        public async Task<IActionResult> GetPublish()
         {
-            List<Cat> cats = _context.Cats.Where(x => x.MemberId == _memberId).ToList();
+            List<Cat> cats = await _context.Cats.Where(x => x.MemberId == _memberId).ToListAsync();
             ViewData["cats"] = cats;
 
             return PartialView("_MissingPublishPartial");
         }
 
-        public string PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId)
+        public async Task<IActionResult> PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId)
         {
             var clue = new Clue
             {
@@ -127,16 +127,16 @@ namespace MeowPlanet.Models
                 clue.ImagePath = "/images/clue/" + uniqueFileName;
             }
 
-            _context.Clues.Add(clue);
-            _context.SaveChanges();
+            await _context.Clues.AddAsync(clue);
+            await _context.SaveChangesAsync();
 
-            return "OK";
+            return Content("OK");
         }
 
         [HttpGet]
-        public IActionResult GetClues()
+        public async Task<IActionResult> GetClues()
         {
-            var missingCat = _context.Cats.FirstOrDefault(x => x.MemberId == _memberId && x.IsMissing == true);
+            var missingCat = await _context.Cats.FirstOrDefaultAsync(x => x.MemberId == _memberId && x.IsMissing == true);
 
             if (missingCat != null)
             {
@@ -157,21 +157,22 @@ namespace MeowPlanet.Models
         }
 
         [HttpPost]
-        public IActionResult EditClue(int clueId, int newStatus)
+        public async Task<IActionResult> EditClue(int clueId, int newStatus)
         {
             string respond = newStatus == 1 ? "已釘選此線索" : "已移除此線索";
 
-            _context.Clues.FirstOrDefault(x => x.ClueId == clueId).Status = newStatus;
-            _context.SaveChanges();
+            var clue = await _context.Clues.FirstOrDefaultAsync(x => x.ClueId == clueId);
+            clue.Status = newStatus;
+            await _context.SaveChangesAsync();
 
             return Content(respond);
         }
 
         [HttpGet]
-        public IActionResult CheckCats()
+        public async Task<IActionResult> CheckCats()
         {
-            var catCount = _context.Cats.Count(x => x.MemberId == _memberId);
-            var missingCount = _context.Cats.Count(x => x.MemberId == _memberId && x.IsMissing == true);
+            var catCount = await _context.Cats.CountAsync(x => x.MemberId == _memberId);
+            var missingCount = await _context.Cats.CountAsync(x => x.MemberId == _memberId && x.IsMissing == true);
 
             if (catCount == 0)
             {

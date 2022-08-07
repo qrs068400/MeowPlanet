@@ -24,7 +24,7 @@ namespace MeowPlanet.Controllers
         }
 
         [HttpPost]
-        public ActionResult sendMessage(string message, int receivedId)
+        public async Task<IActionResult> sendMessage(string message, int receivedId)
         {
             _context.Messages.Add(new Message
             {
@@ -34,7 +34,7 @@ namespace MeowPlanet.Controllers
                 Time = DateTime.Now
             });
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Content("OK");
         }
@@ -73,24 +73,24 @@ namespace MeowPlanet.Controllers
             return PartialView("_HistoryMessagePartial", result);
         }
 
-        public ActionResult SearchMember(int memberId)
+        public async Task<IActionResult> SearchMember(int memberId)
         {
-            var result = _context.Members.Where(x => x.MemberId == memberId).Select(x => new
+            var result = await _context.Members.Where(x => x.MemberId == memberId).Select(x => new
             {
                 x.Name,
                 x.Photo
-            }).FirstOrDefault();
+            }).FirstOrDefaultAsync();
 
             return Json(result);
         }
 
-        public ActionResult MessageRead(int selfId, int memberId)
+        public async Task<IActionResult> MessageRead(int selfId, int memberId)
         {
             _context.Messages.Where(x => x.SendId == memberId && x.ReceivedId == selfId && x.IsRead == false)
                 .ToList()
                 .ForEach(x => x.IsRead = true);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Content("OK");
         }
