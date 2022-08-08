@@ -21,8 +21,8 @@
 </style>
 
 
-<div class="row">
-    <form method="post" asp-action="UpdateCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
+<form method="post" asp-action="UpdateCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
+    <div class="row">
         <input type="text" asp-for="CatId" class="d-none" value="@Model.CatId" />
         <div class="col-1"></div>
         <div class="col-4">
@@ -156,9 +156,9 @@
                 <button type="button" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="backToList">返回列表</button>
             </div>
         </div>
-    </form>
 
-</div>
+    </div>
+</form>
 
 
 <script>
