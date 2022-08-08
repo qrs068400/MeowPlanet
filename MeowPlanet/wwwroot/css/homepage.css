@@ -141,6 +141,16 @@ body {
     align-items: center;
 }
 
+#sitterLink:hover {
+    opacity: 0.7;
+}
+#adoptionLink:hover {
+    opacity: 0.7;
+}
+#missingsLink:hover {
+    opacity: 0.7;
+}
+
 #move-section1 #img4 {
     border: 2px rgb(219, 232, 248) solid;
     border-radius: 50px;
@@ -150,9 +160,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    --lef: 5%;
-    --top: 30%;
-    --wid: 30%;
+    --lef: 7%;
+    --top: 33%;
+    --wid: 24%;
 }
 
 .move-section .f-pic .move-div p {
@@ -169,9 +179,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    --lef: 35%;
-    --top: 30%;
-    --wid: 30%;
+    --lef: 38%;
+    --top: 33%;
+    --wid: 24%;
 }
 
 #move-section1 #img6 {
@@ -183,9 +193,9 @@ body {
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-    --lef: 65%;
-    --top: 30%;
-    --wid: 30%;
+    --lef: 69%;
+    --top: 33%;
+    --wid: 24%;
 }
 
 .intro {
@@ -292,15 +302,15 @@ body {
 }
 
 .p2 {
-    font-size: 20px;
-    margin: 1px;
-    font-weight: 500;
+    font-size: 50px;
+    margin: 30px;
+    font-weight: 800;
 }
 
 .p3 {
-    font-size: 20px;
-    margin: 1px;
-    font-weight: 500;
+    font-size: 50px;
+    margin: 30px;
+    font-weight: 800;
 }
 
 

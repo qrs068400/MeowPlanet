@@ -251,3 +251,15 @@ body {
         transform: translateY(-3000px)
     }
 }
+
+@keyframes FadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(200px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
