@@ -85,8 +85,12 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="text" class="form-control regist-send" autocomplete="current-password" aria-required="true" />
-                                <button type="button" class="btn btn-send">寄送驗證碼</button>
+                                <input type="text" class="form-control regist-send" autocomplete="current-password" aria-required="true" id="verify" maxlength="5" />
+                                <button type="button" class="btn btn-send" id="sendEmail">寄送驗證碼</button>
+                            </div>
+
+                            <div class="d-flex justify-content-start align-items-center err-msg-div">
+                                <span class="text-danger" id="verifyspan"></span>
                             </div>
 
                         </div>
@@ -108,49 +112,84 @@
 
 
     <script>
+        (() => {
 
-        $('input[type=email]').blur(function() {
+            let verifycode;
 
-            if ($('#EmailValid').text() == '') {
-                if ($('input[type=email]').val() == '') {
-                    $('#EmailValid').addClass('text-danger')
-                } else {
-                    $.get("EmailCheck", { email: this.value }, function(data) {
-                        if (data == "此信箱已註冊") {
-                            $('#EmailValid').html(data).addClass('text-danger')
-                        } else {
-                            $('#EmailValid').html(data).removeClass('text-danger').css('color', '#FF8EFF')
-                        }
-                    })
-                }
-            } else {
-            }
-
-
-        })
-
-        $('#registerSubmit').click(function(e) {
-            e.preventDefault();
-            var form = $(this).parents('form');
-
-            $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
-                if (data == "此信箱可使用") {
-                    Swal.fire({
-                        heightAuto: false,
-                        position: 'center',
-                        icon: 'success',
-                        title: '註冊成功',
-                        showConfirmButton: false,
-                        timer: 2500
-                    }).then(function() {
-                        form.submit();
-                    })
-                } else {
-                    form.submit();
-                }
+            $('#sendEmail').click(function() {
+                let email = $('input[type=email]').val();
+                $.get("/Login/SendRegistMail", { email }, function(data) {
+                    $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', '#FF8EFF');
+                    verifycode = data;
+                })
             })
-        })
 
+            $('input[type=email]').blur(function() {
+
+                if ($('#EmailValid').text() == '') {
+                    if ($('input[type=email]').val() == '') {
+                        $('#EmailValid').addClass('text-danger')
+                    } else {
+                        $.get("EmailCheck", { email: this.value }, function(data) {
+                            if (data == "此信箱已註冊") {
+                                $('#EmailValid').html(data).addClass('text-danger')
+                            } else {
+                                $('#EmailValid').removeClass('text-danger').css('color', '#FF8EFF')
+                            }
+                        })
+                    }
+                } else {
+                }
+
+
+            })
+
+            $('#verify').keyup(function() {
+                $('#verifyspan').text("")
+                if ($('#verify').val().length == 5) {
+                    if (verifycode != $('#verify').val()) {
+                        $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
+                    } else {
+                        
+                    }
+                }
+                
+            })
+
+            $('#registerSubmit').click(function(e) {
+                e.preventDefault();
+
+                if ($('#verify').val() != "") {
+                    if (verifycode != $('#verify').val()) {
+                        $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
+                        return;
+                    }
+
+                } else {
+                    $('#verifyspan').text("請輸入驗證碼").addClass('text-danger');
+                    return;
+                }
+
+                var form = $(this).parents('form');
+
+                $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
+                    if (data == "此信箱可使用") {
+                        Swal.fire({
+                            heightAuto: false,
+                            position: 'center',
+                            icon: 'success',
+                            title: '註冊成功',
+                            showConfirmButton: false,
+                            timer: 2500
+                        }).then(function() {
+                            form.submit();
+                        })
+                    } else {
+                        form.submit();
+                    }
+                })
+            })
+        })()
     </script>
 
     }

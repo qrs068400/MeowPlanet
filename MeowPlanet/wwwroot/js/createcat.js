@@ -7,6 +7,7 @@
     });
 });
 
+
 // 畫面切換
 $('#f1-b1').click(function () {
     $('#p1').css('display', 'none');
@@ -247,4 +248,20 @@ function fileChange(num) {
     $(`#plus${num}`).css('display', 'none')
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
+
+$('#f7-b2').click(function (e) {
+    e.preventDefault();
+    var form = $(this).parents('form');
+
+    Swal.fire({
+        heightAuto: false,
+        position: 'center',
+        icon: 'success',
+        title: '貓咪建立完成',
+        showConfirmButton: false,
+        timer: 2500
+    }).then(function () {
+        form.submit();
+    })
+})
 

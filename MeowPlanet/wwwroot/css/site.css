@@ -41,15 +41,8 @@ body {
 }
 
 #logo .img-p {
-    height: 50px;
-}
-
-.loginbtn {
-    color:white;
-}
-
-.loginbtn:hover {
-    color: #FF8EFF;
+    height: 38px;
+    margin-right: 5px;
 }
 
 .nav-item a {
@@ -60,11 +53,11 @@ body {
     text-decoration: none;
 }
 
-    .nav-item a:hover {
-        border-radius: 50rem;
-        background-color: white;
-        color: black !important;
-    }
+.nav-item a:hover {
+    border-radius: 50rem;
+    background-color: white;
+    color: black !important;
+}
 
 .nav-item-active {
     border-radius: 50rem;

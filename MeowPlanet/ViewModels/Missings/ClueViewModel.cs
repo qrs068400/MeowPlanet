@@ -13,6 +13,7 @@ namespace MeowPlanet.ViewModels.Missings
         public string ImagePath { get; set; } = null!;
         public string Description { get; set; } = null!;
         public int Distance { get; set; }
+        public int ProviderId { get; set; }
         public string ProviderName { get; set; } = null!;
         public string ProviderPhoto { get; set; } = null!;
 

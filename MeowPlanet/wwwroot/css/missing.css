@@ -5,7 +5,7 @@
 }
 
 html,
-body {    
+body {
     margin: 0;
     padding: 0;
     overflow: hidden;
@@ -13,8 +13,8 @@ body {
     background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%);
 }
 
-.my{
-    margin-top:2.3rem;
+.my {
+    margin-top: 2.3rem;
     margin-bottom: 2.3rem;
 }
 
@@ -27,13 +27,14 @@ body {
     height: 100%;
 }
 
-#div-map{
-    opacity:0.7;
+#div-map {
+    opacity: 0.7;
 }
 
 #missingIndex {
     animation: topFadeIn 1s ease;
 }
+
 .cat-item {
     animation: leftFadeIn 1s ease;
 }
@@ -83,6 +84,10 @@ body {
     color: white;
 }
 
+    .pac-item:hover {
+        background-color: #444;
+    }
+
 
 .pac-container {
     border: 1px solid white;
@@ -102,6 +107,7 @@ body {
     color: white;
 }
 
+
 #pre-publish, #cancel-publish, #backToDetail {
     position: absolute;
     left: 50%;
@@ -118,9 +124,11 @@ a[href^="http://maps.google.com/maps"] {
 a[href^="https://maps.google.com/maps"] {
     display: none !important
 }
-.gm-style{
+
+.gm-style {
     font: inherit;
 }
+
 .gmnoprint a,
 .gmnoprint span,
 .gm-style-cc {
@@ -155,7 +163,7 @@ input[type="search"]::-webkit-search-cancel-button {
 .map-activate {
     width: 97%;
     transform: translateX(-10.3%);
-    opacity: 1 !important; 
+    opacity: 1 !important;
 }
 
 .btn-location {
@@ -172,27 +180,27 @@ input[type="search"]::-webkit-search-cancel-button {
     background-color: rgb(27, 39, 53) !important;
     border: 2px solid white !important;
     border-radius: 25px !important;
-    box-shadow: 0 0 3rem rgb(134 171 190 / 50%) inset !important;    
+    box-shadow: 0 0 3rem rgb(134 171 190 / 50%) inset !important;
 }
 
-.gm-style-iw button{
-    padding-left: 1.5rem;
-    padding-right: 1.5rem;
-    font-size:1.05rem;
-    border: 1px solid white;
-}
-
-    .gm-style-iw button:hover{
-        border-color: black;
-        color: black;
-        background-color: white;
+    .gm-style-iw button {
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
+        font-size: 1.05rem;
+        border: 1px solid white;
     }
 
-.gm-style-iw div{
-    color: white !important;
-}
+        .gm-style-iw button:hover {
+            border-color: black;
+            color: black;
+            background-color: white;
+        }
 
-.gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece{
+    .gm-style-iw div {
+        color: white !important;
+    }
+
+.gm-style .gm-style-iw-d::-webkit-scrollbar-track, .gm-style .gm-style-iw-d::-webkit-scrollbar-track-piece {
     display: none;
 }
 
@@ -232,8 +240,8 @@ input[type="search"]::-webkit-search-cancel-button {
     }
 
 
-@media (max-width: 900px){
-    #div-items{
+@media (max-width: 900px) {
+    #div-items {
         display: none;
     }
 }
@@ -255,8 +263,8 @@ input[type="search"]::-webkit-search-cancel-button {
     overflow: hidden;
 }
 
-.w-85{
-    width:85%
+.w-85 {
+    width: 85%
 }
 
 .modal-content {
