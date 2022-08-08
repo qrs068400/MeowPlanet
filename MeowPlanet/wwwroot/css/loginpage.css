@@ -172,6 +172,7 @@ body {
 
 .form-check-input:focus {
     border-color: white;
+    box-shadow:none;
 }
 
 .form-switch .form-check-input:focus {
