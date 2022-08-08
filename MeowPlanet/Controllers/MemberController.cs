@@ -403,7 +403,7 @@ namespace MeowPlanet.Controllers
         {
             var Cat = _context.Cats.FirstOrDefault(p => p.CatId == cat.CatId);
 
-            _context.Sitters.Remove(Cat);
+            _context.Cats.Remove(Cat);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
