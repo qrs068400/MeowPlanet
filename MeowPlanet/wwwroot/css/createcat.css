@@ -264,7 +264,7 @@ body {
     color: white;
     font-size: 30px;
     height: 80px;
-    padding: 1rem;
+    padding:0px;
     border: 2px rgb(115, 244, 222) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);

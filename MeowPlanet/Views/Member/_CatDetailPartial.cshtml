@@ -20,9 +20,9 @@
         }
 </style>
 
+
 <form method="post" asp-action="UpdateCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
     <div class="row">
-
         <input type="text" asp-for="CatId" class="d-none" value="@Model.CatId" />
         <div class="col-1"></div>
         <div class="col-4">
@@ -38,7 +38,7 @@
                     <option value="3">俄羅斯藍貓</option>
                     <option value="4">波斯貓</option>
                     <option value="5">布偶貓</option>
-                    <option value="6">曼斥肯</option>
+                    <option value="6">曼赤肯</option>
                     <option value="7">米克斯</option>
                     <option value="8">其他</option>
                 </select>
@@ -157,9 +157,9 @@
             </div>
         </div>
 
-
     </div>
 </form>
+
 
 <script>
     var breed = '@Model.Breed';
@@ -232,6 +232,21 @@
             event.preventDefault();
 
             let file = event.originalEvent.dataTransfer.files[0];
+
+            if (file.type.indexOf('image') == -1) {
+
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '請上傳正確的圖片格式',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                return
+            }
+
             let reader = new FileReader()
 
             reader.readAsDataURL(file);
@@ -246,6 +261,22 @@
     }, '#imgPreview1')
 
     $(document).on('change', '#imgInput1', function() {
+
+        if ($(this)[0].files[0].type.indexOf('image') == -1) {
+
+            $(this).val('');
+
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '請上傳正確的圖片格式',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2000
+            })
+
+            return
+        }
 
         let reader = new FileReader();
         reader.onload = function(e) {
@@ -264,6 +295,21 @@
             event.preventDefault();
 
             let file = event.originalEvent.dataTransfer.files[0];
+
+            if (file.type.indexOf('image') == -1) {
+
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '請上傳正確的圖片格式',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                return
+            }
+
             let reader = new FileReader()
 
             reader.readAsDataURL(file);
@@ -279,6 +325,22 @@
     }, '#imgPreview2')
 
     $(document).on('change', '#imgInput2', function() {
+
+        if ($(this)[0].files[0].type.indexOf('image') == -1) {
+
+            $(this).val('');
+
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '請上傳正確的圖片格式',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2000
+            })
+
+            return
+        }
 
         let reader = new FileReader();
         reader.onload = function(e) {
@@ -297,6 +359,21 @@
             event.preventDefault();
 
             let file = event.originalEvent.dataTransfer.files[0];
+
+            if (file.type.indexOf('image') == -1) {
+
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '請上傳正確的圖片格式',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                return
+            }
+
             let reader = new FileReader()
 
             reader.readAsDataURL(file);
@@ -311,6 +388,22 @@
     }, '#imgPreview3')
 
     $(document).on('change', '#imgInput3', function() {
+
+        if ($(this)[0].files[0].type.indexOf('image') == -1) {
+
+            $(this).val('');
+
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '請上傳正確的圖片格式',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2000
+            })
+
+            return
+        }
 
         let reader = new FileReader();
         reader.onload = function(e) {
@@ -329,6 +422,21 @@
             event.preventDefault();
 
             let file = event.originalEvent.dataTransfer.files[0];
+
+            if (file.type.indexOf('image') == -1) {
+
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '請上傳正確的圖片格式',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                return
+            }
+
             let reader = new FileReader()
 
             reader.readAsDataURL(file);
@@ -343,6 +451,22 @@
     }, '#imgPreview4')
 
     $(document).on('change', '#imgInput4', function() {
+
+        if ($(this)[0].files[0].type.indexOf('image') == -1) {
+
+            $(this).val('');
+
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '請上傳正確的圖片格式',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2000
+            })
+
+            return
+        }
 
         let reader = new FileReader();
         reader.onload = function(e) {
@@ -361,6 +485,21 @@
             event.preventDefault();
 
             let file = event.originalEvent.dataTransfer.files[0];
+
+            if (file.type.indexOf('image') == -1) {
+
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '請上傳正確的圖片格式',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                return
+            }
+
             let reader = new FileReader()
 
             reader.readAsDataURL(file);
@@ -375,6 +514,22 @@
     }, '#imgPreview5')
 
     $(document).on('change', '#imgInput5', function() {
+
+        if ($(this)[0].files[0].type.indexOf('image') == -1) {
+
+            $(this).val('');
+
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                title: '請上傳正確的圖片格式',
+                icon: 'warning',
+                showConfirmButton: false,
+                timer: 2000
+            })
+
+            return
+        }
 
         let reader = new FileReader();
         reader.onload = function(e) {
