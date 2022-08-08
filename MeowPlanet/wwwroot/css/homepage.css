@@ -130,13 +130,13 @@ body {
 }
 
 .move-section .f-pic .move-div {
-    clip-path: inset(10% 5% round 5%);
+    /*clip-path: inset(10% 5% round 5%);*/
     position: absolute;
     left: var(--lef);
     top: var(--top);
     transform: translate(-(var(--lef)), -var(--top));
     width: var(--wid);
-    height: 40%;
+    height: 34%;
     display: flex;
     align-items: center;
 }
@@ -161,7 +161,7 @@ body {
 }
 
 #move-section1 #img5 {
-    padding: 1rem;
+    border-radius: 50px;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
@@ -175,7 +175,7 @@ body {
 }
 
 #move-section1 #img6 {
-    padding: 1rem;
+    border-radius: 50px;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
@@ -653,14 +653,33 @@ body {
     justify-content: center;
     align-items: center;
     height: 80px;
+    position: relative;
 }
 
     .third p {
-        color: #FFF;
+        color: #fff;
         margin: 0;
         font-size: 14px;
-        border-left: 1vh solid #DDB178;
+        position: relative;
     }
+
+        .third p::before, .third p::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            background: #aaa;
+            width: 10%;
+            height: 1px;
+        }
+
+        .third p::before {
+            transform:translateX(-100%);
+            margin-left: -10px;
+        }
+
+        .third p::after {
+            margin-left: 10px;
+        }
 
 #service .col {
     display: flex;
@@ -680,6 +699,38 @@ body {
     font-size: 10px;
     margin: 0;
 }
+
+.fourth {
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    position: relative;
+}
+
+    .fourth p {
+        color: #fff;
+        margin: 0;
+        font-size: 14px;
+        position: relative;
+    }
+
+        .fourth p::before, .fourth p::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            background: #aaa;
+            width: 25%;
+            height: 1px;
+        }
+
+        .fourth p::before {
+            transform: translateX(-100%);
+            margin-left: -10px;
+        }
+
+        .fourth p::after {
+            margin-left: 10px;
+        }
 
 #car .carousel-inner {
     padding-left: 15%;
