@@ -12,6 +12,7 @@
         <li class="nav-item memberlogin d-flex align-items-center">
             <a class="text-light" asp-area="" asp-controller="Member" asp-action="Index">歡迎回來 @User.FindFirst(ClaimTypes.Name).Value</a>
         </li>
+
         <li class="nav-item memberlogin d-flex align-items-center">
             <form class="form-inline" asp-controller="Login" asp-action="Logout">
                 <button type="submit" class="btn text-light">登出</button>
@@ -21,11 +22,8 @@
     else
     {
         <li class="nav-item">
-            
-            <a class="btn navbar-brand" asp-area="" asp-controller="Login" asp-action="Index" id="loginbtn">
-                <div class="loginbtn">
-                    <i class="fa-regular fa-circle-user"></i>&nbsp;會員登入
-                </div>
+            <a class="navbar-brand" asp-area="" asp-controller="Login" asp-action="Index" id="loginbtn">
+                <i class="fa-regular fa-circle-user"></i>&nbsp;會員登入
             </a>
         </li>
     }

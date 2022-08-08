@@ -109,6 +109,7 @@ namespace MeowPlanet.Controllers
                 {
                     new Claim(ClaimTypes.Sid, LoginId.ToString()),
                     new Claim(ClaimTypes.Name, LoginName),
+                    new Claim(ClaimTypes.Role, "member")
 
                 };
 
@@ -137,11 +138,42 @@ namespace MeowPlanet.Controllers
 
         }
 
+        // 登出
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
             return RedirectToAction("Index", "Home");
+        }
+
+        // 寄送註冊驗證碼
+        public ActionResult SendRegistMail(string email)
+        {
+
+            Random random = new Random();
+            int verifycode = random.Next(10000, 99999);
+
+            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+            msg.To.Add(email);
+
+            msg.From = new MailAddress("meowplanet04@gmail.com", "喵屋星球", System.Text.Encoding.UTF8);
+
+            msg.Subject = "MeowPlanet 註冊驗證碼";
+            msg.SubjectEncoding = System.Text.Encoding.UTF8;
+            msg.Body = "這是 MeowPlanet 喵屋星球 的註冊驗證信，若你不曾要求註冊，請忽略這封信<br />" + "驗證碼:" + verifycode;
+            msg.BodyEncoding = System.Text.Encoding.UTF8;
+            msg.IsBodyHtml = true;
+
+            SmtpClient client = new SmtpClient();
+            client.Credentials = new System.Net.NetworkCredential("meowplanet04@gmail.com", "cbqjonjcosbrqnnv");
+            client.Host = "smtp.gmail.com";
+            client.Port = 25;
+            client.EnableSsl = true;
+            client.Send(msg);
+            client.Dispose();
+            msg.Dispose();
+
+            return Content(verifycode.ToString());
         }
 
         // 註冊判定Email是否可使用
@@ -179,7 +211,7 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Register");
         }
 
-        // 寄驗證信
+        // 寄密碼重置信
         public ActionResult SendEmailMsg(string Email)
         {
             System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
@@ -225,7 +257,9 @@ namespace MeowPlanet.Controllers
         }
 
 
-        public IActionResult ValidGoogleLogin()
+
+        // google登入
+        public async Task<IActionResult> ValidGoogleLogin()
         {
             string? formCredential = Request.Form["credential"]; //回傳憑證
             string? formToken = Request.Form["g_csrf_token"]; //回傳令牌
@@ -282,25 +316,26 @@ namespace MeowPlanet.Controllers
                 }
                 else
                 {
+                    // 建立google會員
                     Member member = new()
                     {
                         Email = payload.Email,
                         Name = payload.Name,
                         Password = "123456",
-                        Phone = "0900000000"
+                        Phone = " "
 
                     };
 
-                    _context.Members.Add(member);
-                    _context.SaveChangesAsync();
+                    await AddMember(member);
 
-                    var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == payload.Email); //整筆資料取出
+
+                    // 登入
+                    var LoginInfo = _context.Members.FirstOrDefault(p => p.Email == payload.Email);
 
                     var LoginId = LoginInfo.MemberId;
 
                     var LoginName = LoginInfo.Name;
 
-                    //cookie驗證
                     var claims = new List<Claim>
                     {
                         new Claim(ClaimTypes.Sid, LoginId.ToString()),
@@ -311,14 +346,12 @@ namespace MeowPlanet.Controllers
                     var claimsIdentity = new ClaimsIdentity(
                                claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
-                    //記住我
                     var properties = new AuthenticationProperties
                     {
                         IsPersistent = true,
                         ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
                     };
 
-                    //登入驗證存進cookie
                     HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                             new ClaimsPrincipal(claimsIdentity), properties);
 
@@ -381,5 +414,7 @@ namespace MeowPlanet.Controllers
             }
             return payload;
         }
+
+
     }
 }

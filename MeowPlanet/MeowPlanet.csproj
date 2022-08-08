@@ -38,6 +38,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\images\message\" />
     <Folder Include="wwwroot\images\userUpload\" />
   </ItemGroup>
 

@@ -6,9 +6,13 @@
 
 html {
     height: 100%;
+    overflow: hidden;
 }
 
 body {
+    background-color: #171b20;
+    background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%);
+    overflow: hidden;
     height: 100%;
 }
 
@@ -37,14 +41,17 @@ body {
     padding: 1rem;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-    background: #4B5461;
     height: 700px;
     border-radius: 30px;
 }
 
     .memberleft img {
-        width: 90%;
+        width: 120px;
+        height: 120px;
+        object-fit: cover;
+        cursor: pointer;
         border-radius: 50%;
+        margin-bottom: 15px;
     }
 
 .col-3 {
@@ -60,33 +67,33 @@ body {
     text-decoration: none;
     color: white;
     font-size: 25px;
+    cursor: pointer;
 }
 
-.memberleft a:hover {
-    color: white;
-    text-shadow: 0 0 1px white,0 0 3px white,0 0 5px white,0 0 7px white;
-}
+    .memberleft a:hover {
+        color: white;
+        text-shadow: 0 0 1px white,0 0 3px white,0 0 5px white,0 0 7px white;
+    }
 
 .memberright {
     color: white;
     padding: 1rem;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-    background: #4B5461;
     height: 700px;
     border-radius: 30px;
 }
 
-.memberright p {
-    margin: 3px;
-    font-size: 14px;
-}
+    .memberright p {
+        margin: 3px;
+        font-size: 14px;
+    }
 
 .title p {
     font-size: 24px;
 }
 
-.memberright input {
+.memberright .member-region input {
     color: white;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
@@ -97,10 +104,23 @@ body {
     padding: 0 1rem;
 }
 
+.memberright .cat-region input {
+    color: white;
+    border: 2px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 25px;
+    font-size: 25px;
+    width: 100%;
+    padding: 0 1rem;
+    text-align: center;
+}
+
 .member-region {
     padding-left: 50px;
     padding-right: 50px;
-    padding-top:30px;
+    padding-top: 30px;
+    position: relative;
 }
 
 
@@ -113,9 +133,9 @@ body {
     border-radius: 30px;
     font-size: 20px;
     color: white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .cat-region {
@@ -125,41 +145,41 @@ body {
     padding: 30px;
 }
 
-.cat-region-title{
-    margin-left:30px;
+.cat-region-title {
+    margin-left: 30px;
 }
 
-.cat-region-title p {
-    font-size: 24px;
-}
+    .cat-region-title p {
+        font-size: 24px;
+    }
 
-.cat-region-title .btn {
-    font-size: 18px;
-    color: white;
-    border: 2px rgb(219, 232, 248) solid;
-    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
-    border-radius: 30px;
-    width: 120px;
-    height: 41.5px;
-    margin-left: auto;
-}
+    .cat-region-title .btn {
+        font-size: 18px;
+        color: white;
+        border: 2px rgb(219, 232, 248) solid;
+        box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+        border-radius: 30px;
+        width: 120px;
+        height: 41.5px;
+        margin-left: auto;
+    }
 
-.cat-region-title .btn:hover{
-    color:black;
-    background:white;
-}
+        .cat-region-title .btn:hover {
+            color: black;
+            background: white;
+        }
 
 .cat-select {
     border-radius: 30px;
     margin-top: 15px;
-    width: 100%;
-    height: 140px;
+    width: 95%;
+    height: 155px;
     background-color: #CCCCCC;
 }
 
 .cat-region-select {
     margin-top: 15px;
-    height: 480px;
+    height: 520px;
     overflow-x: hidden;
     overflow-y: auto;
 }
@@ -187,16 +207,50 @@ body {
 
 .cat-detail-btn {
     color: white;
-    font-size: 30px;
+    font-size: 25px;
     border-radius: 20px;
-    height: 70px;
     width: 200px;
-    padding: 1rem;
     border: 2px rgb(115, 244, 222) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
-    margin-top:8px;
+    margin-top: 8px;
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
+.member-update-btn {
+    color: white;
+    font-size: 25px;
+    border-radius: 20px;
+    width: 200px;
+    border: 2px rgb(115, 244, 222) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    margin-top: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 30px;
+}
+
+.member-div {
+    margin-top: 35px;
+}
+
+.dropZone {
+    border: 2px rgb(115, 244, 222) solid;
+    box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
+    background: rgba(0, 0, 0, .3);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    cursor: pointer;
+}
+
+    .dropZone:hover {
+        background: rgba(0, 0, 0, 0);
+    }

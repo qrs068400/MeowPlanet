@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MeowPlanet.Models
 {
@@ -12,9 +13,11 @@ namespace MeowPlanet.Models
 
         public int MissingId { get; set; }
         public int CatId { get; set; }
+        [Required(ErrorMessage = "此欄位為必填")]
         public DateTime Date { get; set; }
         public decimal Lat { get; set; }
         public decimal Lng { get; set; }
+        [Required(ErrorMessage = "此欄位為必填")]
         public string Description { get; set; } = null!;
         public bool IsFound { get; set; }
 
