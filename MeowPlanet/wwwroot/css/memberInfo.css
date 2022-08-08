@@ -82,6 +82,7 @@ body {
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     height: 700px;
     border-radius: 30px;
+    position:relative;
 }
 
     .memberright p {
@@ -120,7 +121,9 @@ body {
     padding-left: 50px;
     padding-right: 50px;
     padding-top: 30px;
-    position: relative;
+    position: absolute;
+    left: 50px;
+    top:20px;
 }
 
 
@@ -140,9 +143,13 @@ body {
 
 .cat-region {
     background-color: #A9ADB1;
-    height: 95%;
+    height: 90%;
     border-radius: 25px;
     padding: 30px;
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    transition: all 0.2s ease;
 }
 
 .cat-region-title {
@@ -227,12 +234,11 @@ body {
     border: 2px rgb(115, 244, 222) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
-    margin-top: 8px;
+    margin-top: 70px;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    bottom: 30px;
+
 }
 
 .member-div {

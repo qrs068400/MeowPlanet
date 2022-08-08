@@ -22,23 +22,42 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
-            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
-
-            var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
-
-
-
-            return View(LoginInfo);
+            if(User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+                var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
+                return View(LoginInfo);
+            }
         }
 
         public IActionResult CreateCat()
         {
+            if (User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
             return View();
+
+            }
         }
 
         public IActionResult CreateSitter()
         {
+            if (User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
             return View();
+
+            }
         }
 
         // 回應MyAccountPartial
@@ -375,6 +394,16 @@ namespace MeowPlanet.Controllers
                 oldCat.Img05 = cat.Img05;
             }
 
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
+        // 刪除貓咪
+        public async Task<IActionResult> DeleteCat(Cat cat)
+        {
+            var Cat = _context.Cats.FirstOrDefault(p => p.CatId == cat.CatId);
+
+            _context.Sitters.Remove(Cat);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
