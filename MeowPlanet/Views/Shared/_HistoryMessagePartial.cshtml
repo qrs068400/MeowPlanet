@@ -95,7 +95,12 @@
 }
 
 <script>
-$('.message img').one('load', () => {
-    messagebox.autoScroll();
-})
+    $('.message img').one('load', () => {
+
+        if ($('#message-content').find('.separator').length == 0) {
+            messagebox.autoScroll();
+
+        }
+
+    })
 </script>
