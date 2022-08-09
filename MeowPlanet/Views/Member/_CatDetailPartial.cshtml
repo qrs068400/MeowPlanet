@@ -5,7 +5,7 @@
         color: white;
         padding: 0px;
         font-size: 25px;
-        border: 2px rgb(115, 244, 222) solid;
+        border: 2px rgb(219, 232, 248) solid;
         box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
         background: rgba(0, 0, 0, .3);
         border-radius: 40px;
@@ -20,12 +20,59 @@
         }
 </style>
 
-
+<div class="d-flex justify-content-end" style="margin-right:70px;">
+    <button type="button" class="btn btn-backToList d-flex align-items-center justify-content-center" id="backToList"><i class="fa-solid fa-arrow-left"></i>&nbsp;返回列表</button>
+</div>
 <form method="post" asp-action="UpdateCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
     <div class="row">
         <input type="text" asp-for="CatId" class="d-none" value="@Model.CatId" />
-        <div class="col-1"></div>
-        <div class="col-4">
+
+        <div class="col-6">
+
+            <div class="d-flex justify-content-center" style="margin:10px;">
+                <div>
+                    <img src="@Model.Img01" style="width:380px;height:280px;border-radius:30px; object-fit:cover" id="imgPreview1" class="dropZone">
+                    <input id="imgInput1" type="file" class="d-none" name="file1" />
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center" style="margin:10px;">
+
+                <div style="position: relative;">
+                    <img src="@Model.Img02" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview2" class="dropZone">
+                    <input id="imgInput2" type="file" class="d-none" name="file2" />
+                </div>
+                <div style="position: relative;">
+                    <img src="@Model.Img03" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview3" class="dropZone">
+                    <input id="imgInput3" type="file" class="d-none" name="file3" />
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-center" style="margin:10px;">
+
+                <div style="position: relative;">
+                    <img src="@Model.Img04" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview4" class="dropZone">
+                    <input id="imgInput4" type="file" class="d-none" name="file4" />
+                </div>
+                <div style="position: relative;">
+                    <img src="@Model.Img05" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview5" class="dropZone">
+                    <input id="imgInput5" type="file" class="d-none" name="file5" />
+                </div>
+
+            </div>
+
+            <div class="text-center">
+                <p style="font-size:25px; margin:0px;">可點擊或拖曳更換照片</p>
+            </div>
+
+            <div class="d-flex justify-content-center" style="margin-top:50px;">
+                <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-update">修改資料</button>
+                <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-delete">刪除貓咪</button>
+            </div>
+
+        </div>
+        <div class="col-5">
             <div class="my-3">
                 <p>名稱</p>
                 <input type="text" value="@Model.Name" asp-for="Name" />
@@ -107,55 +154,7 @@
 
             </div>
         </div>
-        <div class="col-6">
 
-            <div class="d-flex justify-content-center" style="margin:10px;">
-                <div>
-                    <img src="@Model.Img01" style="width:250px;height:180px;border-radius:30px; object-fit:cover" id="imgPreview1" class="dropZone">
-                    <input id="imgInput1" type="file" class="d-none" name="file1" />
-                </div>
-            </div>
-
-            <div class="d-flex justify-content-center" style="margin:10px;">
-
-                <div style="position: relative;">
-                    <img src="@Model.Img02" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview2" class="dropZone">
-                    <input id="imgInput2" type="file" class="d-none" name="file2" />
-                </div>
-                <div style="position: relative;">
-                    <img src="@Model.Img03" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview3" class="dropZone">
-                    <input id="imgInput3" type="file" class="d-none" name="file3" />
-                </div>
-
-            </div>
-
-            <div class="d-flex justify-content-center" style="margin:10px;">
-
-                <div style="position: relative;">
-                    <img src="@Model.Img04" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview4" class="dropZone">
-                    <input id="imgInput4" type="file" class="d-none" name="file4" />
-                </div>
-                <div style="position: relative;">
-                    <img src="@Model.Img05" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview5" class="dropZone">
-                    <input id="imgInput5" type="file" class="d-none" name="file5" />
-                </div>
-
-            </div>
-
-            <div class="text-center">
-                <p style="font-size:25px; margin:0px;">可點擊或拖曳更換照片</p>
-            </div>
-
-            <div class="my-4 d-flex justify-content-center">
-                <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-update">修改資料</button>
-            </div>
-            <div class="my-4 d-flex justify-content-center">
-                <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-delete">刪除貓咪</button>
-            </div>
-            <div class="my-4 d-flex justify-content-center">
-                <button type="button" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="backToList">返回列表</button>
-            </div>
-        </div>
 
     </div>
 </form>
@@ -170,7 +169,7 @@
 
     $(function() {
 
-        if ((missing == "True")||(sitting == "True")) {
+        if ((missing == "True") || (sitting == "True")) {
             $('#ad1').attr("disabled", true);
             $('#ad2').attr("disabled", true);
         }
