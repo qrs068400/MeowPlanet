@@ -170,6 +170,11 @@
 
     $(function() {
 
+        if ((missing == "True")||(sitting == "True")) {
+            $('#ad1').attr("disabled", true);
+            $('#ad2').attr("disabled", true);
+        }
+
         if (sex == "True") {
             $('#sex1').addClass('active');
         } else {
