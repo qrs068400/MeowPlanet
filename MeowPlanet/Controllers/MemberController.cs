@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using MeowPlanet.ViewModels.MemberInfo;
 using System.Collections;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MeowPlanet.Controllers
 {
@@ -417,6 +419,17 @@ namespace MeowPlanet.Controllers
             oldMember.Password = member.Password;
             oldMember.Name = member.Name;
             oldMember.Phone = member.Phone;
+
+
+            //更新暱稱
+            var identity = new ClaimsIdentity(User.Identity);
+            identity.RemoveClaim(identity.FindFirst(ClaimTypes.Name));
+            identity.AddClaim(new Claim(ClaimTypes.Name, member.Name));
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                        new ClaimsPrincipal(identity));
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

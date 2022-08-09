@@ -540,6 +540,9 @@
 
                 if (item.type.indexOf('image') != -1) {
 
+                    $(`.contact[data-id="${receivedId}"]`).find('.last-time').text(time);
+                    $(`.contact[data-id="${receivedId}"]`).prependTo('#message-user');
+
                     let reader = new FileReader()
 
                     reader.onload = function(e) {
