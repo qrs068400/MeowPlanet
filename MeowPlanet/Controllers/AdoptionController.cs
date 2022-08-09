@@ -50,7 +50,6 @@ namespace MeowPlanet.Controllers
                 ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? catDtoList[0].CatCity : "全部";
                 ViewBag.breedId = (breedId != 0) ? catDtoList[0].BreedId : 0;
                 ViewBag.catSex = (catSex != null) ? catDtoList[0].CatSex : null;
-
             }
             else
             {

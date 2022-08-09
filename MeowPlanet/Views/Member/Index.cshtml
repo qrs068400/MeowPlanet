@@ -40,7 +40,7 @@
                         <a onclick="showAccount()">我的帳戶</a>
                     </div>
                     <div class="text-center" style="margin-top:65px;">
-                        <a style="cursor: pointer;">保姆服務</a>
+                        <a style="cursor: pointer;">保姆管理</a>
                     </div>
                     <div class="text-center" style="margin-top:65px;">
                         <a href="#" id="adoption">領養資訊</a>
@@ -84,11 +84,9 @@
                 $('#member-right-region').html(data);
             })
         })
-
+        //走失資訊
         $('#clues').click(() => {
-
             $.get('/Missings/GetClues', function(data) {
-
                 if (data == "False") {
                     Swal.fire({
                         title: '您尚未有貓咪走失',
@@ -108,11 +106,17 @@
                     })
                 }
                 else {
-
                     $('#member-right-region').html(data);
                 }
             })
         })
+        //保母資訊
+        $('#sitter').click(() => {
+            $.get('/Sitter/SitterViewMode', function(data) {
+                $('#member-right-region').html(data);
+            })
+        })
+
 
 
         $(document).on({

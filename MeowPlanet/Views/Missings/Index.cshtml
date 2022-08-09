@@ -1,6 +1,7 @@
-﻿@model IEnumerable<MeowPlanet.ViewModels.Missings.ItemsViewModel>
+﻿@model IEnumerable<ItemsViewModel>
 @using System.Security.Claims;
 @addTagHelper *, MeowPlanet
+@using MeowPlanet.ViewModels.Missings;
 
 @{
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);

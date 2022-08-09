@@ -1,0 +1,183 @@
+﻿:root {
+    --project-bg-color: #171B20;
+    --project-primary-color: #B99668;
+    --project-primary-color-buzz: rgba(185, 150, 104, 0.5);
+    --project-pink-color: #FF8EFF;
+    --project-pink-color-buzz: rgba(255, 142, 255, 0.5);
+    --project-gray-color: #4B5461;
+    --project-gray-color-buzz: rgba(75, 84, 97, 0.5);
+    --project-green-color: #2A483A;
+    --project-green-color-buzz: rgba(42, 72, 58, 0.5);
+    --project-txt-color: #ffffff;
+    --project-txt-color-buzz: rgba(255, 255, 255, 0.5);
+    --project-scroll-color: #b996689c;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%);
+}
+
+.order-rec_div01 {
+    display: flex;
+    max-width: 1300px;
+    margin: 0 auto;
+    color: white;
+    padding: 30px;
+    /* 太空感 */
+    border: 3px rgb(219, 232, 248) solid;
+    box-shadow: 0 0 2rem rgba(134, 171, 190, 0.5) inset;
+    border-radius: 40px;
+    background-color: rgb(18, 32, 46);
+}
+
+.user-info_div02 {
+    width: 50%;
+    margin: auto;
+}
+
+/* 保母 */
+.rec_div7 {
+    display: flex;
+    padding: 3% 2% 6% 2%;
+}
+
+.rec-last_div7 {
+    display: flex;
+    padding: 3% 2% 3% 2%;
+}
+
+.info-rec {
+    width: 70%;
+}
+
+.title_div7-1 {
+    font-size: 25px;
+    font-weight: 900;
+    color: var(--project-txt-color);
+    margin: 0px 0px 10px 0px;
+}
+
+.content_div7-2 {
+    font-size: 20px;
+    margin-left: 35px;
+}
+
+.rec_div7 img {
+    width: 20%;
+    border-radius: 15px;
+    margin: auto 4%;
+}
+
+.hr-line {
+    width: 91%;
+    height: 3px;
+    background-color: #7d8999;
+    margin-left: 10px;
+    border-radius: 40px;
+}
+
+.self-intro-tag_div5-2-1 {
+    background-color: rgb(26, 48, 68);
+    width: 45px;
+    height: 110px;
+    font-size: 15px;
+    margin: 10px 0px 0px -10px;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    padding: 10px 15px 10px 13px;
+}
+
+.self-intro_div5-2-2 {
+    overflow: auto;
+    text-align: justify;
+    background-color: rgb(27, 39, 53);
+    width: 90%;
+    height: 110px;
+    margin: 10px 0px 0px 0px;
+    padding: 7px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.cat_div6 {
+    width: 21%;
+    margin: auto 4%;
+}
+
+    .cat_div6 img {
+        width: 100%;
+        border-radius: 15px;
+        margin-bottom: 5px;
+    }
+
+    .cat_div6 div {
+        text-align: center;
+    }
+
+/* 訂單細項 */
+.order-info_div03 {
+    width: 40%;
+    margin: 3% 4%;
+    color: rgb(255, 255, 255);
+    border: 2px rgba(142, 247, 255, 0.822) solid;
+    box-shadow: 0 0 1rem rgb(142 247 255 / 82%) inset;
+    background: rgba(0, 0, 0, .3);
+    padding: 2% 3%;
+    border-radius: 30px;
+}
+
+.order-detail_div05 {
+    margin: 10px;
+}
+
+.order-title_div9 {
+    font-size: 25px;
+    font-weight: 900;
+}
+
+.order-content_div10 {
+    font-size: 25px;
+    color: rgb(255, 255, 255);
+    margin-top: 35px;
+    margin-left: 45px;
+    font-weight: 500;
+}
+
+.order-total_div11 {
+    color: rgb(241, 151, 151);
+    text-align: right;
+    font-size: 38px;
+    font-weight: 900;
+    margin-top: 15px;
+}
+
+.btn-rec_div06 {
+    margin-top: 30px;
+    display: flex;
+    justify-content: space-around;
+}
+
+    .btn-rec_div06 button {
+        font-size: 20px;
+        line-height: 15px;
+        font-weight: 800;
+        color: rgb(255, 255, 255);
+        padding: 20px 60px;
+        background: rgba(0, 0, 0, .3);
+        border-radius: 20px;
+    }
+
+.yes_div12 {
+    border: 2px rgba(0, 150, 209, 0.829) solid;
+    box-shadow: 0 0 0.5rem rgb(0 150 209 / 83%) inset;
+}
+
+.cancel_div13 {
+    border: 2px rgb(142, 255, 212, 0.767) solid;
+    box-shadow: 0 0 0.5rem rgba(142, 255, 212, 0.767) inset;
+}

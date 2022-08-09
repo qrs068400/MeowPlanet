@@ -1,5 +1,6 @@
 ﻿using MeowPlanet.Models;
-namespace MeowPlanet.ViewModels
+
+namespace MeowPlanet.ViewModels.Sitters
 {
     public class SitterViewModels
     {
@@ -7,8 +8,10 @@ namespace MeowPlanet.ViewModels
 
         public string? memberPhoto { get; set; }
 
-        public List<SitterFeature>? sitterfeatureList { get; set; }
+        public List<string>? sitterfeatureList { get; set; }
 
         public List<Orderlist>? OrderCommentList { get; set; }
+
+        public List<Cat>? usercatList { get; set; }
     }
 }
