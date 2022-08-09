@@ -24,7 +24,7 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
-            if(User.FindFirstValue(ClaimTypes.Sid) == null)
+            if (User.FindFirstValue(ClaimTypes.Sid) == null)
             {
                 return RedirectToAction("Index", "Login");
             }
@@ -44,7 +44,7 @@ namespace MeowPlanet.Controllers
             }
             else
             {
-            return View();
+                return View();
 
             }
         }
@@ -57,7 +57,7 @@ namespace MeowPlanet.Controllers
             }
             else
             {
-            return View();
+                return View();
 
             }
         }
@@ -218,7 +218,7 @@ namespace MeowPlanet.Controllers
         [HttpPost]
         public async Task<IActionResult> AddSitterFeature(string sitterfeature, int memberId)
         {
-            if(sitterfeature != null)
+            if (sitterfeature != null)
             {
                 string[] sitterfeatureArray = sitterfeature.Split(',');
 
@@ -372,9 +372,12 @@ namespace MeowPlanet.Controllers
             oldCat.Sex = cat.Sex;
             oldCat.City = cat.City;
             oldCat.Introduce = cat.Introduce;
-            oldCat.IsAdoptable = cat.IsAdoptable;
-            oldCat.IsSitting = cat.IsSitting;
-            oldCat.IsMissing = cat.IsMissing;
+
+            if ((oldCat.IsMissing != true)||(oldCat.IsSitting != true))
+            {
+                oldCat.IsAdoptable = cat.IsAdoptable;
+            }
+
             if (cat.Img01 != null)
             {
                 oldCat.Img01 = cat.Img01;
@@ -437,7 +440,7 @@ namespace MeowPlanet.Controllers
 
         // 修改會員頭像
         [HttpPost]
-        public async Task<IActionResult> UpdatePhoto(IFormFile memberPhoto,int memberId)
+        public async Task<IActionResult> UpdatePhoto(IFormFile memberPhoto, int memberId)
         {
             var oldMember = _context.Members.FirstOrDefault(p => p.MemberId == memberId);
 

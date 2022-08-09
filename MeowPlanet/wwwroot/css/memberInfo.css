@@ -143,7 +143,7 @@ body {
 }
 
 .cat-region {
-    background-color: #A9ADB1;
+    background-color: rgb(27, 39, 53);
     height: 90%;
     border-radius: 25px;
     padding: 30px;
