@@ -14,7 +14,7 @@
     <section class="registersection img-bg d-flex align-items-center">
 
         <div class="container">
-            <div class="row d-flex justify-content-center w-75"  style="background-color: #171b20;     background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%); animation: FadeInUp 1s ease;">
+            <div class="row d-flex justify-content-center w-75" style="background-color: #171b20;     background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%); animation: FadeInUp 1s ease;">
                 <div class="col-6 mycontent-left d-flex align-items-center justify-content-center">
                     <p>
                         填寫簡單資料<br />
@@ -150,27 +150,29 @@
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
                     } else {
-                        
+
                     }
                 }
-                
+
             })
 
             $('#registerSubmit').click(function(e) {
                 e.preventDefault();
 
+                var form = $(this).parents('form');
+
                 if ($('#verify').val() != "") {
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
+                        form.submit();
                         return;
                     }
 
                 } else {
                     $('#verifyspan').text("請輸入驗證碼").addClass('text-danger');
+                    form.submit();
                     return;
                 }
-
-                var form = $(this).parents('form');
 
                 $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
                     if (data == "此信箱可使用") {
