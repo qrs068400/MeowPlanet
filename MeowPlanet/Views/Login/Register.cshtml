@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="email" asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" />
+                                <input type="email" asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" id="email" />
 
                             </div>
 
@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                                <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="password" />
 
                             </div>
 
@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                                <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="name" />
 
                             </div>
 
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="text" asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                                <input type="text" asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="phone" />
 
                             </div>
 
@@ -117,10 +117,16 @@
             let verifycode;
 
             $('#sendEmail').click(function() {
-                let email = $('input[type=email]').val();
-                $.get("/Login/SendRegistMail", { email }, function(data) {
-                    $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', '#FF8EFF');
-                    verifycode = data;
+                $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
+                    if (data == "此信箱可使用") {
+                        let email = $('input[type=email]').val();
+                        $.get("/Login/SendRegistMail", { email }, function(data) {
+                            $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', 'white');
+                            verifycode = data;
+                        })
+                    } else {
+
+                    }
                 })
             })
 
@@ -134,7 +140,7 @@
                             if (data == "此信箱已註冊") {
                                 $('#EmailValid').html(data).addClass('text-danger')
                             } else {
-                                $('#EmailValid').removeClass('text-danger').css('color', '#FF8EFF')
+                                $('#EmailValid').removeClass('text-danger')
                             }
                         })
                     }
@@ -173,6 +179,9 @@
                     form.submit();
                     return;
                 }
+
+              
+
 
                 $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
                     if (data == "此信箱可使用") {
