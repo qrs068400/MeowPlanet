@@ -121,11 +121,11 @@ namespace MeowPlanet.Controllers
             var adopt = new List<Adopt>();
             if (memberid == 0)
             {
-                catList = _context.Cats.Where(x => x.IsAdoptable == true).ToList();
+                catList = _context.Cats.Where(x => x.IsAdoptable == true && x.IsMissing == false).ToList();
             }
             else
             {
-                catList = _context.Cats.Where(x => x.MemberId != memberid && x.IsAdoptable == true).ToList();
+                catList = _context.Cats.Where(x => x.MemberId != memberid && x.IsAdoptable == true && x.IsMissing == false).ToList();
                 adopt = _context.Adopts.Where(x => x.MemberId == memberid).ToList();
             }
 
@@ -202,7 +202,7 @@ namespace MeowPlanet.Controllers
 
             //送養列表         
             var ownerlist = _context.Adopts
-             .Where(x => x.Owner == memberid)
+             .Where(x => x.Owner == memberid && x.Cat.IsMissing==false)
              .Include(x => x.Member)
              .Select(x => new ViewModels.LikeAdopts()
              {
