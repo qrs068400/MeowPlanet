@@ -137,7 +137,7 @@ function initMap() {
 
     for (var i = 0; i < sitterList.length; i++) {
         $('.row').append(
-            `<div class="card_div4" style="display:none;" data-id="${sitterList[i].serviceId}">
+            `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}">
                 <div class="pic_div4-1">
                     ${pic()}
                 </div>
@@ -197,9 +197,9 @@ function initMap() {
 
                 if (!showingSitterList.includes(sitter)) {
                     showingSitterList.push(sitter);
-                    $(`[data-id="${sitter.serviceId}"]`).remove().appendTo('.row').delay(100).fadeIn(600);
+                    $(`[data-sid="${sitter.serviceId}"]`).remove().appendTo('.row').delay(100).fadeIn(600);
                 }
-                $(`[data-id="${sitter.serviceId}"]`).fadeIn(600);
+                $(`[data-sid="${sitter.serviceId}"]`).fadeIn(600);
             }
             else {
 
@@ -207,7 +207,7 @@ function initMap() {
 
                 if (showingSitterList.includes(sitter)) {
                     showingSitterList.splice(showingSitterList.indexOf(sitter), 1);
-                    $(`[data-id="${sitter.serviceId}"]`).fadeOut(600);
+                    $(`[data-sid="${sitter.serviceId}"]`).fadeOut(600);
                 }
             }
         })

@@ -198,7 +198,6 @@ function getlatlng() {
         $('#lat').attr('value', result[0].geometry.location.lat());
         $('#lng').attr('value', result[0].geometry.location.lng());
     })
-
 }
 
 // 照顧條件選擇

@@ -11,7 +11,14 @@
                 <div style="margin-right: 20px;">服務模式:</div>
                 <div class="switch">
                     @*checked = 營業*@
-                    <input class="switch-checkbox" id="switchID1" type="checkbox" name="switch-checkbox" checked>
+                    @if(Model.sitter.IsService == true)
+                    {
+                        <input class="switch-checkbox" id="switchID1" type="checkbox" name="switch-checkbox" checked>
+                    }
+                    else
+                    {
+                        <input class="switch-checkbox" id="switchID1" type="checkbox" name="switch-checkbox">
+                    }
                     <label class="switch-label" for="switchID1">
                         <span class="switch-txt" turnOn="營業" turnOff="休息"></span>
                         <span class=" switch-Round-btn"></span>
@@ -29,7 +36,7 @@
                             </p>
                             <input type="file" name="file1"
                                 style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile1" />
+                                id="theFile1" value="@Model.sitter.Img01"/>
                         </div>
                         <div id="dropZone2" class="dropZone div0-1" style="position: relative;">
                             <img id="dropImg2" class="dropImg" />
@@ -38,7 +45,7 @@
                             </p>
                             <input type="file" name="file2"
                                 style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile2" />
+                                id="theFile2" value="@Model.sitter.Img02"/>
                         </div>
                         <div id="dropZone3" class="dropZone div0-1" style="position: relative;">
                             <img id="dropImg3" class="dropImg" />
@@ -47,7 +54,7 @@
                             </p>
                             <input type="file" name="file3"
                                 style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile3" />
+                                id="theFile3" value="@Model.sitter.Img03"/>
                         </div>
                         <div id="dropZone4" class="dropZone div0-1" style="position: relative;">
                             <img id="dropImg4" class="dropImg" />
@@ -56,7 +63,7 @@
                             </p>
                             <input type="file" name="file4"
                                 style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile4" />
+                                id="theFile4" value="@Model.sitter.Img04"/>
                         </div>
                         <div id="dropZone5" class="dropZone div0-1" style="position: relative;">
                             <img id="dropImg5" class="dropImg" />
@@ -65,7 +72,7 @@
                             </p>
                             <input type="file" name="file5"
                                 style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile5" />
+                                id="theFile5" value="@Model.sitter.Img05"/>
                         </div>
                     </div>
                     <div class="hint-d">
@@ -128,12 +135,12 @@
             <div class="div0-2">
                 <div style=" margin-top: 5px;">保母自介:</div>
                 <div>
-                    <textarea class="div5"></textarea>
+                    <textarea class="div5">@Model.sitter.Summary</textarea>
                 </div>
             </div>
             <div class="div0-2">
                 <div>
-                    <button id="save" class="div6-1">儲存</button>
+                    <button id="save" type="submit" class="div6-1">儲存</button>
                 </div>
                 <div>
                     <button id="cancel" class="div6-2">返回</button>
@@ -153,9 +160,9 @@
         $(this).siblings('button').removeClass('div0-4-1');
         $(this).addClass('div0-4-1');
     })
-
+    
+    //比對資料庫顯示在畫面
     $(function() {
-        alert(model.sitter.Licence);
         if(model.sitter.licence == "有證照"){
             $('#equip button').eq(0).addClass('div0-4-1');
         }
@@ -185,15 +192,16 @@
     })
 
     //儲存
-    $('#editMode').click(() => {
-        $.get('/Sitter/SitterViewMode',function(data) {
-            $('#sitterContent').html(data);
+    $('#save').click(() => {
+
+       $.get('/Sitter/SitterViewMode',function(data) {
+            $('#member-right-region').html(data);
         })
     })
     //取消
-    $('#editMode').click(() => {
-        $.get('/Sitter/SitterEditMode', model ,function(data) {
-            $('#sitterContent').html(data);
+    $('#cancel').click(() => {
+        $.get('/Sitter/SitterViewMode',function(data) {
+            $('#member-right-region').html(data);
         })
     })
 

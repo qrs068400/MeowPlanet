@@ -307,8 +307,7 @@
 </div>
 
 <script>
-    (()=>{
-
+    let f = function() {
         let model = @Html.Raw(JsonSerializer.Serialize(Model));
     
         let j = JSON.stringify(model);
@@ -319,16 +318,16 @@
         })
 
         $('#editMode').click(() => {
-
-           $.ajax({
-               method: 'post',
-               url: '/Sitter/SitterEditMode',
-               data: j,
+            $.ajax({
+                method: 'post',
+                url: '/Sitter/SitterEditMode',
+                data: j,
                 contentType: 'application/json; charset=utf-8',
                 success: function(data) {
-                   $('#sitterContent').html(data);
+                    $('#sitterContent').html(data);
                 },
             });
-        })
-    })()
+        });
+    }();
+    @*這裡要用IIFE，否則model這個變數會外露到editmode 的 script*@
 </script>
