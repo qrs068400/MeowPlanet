@@ -6,16 +6,20 @@
 
 @section Styles{
     <link href="~/css/loginpage.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 }
 
-
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
     <section class="loginsection">
         <div class="container d-flex justify-content-center">
-            <div class="row w-75">
+            <div class="row w-75" style="animation: FadeInUp 1s ease;" id="row1">
+
                 <div class="col-6 bg-img">
                 </div>
                 <div class="col-6 loginform">
-                    <form id="account" method="post" asp-action="Login" autocomplete="on">
+                    <form id="account" method="post" asp-action="Login">
                         <div class="text-center">
                             <h2>登入喵星球</h2>
                         </div>
@@ -23,11 +27,10 @@
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">Email</p>
-                                @*<span id="alert"></span>*@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="email" asp-for="Email" class="form-control login-sp" value="test@some.com" aria-required="true" />
+                                <input type="email" asp-for="Email" class="form-control login-sp" aria-required="true" id="email" />
 
                             </div>
 
@@ -41,7 +44,8 @@
 
 
                             <div class="d-flex align-items-center">
-                                <input type="password" asp-for="Password" class="form-control login-sp" value="789" aria-required="true" />
+
+                                <input type="password" asp-for="Password" class="form-control login-sp" aria-required="true" id="password" />
 
                             </div>
 
@@ -59,11 +63,27 @@
                                 <button id="login-submit" type="submit" class="btn login-sp">登入</button>
                             </div>
                         </div>
-                        <p class="or-p text-center">———————&ensp;&ensp;&ensp;或者&ensp;&ensp;&ensp;———————</p>
+                        <p class="or-p text-center">或者</p>
 
-                        <div class="d-flex justify-content-center link-icon">
-                            <i class="fa-brands fa-google-plus"></i>
+                        <div class="d-flex justify-content-center my-4">
+                            <div id="g_id_onload"
+                             data-client_id="824506292381-98hjid099dhp06oqudugbjlj1bclr0u0.apps.googleusercontent.com"
+                             data-login_uri="@Url.Action("ValidGoogleLogin","Login")"
+                             data-auto_prompt="false">
+                            </div>
+                            <div class="g_id_signin rounded-pill"
+                             data-type="standard"
+                             data-size="large"
+                             data-theme="filled_black"
+                             data-text="signin_with"
+                             data-shape="circle"
+                             data-logo_alignment="left"
+                             data-auto_prompt="true"
+                             style="border:1px solid white">
+                            </div>
                         </div>
+
+
 
                         <div class="text-center re-a">
                             <a asp-controller="Login" asp-action="Register">還不是會員?</a>
@@ -80,6 +100,7 @@
 
     @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <script>
 
@@ -94,10 +115,10 @@
                 $.get("Login/LoginCheck", { email: $('input[type=email]').val(), password: $('input[type=password]').val() }, function(data) {
 
                     if (data == "密碼錯誤") {
-                        $('#password-err').html(data).css('color', '#2A483A')
+                        $('#password-err').html(data).css('color', '#ff0000')
                     } else if (data == "此Email不存在") {
-                        $('#email-err').html(data).css('color', '#2A483A')
-                    }else {
+                        $('#email-err').html(data).css('color', '#ff0000')
+                    } else {
                         Swal.fire({
                             heightAuto: false,
                             position: 'center',
@@ -111,9 +132,6 @@
                     }
 
                 })
-
-
-
 
             } else {
                 form.submit();
@@ -135,6 +153,7 @@
             }
 
         })
+
 
 
     </script>

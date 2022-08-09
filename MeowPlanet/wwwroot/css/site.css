@@ -41,15 +41,8 @@ body {
 }
 
 #logo .img-p {
-    height: 50px;
-}
-
-.loginbtn {
-    color:white;
-}
-
-.loginbtn:hover {
-    color: #FF8EFF;
+    height: 38px;
+    margin-right: 5px;
 }
 
 .nav-item a {
@@ -60,11 +53,11 @@ body {
     text-decoration: none;
 }
 
-    .nav-item a:hover {
-        border-radius: 50rem;
-        background-color: white;
-        color: black !important;
-    }
+.nav-item a:hover {
+    border-radius: 50rem;
+    background-color: white;
+    color: black !important;
+}
 
 .nav-item-active {
     border-radius: 50rem;
@@ -75,6 +68,13 @@ body {
 .navbar-brand {
     margin-right: 200px;
 }
+
+@media screen and (max-width: 992px) {
+    .navbar-brand {
+        margin-right: 0px;
+    }
+}
+
 
 .memberlogin btn{
     color:white;
@@ -94,18 +94,25 @@ body {
     --project-txt-color-buzz: rgba(255, 255, 255, 0.5);
 }
 
-::-webkit-scrollbar {
-    width: 5px;
+/* width */
+body::-webkit-scrollbar {
+    width: 8px;
 }
 
-::-webkit-scrollbar-thumb {
-    background-color: var(--project-primary-color);
-    border-radius: 5px;
-}
-
-::-webkit-scrollbar-track {
+/* Track */
+body::-webkit-scrollbar-track {
     box-shadow: inset 0 0 5px grey;
-    border-radius: 10px;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    border-radius: 8px;
 }
+
+/* Handle */
+body::-webkit-scrollbar-thumb {
+    background: #b99668;
+    border-radius: 8px;
+}
+
+/* Handle on hover */
+body::-webkit-scrollbar-thumb:hover {
+    background: #b996689c;
+}
+

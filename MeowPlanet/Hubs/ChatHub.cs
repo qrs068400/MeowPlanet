@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using Microsoft.EntityFrameworkCore;
 using MeowPlanet.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace MeowPlanet.Hubs
 {
@@ -14,5 +15,6 @@ namespace MeowPlanet.Hubs
         {
             return Clients.User(receivedId).SendAsync("ReceiveMessage", userName, userPhoto, message, senderId);
         }
+
     }
 }

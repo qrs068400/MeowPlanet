@@ -16,8 +16,9 @@ namespace MeowPlanet.Models
     {
         private readonly endtermContext _context;
         private readonly int? _memberId;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public MissingsController(endtermContext context, IHttpContextAccessor contextAccessor)
+        public MissingsController(endtermContext context, IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
 
@@ -25,7 +26,7 @@ namespace MeowPlanet.Models
             {
                 _memberId = Convert.ToInt32(contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid).Value);
             }
-
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public async Task<IActionResult> Index()
@@ -88,15 +89,15 @@ namespace MeowPlanet.Models
             return PartialView("_MissingDetailPartial", result);
         }
 
-        public ActionResult GetPublish()
+        public async Task<IActionResult> GetPublish()
         {
-            List<Cat> cats = _context.Cats.Where(x => x.MemberId == _memberId).ToList();
+            List<Cat> cats = await _context.Cats.Where(x => x.MemberId == _memberId).ToListAsync();
             ViewData["cats"] = cats;
 
             return PartialView("_MissingPublishPartial");
         }
 
-        public string PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId, [FromServices] IWebHostEnvironment _webHostEnvironment)
+        public async Task<IActionResult> PostClue(decimal WitnessLat, decimal WitnessLng, IFormFile Image, DateTime WitnessTime, string Description, int MissingId)
         {
             var clue = new Clue
             {
@@ -114,7 +115,7 @@ namespace MeowPlanet.Models
             if (Image != null)
             {
                 string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/clue");
-                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + Image.FileName;
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + Path.GetExtension(Image.FileName);
                 string filePath = Path.Combine(uploadsFolder, uniqueFileName);
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
                 {
@@ -123,16 +124,16 @@ namespace MeowPlanet.Models
                 clue.ImagePath = "/images/clue/" + uniqueFileName;
             }
 
-            _context.Clues.Add(clue);
-            _context.SaveChanges();
+            await _context.Clues.AddAsync(clue);
+            await _context.SaveChangesAsync();
 
-            return "OK";
+            return Content("OK");
         }
 
         [HttpGet]
-        public IActionResult GetClues()
+        public async Task<IActionResult> GetClues()
         {
-            var missingCat = _context.Cats.FirstOrDefault(x => x.MemberId == _memberId && x.IsMissing == true);
+            var missingCat = await _context.Cats.FirstOrDefaultAsync(x => x.MemberId == _memberId && x.IsMissing == true);
 
             if (missingCat != null)
             {
@@ -153,21 +154,22 @@ namespace MeowPlanet.Models
         }
 
         [HttpPost]
-        public IActionResult EditClue(int clueId, int newStatus)
+        public async Task<IActionResult> EditClue(int clueId, int newStatus)
         {
             string respond = newStatus == 1 ? "已釘選此線索" : "已移除此線索";
 
-            _context.Clues.FirstOrDefault(x => x.ClueId == clueId).Status = newStatus;
-            _context.SaveChanges();
+            var clue = await _context.Clues.FirstOrDefaultAsync(x => x.ClueId == clueId);
+            clue.Status = newStatus;
+            await _context.SaveChangesAsync();
 
             return Content(respond);
         }
 
         [HttpGet]
-        public IActionResult CheckCats()
+        public async Task<IActionResult> CheckCats()
         {
-            var catCount = _context.Cats.Count(x => x.MemberId == _memberId);
-            var missingCount = _context.Cats.Count(x => x.MemberId == _memberId && x.IsMissing == true);
+            var catCount = await _context.Cats.CountAsync(x => x.MemberId == _memberId);
+            var missingCount = await _context.Cats.CountAsync(x => x.MemberId == _memberId && x.IsMissing == true);
 
             if (catCount == 0)
             {
@@ -191,7 +193,7 @@ namespace MeowPlanet.Models
             var missingCatId = missingCat.CatId;
 
             missingCat.IsMissing = false;
-            _context.Missings.FirstOrDefault(x => x.CatId == missingCatId).IsFound = true;
+            _context.Missings.FirstOrDefault(x => x.CatId == missingCatId && x.IsFound == false).IsFound = true;
 
             await _context.SaveChangesAsync();
 

@@ -7,6 +7,7 @@
     });
 });
 
+
 // 畫面切換
 $('#f1-b1').click(function () {
     $('#p1').css('display', 'none');
@@ -176,10 +177,25 @@ $(".dropZone, .dropZone1").on({
 
         let fileList = event.originalEvent.dataTransfer.files;  //把滑鼠抓住的若干檔案assign進去
 
+
+
         for (let i = 0; i < fileList.length; i++) {   
 
             let file = fileList[i];          //把fileList拆分成單獨file跑迴圈
 
+            if (file.type.indexOf('image') == -1) {
+
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '請上傳正確的圖片格式',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                return
+            }
 
             //預覽功能
             let reader = new FileReader();
@@ -237,6 +253,23 @@ $(function () {
 
 function fileChange(num) {
     let file = $(`#theFile${num}`)[0].files[0]
+
+    if (file.type.indexOf('image') == -1) {
+
+        $(`#theFile${num}`).val('');
+
+        Swal.fire({
+            heightAuto: false,
+            position: 'center',
+            title: '請上傳正確的圖片格式',
+            icon: 'warning',
+            showConfirmButton: false,
+            timer: 2000
+        })
+
+        return
+    }
+
     let readFile = new FileReader()
     readFile.readAsDataURL(file)
     readFile.addEventListener('load', function () {
@@ -247,4 +280,20 @@ function fileChange(num) {
     $(`#plus${num}`).css('display', 'none')
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
+
+$('#f7-b2').click(function (e) {
+    e.preventDefault();
+    var form = $(this).parents('form');
+
+    Swal.fire({
+        heightAuto: false,
+        position: 'center',
+        icon: 'success',
+        title: '貓咪建立完成',
+        showConfirmButton: false,
+        timer: 2500
+    }).then(function () {
+        form.submit();
+    })
+})
 

@@ -69,7 +69,6 @@
                             <div class="form-row">
                                 <div class="form-group col-4">
                                     <select id="city" class="form-select">
-                                        <option>全部</option>
                                         <option>臺北市</option>
                                         <option>新北市</option>
                                         <option>基隆市</option>
@@ -208,8 +207,19 @@
 
         //傳送資料到後端,回傳PartialView
         $.get("@Url.Action("Search", "Adoption")" + "?city_Utf8=" + escape(catCity) + "&breedId=" + escape(breedId) + "&catSex=" + escape(catSex), function(data) {
-            $(".cardbox").empty();
-            $('.cardbox').html(data);
+            if (data == null) {
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '無此貓貓',
+                    icon: 'error',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            } else {
+                $(".cardbox").empty();
+                $('.cardbox').html(data);
+            }
         })
     })
 
