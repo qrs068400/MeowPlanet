@@ -31,10 +31,7 @@ namespace MeowPlanet.Models
 
         public async Task<IActionResult> Index()
         {
-
             var itemList = await _context.ItemsViewModels.FromSqlRaw("SELECT missing.missing_id AS MissingId, sex AS Sex, img_01 AS Image, cat.name AS Name, date AS MissingDate, cat_breed.name AS Breed, COUNT(CASE WHEN clue.status = 1 THEN 1 ELSE NULL END) AS ClueCount, MAX(CASE WHEN status = 1 THEN witness_time ELSE NULL END) AS UpdateDate FROM missing INNER JOIN cat ON cat.cat_id = missing.cat_id INNER JOIN cat_breed ON cat.breed_id = cat_breed.breed_id LEFT JOIN clue ON missing.missing_id = clue.missing_id WHERE is_found = 0 GROUP BY missing.missing_id, sex, img_01, cat.name, date, cat_breed.name").ToListAsync();
-
-
 
             return View(itemList);
         }
@@ -44,12 +41,12 @@ namespace MeowPlanet.Models
         public async Task<IActionResult> AddMissing(Missing missingCat)
         {
             _context.Missings.Add(missingCat);
-            _context.Cats.Where(x => x.CatId == missingCat.CatId).First().IsMissing = true;
+            _context.Cats.FirstOrDefault(x => x.CatId == missingCat.CatId).IsMissing = true;
+            _context.Cats.FirstOrDefault(x => x.CatId == missingCat.CatId).IsAdoptable = false;
 
             await _context.SaveChangesAsync();
             return Content("OK");
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetMissing()

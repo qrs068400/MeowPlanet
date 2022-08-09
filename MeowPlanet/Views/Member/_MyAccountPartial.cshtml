@@ -46,23 +46,26 @@
         })
     })
 
-    
+
     if ("@User.FindFirst(ClaimTypes.Role).Value" == "google") {
-        $('#email-in').attr('disabled','disabled');
-        $('#password-in').attr('disabled','disabled');
-        $('#phone-in').attr('disabled','disabled');
-        $('#name-in').attr('disabled','disabled');
-        $('#member-update').attr('disabled','disabled');
+        $('#email-in').attr('disabled', 'disabled');
+        $('#password-in').attr('disabled', 'disabled');
+        $('#phone-in').attr('disabled', 'disabled');
+        $('#name-in').attr('disabled', 'disabled');
+        $('#member-update').attr('disabled', 'disabled');
     }
 
     function ToDetail(id) {
-        $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
-            $("#cat-region-select").html(data)
-        })
+
+        $("#cat-region-select").html("")
 
         $(".member-region").css("display", "none")
 
         $("#cat-region").removeClass("col-6").css("width", "91.66%")
+
+        $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
+            $("#cat-region-select").html(data)
+        })
     }
 
     $('#member-update').click(function(e) {

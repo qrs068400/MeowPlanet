@@ -84,7 +84,6 @@ function initMap() {
             alert("Partyin Partyin Yeah!", this);
         })
 
-        sitter.name
         sitter.marker = marker;
         sitter.latlng = latlng;
         sitter.memberPhoto = value.memberPhoto;
@@ -95,7 +94,7 @@ function initMap() {
         console.log(sitterList);
     })
 
-
+    //-------!@##$$%^**()---!!!!!!!!!!照片來源還需要修改!!!!!!!!!---------!@#$%^&*()-------
     function pic() {
         let pic = "";
         for (var j = 1; j < 3; j++) {
@@ -105,7 +104,7 @@ function initMap() {
     };
 
     function avg_star(sitter) {
-        let star ="";
+        let star = "";
         let solidstar = parseInt(sitter.avgStar / 1);
         let halfstar = sitter.avgStar % 1 == 0;
         //產生實星星
@@ -114,7 +113,7 @@ function initMap() {
         }
         //產生半星及空星
         if (halfstar) {
-            for (var i = 0; i < 5-solidstar; i++) {
+            for (var i = 0; i < 5 - solidstar; i++) {
                 star += '<i class="fa-regular mr-1 fa-star fa-xs"></i>';
             }
         } else {
@@ -124,12 +123,21 @@ function initMap() {
             }
         }
         star += sitter.avgStar;
+        star += `(${sitter.featureList.length})`
         return star;
+    };
+
+    function featureOrNot(sitter) {
+        if (sitter.featureList.length ==0) {
+            return "無設備";
+        } else {
+            return "有設備";
+        }
     };
 
     for (var i = 0; i < sitterList.length; i++) {
         $('.row').append(
-            `<div class="card_div4">
+            `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}">
                 <div class="pic_div4-1">
                     ${pic()}
                 </div>
@@ -145,7 +153,6 @@ function initMap() {
                             <p class=" d-flex sitter-star">
                                 ${avg_star(sitterList[i])}
                             </p>
-
                         </div>
                     </div>
                     <div class="sitter-location_div5-3 ">
@@ -154,61 +161,64 @@ function initMap() {
                         <span>${sitterList[i].distanceToMe} Km</span>
                     </div>
                     <div class="sitter-feature_div6">
-                        <div class="feature_span1"> 專人專 </div>
-                        <div class="feature_span1"> marquee </div>
-                        <div class="feature_span1"> 細心細心 </div>
-                        <div class="feature_span1"> 細心 </div>
-                        <div class="feature_span1"> 跳台 </div>
+                        <div class="feature_span1"> ${sitterList[i].licence} </div>
+                        <div class="feature_span1"> ${sitterList[i].meal} </div>
+                        <div class="feature_span1"> ${sitterList[i].cage} </div>
+                        <div class="feature_span1"> ${sitterList[i].catNumber} </div>
+                        <div class="feature_span1"> ${featureOrNot(sitterList[i])} </div>
+                        <div class="feature_span1"> ${sitterList[i].monitor} </div>
                     </div>
-                    <button class="sitter-btn_div7">
+                    <a class="sitter-btn_div7" href="/Sitter/Detail/${sitterList[i].serviceId}">
                         <i class="fa-regular fa-calendar-check"></i>
                         預約
-                    </button>
+                    </a>
                 </div>
             </div>`
+        )
+    };
+    let showingSitterList = [];
+    searchSitter();
 
-            )
-        };
-        searchSitter();
 
-        //綁定地圖停止時，做搜尋
-        map.addListener('idle', searchSitter);
-        function searchSitter() {
+    //綁定地圖停止時，做搜尋
+    map.addListener('idle', searchSitter);
+
+    function searchSitter() {
         sitterList.forEach((sitter, index) => {
             let marker = sitter.marker;
             let latlng = sitter.latlng;
             let center = map.getCenter();
             let distance = google.maps.geometry.spherical.computeDistanceBetween(center, latlng);
 
-                //距離小於1公里就加入圖標 & 顯示在左邊item列
-                if (distance < 3000) {
+            //距離小於1公里就加入圖標 & 顯示在左邊item列
+            if (distance < 1000) {
 
-                    marker.setMap(map);
+                marker.setMap(map);
 
-                    //if (!showingCatList.includes(cat)) {
-                    //    showingCatList.push(cat);
-                    //    $(`#missing-${cat.missingId}`).remove().appendTo('#div-items').delay(100).fadeIn(600);
-                    //}
-                    //$(`#missing-${cat.missingId}`).fadeIn(600);
+                if (!showingSitterList.includes(sitter)) {
+                    showingSitterList.push(sitter);
+                    $(`[data-sid="${sitter.serviceId}"]`).remove().appendTo('.row').delay(100).fadeIn(600);
                 }
-                else {
+                $(`[data-sid="${sitter.serviceId}"]`).fadeIn(600);
+            }
+            else {
 
-                    marker.setMap(null);
+                marker.setMap(null);
 
-                    //if (showingCatList.includes(cat)) {
-                    //    showingCatList.splice(showingCatList.indexOf(cat), 1);
-                    //    $(`#missing-${cat.missingId}`).fadeOut(600);
-                    //}
+                if (showingSitterList.includes(sitter)) {
+                    showingSitterList.splice(showingSitterList.indexOf(sitter), 1);
+                    $(`[data-sid="${sitter.serviceId}"]`).fadeOut(600);
                 }
-            })
+            }
+        })
 
-        }
+    };
 
-        //function scrollToItem(item) {
-        //    let id = $(item).data('id');
-        //    catList.filter(x => x.missingId == id)[0].marker.setAnimation(google.maps.Animation.BOUNCE);
-        //}
-}
+    //function scrollToItem(item) {
+    //    let id = $(item).data('id');
+    //    catList.filter(x => x.missingId == id)[0].marker.setAnimation(google.maps.Animation.BOUNCE);
+    //}
+};
 $(initMap());
 
 

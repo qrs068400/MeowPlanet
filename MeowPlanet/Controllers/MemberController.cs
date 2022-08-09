@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using MeowPlanet.ViewModels.MemberInfo;
 using System.Collections;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MeowPlanet.Controllers
 {
@@ -22,23 +24,42 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
-            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
-
-            var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
-
-
-
-            return View(LoginInfo);
+            if(User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+                var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
+                return View(LoginInfo);
+            }
         }
 
         public IActionResult CreateCat()
         {
+            if (User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
             return View();
+
+            }
         }
 
         public IActionResult CreateSitter()
         {
+            if (User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
             return View();
+
+            }
         }
 
         // 回應MyAccountPartial
@@ -379,6 +400,16 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Index");
         }
 
+        // 刪除貓咪
+        public async Task<IActionResult> DeleteCat(Cat cat)
+        {
+            var Cat = _context.Cats.FirstOrDefault(p => p.CatId == cat.CatId);
+
+            _context.Cats.Remove(Cat);
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
+
         // 修改會員資料
         [HttpPost]
         public async Task<IActionResult> UpdateMember(Member member)
@@ -388,6 +419,17 @@ namespace MeowPlanet.Controllers
             oldMember.Password = member.Password;
             oldMember.Name = member.Name;
             oldMember.Phone = member.Phone;
+
+
+            //更新暱稱
+            var identity = new ClaimsIdentity(User.Identity);
+            identity.RemoveClaim(identity.FindFirst(ClaimTypes.Name));
+            identity.AddClaim(new Claim(ClaimTypes.Name, member.Name));
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                        new ClaimsPrincipal(identity));
 
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");

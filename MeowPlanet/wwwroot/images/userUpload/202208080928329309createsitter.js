@@ -7,7 +7,6 @@
     });
 });
 
-
 // 畫面切換
 $('#f1-b1').click(function () {
     $('#p1').css('display', 'none');
@@ -18,16 +17,15 @@ $('#f1-b1').click(function () {
 
 
 $('#f2-b4').click(function () {
-
-    if ($('#ad-in').attr('value') == '') {
-        $('#ado-sp').text('請選擇');
-    }
-    else {
+    if ($('#name-in').val() == '' || $('#address').val() == '' || $('#intro-in').val() == '') {
+        $('#f2-sp').text('請填寫');
+    } else {
         $('#p2').css('display', 'none');
         $('#p3').css('display', 'block');
         $('#f2').css('display', 'none');
         $('#f3').css('display', 'block');
     }
+
 })
 
 $('#f2-b3').click(function () {
@@ -38,23 +36,23 @@ $('#f2-b3').click(function () {
 })
 
 $('#f3-b1').click(function () {
+
     $('#p3').css('display', 'none');
     $('#p2').css('display', 'block');
     $('#f3').css('display', 'none');
     $('#f2').css('display', 'block');
+
 })
 
 $('#f3-b2').click(function () {
-    if ($('#bre-in').attr('value') == '') {
-        $('#bre-sp').text('請選擇');
-    }
-    else {
+    if ($('#licence-in').val() == '' || $('#cage-in').val() == '' || $('#monitor-in').val() == '' || $('#pay-in').val() == '') {
+        $('#f3-sp').text('請選填');
+    } else {
         $('#p3').css('display', 'none');
         $('#p4').css('display', 'block');
         $('#f3').css('display', 'none');
         $('#f4').css('display', 'block');
     }
-
 })
 
 $('#f4-b1').click(function () {
@@ -65,92 +63,21 @@ $('#f4-b1').click(function () {
 })
 
 $('#f4-b2').click(function () {
-
-    if (($('#name-in').val() == '') || ($('#sex-in').attr('value') == '')) {
-        $('#name-sex-sp').text('請填寫及選擇');
+    if ($('#meal-in').val() == '' || $('#num-in').val() == '') {
+        $('#f4-sp').text('請選擇');
     } else {
         $('#p4').css('display', 'none');
         $('#p5').css('display', 'block');
         $('#f4').css('display', 'none');
         $('#f5').css('display', 'block');
     }
-
-
 })
 
 $('#f5-b1').click(function () {
-    if (($('#age-in').val() == '') || $('#city').val() == '請選擇') {
-        $('#age-city-sp').text('請填寫及選擇');
-    } else {
-        $('#p5').css('display', 'none');
-        $('#p4').css('display', 'block');
-        $('#f5').css('display', 'none');
-        $('#f4').css('display', 'block');
-    }
-})
-
-$('#f5-b2').click(function () {
-
     $('#p5').css('display', 'none');
-    $('#p6').css('display', 'block');
+    $('#p4').css('display', 'block');
     $('#f5').css('display', 'none');
-    $('#f6').css('display', 'block');
-
-})
-
-$('#f6-b1').click(function () {
-    $('#p6').css('display', 'none');
-    $('#p5').css('display', 'block');
-    $('#f6').css('display', 'none');
-    $('#f5').css('display', 'block');
-})
-
-$('#f6-b2').click(function () {
-
-    if ($('#intro-in').val() == '') {
-        $('#intro-sp').text('請填寫');
-    } else {
-        $('#p6').css('display', 'none');
-        $('#p7').css('display', 'block');
-        $('#f6').css('display', 'none');
-        $('#f7').css('display', 'block');
-    }
-
-
-})
-
-$('#f7-b1').click(function () {
-    $('#p7').css('display', 'none');
-    $('#p6').css('display', 'block');
-    $('#f7').css('display', 'none');
-    $('#f6').css('display', 'block');
-})
-
-//品種輸入
-$('.bre-btn').click(function () {
-
-    $('.bre-btn').removeClass('b-press');
-    $(this).addClass('b-press');
-
-    $('#bre-in').attr('value', this.value);
-})
-
-//性別輸入
-$('.sex-b').click(function () {
-
-    $('.sex-btn').removeClass('b-press');
-    $(this).addClass('b-press');
-
-    $('#sex-in').attr('value', this.value);
-})
-
-//領養輸入
-$('.st-b').click(function () {
-
-    $('.st-b').removeClass('b-press');
-    $(this).addClass('b-press');
-
-    $('#ad-in').attr('value', this.value);
+    $('#f4').css('display', 'block');
 })
 
 
@@ -181,25 +108,10 @@ $(".dropZone, .dropZone1").on({
 
         let fileList = event.originalEvent.dataTransfer.files;  //把滑鼠抓住的若干檔案assign進去
 
-
-
-        for (let i = 0; i < fileList.length; i++) {   
+        for (let i = 0; i < fileList.length; i++) {
 
             let file = fileList[i];          //把fileList拆分成單獨file跑迴圈
 
-            if (file.type.indexOf('image') == -1) {
-
-                Swal.fire({
-                    heightAuto: false,
-                    position: 'center',
-                    title: '請上傳正確的圖片格式',
-                    icon: 'warning',
-                    showConfirmButton: false,
-                    timer: 2000
-                })
-
-                return
-            }
 
             //預覽功能
             let reader = new FileReader();
@@ -210,8 +122,8 @@ $(".dropZone, .dropZone1").on({
                     //如果該img為空則把該圖片的url assign進去
                     if (imgList[i].src == '') {
                         imgList[i].src = event.target.result;
-                        $(`#plus${i+1}`).css('display', 'none')
-                        $(`#dropZone${i+1}`).css('border', '2px rgb(115, 244, 222) solid')
+                        $(`#plus${i + 1}`).css('display', 'none')
+                        $(`#dropZone${i + 1}`).css('border', '2px rgb(115, 244, 222) solid')
                         remainNum -= 1;
                         $('#re-p').text(`還剩${remainNum}張可以選擇`)
                         break;  //跳脫出for迴圈
@@ -231,8 +143,8 @@ $(".dropZone, .dropZone1").on({
                     break;
                 }
             }
-        }       
-        
+        }
+
     }
 })
 
@@ -241,7 +153,7 @@ $(function () {
     $('#theFile1').change(function () {
         fileChange(1);
     })
-    $('#theFile2').change(function() {
+    $('#theFile2').change(function () {
         fileChange(2);
     })
     $('#theFile3').change(function () {
@@ -253,27 +165,12 @@ $(function () {
     $('#theFile5').change(function () {
         fileChange(5);
     })
+
+
 })
 
 function fileChange(num) {
     let file = $(`#theFile${num}`)[0].files[0]
-
-    if (file.type.indexOf('image') == -1) {
-
-        $(`#theFile${num}`).val('');
-
-        Swal.fire({
-            heightAuto: false,
-            position: 'center',
-            title: '請上傳正確的圖片格式',
-            icon: 'warning',
-            showConfirmButton: false,
-            timer: 2000
-        })
-
-        return
-    }
-
     let readFile = new FileReader()
     readFile.readAsDataURL(file)
     readFile.addEventListener('load', function () {
@@ -285,7 +182,130 @@ function fileChange(num) {
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
 
-$('#f7-b2').click(function (e) {
+// 地址轉經緯度
+var geocoder;
+
+function initMap() {
+    geocoder = new google.maps.Geocoder();
+}
+
+function getlatlng() {
+    var address = $('#address').val();
+
+    geocoder.geocode({
+        'address': address
+    }, function (result) {
+        $('#lat').attr('value', result[0].geometry.location.lat());
+        $('#lng').attr('value', result[0].geometry.location.lng());
+    })
+
+}
+
+// 照顧條件選擇
+$('.con-b').click(function () {
+    $(this).toggleClass('active').blur();
+})
+
+$('#licence-btn').click(function () {
+    if ($(this).val() == "無證照") {
+        $('#licence-in').attr('value', "有證照");
+        $(this).attr('value', "有證照");
+    } else {
+        $('#licence-in').attr('value', "無證照");
+        $(this).attr('value', "無證照");
+    }
+})
+
+$('#cage-btn').click(function () {
+    if ($(this).val() == "不關籠") {
+        $('#cage-in').attr('value', "需關籠");
+        $(this).attr('value', "需關籠");
+    } else {
+        $('#cage-in').attr('value', "不關籠");
+        $(this).attr('value', "不關籠");
+    }
+})
+
+
+$('#monitor-btn').click(function () {
+    if ($(this).val() == "無監視器") {
+        $('#monitor-in').attr('value', "有監視器");
+        $(this).attr('value', "有監視器");
+    } else {
+        $('#monitor-in').attr('value', "無監視器");
+        $(this).attr('value', "無監視器");
+    }
+})
+
+$('.con2-b').click(function () {
+
+    $('.con2-b').removeClass('b-press');
+    $(this).addClass('b-press');
+
+    $('#meal-in').attr('value', this.value);
+})
+
+$('.con3-b').click(function () {
+
+    $('.con3-b').removeClass('b-press');
+    $(this).addClass('b-press');
+
+    $('#num-in').attr('value', this.value);
+})
+
+var feature = [];
+
+Array.prototype.remove = function (value) {
+    this.splice(this.indexOf(value), 1);
+}
+
+$('.con4-b').click(function () {
+    $(this).toggleClass('active').blur();
+
+    if ($(this).hasClass('active')) {
+        s = 1;
+    } else {
+        s = 0;
+    }
+
+    if (s == 1) {
+        feature.push($(this).val());
+    } else {
+        feature.remove($(this).val());
+    }
+
+    $('#feature').attr('value', feature);
+
+})
+
+
+$('#sitterform').on('submit', function (e) {
+    e.preventDefault();
+    let data = $(this).serialize();
+
+    $.post("/Member/AddSitter", data, function (data) {
+
+        if (data == "服務建立完成") {
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                icon: 'success',
+                title: '服務建立完成',
+                showConfirmButton: false,
+                timer: 2500
+            })
+        }
+
+    }).then(function () {
+        $('#p5').css('display', 'none');
+        $('#p6').css('display', 'block');
+        $('#f5').css('display', 'none');
+        $('#f6').css('display', 'block');
+    })
+
+})
+
+$('#f6-b1').click(function (e) {
     e.preventDefault();
     var form = $(this).parents('form');
 
@@ -293,11 +313,10 @@ $('#f7-b2').click(function (e) {
         heightAuto: false,
         position: 'center',
         icon: 'success',
-        title: '貓咪建立完成',
+        title: '設施設定完成',
         showConfirmButton: false,
         timer: 2500
     }).then(function () {
         form.submit();
     })
 })
-

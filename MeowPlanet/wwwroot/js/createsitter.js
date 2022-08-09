@@ -99,8 +99,6 @@ $(".dropZone, .dropZone1").on({
     "dragover": function (event) {
         event.preventDefault();
     },
-
-
     "drop": function (event) {
 
         event.preventDefault();
@@ -112,6 +110,19 @@ $(".dropZone, .dropZone1").on({
 
             let file = fileList[i];          //把fileList拆分成單獨file跑迴圈
 
+            if (file.type.indexOf('image') == -1) {
+
+                Swal.fire({
+                    heightAuto: false,
+                    position: 'center',
+                    title: '請上傳正確的圖片格式',
+                    icon: 'warning',
+                    showConfirmButton: false,
+                    timer: 2000
+                })
+
+                return
+            }
 
             //預覽功能
             let reader = new FileReader();
@@ -171,6 +182,23 @@ $(function () {
 
 function fileChange(num) {
     let file = $(`#theFile${num}`)[0].files[0]
+
+    if (file.type.indexOf('image') == -1) {
+
+        $(`#theFile${num}`).val('');
+
+        Swal.fire({
+            heightAuto: false,
+            position: 'center',
+            title: '請上傳正確的圖片格式',
+            icon: 'warning',
+            showConfirmButton: false,
+            timer: 2000
+        })
+
+        return
+    }
+
     let readFile = new FileReader()
     readFile.readAsDataURL(file)
     readFile.addEventListener('load', function () {
@@ -198,7 +226,6 @@ function getlatlng() {
         $('#lat').attr('value', result[0].geometry.location.lat());
         $('#lng').attr('value', result[0].geometry.location.lng());
     })
-
 }
 
 // 照顧條件選擇

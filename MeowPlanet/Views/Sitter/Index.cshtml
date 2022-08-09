@@ -1,4 +1,5 @@
-﻿@model IEnumerable< MeowPlanet.ViewModels.SitterViewModels>;
+﻿@using MeowPlanet.ViewModels.Sitters;
+@model IEnumerable< SitterViewModels>;
 @section Styles{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
@@ -36,13 +37,10 @@
 @section Scripts{
     <script type="text/javascript">
         var model = @Html.Raw(Json.Serialize(Model));
+        $('.nav-item a').eq(0).addClass('nav-item-active');
     </script>
     <script src="~/js/sitter-index.js" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
     <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5GLU-Md1jCttuMgYGiLngvDh0nELvLjM&callback=initMap&libraries=places,geometry"></script>
-    @*$(function() {
-            $.get("@Url.Action("GetItems", "Sitter")", function(data) {
-                $('#div-items').html(data);
-            })*@
     })
 }

@@ -50,7 +50,6 @@ namespace MeowPlanet.Controllers
                 ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? catDtoList[0].CatCity : "全部";
                 ViewBag.breedId = (breedId != 0) ? catDtoList[0].BreedId : 0;
                 ViewBag.catSex = (catSex != null) ? catDtoList[0].CatSex : null;
-
             }
             else
             {
@@ -86,18 +85,19 @@ namespace MeowPlanet.Controllers
 
         public ActionResult Search(string? city_Utf8, int breedId, bool? catSex)
         {
-            try {
-            var city = HttpUtility.UrlDecode(city_Utf8); //解碼unicode
-            var catDtoList = new List<CatsDto>();
-            var CatsDto = GetCatsDto(city, breedId, catSex).OrderBy(x => Guid.NewGuid()).ToList(); //排序及查詢條件
+            try
+            {
+                var city = HttpUtility.UrlDecode(city_Utf8); //解碼unicode
+                var catDtoList = new List<CatsDto>();
+                var CatsDto = GetCatsDto(city, breedId, catSex).OrderBy(x => Guid.NewGuid()).ToList(); //排序及查詢條件
 
-            //暫存查詢條件
-            ViewBag.catid = CatsDto[0].CatId;
-            ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? CatsDto[0].CatCity : "全部";
-            ViewBag.breedId = (breedId != 0) ? CatsDto[0].BreedId : 0;
-            ViewBag.catSex = (catSex != null) ? CatsDto[0].CatSex : null;
+                //暫存查詢條件
+                ViewBag.catid = CatsDto[0].CatId;
+                ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? CatsDto[0].CatCity : "全部";
+                ViewBag.breedId = (breedId != 0) ? CatsDto[0].BreedId : 0;
+                ViewBag.catSex = (catSex != null) ? CatsDto[0].CatSex : null;
 
-            return PartialView("_CardPartial", CatsDto);
+                return PartialView("_CardPartial", CatsDto);
             }
             catch
             {

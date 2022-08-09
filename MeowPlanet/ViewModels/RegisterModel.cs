@@ -12,8 +12,8 @@ namespace MeowPlanet.ViewModels
         [Required(ErrorMessage = "請輸入有效的密碼")]
         public new string Password { get; set; } = null!;
         [Required(ErrorMessage = "請輸入有效的手機號碼")]
-
-        public new string Phone { get; set; } = null!;
+        [RegularExpression(@"^09[0-9]{8}$",ErrorMessage =  "手機號碼格式不正確")]
+        public string Phone { get; set; } = null!;
         [Required(ErrorMessage = "請輸入有效的名字")]
         public new string Name { get; set; } = null!;
         public new string? Photo { get; set; }

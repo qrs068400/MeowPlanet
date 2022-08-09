@@ -249,7 +249,7 @@
                     timeouts.push(setTimeout(() => {
                         polylinePath.setMap(map);
                         let step = 0;
-                        let numSteps = 1200;
+                        let numSteps = 1000;
                         let timePerStep = 20;
                         let interval = setInterval(function() {
                             step += 20;
@@ -260,7 +260,7 @@
                                 polylinePath.setPath([departure, are_we_there_yet]);
                             }
                         }, timePerStep);
-                    }, i * 1200))
+                    }, i * 1000 + 500))
                 }
             })
 
