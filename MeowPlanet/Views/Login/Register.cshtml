@@ -114,7 +114,17 @@
 
     <script>
         (() => {
+            // 檢查email是否重複
+            $('input[type=email]').blur(function() {
+                $.get("EmailCheck", { email: this.value }, function(data) {
+                    if (data == "此信箱已註冊") {
+                        $('#EmailValid').html(data)
+                    } else {
+                    }
+                })
+            })
 
+            // 寄送驗證碼
             let verifycode;
 
             $('#sendEmail').click(function() {
@@ -127,15 +137,6 @@
                         })
                     } else {
 
-                    }
-                })
-            })
-
-            $('input[type=email]').blur(function() {
-                $.get("EmailCheck", { email: this.value }, function(data) {
-                    if (data == "此信箱已註冊") {
-                        $('#EmailValid').html(data)
-                    } else {
                     }
                 })
             })
