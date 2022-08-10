@@ -152,8 +152,7 @@ function initMap() {
                     showConfirmButton: false,
                     timer: 2000
                 })
-                break;
-                
+                break;                
         }
     })
     //綁定移動事件
