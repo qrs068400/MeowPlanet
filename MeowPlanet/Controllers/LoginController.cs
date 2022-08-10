@@ -198,7 +198,7 @@ namespace MeowPlanet.Controllers
             if (!string.IsNullOrEmpty(email))
             {
                 var count = _context.Members.Count(x => x.Email == email);
-
+                
                 if (count > 0)
                 {
                     return Content("此信箱已註冊");
