@@ -126,7 +126,6 @@
 
             // 寄送驗證碼
             let verifycode;
-
             $('#sendEmail').click(function() {
                 $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
                     if (data == "此信箱可使用") {
@@ -141,16 +140,15 @@
                 })
             })
 
+            // 判定驗證碼是否正確
             $('#verify').keyup(function() {
                 $('#verifyspan').text("")
                 if ($('#verify').val().length == 5) {
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
                     } else {
-
                     }
                 }
-
             })
 
             $('#registerSubmit').click(function(e) {
