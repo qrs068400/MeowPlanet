@@ -254,12 +254,35 @@ function initMap() {
 
 function getlatlng() {
     var address = $('#address').val();
-
+    $('#area_1,#area_2,#area_3').attr('value', '');
     geocoder.geocode({
         'address': address
     }, function (result) {
         $('#lat').attr('value', result[0].geometry.location.lat());
         $('#lng').attr('value', result[0].geometry.location.lng());
+        $('#formatted_address').attr('value', result[0].formatted_address);
+        for (const component of result[0].address_components) {
+            if (component.types[0] == 'administrative_area_level_1') {
+                $('#area_1').attr('value', component.long_name);
+            }
+            if (component.types[0] == 'administrative_area_level_2') {
+                $('#area_2').attr('value', component.long_name);
+            }
+            if (component.types[0] == 'administrative_area_level_3') {
+                $('#area_3').attr('value', component.long_name);
+            }
+        }
+    })
+}
+
+
+
+function getaddress() {
+    var latlng = { lat: $('#lat').val(), lng: $('#lng').val() };
+    geocoder.geocode({
+        'location': latlng
+    }, function (result) {
+        $('#trans-address').attr('value', results[0].formatted_address);
     })
 }
 
