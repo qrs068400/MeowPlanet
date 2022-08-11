@@ -138,7 +138,7 @@
                 })
             })
 
-            // 判定驗證碼是否正確
+            // 輸入完顯示驗證碼是否正確
             $('#verify').keyup(function() {
                 $('#verifyspan').text("")
                 if ($('#verify').val().length == 5) {
@@ -154,6 +154,7 @@
 
                 var form = $(this).parents('form');
 
+                // 註冊前判定驗證碼是否正確
                 if ($('#verify').val() != "") {
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
@@ -166,7 +167,7 @@
                     form.submit();
                     return;
                 }
-
+                //form.valid先驗證再ajax
                 if (form.valid()) {
                     $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
                         if (data == "此信箱可使用") {
