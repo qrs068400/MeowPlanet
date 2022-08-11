@@ -38,8 +38,8 @@ function initMap() {
     map = new google.maps.Map($('#map')[0], {
         center: { lat: 22.629314218928563, lng: 120.29299528465663 },
         zoom: 16,
-        minZoom: 14,
-        maxZoom: 17,
+        minZoom: 10,
+        maxZoom: 18,
         disableDefaultUI: true,
         mapId: 'a5f4cec6781c8dda',
         gestureHandling: 'greedy',
@@ -125,7 +125,20 @@ function initMap() {
 
     map.addListener('zoom_changed', () => {
         let zoom = map.getZoom();
+        console.log(zoom);
         switch (zoom) {
+            case 10:
+                scaledRange = 64000;
+                break;
+            case 11:
+                scaledRange = 32000;
+                break;
+            case 12:
+                scaledRange = 16000;
+                break;
+            case 13:
+                scaledRange = 8000;
+                break;
             case 14:
                 scaledRange = 4000;
                 break;
@@ -138,18 +151,20 @@ function initMap() {
             case 17:
                 scaledRange = 500;
                 break;
-            default:
+            case 18:
+                scaledRange = 250;
+                break;
+            default:                
                 Swal.fire({
                     heightAuto: false,
                     position: 'center',
                     icon: 'warning',
                     title: '搜尋的地區超出縮放範圍',
-                    text: '請執行重新搜尋',
+                    text: '請重新執行搜尋',
                     showConfirmButton: false,
                     timer: 2000
                 })
-                break;
-                
+                break;                
         }
     })
     //綁定移動事件
