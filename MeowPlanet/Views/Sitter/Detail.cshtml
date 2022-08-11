@@ -1,7 +1,13 @@
-﻿@model MeowPlanet.ViewModels.SitterViewModels;
- @section Styles{
+﻿@model SitterViewModels;
+@using System.Security.Claims;
+@using MeowPlanet.ViewModels.Sitters;
+@{
+    bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
+}
+@section Styles{
     <link  href="~/css/sitter-detail.css" rel="stylesheet"/>
 }
+
 
 
     <div class="container">
@@ -36,19 +42,19 @@
                 <div class="col-7 p-0">
                     <h3>服務介紹</h3>
                     <hr>
-                    <h5>摘要</h5>
+                    <h5>自介</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Summary)</p>
-                    <h5>寵物晚上睡覺的地方</h5>
+                    <h5>有無相關證照</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Licence)</p>
-                    <h5>我家的類型</h5>
+                    <h5>是否關籠</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Cage)</p>
-                    <h5>我的戶外區域大小</h5>
+                    <h5>是否提供即時監控設備</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Monitor)</p>
                     <h5>貓需要的室內設施</h5>
                         @for(int i = 0 ; i< Model.sitterfeatureList.Count; i++)
                         {
                             <p>
-                            @Html.DisplayFor(model => model.sitterfeatureList[i].FeatureId)
+                            @Html.DisplayFor(model => model.sitterfeatureList[i])
                             </p>
                         }
                         
@@ -65,15 +71,23 @@
                             <span class="comment-num">@Html.DisplayFor(model => model.OrderCommentList.Count) 則評價</span>
                         </div>
                     </div>
+
+                    
                     <div class="reserve-panel">
                         <div class="reserve-btn">
-
                             <div class="calender-rec buzz" style="display: none;">
                                 <div class="calender-header">
                                     <div class="night h3">選擇日期</div>
                                     <div>
                                         <span></span>-<span></span>
                                     </div>
+                                    <form id="confirmForm" method="post" asp-controller="Sitter" asp-action="ComfirmPay">
+                                        <input name="startDate" type="hidden"/>
+                                        <input name="endDate" type="hidden"/>
+                                        <input name="night" type="hidden"/>
+                                        <input name="catId" type="hidden"/>
+                                        <input name="serviceId" type="hidden"/>
+                                    </form>
                                 </div>
                                 <div class="calendar"></div>
                                 <div>
@@ -98,14 +112,24 @@
                             </div>
                         </div>
                         <button class="reserve-number-btn">
+                            <div class="pet-rec" style="display: none;">
+                                @for (int i = 0; i < @ViewBag.catList.Count; i++)
+                            {
+                                <div class="cat-card" data-index=@i>
+                                    <img src="@ViewBag.catList[i].Img01"/>
+                                    <span>@ViewBag.catList[i].Name</span>
+                                </div>
+                            }
+                            </div>
                             <div class="number-txt">哪一隻寵物</div>
                             <div class="number">
-                                咪咪
+                                請選擇一隻寵物...
                             </div>
                             <i class="icon fa-solid fa-angle-down"></i>
                         </button>
+                        
                     </div>
-                    <a asp-controller="Missings" asp-action="Index">
+                    <a id="comfirmPay">
                         <div class="btn btn-order">預定</div>
                     </a>
                 </div>
@@ -137,7 +161,8 @@
                             </div>
                         </div>
                     </div>
-                    }
+                    if(i == 9){ break; }
+                }
                     <button class="more-comment buzz">
                         顯示全部評價
                     </button>
@@ -164,6 +189,13 @@
 
 
     @section Scripts{
+     <script>  
+         var viewBag_catList = @Html.Raw(Json.Serialize(ViewBag.catList));
+         var model = @Html.Raw(Json.Serialize(Model));
+         var isLogin = '@isLogin';
+         var memberId = '@memberId';
+         $('.nav-item a').eq(0).addClass('nav-item-active');
+     </script>
     <script src="~/js/sitter-detail.js"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5GLU-Md1jCttuMgYGiLngvDh0nELvLjM&callback=initMap&libraries=places,geometry&v=weekly"></script>
     <script>
@@ -185,18 +217,18 @@
                             <span class="">@Html.DisplayFor(model => model.OrderCommentList.Count)則評價</span>
                         </div>
                             <div class="pop-comment-area">
-                        @for(int i = 0 ; i < 4;i++){
+                        @for(int i = 0 ; i < Model.OrderCommentList.Count;i++){
                                 <div class="pop-one-comment">
                                     <div class="pop-user-info">
                                         <div class="d-flex">
                                             <img class="user-pic" src="/images/sitter/cat.jpg">
                                             <div class="user-detail">
-                                                <div class="user-name">@Html.DisplayFor(model => model.OrderCommentList[0].MemberId)</div>
-                                                <div class="comment-time">@Html.DisplayFor(model => model.OrderCommentList[0].DateOver)</div>
+                                                <div class="user-name">@Html.DisplayFor(model => model.OrderCommentList[i].MemberId)</div>
+                                                <div class="comment-time">@Html.DisplayFor(model => model.OrderCommentList[i].DateOver)</div>
                                             </div>
                                         </div>
                                         <div class="user-comment">
-                                            @Html.DisplayFor(model => model.OrderCommentList[0].Comment)
+                                            @Html.DisplayFor(model => model.OrderCommentList[i].Comment)
                                         </div>
                                     </div>
                                 </div>

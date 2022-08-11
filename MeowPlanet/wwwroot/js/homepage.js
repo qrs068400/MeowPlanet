@@ -10,13 +10,13 @@ let mid3_2 = window.innerHeight * 3.6;
 let end3 = window.innerHeight * 4;
 $(document).on('scroll', function () {
     let now = $(document).scrollTop(); 
-    if (now < start) {
+    if (now <= start) {
         $('#img4').css('opacity', '1').css('--lef', '7%').css('--top', '33%').css('--wid', '24%').css('height', '34%')
         $('#img5').css('opacity', '1').css('--lef', '38%').css('--top', '33%').css('--wid', '24%').css('height', '34%')
         $('#img6').css('opacity', '1').css('--lef', '69%').css('--top', '33%').css('--wid', '24%').css('height', '34%')
-        $('.p1').css('font-size', '50')
-        $('.p2').css('font-size', '50')
-        $('.p3').css('font-size', '50')
+        $('.p1').css('font-size', '50px')
+        $('.p2').css('font-size', '50px')
+        $('.p3').css('font-size', '50px')
         $('.intro-p1').css('opacity', '0')
         $('.intro-p2').css('opacity', '0')
         $('.intro-p3').css('opacity', '0')
@@ -185,9 +185,9 @@ $(document).on('scroll', function () {
         $('#img4').css('opacity', '1')
         $('#img5').css('opacity', '1')
         $('#img6').css('opacity', '1')
-        $('.p1').css('font-size', '50')
-        $('.p2').css('font-size', '50')
-        $('.p3').css('font-size', '50')
+        $('.p1').css('font-size', '50px')
+        $('.p2').css('font-size', '50px')
+        $('.p3').css('font-size', '50px')
         $('.intro-p1').css('opacity', '0')
         $('.intro-p2').css('opacity', '0')
         $('.intro-p3').css('opacity', '0')

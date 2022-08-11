@@ -79,10 +79,14 @@ $('#f4-b2').click(function () {
 })
 
 $('#f5-b1').click(function () {
-    $('#p5').css('display', 'none');
-    $('#p4').css('display', 'block');
-    $('#f5').css('display', 'none');
-    $('#f4').css('display', 'block');
+    if (($('#age-in').val() == '') || $('#city').val() == '請選擇') {
+        $('#age-city-sp').text('請填寫及選擇');
+    } else {
+        $('#p5').css('display', 'none');
+        $('#p4').css('display', 'block');
+        $('#f5').css('display', 'none');
+        $('#f4').css('display', 'block');
+    }
 })
 
 $('#f5-b2').click(function () {

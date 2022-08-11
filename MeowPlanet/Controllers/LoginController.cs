@@ -127,8 +127,6 @@ namespace MeowPlanet.Controllers
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                         new ClaimsPrincipal(claimsIdentity), properties);
 
-
-
                 return RedirectToAction("Index", "Member");
             }
             else
@@ -183,7 +181,7 @@ namespace MeowPlanet.Controllers
             if (!string.IsNullOrEmpty(email))
             {
                 var count = _context.Members.Count(x => x.Email == email);
-
+                
                 if (count > 0)
                 {
                     return Content("此信箱已註冊");
