@@ -85,15 +85,27 @@ $('#f4-b1').click(function () {
     $('#f3').css('display', 'block');
 })
 
+$('.con2-b').click(function () {
+    $('#meal-err').text('');
+})
+$('.con3-b').click(function () {
+    $('#num-err').text('');
+})
+
 $('#f4-b2').click(function () {
     if ($('#meal-in').val() == '' || $('#num-in').val() == '') {
-        $('#f4-sp').text('請選擇');
-    } else {
-        $('#p4').css('display', 'none');
-        $('#p5').css('display', 'block');
-        $('#f4').css('display', 'none');
-        $('#f5').css('display', 'block');
+        if ($('#meal-in').val() == "") {
+            $('#meal-err').text('請選擇是否供餐');
+        }
+        if ($('#num-in').val() == "") {
+            $('#num-err').text('請選擇照顧數量');
+        }
+        return;
     }
+    $('#p4').css('display', 'none');
+    $('#p5').css('display', 'block');
+    $('#f4').css('display', 'none');
+    $('#f5').css('display', 'block');
 })
 
 $('#f5-b1').click(function () {

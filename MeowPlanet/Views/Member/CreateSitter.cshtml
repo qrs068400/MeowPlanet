@@ -126,11 +126,15 @@
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-light con2-b" value="附一餐">附一餐</button>
                         <button type="button" class="btn btn-light con2-b" value="附二餐">附二餐</button>
-
                     </div>
-                    <div class="d-flex justify-content-between">
+
+                    <div class="d-flex justify-content-between" style="margin-top:50px;">
                         <button type="button" class="btn btn-light con2-b" value="附三餐">附三餐</button>
                         <button type="button" class="btn btn-light con2-b" value="無附餐">無附餐</button>
+                    </div>
+
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="meal-err" style="margin-top:2px;"></span>
                     </div>
 
                     <input type="text" asp-for="Meal" class="d-none" id="meal-in" />
@@ -141,14 +145,16 @@
                         <button type="button" class="btn btn-light con3-b" value="一對二">一對二</button>
 
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between" style="margin-top:50px;">
                         <button type="button" class="btn btn-light con3-b" value="一對三">一對三</button>
                         <button type="button" class="btn btn-light con3-b" value="一對多">一對多</button>
                     </div>
 
-                    <input type="text" asp-for="CatNumber" class="d-none" id="num-in" />
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="num-err" style="margin-top:2px;"></span>
+                    </div>
 
-                    <span id="f4-sp" class="in-sp"></span>
+                    <input type="text" asp-for="CatNumber" class="d-none" id="num-in" />
 
                     <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
