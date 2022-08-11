@@ -22,23 +22,42 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
-            var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
-
-            var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
-
-
-
-            return View(LoginInfo);
+            if(User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
+                var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
+                var LoginInfo = _context.Members.FirstOrDefault(p => p.MemberId == LoginId);
+                return View(LoginInfo);
+            }
         }
 
         public IActionResult CreateCat()
         {
+            if (User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
             return View();
+
+            }
         }
 
         public IActionResult CreateSitter()
         {
+            if (User.FindFirstValue(ClaimTypes.Sid) == null)
+            {
+                return RedirectToAction("Index", "Login");
+            }
+            else
+            {
             return View();
+
+            }
         }
 
         // 回應MyAccountPartial
@@ -255,6 +274,7 @@ namespace MeowPlanet.Controllers
                 {
                     MemberId = LoginId,
                     CatId = c.CatId,
+                    BreedId = c.BreedId,
                     Name = c.Name,
                     Breed = s.Name,
                     Sex = c.Sex,
@@ -346,6 +366,7 @@ namespace MeowPlanet.Controllers
 
             oldCat.Name = cat.Name;
             oldCat.Age = cat.Age;
+            oldCat.BreedId = cat.BreedId;
             oldCat.Sex = cat.Sex;
             oldCat.City = cat.City;
             oldCat.Introduce = cat.Introduce;
@@ -373,10 +394,16 @@ namespace MeowPlanet.Controllers
                 oldCat.Img05 = cat.Img05;
             }
 
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
 
+        // 刪除貓咪
+        public async Task<IActionResult> DeleteCat(Cat cat)
+        {
+            var Cat = _context.Cats.FirstOrDefault(p => p.CatId == cat.CatId);
 
-
-
+            _context.Cats.Remove(Cat);
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
@@ -395,5 +422,29 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Index");
         }
 
+        // 修改會員頭像
+        [HttpPost]
+        public async Task<IActionResult> UpdatePhoto(IFormFile memberPhoto,int memberId)
+        {
+            var oldMember = _context.Members.FirstOrDefault(p => p.MemberId == memberId);
+
+            Random random = new Random();
+            string? uniqueFileName = null;
+
+            if (memberPhoto != null)
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + memberPhoto.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    memberPhoto.CopyTo(fileStream);
+                }
+                oldMember.Photo = "/images/userUpload/" + uniqueFileName;
+            }
+
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index");
+        }
     }
 }

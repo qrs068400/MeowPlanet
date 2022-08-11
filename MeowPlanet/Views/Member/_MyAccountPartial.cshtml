@@ -6,25 +6,25 @@
     <form method="post" asp-action="UpdateMember" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
         <input type="text" value="@Model.MemberId" asp-for="MemberId" class="d-none" />
         <div class="title"><p>會員資料</p></div>
-        <div class="my-4">
+        <div class="member-div">
             <p>Email</p>
             <input type="email" value="@Model.Email" id="email-in" asp-for="Email" />
         </div>
-        <div class="my-4">
+        <div class="member-div">
             <p>密碼</p>
-            <input type="password" value="@Model.Password" asp-for="Password" />
+            <input type="password" value="@Model.Password" id="password-in" asp-for="Password" />
         </div>
-        <div class="my-4">
+        <div class="member-div">
             <p>姓名</p>
-            <input type="text" value="@Model.Name" asp-for="Name" />
+            <input type="text" value="@Model.Name" id="name-in" asp-for="Name" />
         </div>
-        <div class="my-4">
+        <div class="member-div">
             <p>電話</p>
-            <input type="text" value="@Model.Phone" asp-for="Phone" />
+            <input type="text" value="@Model.Phone" id="phone-in" asp-for="Phone" />
         </div>
 
         <div class="d-flex justify-content-center">
-            <button type="submit" class="btn cat-detail-btn my-5">修改資料</button>
+            <button type="submit" class="btn member-update-btn" id="member-update">修改資料</button>
         </div>
     </form>
 </div>
@@ -44,17 +44,44 @@
         $.get("@Url.Action("GetCatInfo", "Member")", function(data) {
             $("#cat-region-select").html(data)
         })
-
     })
 
 
+    if ("@User.FindFirst(ClaimTypes.Role).Value" == "google") {
+        $('#email-in').attr('disabled', 'disabled');
+        $('#password-in').attr('disabled', 'disabled');
+        $('#phone-in').attr('disabled', 'disabled');
+        $('#name-in').attr('disabled', 'disabled');
+        $('#member-update').attr('disabled', 'disabled');
+    }
+
     function ToDetail(id) {
-        $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
-            $("#cat-region-select").html(data)
-        })
+
+        $("#cat-region-select").html("")
 
         $(".member-region").css("display", "none")
 
         $("#cat-region").removeClass("col-6").css("width", "91.66%")
+
+        $.get("@Url.Action("GetCatDetail", "Member")", { CatId: id }, function(data) {
+            $("#cat-region-select").html(data)
+        })
     }
+
+    $('#member-update').click(function(e) {
+        e.preventDefault();
+        var form = $(this).parents('form');
+
+        Swal.fire({
+            heightAuto: false,
+            position: 'center',
+            icon: 'success',
+            title: '修改完成',
+            showConfirmButton: false,
+            timer: 2500
+        }).then(function() {
+            form.submit();
+        })
+    })
+
 </script>
