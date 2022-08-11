@@ -125,17 +125,20 @@
             // 寄送驗證碼
             let verifycode;
             $('#sendEmail').click(function() {
-                $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
-                    if (data == "此信箱可使用") {
-                        let email = $('input[type=email]').val();
-                        $.get("/Login/SendRegistMail", { email }, function(data) {
-                            $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', 'white');
-                            verifycode = data;
-                        })
-                    } else {
+                let form = $(this).parents('form');
+                if (form.valid()) {
+                    $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
+                        if (data == "此信箱可使用") {
+                            let email = $('input[type=email]').val();
+                            $.get("/Login/SendRegistMail", { email }, function(data) {
+                                $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', 'white');
+                                verifycode = data;
+                            })
+                        } else {
 
-                    }
-                })
+                        }
+                    })
+                }
             })
 
             // 輸入完顯示驗證碼是否正確
@@ -144,15 +147,14 @@
                 if ($('#verify').val().length == 5) {
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
-                    } else {
-                    }
+                    } 
                 }
             })
 
             $('#registerSubmit').click(function(e) {
                 e.preventDefault();
 
-                var form = $(this).parents('form');
+                let form = $(this).parents('form');
 
                 // 註冊前判定驗證碼是否正確
                 if ($('#verify').val() != "") {
