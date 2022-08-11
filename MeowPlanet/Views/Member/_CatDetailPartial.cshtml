@@ -172,6 +172,13 @@
         if ((missing == "True") || (sitting == "True")) {
             $('#ad1').attr("disabled", true);
             $('#ad2').attr("disabled", true);
+            if (adoptable == "True") {
+                $('#ad1').css('opacity', '1')
+                $('#ad2').css('opacity', '0.2')
+            } else {
+                $('#ad1').css('opacity', '0.2')
+                $('#ad2').css('opacity', '1')
+            }
         }
 
         if (sex == "True") {
@@ -181,7 +188,7 @@
         }
 
         if (adoptable == "True") {
-            $('#ad1').addClass('active');
+            $('#ad1').addClass('active')
         } else {
             $('#ad2').addClass('active');
         }
