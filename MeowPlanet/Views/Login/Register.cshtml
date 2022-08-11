@@ -169,23 +169,24 @@
                     return;
                 }
 
-
-                $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
-                    if (data == "此信箱可使用") {
-                        Swal.fire({
-                            heightAuto: false,
-                            position: 'center',
-                            icon: 'success',
-                            title: '註冊成功',
-                            showConfirmButton: false,
-                            timer: 2500
-                        }).then(function() {
+                if (form.valid()) {
+                    $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
+                        if (data == "此信箱可使用") {
+                            Swal.fire({
+                                heightAuto: false,
+                                position: 'center',
+                                icon: 'success',
+                                title: '註冊成功',
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then(function() {
+                                form.submit();
+                            })
+                        } else {
                             form.submit();
-                        })
-                    } else {
-                        form.submit();
-                    }
-                })
+                        }
+                    })
+                }
             })
         })()
     </script>
