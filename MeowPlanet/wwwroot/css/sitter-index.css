@@ -30,6 +30,7 @@ body {
 
 .starsky {
     overflow: hidden;
+    min-height: 81vh;
 }
 
 #stars {

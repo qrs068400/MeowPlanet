@@ -1,14 +1,15 @@
 ﻿@using MeowPlanet.ViewModels.Sitters;
-@model IEnumerable< SitterViewModels>;
+@model IEnumerable<SitterViewModels>;
 @section Styles{
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick-theme.css" />
     <link href="~/css/sitter-index.css" rel="stylesheet" />
 }
-<div style="position:relative;">
-    <div class="input-box">
+<div class="input-box">
         <input type="text" id="mapInput" placeholder="想在哪裡找保母呢...">
     </div>
+<div style="position:relative;">
+    
     <!-- 地圖顯示區 -->
     <div class="show-map_div2-1" id="btn01">
         <img id="btn01" src="@Href("~/images/sitter/顯示地圖.png")">
@@ -42,5 +43,4 @@
     <script src="~/js/sitter-index.js" type="module"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
     <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5GLU-Md1jCttuMgYGiLngvDh0nELvLjM&callback=initMap&libraries=places,geometry"></script>
-    })
-}
+    }

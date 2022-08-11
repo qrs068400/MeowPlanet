@@ -216,12 +216,12 @@ $('#licence-btn').click(function () {
 })
 
 $('#cage-btn').click(function () {
-    if ($(this).val() == "不關籠") {
-        $('#cage-in').attr('value', "需關籠");
-        $(this).attr('value', "需關籠");
+    if ($(this).val() == "不關籠子") {
+        $('#cage-in').attr('value', "需關籠子");
+        $(this).attr('value', "需關籠子");
     } else {
-        $('#cage-in').attr('value', "不關籠");
-        $(this).attr('value', "不關籠");
+        $('#cage-in').attr('value', "不關籠子");
+        $(this).attr('value', "不關籠子");
     }
 })
 

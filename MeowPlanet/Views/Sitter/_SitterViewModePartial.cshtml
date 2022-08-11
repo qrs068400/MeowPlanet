@@ -252,7 +252,7 @@
                         <div class="div5-1">
                             服務位置 &nbsp :
                         </div>
-                        <div>高雄市前金區中正四路211號8樓之1</div>
+                        <div id="address"></div>
 
                     </div>
 
@@ -307,17 +307,16 @@
 </div>
 
 <script>
-    let f = function() {
+    {
         let model = @Html.Raw(JsonSerializer.Serialize(Model));
-    
         let j = JSON.stringify(model);
-        console.log(model);
-        console.log(j);
+        @*console.log(model);
+        console.log(j);*@
         $('#creatSitter').click(() => {
             window.location.href = "/Member/CreateSitter";
         })
 
-        $('#editMode').click(() => {
+         $('#editMode').click(function(){
             $.ajax({
                 method: 'post',
                 url: '/Sitter/SitterEditMode',
@@ -328,6 +327,38 @@
                 },
             });
         });
-    }();
+
+        @*$('#member-right-region').one('click',$('#editMode'),function(){
+            $.ajax({
+                method: 'post',
+                url: '/Sitter/SitterEditMode',
+                data: j,
+                contentType: 'application/json; charset=utf-8',
+                success: function(data) {
+                    $('#sitterContent').html(data);
+                },
+            });
+        });*@
+        function initMap() {
+        var geocoder = new google.maps.Geocoder();
+
+        (function getlatlng() {
+            var latlng = { lat: model.sitter.PosLat, lng: model.sitter.PosLng };
+            geocoder.geocode({ 'location': latlng }, function(results, status) {
+                console.log(status);
+                console.log(results[0]);
+
+                if (status === 'OK') {
+
+                    if (results[0]) {
+
+                        $('#address').text(results[0].formatted_address);
+                    }
+                }
+            })
+        }())
+        }
+    }
     @*這裡要用IIFE，否則model這個變數會外露到editmode 的 script*@
 </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5GLU-Md1jCttuMgYGiLngvDh0nELvLjM&callback=initMap&libraries=places,geometry"></script>

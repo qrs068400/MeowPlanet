@@ -40,7 +40,7 @@ body {
     color: var(--project-txt-color);
 }
 
-body button {
+container button {
     color: var(--project-txt-color);
 }
 

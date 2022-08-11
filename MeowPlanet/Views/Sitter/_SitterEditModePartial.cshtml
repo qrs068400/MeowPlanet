@@ -7,17 +7,18 @@
     <div style="overflow-y: auto;">
         <div id="accordionExample" class="div3">
             <!-- 開關鈕 -->
+            <form method="post" asp-action="SaveSitter" asp-controller="Sitter" id="saveSitterForm" enctype='multipart/form-data' autocomplete="off">
             <div class="div0">
                 <div style="margin-right: 20px;">服務模式:</div>
                 <div class="switch">
                     @*checked = 營業*@
                     @if(Model.sitter.IsService == true)
                     {
-                        <input class="switch-checkbox" id="switchID1" type="checkbox" name="switch-checkbox" checked>
+                        <input class="switch-checkbox" id="switchID1" type="checkbox"  checked asp-for="sitter.IsService">
                     }
                     else
                     {
-                        <input class="switch-checkbox" id="switchID1" type="checkbox" name="switch-checkbox">
+                        <input class="switch-checkbox" id="switchID1" type="checkbox" asp-for="sitter.IsService">
                     }
                     <label class="switch-label" for="switchID1">
                         <span class="switch-txt" turnOn="營業" turnOff="休息"></span>
@@ -29,50 +30,40 @@
             <div class="div0-2">
                 <div class="div-right-form text-center" id="f7">
                     <div class="d-flex align-items-center">
-                        <div id="dropZone1" class="dropZone" style="position: relative;">
-                            <img id="dropImg1" class="dropImg" />
+                        <div id="dropZone1" class="dropZone-1" style="position: relative;">
+                            <img id="dropImg1" class="dropImg" src="@Model.sitter.Img01"/>
                             <p id="plus1">
                                 <i class="fa-solid fa-plus"></i>
                             </p>
-                            <input type="file" name="file1"
-                                style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile1" value="@Model.sitter.Img01"/>
+                            <input type="file" name="file1" class="img-input" id="theFile1" />
                         </div>
-                        <div id="dropZone2" class="dropZone div0-1" style="position: relative;">
-                            <img id="dropImg2" class="dropImg" />
+                        <div id="dropZone2" class="dropZone-1 div0-1" style="position: relative;">
+                            <img id="dropImg2" class="dropImg" src="@Model.sitter.Img02"/>
                             <p id="plus2">
                                 <i class="fa-solid fa-plus"></i>
                             </p>
-                            <input type="file" name="file2"
-                                style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile2" value="@Model.sitter.Img02"/>
+                            <input type="file" name="file2" class="img-input" id="theFile2" />
                         </div>
-                        <div id="dropZone3" class="dropZone div0-1" style="position: relative;">
-                            <img id="dropImg3" class="dropImg" />
+                        <div id="dropZone3" class="dropZone-1 div0-1" style="position: relative;">
+                            <img id="dropImg3" class="dropImg" src="@Model.sitter.Img03"/>
                             <p id="plus3">
                                 <i class="fa-solid fa-plus"></i>
                             </p>
-                            <input type="file" name="file3"
-                                style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile3" value="@Model.sitter.Img03"/>
+                            <input type="file" name="file3" class="img-input" id="theFile3" />
                         </div>
-                        <div id="dropZone4" class="dropZone div0-1" style="position: relative;">
-                            <img id="dropImg4" class="dropImg" />
+                        <div id="dropZone4" class="dropZone-1 div0-1" style="position: relative;">
+                            <img id="dropImg4" class="dropImg" src="@Model.sitter.Img04"/>
                             <p id="plus4">
                                 <i class="fa-solid fa-plus"></i>
                             </p>
-                            <input type="file" name="file4"
-                                style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile4" value="@Model.sitter.Img04"/>
+                            <input type="file" name="file4" class="img-input" id="theFile4" />
                         </div>
-                        <div id="dropZone5" class="dropZone div0-1" style="position: relative;">
-                            <img id="dropImg5" class="dropImg" />
+                        <div id="dropZone5" class="dropZone-1 div0-1" style="position: relative;">
+                            <img id="dropImg5" class="dropImg" src="@Model.sitter.Img05"/>
                             <p id="plus5">
                                 <i class="fa-solid fa-plus"></i>
                             </p>
-                            <input type="file" name="file5"
-                                style="opacity: 0.0; position: absolute; top:0; left: 0; bottom: 0; right:0; width: 100%; height:100%;"
-                                id="theFile5" value="@Model.sitter.Img05"/>
+                            <input type="file" name="file5" class="img-input" id="theFile5" />
                         </div>
                     </div>
                     <div class="hint-d">
@@ -84,58 +75,63 @@
             <div class="div0-2">
                 <div style=" margin-top: 5px;">服務名稱:</div>
                 <div>
-                    <input class="div0-3" value="@Model.sitter.Name"/>
+                    <input class="div0-3"  value="@Model.sitter.Name" asp-for="sitter.Name"/>
                 </div>
             </div>
             <div class="div0-2">
                 <div>服務位置:</div>
                 <div>
-                    <input class="div0-3" />
+                    <input class="div0-3" id="address"/>
                 </div>
             </div>
 
             <div class="div0-2">
                 <div> 每日費用:</div>
                 <div>
-                    <input class="div0-4" value="@Model.sitter.Pay"/>
+                    <input class="div0-4"  value="@Model.sitter.Pay" asp-for="sitter.Pay"/>
                 </div>
             </div>
 
             <div class="div0-2" id="equip">
-                <div >保母細項:</div>
-                <button class="div0-4">持有證照</button>
-                <button class="div0-4">無須住籠</button>
-                <button class="div0-4">附監視器</button>
+                <div>保母細項:</div>
+                <button type="button" class="div0-4">持有證照</button>
+                <button type="button" class="div0-4">無須住籠</button>
+                <button type="button" class="div0-4">附監視器</button>
+                <input type="hidden" value="@Model.sitter.Licence" asp-for="sitter.Licence"/>
+                <input type="hidden" value="@Model.sitter.Cage" asp-for="sitter.Cage"/>
+                <input type="hidden" value="@Model.sitter.Monitor" asp-for="sitter.Monitor"/>
                 <div class="div0-5">(複選)</div>
             </div>
             <div class="div0-2" id="catFeature">
                 <div >娛樂設施:</div>
-                <button class="div0-4">貓跳台</button>
-                <button class="div0-4">貓抓板</button>
-                <button class="div0-4">貓屋子</button>
-                <button class="div0-4">逗貓棒</button>
+                <input type="checkbox" name="check" class="switch-checkbox" value="1" id="貓跳台" /><label class="div0-4" for="貓跳台">貓跳台</label>
+                <input type="checkbox" name="check" class="switch-checkbox" value="2" id="貓抓板" /><label class="div0-4" for="貓抓板">貓抓板</label>
+                <input type="checkbox" name="check" class="switch-checkbox" value="3" id="逗貓棒" /><label class="div0-4" for="逗貓棒">逗貓棒</label>
+                <input type="checkbox" name="check" class="switch-checkbox" value="4" id="貓屋子" /><label class="div0-4" for="貓屋子">貓屋子</label>
                 <div class="div0-5">(複選)</div>
             </div>
             <div class="div0-2" id="catNumber">
                 <div >照顧數量:</div>
-                <button class="div0-4">一對一</button>
-                <button class="div0-4">一對二</button>
-                <button class="div0-4">一對三</button>
-                <button class="div0-4">一對多</button>
+                <button type="button" class="div0-4">一對一</button>
+                <button type="button" class="div0-4">一對二</button>
+                <button type="button" class="div0-4">一對三</button>
+                <button type="button" class="div0-4">一對多</button>
                 <div class="div0-5">(單選)</div>
+                <input type="hidden" value="@Model.sitter.CatNumber" asp-for="sitter.CatNumber"/>
             </div>
             <div class="div0-2" id="catMeal">
                 <div >每日附餐:</div>
-                <button class="div0-4">無附餐</button>
-                <button class="div0-4">附一餐</button>
-                <button class="div0-4">附二餐</button>
-                <button class="div0-4">附三餐</button>
+                <button type="button" class="div0-4">無附餐</button>
+                <button type="button" class="div0-4">附一餐</button>
+                <button type="button" class="div0-4">附二餐</button>
+                <button type="button" class="div0-4">附三餐</button>
                 <div class="div0-5">(單選)</div>
+                <input type="hidden" value="@Model.sitter.Meal" asp-for="sitter.Meal"/>
             </div>
             <div class="div0-2">
                 <div style=" margin-top: 5px;">保母自介:</div>
                 <div>
-                    <textarea class="div5">@Model.sitter.Summary</textarea>
+                    <textarea class="div5" asp-for="sitter.Summary">@Model.sitter.Summary</textarea>
                 </div>
             </div>
             <div class="div0-2">
@@ -143,167 +139,257 @@
                     <button id="save" type="submit" class="div6-1">儲存</button>
                 </div>
                 <div>
-                    <button id="cancel" class="div6-2">返回</button>
+                    <button type="button" id="cancel" class="div6-2">返回</button>
                 </div>
             </div>
+            </form>
 
         </div>
     </div>
 <script>
-    let model = @Html.Raw(JsonSerializer.Serialize(Model));
-    //複選
-    $('#equip button,#catFeature button').click(function() {
-        $(this).toggleClass('div0-4-1');
-    })
-    //單選
-    $('#catNumber button,#catMeal button').click(function() {
-        $(this).siblings('button').removeClass('div0-4-1');
-        $(this).addClass('div0-4-1');
-    })
-    
+{
+    let m = @Html.Raw(JsonSerializer.Serialize(Model));
+    console.log(m);
+
     //比對資料庫顯示在畫面
     $(function() {
-        if(model.sitter.licence == "有證照"){
+        if (m.sitter.Licence == "有證照") {
             $('#equip button').eq(0).addClass('div0-4-1');
         }
-        if(model.sitter.Cage == "不關籠子"){
+        if (m.sitter.Cage == "不關籠子") {
             $('#equip button').eq(1).addClass('div0-4-1');
         }
-        if(model.sitter.Moniter == "有監視器"){
+        if (m.sitter.Monitor == "有監視器") {
             $('#equip button').eq(2).addClass('div0-4-1');
         }
-        for (let i = 0; i < 3;i++) {
-            for (let j = 0; j < 3;j++) {
-                if (model.sitterfeatureList[j] == $('#catFeature button').eq(i).text()) {
-                $('#catFeature button').eq(i).addClass('div0-4-1');
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 3; j++) {
+                if (m.sitterfeatureList[j] == $('#catFeature label').eq(i).text()) {
+                    $('#catFeature label').eq(i).addClass('div0-4-1');
+                    $("#catFeature input").eq(i).prop("checked", true);
                 }
             }
         }
-        for (let i = 0; i < 3;i++) {
-            if (model.sitter.CatNumber == $('#catNumber button').eq(i).text()) {
+        for (let i = 0; i < 4; i++) {
+            if (m.sitter.CatNumber == $('#catNumber button').eq(i).text()) {
                 $('#catNumber button').eq(i).addClass('div0-4-1');
             }
         }
-        for (let i = 0; i < 3;i++) {
-            if (model.sitter.Meal == $('#catMeal button').eq(i).text()) {
+        for (let i = 0; i < 4; i++) {
+            if (m.sitter.Meal == $('#catMeal button').eq(i).text()) {
                 $('#catMeal button').eq(i).addClass('div0-4-1');
             }
         }
     })
 
+
+// 地址轉經緯度
+    function initMap() {
+        var geocoder = new google.maps.Geocoder();
+
+        (function getlatlng() {
+            var latlng = { lat: m.sitter.PosLat, lng: m.sitter.PosLng };
+            geocoder.geocode({ 'location': latlng }, function(results, status) {
+                console.log(status);
+                console.log(results[0]);
+
+                if (status === 'OK') {
+
+                    if (results[0]) {
+
+                        $('#address').val(results[0].formatted_address);
+                    }
+                }
+            })
+        }())
+    }
+
+
+    //click 更改 input
+    {
+        $('#equip button').eq(0).click(function() {
+            if ($(this).hasClass('div0-4-1')) {
+                $('#sitter_Licence').attr('value', "無證照")
+            } else {
+                $('#sitter_Licence').attr('value', "有證照")
+            }
+        })
+
+        $('#equip button').eq(1).click(function() {
+            console.log($('#sitter_Cage').val())
+            if ($(this).hasClass('div0-4-1')) {
+                $('#sitter_Cage').attr('value', "需關籠子")
+            } else {
+                $('#sitter_Cage').attr('value', "不關籠子")
+            }
+        })
+
+        $('#equip button').eq(2).click(function() {
+            if ($(this).hasClass('div0-4-1')) {
+                $('#sitter_Monitor').attr('value', "無監視器")
+            } else {
+                $('#sitter_Monitor').attr('value', "有監視器")
+            }
+        })
+
+        $('#catNumber button').click(function() {
+            console.log($('#sitter_CatNumber').val())
+            $('#sitter_CatNumber').attr('value', $(this).text())
+            console.log($('#sitter_CatNumber').val())
+        })
+
+        $('#catMeal button').click(function() {
+            console.log($('#sitter_Meal').val())
+            $('#sitter_Meal').attr('value', $(this).text())
+            console.log($('#sitter_Meal').val())
+        })
+    }
+
+    //複選
+    $('#equip button,#catFeature label').click(function() {
+        $(this).toggleClass('div0-4-1');
+    })
+    //單選
+    $('#catNumber button,#catMeal button').click(function() {
+        $(this).siblings('.div0-4').removeClass('div0-4-1');
+        $(this).addClass('div0-4-1');
+    })
+    
+    
+
     //儲存
     $('#save').click(() => {
-
-       $.get('/Sitter/SitterViewMode',function(data) {
-            $('#member-right-region').html(data);
-        })
+        $('#saveSitterForm').submit()
+        //.then(function() {
+        //    Swal.fire({
+        //        heightAuto: false,
+        //        position: 'center',
+        //        icon: 'success',
+        //        title: '儲存',
+        //        showConfirmButton: false,
+        //        timer: 2500
+        //    })
+        //})
+        //.then(function() {
+        //    $.get('/Sitter/SitterViewMode', function(data) {
+        //        $('#member-right-region').html(data);
+        //    })
+        //})
     })
+    
     //取消
     $('#cancel').click(() => {
+
         $.get('/Sitter/SitterViewMode',function(data) {
             $('#member-right-region').html(data);
         })
     })
+}
+    
 
 </script>
 @*切換照片*@
  <script>
-        let inputList = [] // 放input dom的list
-        let imgList = [] //放img dom的list
+{
+    let inputList = [] // 放input dom的list
+    let imgList = [] //放img dom的list
 
-        for (var i = 0; i < $(":file").length; i++) {
-            inputList.push($(":file")[i])  //把所有的input dom加進去
-        }
+    for (var i = 0; i < $(":file").length; i++) {
+        inputList.push($(":file")[i])  //把所有的input dom加進去
+    }
 
-        for (var i = 0; i < $(".dropImg").length; i++) {
-            imgList.push($(".dropImg")[i]) //把所有的img dom加進去
-        }
+    for (var i = 0; i < $(".dropImg").length; i++) {
+        imgList.push($(".dropImg")[i]) //把所有的img dom加進去
+    }
 
-        let remainNum = 5;
+    let remainNum = 5;
 
-        $(".dropZone, .dropZone1").on({
+    $(".dropZone-1, .dropZone1").on({
 
-            "dragover": function (event) {
-                event.preventDefault();
-            },
-
-
-            "drop": function (event) {
-
-                event.preventDefault();
-                event.stopPropagation();
-
-                let fileList = event.originalEvent.dataTransfer.files;  //把滑鼠抓住的若干檔案assign進去
-
-                for (let i = 0; i < fileList.length; i++) {
-
-                    let file = fileList[i];          //把fileList拆分成單獨file跑迴圈
+        "dragover": function(event) {
+            event.preventDefault();
+        },
 
 
-                    //預覽功能
-                    let reader = new FileReader();
-                    reader.readAsDataURL(file);
-                    reader.addEventListener("load", function (event) {
-                        for (let i = 0; i < imgList.length; i++) {
+        "drop": function(event) {
 
-                            //如果該img為空則把該圖片的url assign進去
-                            if (imgList[i].src == '') {
-                                imgList[i].src = event.target.result;
-                                $(`#plus${i + 1}`).css('display', 'none')
-                                $(`#dropZone${i + 1}`).css('border', '2px rgb(115, 244, 222) solid')
-                                remainNum -= 1;
-                                $('#re-p').text(`還剩${remainNum}張可以選擇`)
-                                break;  //跳脫出for迴圈
-                            }
-                        }
-                    })
+            event.preventDefault();
+            event.stopPropagation();
 
-                    //檔案上傳
-                    for (let i = 0; i < inputList.length; i++) {
+            let fileList = event.originalEvent.dataTransfer.files;  //把滑鼠抓住的若干檔案assign進去
 
-                        //如果該input裡的file為空則把file assign進去
-                        if (inputList[i].files.length == 0) {
+            for (let i = 0; i < fileList.length; i++) {
 
-                            let dt = new DataTransfer();
-                            dt.items.add(file);
-                            inputList[i].files = dt.files;
-                            break;
+                let file = fileList[i];          //把fileList拆分成單獨file跑迴圈
+
+
+                //預覽功能
+                let reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.addEventListener("load", function(event) {
+                    for (let i = 0; i < imgList.length; i++) {
+
+                        //如果該img為空則把該圖片的url assign進去
+                        if (imgList[i].src == '') {
+                            imgList[i].src = event.target.result;
+                            $(`#plus${i + 1}`).css('display', 'none')
+                            $(`#dropZone${i + 1}`).css('border', '2px rgb(115, 244, 222) solid')
+                            remainNum -= 1;
+                            $('#re-p').text(`還剩${remainNum}張可以選擇`)
+                            break;  //跳脫出for迴圈
                         }
                     }
+                })
+
+                //檔案上傳
+                for (let i = 0; i < inputList.length; i++) {
+
+                    //如果該input裡的file為空則把file assign進去
+                    if (inputList[i].files.length == 0) {
+
+                        let dt = new DataTransfer();
+                        dt.items.add(file);
+                        inputList[i].files = dt.files;
+                        break;
+                    }
                 }
-
             }
-        })
 
-
-        $(function () {
-            $('#theFile1').change(function () {
-                fileChange(1);
-            })
-            $('#theFile2').change(function () {
-                fileChange(2);
-            })
-            $('#theFile3').change(function () {
-                fileChange(3);
-            })
-            $('#theFile4').change(function () {
-                fileChange(4);
-            })
-            $('#theFile5').change(function () {
-                fileChange(5);
-            })
-        })
-
-        function fileChange(num) {
-            let file = $(`#theFile${num}`)[0].files[0]
-            let readFile = new FileReader()
-            readFile.readAsDataURL(file)
-            readFile.addEventListener('load', function () {
-                $(`#dropImg${num}`)[0].src = readFile.result
-            })
-            remainNum -= 1;
-            $('#re-p').text(`還剩${remainNum}張可以選擇`)
-            $(`#plus${num}`).css('display', 'none')
-            $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
         }
+    })
+
+
+    $(function() {
+        $('#theFile1').change(function() {
+            fileChange(1);
+        })
+        $('#theFile2').change(function() {
+            fileChange(2);
+        })
+        $('#theFile3').change(function() {
+            fileChange(3);
+        })
+        $('#theFile4').change(function() {
+            fileChange(4);
+        })
+        $('#theFile5').change(function() {
+            fileChange(5);
+        })
+    })
+
+    function fileChange(num) {
+        let file = $(`#theFile${num}`)[0].files[0]
+        let readFile = new FileReader()
+        readFile.readAsDataURL(file)
+        readFile.addEventListener('load', function() {
+            $(`#dropImg${num}`)[0].src = readFile.result
+        })
+        remainNum -= 1;
+        $('#re-p').text(`還剩${remainNum}張可以選擇`)
+        $(`#plus${num}`).css('display', 'none')
+        $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
+    }
+}
     </script>
+
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB5GLU-Md1jCttuMgYGiLngvDh0nELvLjM&callback=initMap&libraries=places,geometry"></script>

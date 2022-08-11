@@ -7,14 +7,16 @@ using Microsoft.CodeAnalysis;
 using System.Security.Claims;
 using MeowPlanet.ViewModels.Sitters;
 
+
 namespace MeowPlanet.Controllers
 {
     public class SitterController : Controller
     {
         private readonly endtermContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly int? _memberId;
 
-        public SitterController(endtermContext context, IHttpContextAccessor contextAccessor)
+        public SitterController(endtermContext context, IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
 
@@ -22,6 +24,7 @@ namespace MeowPlanet.Controllers
             {
                 _memberId = Convert.ToInt32(contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid).Value);
             }
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index()
         {
@@ -85,7 +88,7 @@ namespace MeowPlanet.Controllers
 
             TempData["controller"] = "Sitter";
             TempData["action"] = "Index";
-            return View(result);
+            return View( result);
         }
 
         public async Task<IActionResult> Detail(int? id)
@@ -95,7 +98,6 @@ namespace MeowPlanet.Controllers
                 sitter = await _context.Sitters.FirstOrDefaultAsync(m => m.ServiceId == id),
                 sitterfeatureList = await _context.SitterFeatures.Include(x => x.Feature).Where(m => m.ServiceId == id).Select(x => x.Feature.Name).ToListAsync(),
                 OrderCommentList = await _context.Orderlists.Where(m => m.ServiceId == id).ToListAsync(),
-
             };
             var catList = await _context.Cats
                 .Where(m => m.MemberId == _memberId)
@@ -192,7 +194,7 @@ namespace MeowPlanet.Controllers
         }
 
         [HttpGet]
-        public ActionResult SitterViewMode()
+        public  ActionResult SitterViewMode()
         {
             var sitter = _context.Sitters
             //要用theninclude 才看的到 feature
@@ -215,5 +217,121 @@ namespace MeowPlanet.Controllers
         {
             return PartialView("_SitterEditModePartial", j);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SaveSitter(SitterViewModels j, List<string> check, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
+        {
+            var sitterDB = await _context.Sitters
+             .Where(x => x.MemberId == _memberId)
+             .FirstOrDefaultAsync();
+
+            //sitter update
+            Random random = new Random();
+            string? uniqueFileName = null;
+
+            if (file1 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file1.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file1.CopyTo(fileStream);
+                }
+                sitterDB.Img01 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file2 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file2.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file2.CopyTo(fileStream);
+                }
+                sitterDB.Img02 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file3 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file3.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file3.CopyTo(fileStream);
+                }
+                sitterDB.Img03 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file4 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file4.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file4.CopyTo(fileStream);
+                }
+                sitterDB.Img04 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file5 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file5.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file5.CopyTo(fileStream);
+                }
+                sitterDB.Img05 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            sitterDB.Name = j.sitter.Name;
+            sitterDB.Summary = j.sitter.Summary;
+            sitterDB.Pay = j.sitter.Pay;
+            sitterDB.Licence = j.sitter.Licence;
+            sitterDB.Cage = j.sitter.Cage;
+            sitterDB.Monitor = j.sitter.Monitor;
+            sitterDB.Meal = j.sitter.Meal;
+            sitterDB.CatNumber = j.sitter.CatNumber;
+            //sitterDB.PosLat = j.sitter.PosLat;
+            //sitterDB.PosLng = j.sitter.PosLng;   地址還沒轉換
+            sitterDB.IsService = j.sitter.IsService;
+
+            //sitter feature update
+            var sitterfeatureDB = await _context.SitterFeatures
+             .Where(x => x.ServiceId == sitterDB.ServiceId)
+             .ToListAsync();
+
+            List<SitterFeature> sitterFeatures = new List<SitterFeature>();
+            for (int i = 0; i < check.Count; i++)
+            {
+                Int32.TryParse(check[i], out int x);
+                sitterFeatures.Add(
+                    new SitterFeature()
+                    {
+                        ServiceId = sitterDB.ServiceId,
+                        FeatureId = x,
+                    }
+                ); 
+            };
+
+            var upadate = sitterFeatures.Except(sitterfeatureDB);
+            var delete = sitterfeatureDB.Except(sitterFeatures);
+
+            //_context.Entry(sitterDB).CurrentValues.SetValues(j.sitter);
+            //_context.Employee1.Remove(emp);
+
+            //await _context.SaveChangesAsync();
+
+
+
+            return Content("OK");
+        }
+
+
     }
 }
