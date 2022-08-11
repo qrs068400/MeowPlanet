@@ -15,16 +15,34 @@ $('#f1-b1').click(function () {
     $('#f2').css('display', 'block');
 })
 
+$('#name-in').keyup(function () {
+    $('#name-err').text('');
+})
+$('#address').keyup(function () {
+    $('#address-err').text('');
+})
+$('#intro-in').keyup(function () {
+    $('#intro-err').text('');
+})
 
 $('#f2-b4').click(function () {
-    if ($('#name-in').val() == '' || $('#address').val() == '' || $('#intro-in').val() == '') {
-        $('#f2-sp').text('請填寫');
-    } else {
-        $('#p2').css('display', 'none');
-        $('#p3').css('display', 'block');
-        $('#f2').css('display', 'none');
-        $('#f3').css('display', 'block');
+    if ($('#name-in').val() == "" || $('#address').val() == "" || $('#intro-in').val() == "") {
+        if ($('#name-in').val() == "") {
+            $('#name-err').text('請填寫服務名稱');
+        }
+        if ($('#address').val() == "") {
+            $('#address-err').text('請填寫照顧地點');
+        }
+        if ($('#intro-in').val() == "") {
+            $('#intro-err').text('請填寫保姆自介');
+        }
+        return;
     }
+
+    $('#p2').css('display', 'none');
+    $('#p3').css('display', 'block');
+    $('#f2').css('display', 'none');
+    $('#f3').css('display', 'block');
 
 })
 
@@ -44,15 +62,20 @@ $('#f3-b1').click(function () {
 
 })
 
+$('#pay-in').keyup(function () {
+    $('#pay-err').text('');
+})
+
 $('#f3-b2').click(function () {
-    if ($('#licence-in').val() == '' || $('#cage-in').val() == '' || $('#monitor-in').val() == '' || $('#pay-in').val() == '') {
-        $('#f3-sp').text('請選填');
-    } else {
-        $('#p3').css('display', 'none');
-        $('#p4').css('display', 'block');
-        $('#f3').css('display', 'none');
-        $('#f4').css('display', 'block');
+
+    if ($('#pay-in').val() == '') {
+        $('#pay-err').text('請填寫服務價格');
+        return;
     }
+    $('#p3').css('display', 'none');
+    $('#p4').css('display', 'block');
+    $('#f3').css('display', 'none');
+    $('#f4').css('display', 'block');
 })
 
 $('#f4-b1').click(function () {
@@ -306,29 +329,26 @@ $('.con4-b').click(function () {
 })
 
 
-$('#sitterform').on('submit', function (e) {
+$('#f5-b2').on('click', function (e) {
     e.preventDefault();
-    let data = $(this).serialize();
+    var form = $(this).parents('form');
 
-    $.post("/Member/AddSitter", data, function (data) {
-
-        if (data == "服務建立完成") {
-            Swal.fire({
-                heightAuto: false,
-                position: 'center',
-                icon: 'success',
-                title: '服務建立完成',
-                showConfirmButton: false,
-                timer: 2500
-            })
-        }
-
+    Swal.fire({
+        heightAuto: false,
+        position: 'center',
+        icon: 'success',
+        title: '服務建立完成',
+        showConfirmButton: false,
+        timer: 2500
+    }).then(function () {
+        form.submit();
     }).then(function () {
         $('#p5').css('display', 'none');
         $('#p6').css('display', 'block');
         $('#f5').css('display', 'none');
         $('#f6').css('display', 'block');
     })
+
 
 })
 

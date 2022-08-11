@@ -211,7 +211,7 @@ namespace MeowPlanet.Controllers
             }
             _context.Sitters.Add(sitter);
             await _context.SaveChangesAsync();
-            return Content("服務建立完成");
+            return NoContent();
         }
 
         // 儲存sitterfeature資料
