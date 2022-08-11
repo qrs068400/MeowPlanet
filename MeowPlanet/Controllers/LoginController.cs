@@ -126,6 +126,7 @@ namespace MeowPlanet.Controllers
                 //登入驗證存進cookie
                 HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                                         new ClaimsPrincipal(claimsIdentity), properties);
+
                 return RedirectToAction("Index", "Member");
             }
             else
