@@ -57,15 +57,17 @@
 
                 <div class="div-right-form text-center" id="f2">
                     <div>
-                        <button type="button" class="btn btn-light st-b" id="f2-b1" value="true">是，此為待領貓咪</button>
+                        <button type="button" class="btn btn-light st-b" id="f2-b1" value="true" style="margin-bottom:50px;">是，此為待領貓咪</button>
                     </div>
                     <div>
-                        <button type="button" class="btn btn-light st-b" id="f2-b2" value="false">否，此為專屬貓咪</button>
+                        <button type="button" class="btn btn-light st-b" id="f2-b2" value="false" style="margin-top:50px;">否，此為專屬貓咪</button>
                     </div>
 
                     <input type="text" asp-for="IsAdoptable" class="d-none" id="ad-in" />
 
-                    <span id="ado-sp" class="in-sp"></span>
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="ad-err" style="margin-top:20px;"></span>
+                    </div>
 
                     <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f2-b4">下一步</button>
@@ -79,14 +81,16 @@
                     <div><button type="button" class="btn btn-light bre-btn" value="5">布偶貓</button></div>
                     <div><button type="button" class="btn btn-light bre-btn" value="6">曼赤肯</button></div>
                     <div><button type="button" class="btn btn-light bre-btn" value="7">米克斯</button></div>
-                    <div><button type="button" class="btn btn-light bre-btn" value="8">其他</button></div>
+                    <div><button type="button" class="btn btn-light bre-btn" value="8" style="margin-bottom:0px;">其他</button></div>
 
                     <input type="text" asp-for="MemberId" class="d-none" id="member-in" value="@User.FindFirst(ClaimTypes.Sid).Value" />
 
                     <input type="text" asp-for="BreedId" class="d-none" id="bre-in" />
                     <span asp-validation-for="BreedId"></span>
 
-                    <span id="bre-sp" class="in-sp"></span>
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="bre-err" style="margin-top:2px;"></span>
+                    </div>
 
                     <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f3-b2">下一步</button>
@@ -101,6 +105,9 @@
                             <input type="text" asp-for="Name" class="text-center" id="name-in" />
                         </div>
                     </div>
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="name-err" style="margin-top:2px;"></span>
+                    </div>
 
                     <div class="sex-div">
                         <p class="text-start">性別</p>
@@ -109,10 +116,10 @@
                             <button type="button" class="btn btn-light sex-b" value="False">喵妹妹</button>
                         </div>
                     </div>
-
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="sex-err" style="margin-top:2px;"></span>
+                    </div>
                     <input type="text" asp-for="Sex" class="d-none" id="sex-in" />
-
-                    <span id="name-sex-sp" class="in-sp"></span>
 
                     <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
@@ -127,8 +134,9 @@
                                 <span class="text-center mx-auto" style="font-size:35px;">歲</span>
                             </div>
                         </div>
-
-
+                    </div>
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="age-err" style="margin-top:2px;"></span>
                     </div>
                     <div class="d-flex align-items-center location-div">
                         <div>
@@ -155,8 +163,9 @@
                             </select>
                         </div>
                     </div>
-
-                    <span id="age-city-sp" class="in-sp"></span>
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="city-err" style="margin-top:2px;"></span>
+                    </div>
 
                     <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f5-b2">下一步</button>
@@ -169,8 +178,9 @@
                             <textarea type="text" rows="10" cols="50" asp-for="Introduce" class="p-4" id="intro-in"></textarea>
                         </div>
                     </div>
-
-                    <span id="intro-sp" class="in-sp"></span>
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="intro-err" style="margin-top:2px;"></span>
+                    </div>
 
                     <button type="button" class="btn btn-dark re-b" id="f6-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f6-b2">下一步</button>
