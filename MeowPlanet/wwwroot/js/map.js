@@ -38,7 +38,7 @@ function initMap() {
     map = new google.maps.Map($('#map')[0], {
         center: { lat: 22.629314218928563, lng: 120.29299528465663 },
         zoom: 16,
-        minZoom: 14,
+        minZoom: 10,
         maxZoom: 18,
         disableDefaultUI: true,
         mapId: 'a5f4cec6781c8dda',
@@ -127,6 +127,18 @@ function initMap() {
         let zoom = map.getZoom();
         console.log(zoom);
         switch (zoom) {
+            case 10:
+                scaledRange = 64000;
+                break;
+            case 11:
+                scaledRange = 32000;
+                break;
+            case 12:
+                scaledRange = 16000;
+                break;
+            case 13:
+                scaledRange = 8000;
+                break;
             case 14:
                 scaledRange = 4000;
                 break;
