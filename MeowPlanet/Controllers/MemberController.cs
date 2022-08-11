@@ -404,9 +404,10 @@ namespace MeowPlanet.Controllers
         }
 
         // 刪除貓咪
-        public async Task<IActionResult> DeleteCat(Cat cat)
+        [HttpGet]
+        public async Task<IActionResult> DeleteCat(int CatId)
         {
-            var Cat = _context.Cats.FirstOrDefault(p => p.CatId == cat.CatId);
+            var Cat = _context.Cats.FirstOrDefault(p => p.CatId == CatId);
 
             _context.Cats.Remove(Cat);
             await _context.SaveChangesAsync();

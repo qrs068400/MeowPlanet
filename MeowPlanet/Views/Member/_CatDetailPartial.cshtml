@@ -25,7 +25,7 @@
 </div>
 <form method="post" asp-action="UpdateCat" asp-controller="Member" enctype='multipart/form-data' autocomplete="off">
     <div class="row">
-        <input type="text" asp-for="CatId" class="d-none" value="@Model.CatId" />
+        <input type="text" asp-for="CatId" class="d-none" value="@Model.CatId" id="catId" />
 
         <div class="col-6">
 
@@ -68,7 +68,7 @@
 
             <div class="d-flex justify-content-center" style="margin-top:50px;">
                 <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-update">修改資料</button>
-                <button type="submit" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-delete">刪除貓咪</button>
+                <button type="button" class="btn cat-detail-btn d-flex align-items-center justify-content-center" id="cat-delete">刪除貓咪</button>
             </div>
 
         </div>
@@ -543,6 +543,7 @@
         reader.readAsDataURL($('#imgInput5')[0].files[0])
     })
 
+    // 修改貓咪資料
     $('#cat-update').click(function(e) {
         e.preventDefault();
         var form = $(this).parents('form');
@@ -557,6 +558,37 @@
         }).then(function() {
             form.submit();
         })
+    })
+
+    // 刪除貓咪
+    $('#cat-delete').click(function() {
+
+        Swal.fire({
+            title: "確認要刪除貓貓嗎？",
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#B99668',
+            cancelButtonColor: '#4B5461',
+            confirmButtonText: '刪除'
+        }).then(function(result) {
+            if (result.value) {
+                $.get('/Member/DeleteCat', { CatId: $('#catId').val() }, function(data) {
+                    Swal.fire({
+                        heightAuto: false,
+                        position: 'center',
+                        icon: 'success',
+                        title: '貓貓已刪除',
+                        showConfirmButton: false,
+                        timer: 2500
+                    }).then(function() {
+                        window.location.href = "/Member/Index";
+                    })
+                })
+            }
+        })
+
+
+
     })
 
 </script>
