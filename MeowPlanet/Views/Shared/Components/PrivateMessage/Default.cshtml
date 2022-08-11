@@ -298,15 +298,15 @@
                         $('#message-user').prepend(
 
                             `<div class="d-flex contact justify-content-between align-items-center border-bottom p-2 mb-2" data-id="${memberId}">
-                                        <div>
-                                            <img src="${data.photo}" />
-                                            ${data.name}
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-between align-items-end">
-                                            <p style="font-size: 0.5rem;color: gray" class="last-time"></p>
-                                            <div class="unread opacity-0">0</div>
-                                        </div>
-                                    </div>`
+                                <div>
+                                    <img src="${data.photo}" />
+                                    ${data.name}
+                                </div>
+                                <div class="d-flex flex-column justify-content-between align-items-end">
+                                    <p style="font-size: 0.5rem;color: gray" class="last-time"></p>
+                                    <div class="unread opacity-0">0</div>
+                                </div>
+                            </div>`
 
                         )
 
@@ -349,20 +349,22 @@
 
             let time = new Date().toLocaleTimeString().slice(0, -3);
 
-            $('#message-open').addClass('newMessage');
+            if (clickedMemberId != senderId || $('#message-open').attr('aria-expanded') != 'true') {
+                $('#message-open').addClass('newMessage');
+            }
 
             if (!contactList.includes(senderId)) {
                 $('#message-user').prepend(
                     `<div class="d-flex contact justify-content-between align-items-center border-bottom p-2 mb-2" data-id="${senderId}">
-                                        <div>
-                                            <img src="${userPhoto}" />
-                                            ${userName}
-                                        </div>
-                                        <div class="d-flex flex-column justify-content-between align-items-end">
-                                            <p style="font-size: 0.5rem;color: gray" class="last-time">${time}</p>
-                                            <div class="unread">1</div>
-                                        </div>
-                                    </div>`
+                                <div>
+                                    <img src="${userPhoto}" />
+                                    ${userName}
+                                </div>
+                                <div class="d-flex flex-column justify-content-between align-items-end">
+                                    <p style="font-size: 0.5rem;color: gray" class="last-time">${time}</p>
+                                    <div class="unread">1</div>
+                                </div>
+                            </div>`
                 )
 
                 contactList.push(senderId);
@@ -380,26 +382,26 @@
 
                         $messageLeft = $(
                             `<div class="message-left">
-                                            <img class="me-2" src='${userPhoto}' />
-                                            <div class="d-flex flex-column align-items-start">
-                                                <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
-                                                <div class="message" style="border-top-left-radius: 0;">
-                                                    <img src="${message}" style="max-width: 220px; max-height: 250px;object-fit: cover" />
-                                                </div>
-                                            </div>
-                                        </div>`
+                                    <img class="me-2" src='${userPhoto}' />
+                                    <div class="d-flex flex-column align-items-start">
+                                        <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
+                                        <div class="message" style="border-top-left-radius: 0;">
+                                            <img src="${message}" style="max-width: 220px; max-height: 250px;object-fit: cover" />
+                                        </div>
+                                    </div>
+                                </div>`
                         )
                     }
 
                     else {
                         $messageLeft = $(
                             `<div class="message-left">
-                                            <img class="me-2" src='${userPhoto}' />
-                                            <div class="d-flex flex-column align-items-start">
-                                                <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
-                                                <div class="message" style="border-top-left-radius: 0;">${message}</div>
-                                            </div>
-                                        </div>`
+                                    <img class="me-2" src='${userPhoto}' />
+                                    <div class="d-flex flex-column align-items-start">
+                                        <div class="text-end mb-2">${userName} <span class="time">${time}</span></div>
+                                        <div class="message" style="border-top-left-radius: 0;">${message}</div>
+                                    </div>
+                                </div>`
                         )
                     }
 
@@ -407,21 +409,8 @@
                     setTimeout(() => {
                         autoScroll();
                     }, 200)
-
                     let selfId = parseInt('@memberId');
-
-                    if ($('#message-open').attr('aria-expanded') == 'true') {
-
-                        $.post('/Message/MessageRead', { selfId, memberId: senderId })
-                    }
-                    else {
-
-                        $('#message-box').one('show.bs.collapse', () => {
-
-                            $.post('/Message/MessageRead', { selfId, memberId: senderId })
-                        })
-                    }
-
+                    $.post('/Message/MessageRead', { selfId, memberId: senderId })
                 }
 
                 else {
@@ -463,12 +452,12 @@
                     let time = new Date().toLocaleTimeString().slice(0, -3);
                     let $messageRight = $(
                         `<div class="message-right">
-                                        <img class="ms-2" src='${userPhoto}' />
-                                        <div class="d-flex flex-column align-items-end">
-                                            <div class="text-end mb-2"><span class="time">${time}</span> ${userName}</div>
-                                            <div class="message" style="border-top-right-radius: 0;">${message}</div>
-                                        </div>
-                                    </div>`
+                                <img class="ms-2" src='${userPhoto}' />
+                                <div class="d-flex flex-column align-items-end">
+                                    <div class="text-end mb-2"><span class="time">${time}</span> ${userName}</div>
+                                    <div class="message" style="border-top-right-radius: 0;">${message}</div>
+                                </div>
+                            </div>`
                     )
 
                     $("#message-content").append($messageRight);
@@ -508,7 +497,7 @@
                     document.getElementById('message-content').scrollTop = topPos - 10;
                 }
                 else {
-                    autoScroll()
+                    autoScroll()                  
 
                 }
             });
@@ -560,14 +549,14 @@
 
                         let $messageRight = $(
                             `<div class="message-right">
-                                            <img class="ms-2" src='${userPhoto}' />
-                                            <div class="d-flex flex-column align-items-end">
-                                                <div class="text-end mb-2"><span class="time">${time}</span> ${userName}</div>
-                                                <div class="message" style="border-top-right-radius: 0;">
-                                                    <img src="${e.target.result}" style="max-width: 220px; max-height: 250px;object-fit: cover" />
-                                                </div>
-                                            </div>
-                                        </div>`
+                                    <img class="ms-2" src='${userPhoto}' />
+                                    <div class="d-flex flex-column align-items-end">
+                                        <div class="text-end mb-2"><span class="time">${time}</span> ${userName}</div>
+                                        <div class="message" style="border-top-right-radius: 0;">
+                                            <img src="${e.target.result}" style="max-width: 220px; max-height: 250px;object-fit: cover" />
+                                        </div>
+                                    </div>
+                                </div>`
                         )
 
                         $("#message-content").append($messageRight);
