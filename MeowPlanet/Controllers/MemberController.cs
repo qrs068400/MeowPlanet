@@ -145,7 +145,7 @@ namespace MeowPlanet.Controllers
 
         // 建立保姆資料
         [HttpPost]
-        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
+        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5 , string sitterfeature)
         {
             Random random = new Random();
             string? uniqueFileName = null;
@@ -211,7 +211,28 @@ namespace MeowPlanet.Controllers
             }
             _context.Sitters.Add(sitter);
             await _context.SaveChangesAsync();
-            return NoContent();
+
+            if (sitterfeature != null)
+            {
+                string[] sitterfeatureArray = sitterfeature.Split(',');
+
+                var sitterInfo = _context.Sitters.Where(x => x.MemberId == sitter.MemberId).OrderBy(x => x.ServiceId).LastOrDefault();
+
+                var serviceid = sitterInfo.ServiceId;
+
+
+                for (int i = 0; i < sitterfeatureArray.Length; i++)
+                {
+
+                    SitterFeature sitter_feature = new SitterFeature();
+                    sitter_feature.ServiceId = serviceid;
+                    sitter_feature.FeatureId = Convert.ToInt32(sitterfeatureArray[i]);
+                    _context.SitterFeatures.Add(sitter_feature);
+
+                }
+            }
+            await _context.SaveChangesAsync();
+            return RedirectToAction("Index", "Member");
         }
 
         // 儲存sitterfeature資料

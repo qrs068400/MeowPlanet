@@ -115,6 +115,36 @@ $('#f5-b1').click(function () {
     $('#f4').css('display', 'block');
 })
 
+$('#f5-b2').click(function () {
+    $('#p5').css('display', 'none');
+    $('#p6').css('display', 'block');
+    $('#f5').css('display', 'none');
+    $('#f6').css('display', 'block');
+})
+
+$('#f6-b1').click(function () {
+    $('#p6').css('display', 'none');
+    $('#p5').css('display', 'block');
+    $('#f6').css('display', 'none');
+    $('#f5').css('display', 'block');
+})
+
+$('#f6-b2').click(function (e) {
+    e.preventDefault();
+    var form = $(this).parents('form');
+
+    Swal.fire({
+        heightAuto: false,
+        position: 'center',
+        icon: 'success',
+        title: '服務建立完成',
+        showConfirmButton: false,
+        timer: 2500
+    }).then(function () {
+        form.submit();
+    })
+})
+
 
 let inputList = [] // 放input dom的list
 let imgList = [] //放img dom的list
@@ -353,41 +383,3 @@ $('.con4-b').click(function () {
 
 })
 
-
-$('#f5-b2').on('click', function (e) {
-    e.preventDefault();
-    var form = $(this).parents('form');
-    Swal.fire({
-        heightAuto: false,
-        position: 'center',
-        icon: 'success',
-        title: '服務建立完成',
-        showConfirmButton: false,
-        timer: 2500
-    }).then(function () {
-        form.submit();
-    }).then(function () {
-        $('#p5').css('display', 'none');
-        $('#p6').css('display', 'block');
-        $('#f5').css('display', 'none');
-        $('#f6').css('display', 'block');
-    })
-
-
-})
-
-$('#f6-b1').click(function (e) {
-    e.preventDefault();
-    var form = $(this).parents('form');
-
-    Swal.fire({
-        heightAuto: false,
-        position: 'center',
-        icon: 'success',
-        title: '設施設定完成',
-        showConfirmButton: false,
-        timer: 2500
-    }).then(function () {
-        form.submit();
-    })
-})

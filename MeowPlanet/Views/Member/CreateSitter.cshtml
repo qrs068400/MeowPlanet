@@ -31,7 +31,7 @@
             </div>
 
             <div class="div-left-p mx-5" id="p5">
-                <p>請提供相關照片完成服務建立</p>
+                <p>請提供相關照片</p>
             </div>
 
             <div class="div-left-p mx-5" id="p6">
@@ -204,13 +204,8 @@
 
 
                     <button type="button" class="btn btn-dark re-b" id="f5-b1">返回</button>
-                    <button type="submit" class="btn btn-light ct-b" id="f5-b2">建立服務</button>
+                    <button type="button" class="btn btn-light ct-b" id="f5-b2">下一步</button>
                 </div>
-            </form>
-
-            <form method="post" asp-action="AddSitterFeature" asp-controller="Member" enctype='multipart/form-data' autocomplete="off" id="featureform">
-
-                <input type="text" class="d-none" value="@User.FindFirst(ClaimTypes.Sid).Value" name="memberId" />
 
                 <div class="div-right-form text-center" id="f6">
                     <div><button type="button" class="btn btn-light con4-b w-100" value="1">貓跳台</button></div>
@@ -220,9 +215,9 @@
 
                     <input type="text" class="d-none" id="feature" name="sitterfeature" />
 
-                    <button type="submit" class="btn btn-light ct-b2" id="f6-b1">完成</button>
+                    <button type="button" class="btn btn-dark re-b" id="f6-b1">返回</button>
+                    <button type="button" class="btn btn-light ct-b" id="f6-b2">完成</button>
                 </div>
-
             </form>
 
         </div>
