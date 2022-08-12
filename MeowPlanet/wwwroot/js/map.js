@@ -37,7 +37,7 @@ function initMap() {
     //初始化地圖
     map = new google.maps.Map($('#map')[0], {
         center: { lat: 22.629314218928563, lng: 120.29299528465663 },
-        zoom: 16,
+        zoom: 14,
         minZoom: 10,
         maxZoom: 18,
         disableDefaultUI: true,
@@ -171,7 +171,7 @@ function initMap() {
     listener = map.addListener('idle', () => { searchCat(scaledRange) })
 }
 
-let scaledRange = 1000;
+let scaledRange = 4000;
 
 //刊登協尋 檢查名下是否有貓&&是否已有刊登
 function checkCats(callback) {
