@@ -31,6 +31,10 @@ namespace MeowPlanet.Models
         public string? Img03 { get; set; }
         public string? Img04 { get; set; }
         public string? Img05 { get; set; }
+        public string? Area1 { get; set; }
+        public string? Area2 { get; set; }
+        public string? Area3 { get; set; }
+        public string? FormattedAddress { get; set; }
 
         public virtual Member Member { get; set; } = null!;
         public virtual ICollection<Favorite> Favorites { get; set; }

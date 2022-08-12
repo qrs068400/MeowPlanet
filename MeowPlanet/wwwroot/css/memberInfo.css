@@ -248,7 +248,6 @@ body {
 }
 
 .dropZone {
-    border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
     border-radius: 30px;

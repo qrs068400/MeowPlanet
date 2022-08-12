@@ -31,6 +31,7 @@
 
             <div class="d-flex justify-content-center" style="margin:10px;">
                 <div>
+
                     <img src="@Model.Img01" style="width:380px;height:280px;border-radius:30px; object-fit:cover" id="imgPreview1" class="dropZone">
                     <input id="imgInput1" type="file" class="d-none" name="file1" />
                 </div>
@@ -39,10 +40,12 @@
             <div class="d-flex justify-content-center" style="margin:10px;">
 
                 <div style="position: relative;">
+
                     <img src="@Model.Img02" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview2" class="dropZone">
                     <input id="imgInput2" type="file" class="d-none" name="file2" />
                 </div>
                 <div style="position: relative;">
+
                     <img src="@Model.Img03" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview3" class="dropZone">
                     <input id="imgInput3" type="file" class="d-none" name="file3" />
                 </div>
@@ -56,6 +59,7 @@
                     <input id="imgInput4" type="file" class="d-none" name="file4" />
                 </div>
                 <div style="position: relative;">
+
                     <img src="@Model.Img05" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview5" class="dropZone">
                     <input id="imgInput5" type="file" class="d-none" name="file5" />
                 </div>
@@ -166,6 +170,11 @@
     var adoptable = '@Model.IsAdoptable';
     var sitting = '@Model.IsSitting';
     var missing = '@Model.IsMissing';
+    var img1 = '@Model.Img01';
+    var img2 = '@Model.Img02';
+    var img3 = '@Model.Img03';
+    var img4 = '@Model.Img04';
+    var img5 = '@Model.Img05';
 
     $(function() {
 
@@ -205,6 +214,21 @@
             $('#mis-in').attr('value', '無走失');
         }
 
+        if (img1 == '') {
+            $('#imgPreview1').attr('src', '/images/addphoto.png')
+        }
+        if (img2 == '') {
+            $('#imgPreview2').attr('src', '/images/addphoto.png')
+        }
+        if (img3 == '') {
+            $('#imgPreview3').attr('src', '/images/addphoto.png')
+        }
+        if (img4 == '') {
+            $('#imgPreview4').attr('src', '/images/addphoto.png')
+        }
+        if (img5 == '') {
+            $('#imgPreview5').attr('src', '/images/addphoto.png')
+        }
 
     })
 
