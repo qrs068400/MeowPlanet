@@ -235,8 +235,11 @@ $(".dropZone, .dropZone1").on({
                         imgList[i].src = event.target.result;
                         $(`#plus${i + 1}`).css('display', 'none')
                         $(`#dropZone${i + 1}`).css('border', '2px rgb(115, 244, 222) solid')
-                        remainNum -= 1;
-                        $('#re-p').text(`還剩${remainNum}張可以選擇`)
+                        if (remainNum > 0) {
+                            remainNum -= 1;
+                        }
+                            $('#re-p').text(`還剩${remainNum}張可以選擇`)
+
                         break;  //跳脫出for迴圈
                     }
                 }
@@ -302,7 +305,10 @@ function fileChange(num) {
     readFile.addEventListener('load', function () {
         $(`#dropImg${num}`)[0].src = readFile.result
     })
-    remainNum -= 1;
+
+    if (remainNum > 0) {
+        remainNum -= 1;
+    }
     $('#re-p').text(`還剩${remainNum}張可以選擇`)
     $(`#plus${num}`).css('display', 'none')
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')

@@ -400,7 +400,7 @@ namespace MeowPlanet.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction("Index");
+            return NoContent();
         }
 
         // 刪除貓咪
