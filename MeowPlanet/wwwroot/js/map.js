@@ -125,7 +125,6 @@ function initMap() {
 
     map.addListener('zoom_changed', () => {
         let zoom = map.getZoom();
-        console.log(zoom);
         switch (zoom) {
             case 10:
                 scaledRange = 64000;
