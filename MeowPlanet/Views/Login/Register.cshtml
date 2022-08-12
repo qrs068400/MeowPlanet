@@ -14,7 +14,7 @@
     <section class="registersection img-bg d-flex align-items-center">
 
         <div class="container">
-            <div class="row d-flex justify-content-center w-75"  style="background-color: #171b20;     background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%); animation: FadeInUp 1s ease;">
+            <div class="row d-flex justify-content-center w-75" style="background-color: #171b20; background-image: radial-gradient(rgb(27, 39, 53) 0%, rgb(0, 0, 0) 100%); animation: FadeInUp 1s ease; position:relative ; z-index:999;">
                 <div class="col-6 mycontent-left d-flex align-items-center justify-content-center">
                     <p>
                         填寫簡單資料<br />
@@ -31,7 +31,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="email" asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" />
+                                <input type="email" asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" id="email" />
 
                             </div>
 
@@ -45,7 +45,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                                <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="password" />
 
                             </div>
 
@@ -59,7 +59,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                                <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="name" />
 
                             </div>
 
@@ -72,7 +72,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="text" asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" />
+                                <input type="text" asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="phone" />
 
                             </div>
 
@@ -110,84 +110,84 @@
     @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 
-
     <script>
         (() => {
-
-            let verifycode;
-
-            $('#sendEmail').click(function() {
-                let email = $('input[type=email]').val();
-                $.get("/Login/SendRegistMail", { email }, function(data) {
-                    $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', '#FF8EFF');
-                    verifycode = data;
+            // 檢查email是否重複
+            $('input[type=email]').blur(function() {
+                $.get("EmailCheck", { email: this.value }, function(data) {
+                    if (data == "此信箱已註冊") {
+                        $('#EmailValid').html(data)
+                    } else {
+                    }
                 })
             })
 
-            $('input[type=email]').blur(function() {
+            // 寄送驗證碼
+            let verifycode;
+            $('#sendEmail').click(function() {
+                let form = $(this).parents('form');
+                if (form.valid()) {
+                    $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
+                        if (data == "此信箱可使用") {
+                            let email = $('input[type=email]').val();
+                            $.get("/Login/SendRegistMail", { email }, function(data) {
+                                $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', 'white');
+                                verifycode = data;
+                            })
+                        } else {
 
-                if ($('#EmailValid').text() == '') {
-                    if ($('input[type=email]').val() == '') {
-                        $('#EmailValid').addClass('text-danger')
-                    } else {
-                        $.get("EmailCheck", { email: this.value }, function(data) {
-                            if (data == "此信箱已註冊") {
-                                $('#EmailValid').html(data).addClass('text-danger')
-                            } else {
-                                $('#EmailValid').removeClass('text-danger').css('color', '#FF8EFF')
-                            }
-                        })
-                    }
-                } else {
+                        }
+                    })
                 }
-
-
             })
 
+            // 輸入完顯示驗證碼是否正確
             $('#verify').keyup(function() {
                 $('#verifyspan').text("")
                 if ($('#verify').val().length == 5) {
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
-                    } else {
-                        
-                    }
+                    } 
                 }
-                
             })
 
             $('#registerSubmit').click(function(e) {
                 e.preventDefault();
 
+                let form = $(this).parents('form');
+
+                // 註冊前判定驗證碼是否正確
                 if ($('#verify').val() != "") {
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
+                        form.valid();
                         return;
                     }
 
                 } else {
                     $('#verifyspan').text("請輸入驗證碼").addClass('text-danger');
+                    form.valid();
                     return;
                 }
-
-                var form = $(this).parents('form');
-
-                $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
-                    if (data == "此信箱可使用") {
-                        Swal.fire({
-                            heightAuto: false,
-                            position: 'center',
-                            icon: 'success',
-                            title: '註冊成功',
-                            showConfirmButton: false,
-                            timer: 2500
-                        }).then(function() {
+                //form.valid先驗證再ajax
+                if (form.valid()) {
+                    $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
+                        if (data == "此信箱可使用") {
+                            Swal.fire({
+                                heightAuto: false,
+                                position: 'center',
+                                icon: 'success',
+                                title: '註冊成功',
+                                showConfirmButton: false,
+                                timer: 2500
+                            }).then(function() {
+                                form.submit();
+                            })
+                        } else {
                             form.submit();
-                        })
-                    } else {
-                        form.submit();
-                    }
-                })
+                        }
+                    })
+                }
             })
         })()
     </script>

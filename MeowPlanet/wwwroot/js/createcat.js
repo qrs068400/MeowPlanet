@@ -16,18 +16,19 @@ $('#f1-b1').click(function () {
     $('#f2').css('display', 'block');
 })
 
+$('.st-b').click(function () {
+    $('#ad-err').text('');
+})
 
 $('#f2-b4').click(function () {
-
-    if ($('#ad-in').attr('value') == '') {
-        $('#ado-sp').text('請選擇');
+    if ($('#ad-in').val() == '') {
+        $('#ad-err').text('請選擇是否提供領養');
+        return;
     }
-    else {
-        $('#p2').css('display', 'none');
-        $('#p3').css('display', 'block');
-        $('#f2').css('display', 'none');
-        $('#f3').css('display', 'block');
-    }
+    $('#p2').css('display', 'none');
+    $('#p3').css('display', 'block');
+    $('#f2').css('display', 'none');
+    $('#f3').css('display', 'block');
 })
 
 $('#f2-b3').click(function () {
@@ -44,17 +45,19 @@ $('#f3-b1').click(function () {
     $('#f2').css('display', 'block');
 })
 
+$('.bre-btn').click(function () {
+    $('#bre-err').text('');
+})
+
 $('#f3-b2').click(function () {
     if ($('#bre-in').attr('value') == '') {
-        $('#bre-sp').text('請選擇');
+        $('#bre-err').text('請選擇品種');
+        return;
     }
-    else {
-        $('#p3').css('display', 'none');
-        $('#p4').css('display', 'block');
-        $('#f3').css('display', 'none');
-        $('#f4').css('display', 'block');
-    }
-
+    $('#p3').css('display', 'none');
+    $('#p4').css('display', 'block');
+    $('#f3').css('display', 'none');
+    $('#f4').css('display', 'block');
 })
 
 $('#f4-b1').click(function () {
@@ -64,18 +67,27 @@ $('#f4-b1').click(function () {
     $('#f3').css('display', 'block');
 })
 
+$('#name-in').keyup(function () {
+    $('#name-err').text('');
+})
+$('.sex-b').click(function () {
+    $('#sex-err').text('');
+})
+
 $('#f4-b2').click(function () {
-
-    if (($('#name-in').val() == '') || ($('#sex-in').attr('value') == '')) {
-        $('#name-sex-sp').text('請填寫及選擇');
-    } else {
-        $('#p4').css('display', 'none');
-        $('#p5').css('display', 'block');
-        $('#f4').css('display', 'none');
-        $('#f5').css('display', 'block');
+    if (($('#name-in').val() == '') || ($('#sex-in').val() == '')) {
+        if ($('#name-in').val() == "") {
+            $('#name-err').text('請填寫名稱');
+        }
+        if ($('#sex-in').val() == "") {
+            $('#sex-err').text('請選擇性別');
+        }
+        return;
     }
-
-
+    $('#p4').css('display', 'none');
+    $('#p5').css('display', 'block');
+    $('#f4').css('display', 'none');
+    $('#f5').css('display', 'block');
 })
 
 $('#f5-b1').click(function () {
@@ -85,13 +97,27 @@ $('#f5-b1').click(function () {
     $('#f4').css('display', 'block');
 })
 
-$('#f5-b2').click(function () {
+$('#age-in').keyup(function () {
+    $('#age-err').text('');
+})
+$('#city').change(function () {
+    $('#city-err').text('');
+})
 
+$('#f5-b2').click(function () {
+    if (($('#age-in').val() == '') || $('#city').val() == '請選擇') {
+        if ($('#age-in').val() == "") {
+            $('#age-err').text('請填寫年齡');
+        }
+        if ($('#city').val() == "請選擇") {
+            $('#city-err').text('請選擇縣市');
+        }
+        return;
+    }
     $('#p5').css('display', 'none');
     $('#p6').css('display', 'block');
     $('#f5').css('display', 'none');
     $('#f6').css('display', 'block');
-
 })
 
 $('#f6-b1').click(function () {
@@ -101,18 +127,19 @@ $('#f6-b1').click(function () {
     $('#f5').css('display', 'block');
 })
 
+$('#intro-in').keyup(function () {
+    $('#intro-err').text('');
+})
+
 $('#f6-b2').click(function () {
-
     if ($('#intro-in').val() == '') {
-        $('#intro-sp').text('請填寫');
-    } else {
-        $('#p6').css('display', 'none');
-        $('#p7').css('display', 'block');
-        $('#f6').css('display', 'none');
-        $('#f7').css('display', 'block');
+        $('#intro-err').text('請填寫貓咪介紹');
+        return
     }
-
-
+    $('#p6').css('display', 'none');
+    $('#p7').css('display', 'block');
+    $('#f6').css('display', 'none');
+    $('#f7').css('display', 'block');
 })
 
 $('#f7-b1').click(function () {
@@ -179,7 +206,7 @@ $(".dropZone, .dropZone1").on({
 
 
 
-        for (let i = 0; i < fileList.length; i++) {   
+        for (let i = 0; i < fileList.length; i++) {
 
             let file = fileList[i];          //把fileList拆分成單獨file跑迴圈
 
@@ -206,8 +233,8 @@ $(".dropZone, .dropZone1").on({
                     //如果該img為空則把該圖片的url assign進去
                     if (imgList[i].src == '') {
                         imgList[i].src = event.target.result;
-                        $(`#plus${i+1}`).css('display', 'none')
-                        $(`#dropZone${i+1}`).css('border', '2px rgb(115, 244, 222) solid')
+                        $(`#plus${i + 1}`).css('display', 'none')
+                        $(`#dropZone${i + 1}`).css('border', '2px rgb(115, 244, 222) solid')
                         remainNum -= 1;
                         $('#re-p').text(`還剩${remainNum}張可以選擇`)
                         break;  //跳脫出for迴圈
@@ -227,8 +254,8 @@ $(".dropZone, .dropZone1").on({
                     break;
                 }
             }
-        }       
-        
+        }
+
     }
 })
 
@@ -237,7 +264,7 @@ $(function () {
     $('#theFile1').change(function () {
         fileChange(1);
     })
-    $('#theFile2').change(function() {
+    $('#theFile2').change(function () {
         fileChange(2);
     })
     $('#theFile3').change(function () {

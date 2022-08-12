@@ -41,12 +41,12 @@ namespace MeowPlanet.Models
         public async Task<IActionResult> AddMissing(Missing missingCat)
         {
             _context.Missings.Add(missingCat);
-            _context.Cats.Where(x => x.CatId == missingCat.CatId).First().IsMissing = true;
+            _context.Cats.FirstOrDefault(x => x.CatId == missingCat.CatId).IsMissing = true;
+            _context.Cats.FirstOrDefault(x => x.CatId == missingCat.CatId).IsAdoptable = false;
 
             await _context.SaveChangesAsync();
             return Content("OK");
         }
-
 
         [HttpGet]
         public async Task<IActionResult> GetMissing()

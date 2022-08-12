@@ -14,7 +14,7 @@
             <div class="img-bg1"></div>
             <div class="bgdiv">
                 <p>在各方面為您的貓咪著想</p>
-                <button class="btn btn-light navbar-brand addbtn" asp-controller="Login" asp-action="Register">成為會員</button>
+                <a class="btn btn-light navbar-brand addbtn" asp-controller="Login" asp-action="Register">成為會員</a>
             </div>
         </section>
 
@@ -193,7 +193,7 @@
                     <p>
                         在各方面為您的貓咪著想
                     </p>
-                    <a class="btn d-flex">
+                    <a asp-controller="Login" asp-action="Register" class="btn d-flex">
                         成為會員
                     </a>
                 </div>

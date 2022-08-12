@@ -85,18 +85,19 @@ namespace MeowPlanet.Controllers
 
         public ActionResult Search(string? city_Utf8, int breedId, bool? catSex)
         {
-            try {
-            var city = HttpUtility.UrlDecode(city_Utf8); //解碼unicode
-            var catDtoList = new List<CatsDto>();
-            var CatsDto = GetCatsDto(city, breedId, catSex).OrderBy(x => Guid.NewGuid()).ToList(); //排序及查詢條件
+            try
+            {
+                var city = HttpUtility.UrlDecode(city_Utf8); //解碼unicode
+                var catDtoList = new List<CatsDto>();
+                var CatsDto = GetCatsDto(city, breedId, catSex).OrderBy(x => Guid.NewGuid()).ToList(); //排序及查詢條件
 
-            //暫存查詢條件
-            ViewBag.catid = CatsDto[0].CatId;
-            ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? CatsDto[0].CatCity : "全部";
-            ViewBag.breedId = (breedId != 0) ? CatsDto[0].BreedId : 0;
-            ViewBag.catSex = (catSex != null) ? CatsDto[0].CatSex : null;
+                //暫存查詢條件
+                ViewBag.catid = CatsDto[0].CatId;
+                ViewBag.city = (!string.IsNullOrEmpty(city) && city != "全部") ? CatsDto[0].CatCity : "全部";
+                ViewBag.breedId = (breedId != 0) ? CatsDto[0].BreedId : 0;
+                ViewBag.catSex = (catSex != null) ? CatsDto[0].CatSex : null;
 
-            return PartialView("_CardPartial", CatsDto);
+                return PartialView("_CardPartial", CatsDto);
             }
             catch
             {
@@ -120,11 +121,11 @@ namespace MeowPlanet.Controllers
             var adopt = new List<Adopt>();
             if (memberid == 0)
             {
-                catList = _context.Cats.Where(x => x.IsAdoptable == true).ToList();
+                catList = _context.Cats.Where(x => x.IsAdoptable == true && x.IsMissing == false).ToList();
             }
             else
             {
-                catList = _context.Cats.Where(x => x.MemberId != memberid && x.IsAdoptable == true).ToList();
+                catList = _context.Cats.Where(x => x.MemberId != memberid && x.IsAdoptable == true && x.IsMissing == false).ToList();
                 adopt = _context.Adopts.Where(x => x.MemberId == memberid).ToList();
             }
 
@@ -201,7 +202,7 @@ namespace MeowPlanet.Controllers
 
             //送養列表         
             var ownerlist = _context.Adopts
-             .Where(x => x.Owner == memberid)
+             .Where(x => x.Owner == memberid && x.Cat.IsMissing==false)
              .Include(x => x.Member)
              .Select(x => new ViewModels.LikeAdopts()
              {

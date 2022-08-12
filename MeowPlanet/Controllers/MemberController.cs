@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using MeowPlanet.ViewModels.MemberInfo;
 using System.Collections;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace MeowPlanet.Controllers
 {
@@ -22,7 +24,7 @@ namespace MeowPlanet.Controllers
 
         public IActionResult Index()
         {
-            if(User.FindFirstValue(ClaimTypes.Sid) == null)
+            if (User.FindFirstValue(ClaimTypes.Sid) == null)
             {
                 return RedirectToAction("Index", "Login");
             }
@@ -42,7 +44,7 @@ namespace MeowPlanet.Controllers
             }
             else
             {
-            return View();
+                return View();
 
             }
         }
@@ -55,7 +57,7 @@ namespace MeowPlanet.Controllers
             }
             else
             {
-            return View();
+                return View();
 
             }
         }
@@ -209,14 +211,14 @@ namespace MeowPlanet.Controllers
             }
             _context.Sitters.Add(sitter);
             await _context.SaveChangesAsync();
-            return Content("服務建立完成");
+            return NoContent();
         }
 
         // 儲存sitterfeature資料
         [HttpPost]
         public async Task<IActionResult> AddSitterFeature(string sitterfeature, int memberId)
         {
-            if(sitterfeature != null)
+            if (sitterfeature != null)
             {
                 string[] sitterfeatureArray = sitterfeature.Split(',');
 
@@ -370,9 +372,12 @@ namespace MeowPlanet.Controllers
             oldCat.Sex = cat.Sex;
             oldCat.City = cat.City;
             oldCat.Introduce = cat.Introduce;
-            oldCat.IsAdoptable = cat.IsAdoptable;
-            oldCat.IsSitting = cat.IsSitting;
-            oldCat.IsMissing = cat.IsMissing;
+
+            if ((oldCat.IsMissing != true)||(oldCat.IsSitting != true))
+            {
+                oldCat.IsAdoptable = cat.IsAdoptable;
+            }
+
             if (cat.Img01 != null)
             {
                 oldCat.Img01 = cat.Img01;
@@ -399,9 +404,10 @@ namespace MeowPlanet.Controllers
         }
 
         // 刪除貓咪
-        public async Task<IActionResult> DeleteCat(Cat cat)
+        [HttpGet]
+        public async Task<IActionResult> DeleteCat(int CatId)
         {
-            var Cat = _context.Cats.FirstOrDefault(p => p.CatId == cat.CatId);
+            var Cat = _context.Cats.FirstOrDefault(p => p.CatId == CatId);
 
             _context.Cats.Remove(Cat);
             await _context.SaveChangesAsync();
@@ -418,13 +424,24 @@ namespace MeowPlanet.Controllers
             oldMember.Name = member.Name;
             oldMember.Phone = member.Phone;
 
+
+            //更新暱稱
+            var identity = new ClaimsIdentity(User.Identity);
+            identity.RemoveClaim(identity.FindFirst(ClaimTypes.Name));
+            identity.AddClaim(new Claim(ClaimTypes.Name, member.Name));
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
+                                        new ClaimsPrincipal(identity));
+
             await _context.SaveChangesAsync();
             return RedirectToAction("Index");
         }
 
         // 修改會員頭像
         [HttpPost]
-        public async Task<IActionResult> UpdatePhoto(IFormFile memberPhoto,int memberId)
+        public async Task<IActionResult> UpdatePhoto(IFormFile memberPhoto, int memberId)
         {
             var oldMember = _context.Members.FirstOrDefault(p => p.MemberId == memberId);
 

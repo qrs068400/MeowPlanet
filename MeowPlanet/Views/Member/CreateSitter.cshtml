@@ -53,30 +53,37 @@
                 <input type="text" asp-for="IsService" class="d-none" value="true" />
                 <input type="text" asp-for="MemberId" class="d-none" value="@User.FindFirst(ClaimTypes.Sid).Value" id="memberid" />
                 <div class="div-right-form text-center" id="f2">
-
                     <div class="d-flex align-items-center">
                         <div class="w-100">
                             <p class="text-start">服務名稱</p>
-                            <input type="text" asp-for="Name" class="text-center w-100" id="name-in"/>
+                            <input type="text" asp-for="Name" class="text-center w-100" id="name-in" />
                         </div>
                     </div>
-
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="name-err" style="margin-top:2px;"></span>
+                    </div>
                     <div class="d-flex align-items-center">
                         <div class="w-100">
                             <p class="text-start">照顧地點</p>
                             <input type="text" class="text-center w-100" id="address" onchange="getlatlng()" />
                         </div>
                     </div>
-
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="address-err" style="margin-top:2px;"></span>
+                    </div>
                     <input type="text" class="d-none" asp-for="PosLat" id="lat" />
                     <input type="text" class="d-none" asp-for="PosLng" id="lng" />
-
+                    <input type="text" class="d-none" asp-for="FormattedAddress" id="formatted_address" />
+                    <input type="text" class="d-none" asp-for="Area1" id="area_1" />
+                    <input type="text" class="d-none" asp-for="Area2" id="area_2" />
+                    <input type="text" class="d-none" asp-for="Area3" id="area_3" />
                     <div>
                         <p class="text-start">保姆自介</p>
                         <textarea type="text" asp-for="Summary" rows="5" cols="35" class="p-4" id="intro-in"></textarea>
                     </div>
-
-                    <span id="f2-sp" class="in-sp"></span>
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="intro-err" style="margin-top:2px;"></span>
+                    </div>
 
                     <button type="button" class="btn btn-dark re-b" id="f2-b3">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f2-b4">下一步</button>
@@ -102,10 +109,14 @@
 
                     <div class="w-100">
                         <p class="text-start">服務價格</p>
-                        <input type="text" asp-for="Pay" class="text-center w-100" id="pay-in"/>
+                        <div class="d-flex align-items-center">
+                            <input type="text" asp-for="Pay" class="text-center w-75" id="pay-in" />
+                            <p class="text-center my-0 mx-auto">每晚/元</p>
+                        </div>
                     </div>
-
-                    <span id="f3-sp" class="in-sp"></span>
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="pay-err" style="margin-top:2px;"></span>
+                    </div>
 
                     <button type="button" class="btn btn-dark re-b" id="f3-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f3-b2">下一步</button>
@@ -118,11 +129,15 @@
                     <div class="d-flex justify-content-between">
                         <button type="button" class="btn btn-light con2-b" value="附一餐">附一餐</button>
                         <button type="button" class="btn btn-light con2-b" value="附二餐">附二餐</button>
-
                     </div>
-                    <div class="d-flex justify-content-between">
+
+                    <div class="d-flex justify-content-between" style="margin-top:50px;">
                         <button type="button" class="btn btn-light con2-b" value="附三餐">附三餐</button>
                         <button type="button" class="btn btn-light con2-b" value="無附餐">無附餐</button>
+                    </div>
+
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="meal-err" style="margin-top:2px;"></span>
                     </div>
 
                     <input type="text" asp-for="Meal" class="d-none" id="meal-in" />
@@ -133,14 +148,16 @@
                         <button type="button" class="btn btn-light con3-b" value="一對二">一對二</button>
 
                     </div>
-                    <div class="d-flex justify-content-between">
+                    <div class="d-flex justify-content-between" style="margin-top:50px;">
                         <button type="button" class="btn btn-light con3-b" value="一對三">一對三</button>
                         <button type="button" class="btn btn-light con3-b" value="一對多">一對多</button>
                     </div>
 
-                    <input type="text" asp-for="CatNumber" class="d-none" id="num-in" />
+                    <div class="d-flex justify-content-start align-items-center" style="height:40px; font-size:25px;">
+                        <span class="text-danger" id="num-err" style="margin-top:2px;"></span>
+                    </div>
 
-                    <span id="f4-sp" class="in-sp"></span>
+                    <input type="text" asp-for="CatNumber" class="d-none" id="num-in" />
 
                     <button type="button" class="btn btn-dark re-b" id="f4-b1">返回</button>
                     <button type="button" class="btn btn-light ct-b" id="f4-b2">下一步</button>
@@ -193,7 +210,7 @@
 
             <form method="post" asp-action="AddSitterFeature" asp-controller="Member" enctype='multipart/form-data' autocomplete="off" id="featureform">
 
-                <input type="text" class="d-none" value="@User.FindFirst(ClaimTypes.Sid).Value" name="memberId"/>
+                <input type="text" class="d-none" value="@User.FindFirst(ClaimTypes.Sid).Value" name="memberId" />
 
                 <div class="div-right-form text-center" id="f6">
                     <div><button type="button" class="btn btn-light con4-b w-100" value="1">貓跳台</button></div>
