@@ -586,6 +586,8 @@ $(document).on('click', '#provideClues', () => {
         }
         else {
 
+            date = new Date($('#provideClues').data('missingDate'))
+
             let windowContent =
                 '<form id="clueForm" enctype="multipart/form-data" style="width: 350px; height: 450px" autocomplete="off">' +
                 '<div class="h5 text-center">請輸入線索詳細資訊</div>' +
@@ -626,10 +628,13 @@ $(document).on('click', '#provideClues', () => {
 
 })
 
+let date;
+
 $(function () {
     $(document).on({
         'focus': function () {
-            $(this).datepicker({ maxDate: 0 });
+             
+            $(this).datepicker({ maxDate: 0, minDate: date });
         }
     }, '#witness-time'
     )
