@@ -161,7 +161,7 @@ body {
     border-radius: 50px;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
-    background: url('../images/intro1.jpg');
+    background: url('../images/intro6.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -180,7 +180,7 @@ body {
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
-    background: url('../images/intro2.jpg');
+    background: url('../images/intro4.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -194,10 +194,10 @@ body {
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
     background: rgba(0, 0, 0, .3);
-    background: url('../images/intro3.jpg');
+    background: url('../images/intro5.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: right 50%;
     --lef: 69%;
     --top: 33%;
     --wid: 24%;
@@ -451,10 +451,10 @@ body {
 }
 
 .feimg1 {
-    background: url('../images/service2.jpg');
+    background: url('../images/service6.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: right;
 }
 
 .feimg2-wrap {
@@ -472,10 +472,10 @@ body {
 }
 
 .feimg2 {
-    background: url('../images/service3.jpg');
+    background: url('../images/service4.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: 5% 50%;
+    background-position: center;
 }
 
 .feimg3-wrap {
@@ -493,7 +493,7 @@ body {
 }
 
 .feimg3 {
-    background: url('../images/service1.jpg');
+    background: url('../images/service5.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;

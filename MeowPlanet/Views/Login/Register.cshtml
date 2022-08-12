@@ -160,13 +160,13 @@
                 if ($('#verify').val() != "") {
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
-                        form.submit();
+                        form.valid();
                         return;
                     }
 
                 } else {
                     $('#verifyspan').text("請輸入驗證碼").addClass('text-danger');
-                    form.submit();
+                    form.valid();
                     return;
                 }
                 //form.valid先驗證再ajax
