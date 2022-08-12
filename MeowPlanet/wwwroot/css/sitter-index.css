@@ -30,6 +30,7 @@ body {
 
 .starsky {
     overflow: hidden;
+    min-height: 81vh;
 }
 
 #stars {
@@ -102,7 +103,7 @@ body {
 .input-box {
     background-color: var(--project-primary-color);
     position: sticky;
-    top: 8.4%;
+    top: 8.2%;
     z-index: 99;
 }
 
@@ -132,8 +133,8 @@ body {
 /* 地圖顯示區 */
 .show-map_div2-1 {
     Position: fixed;
-    bottom: 6%;
-    right: 0;
+    /* bottom: 6%; */
+    left: 0;
 }
 
     .show-map_div2-1 img {

@@ -7,14 +7,16 @@ using Microsoft.CodeAnalysis;
 using System.Security.Claims;
 using MeowPlanet.ViewModels.Sitters;
 
+
 namespace MeowPlanet.Controllers
 {
     public class SitterController : Controller
     {
         private readonly endtermContext _context;
+        private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly int? _memberId;
 
-        public SitterController(endtermContext context, IHttpContextAccessor contextAccessor)
+        public SitterController(endtermContext context, IHttpContextAccessor contextAccessor, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
 
@@ -22,6 +24,7 @@ namespace MeowPlanet.Controllers
             {
                 _memberId = Convert.ToInt32(contextAccessor.HttpContext.User.FindFirst(ClaimTypes.Sid).Value);
             }
+            _webHostEnvironment = webHostEnvironment;
         }
         public async Task<IActionResult> Index()
         {
@@ -34,7 +37,7 @@ namespace MeowPlanet.Controllers
 
             //方法一
             var result = await _context.Sitters
-                .AsNoTracking()
+                //.AsNoTracking()
                 //.AsNoTrackingWithIdentityResolution()
                 //.Include(c => c.SitterFeatures)
                 .Where(m => m.IsService == true)
@@ -85,7 +88,7 @@ namespace MeowPlanet.Controllers
 
             TempData["controller"] = "Sitter";
             TempData["action"] = "Index";
-            return View(result);
+            return View( result);
         }
 
         public async Task<IActionResult> Detail(int? id)
@@ -95,7 +98,6 @@ namespace MeowPlanet.Controllers
                 sitter = await _context.Sitters.FirstOrDefaultAsync(m => m.ServiceId == id),
                 sitterfeatureList = await _context.SitterFeatures.Include(x => x.Feature).Where(m => m.ServiceId == id).Select(x => x.Feature.Name).ToListAsync(),
                 OrderCommentList = await _context.Orderlists.Where(m => m.ServiceId == id).ToListAsync(),
-
             };
             var catList = await _context.Cats
                 .Where(m => m.MemberId == _memberId)
@@ -191,11 +193,12 @@ namespace MeowPlanet.Controllers
             return RedirectToAction("Index");
         }
 
+
         [HttpGet]
-        public ActionResult SitterViewMode()
+        public async Task<ActionResult> SitterBox()
         {
-            var sitter = _context.Sitters
-            //要用theninclude 才看的到 feature
+            var sitter = await _context.Sitters
+             //要用theninclude 才看的到 feature
              //.Include(x => x.SitterFeatures)
              //.ThenInclude(x => x.Feature)
              //直接 include 看不到 feature
@@ -203,11 +206,30 @@ namespace MeowPlanet.Controllers
              .Where(x => x.MemberId == _memberId)
              .Select(x => new SitterViewModels
              {
+                 sitter = x,
+                 //實際測試 我根本不用上面的include就可以取到我要資料了，這串語法自帶LEFT JOIN 跟 INNER JOIN
+                 sitterfeatureList = x.SitterFeatures.Select(x => x.Feature.Name).ToList(),
+             }).FirstOrDefaultAsync();
+            return PartialView("_SitterBoxPartial",sitter);
+        }
+            [HttpGet]
+        public  async Task<ActionResult> SitterViewMode()
+        {
+            var sitter = await _context.Sitters
+            //要用theninclude 才看的到 feature
+             //.Include(x => x.SitterFeatures)
+             //.ThenInclude(x => x.Feature)
+             //直接 include 看不到 feature
+             //.Include(x => x.SitterFeatures.Feature)
+             .Where(x => x.MemberId == _memberId)
+             .Select( x => new SitterViewModels
+             {
                sitter = x,
                //實際測試 我根本不用上面的include就可以取到我要資料了，這串語法自帶LEFT JOIN 跟 INNER JOIN
                sitterfeatureList = x.SitterFeatures.Select(x => x.Feature.Name).ToList(),
-             }).FirstOrDefault();
-            return PartialView("_SitterViewModePartial", sitter);
+             }).FirstOrDefaultAsync();
+ 
+            return PartialView("_SitterViewModePartial",sitter);
         }
 
         [HttpPost]
@@ -215,5 +237,152 @@ namespace MeowPlanet.Controllers
         {
             return PartialView("_SitterEditModePartial", j);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SaveSitter(SitterViewModels j, List<string> check, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5)
+        {
+            var sitterDB = await _context.Sitters
+             .Where(x => x.MemberId == _memberId)
+             .FirstOrDefaultAsync();
+
+            //sitter update
+            Random random = new Random();
+            string? uniqueFileName = null;
+
+            if (file1 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file1.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file1.CopyTo(fileStream);
+                }
+                sitterDB.Img01 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file2 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file2.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file2.CopyTo(fileStream);
+                }
+                sitterDB.Img02 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file3 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file3.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file3.CopyTo(fileStream);
+                }
+                sitterDB.Img03 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file4 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file4.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file4.CopyTo(fileStream);
+                }
+                sitterDB.Img04 = "/images/userUpload/" + uniqueFileName;
+            }
+
+            if (file5 != null)  //handle iformfile
+            {
+                string uploadsFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Images/userUpload");
+                uniqueFileName = DateTime.Now.ToString("yyyyMMddHHmmss") + random.Next(1000, 9999).ToString() + file5.FileName;
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    file5.CopyTo(fileStream);
+                }
+                sitterDB.Img05 = "/images/userUpload/" + uniqueFileName;
+            }
+            
+            sitterDB.Name = j.sitter.Name;
+            sitterDB.Summary = j.sitter.Summary;
+            sitterDB.Pay = j.sitter.Pay;
+            sitterDB.Licence = j.sitter.Licence;
+            sitterDB.Cage = j.sitter.Cage;
+            sitterDB.Monitor = j.sitter.Monitor;
+            sitterDB.Meal = j.sitter.Meal;
+            sitterDB.CatNumber = j.sitter.CatNumber;
+            //sitterDB.PosLat = j.sitter.PosLat;
+            //sitterDB.PosLng = j.sitter.PosLng;   地址還沒轉換
+            sitterDB.IsService = j.sitter.IsService;
+
+
+            //sitter feature update
+            var sitterfeatureDB = await _context.SitterFeatures
+             .Where(x => x.ServiceId == sitterDB.ServiceId)
+             .ToListAsync();
+
+            List<string> sitterFeaturesIdDB = new List<string>();
+            for (int i = 0; i < sitterfeatureDB.Count; i++)
+            {
+                sitterFeaturesIdDB.Add(sitterfeatureDB[i].FeatureId.ToString());
+            };
+
+            var update = check.Except(sitterFeaturesIdDB).ToList();
+            var delete = sitterFeaturesIdDB.Except(check).ToList();
+
+            for (int i = 0; i < update.Count; i++)
+            {
+                Int32.TryParse(update[i] ,out int x);
+                await _context.SitterFeatures.AddAsync(new SitterFeature() { ServiceId = sitterDB.ServiceId,FeatureId=x});
+            }
+            for (int i = 0; i < delete.Count; i++)
+            {
+                int.TryParse(delete[i], out int d);
+                _context.SitterFeatures.Remove(sitterfeatureDB.FirstOrDefault(x => x.FeatureId == d));
+            }
+
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
+
+        public async Task<IActionResult> SitterWorkManage()
+        {
+            var result = await _context.Orderlists.Where(x => x.Service.MemberId == _memberId)
+                .Select(x => new SitterWorkViewModel
+                {
+                    UserName = x.Member.Name,
+                    UserPhone = x.Member.Phone,
+                    UserPhoto = x.Member.Photo,
+                    OrderId = x.OrderId,
+                    Sex = x.Cat.Sex,
+                    Introduce = x.Cat.Introduce,
+                    BreedName = x.Cat.Breed.Name,
+                    CatName = x.Cat.Name,
+                    CatImg01 = x.Cat.Img01,
+                    DateStart = x.DateStart,
+                    DateOver = x.DateOver,
+                    Total = x.Total,
+                    Status = x.Status
+                }).ToListAsync();
+
+            return PartialView("_SitterWorkManagePartial", result);
+        }
+
+        public async Task<IActionResult> SetOrderStatus(int orderId, int status)
+        {
+            var order = await _context.Orderlists.FirstOrDefaultAsync(x => x.OrderId == orderId);
+            order.Status = status;
+            await _context.SaveChangesAsync();
+
+            return Content("OK");
+        }
+
     }
 }

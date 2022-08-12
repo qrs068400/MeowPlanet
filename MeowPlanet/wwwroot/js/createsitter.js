@@ -260,6 +260,7 @@ function getlatlng() {
     }, function (result) {
         $('#lat').attr('value', result[0].geometry.location.lat());
         $('#lng').attr('value', result[0].geometry.location.lng());
+
         $('#formatted_address').attr('value', result[0].formatted_address);
         for (const component of result[0].address_components) {
             if (component.types[0] == 'administrative_area_level_1') {
@@ -272,17 +273,6 @@ function getlatlng() {
                 $('#area_3').attr('value', component.long_name);
             }
         }
-    })
-}
-
-
-
-function getaddress() {
-    var latlng = { lat: $('#lat').val(), lng: $('#lng').val() };
-    geocoder.geocode({
-        'location': latlng
-    }, function (result) {
-        $('#trans-address').attr('value', results[0].formatted_address);
     })
 }
 
@@ -302,12 +292,12 @@ $('#licence-btn').click(function () {
 })
 
 $('#cage-btn').click(function () {
-    if ($(this).val() == "不關籠") {
-        $('#cage-in').attr('value', "需關籠");
-        $(this).attr('value', "需關籠");
+    if ($(this).val() == "不關籠子") {
+        $('#cage-in').attr('value', "需關籠子");
+        $(this).attr('value', "需關籠子");
     } else {
-        $('#cage-in').attr('value', "不關籠");
-        $(this).attr('value', "不關籠");
+        $('#cage-in').attr('value', "不關籠子");
+        $(this).attr('value', "不關籠子");
     }
 })
 
@@ -367,7 +357,6 @@ $('.con4-b').click(function () {
 $('#f5-b2').on('click', function (e) {
     e.preventDefault();
     var form = $(this).parents('form');
-
     Swal.fire({
         heightAuto: false,
         position: 'center',

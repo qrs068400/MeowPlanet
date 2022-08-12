@@ -35,18 +35,22 @@
                         </div>
 
                     </div>
-
-                    <div class="text-center" style="margin-top:65px;">
-                        <a onclick="showAccount()">我的帳戶</a>
-                    </div>
-                    <div class="text-center" style="margin-top:65px;">
-                        <a id="sitter" >保姆管理</a>
-                    </div>
-                    <div class="text-center" style="margin-top:65px;">
-                        <a id="adoption">領養資訊</a>
-                    </div>
-                    <div class="text-center" style="margin-top:65px;">
-                        <a id="clues">協尋管理</a>
+                    <div class="flex-column d-flex justify-content-evenly" style="height:500px;">
+                        <div class="text-center">
+                            <a onclick="showAccount()">我的帳戶</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" id="sitter">保姆管理</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" id="adoption">領養資訊</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" id="clues">協尋管理</a>
+                        </div>
+                        <div class="text-center">
+                            <a href="#" id="sitterRecord">預約紀錄</a>
+                        </div>
                     </div>
 
 
@@ -112,11 +116,17 @@
         })
         //保母資訊
         $('#sitter').click(() => {
-            $.get('/Sitter/SitterViewMode', function(data) {
+            $.get('/Sitter/SitterBox', function(data) {
                 $('#member-right-region').html(data);
             })
         })
 
+        //預約紀錄
+        $('#sitterRecord').click(() => {
+            $.get('/Sitter/SitterReserveRecord', function(data) {
+                $('#member-right-region').html(data);
+            })
+        })
 
 
         $(document).on({

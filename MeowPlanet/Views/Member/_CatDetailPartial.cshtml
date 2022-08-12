@@ -158,8 +158,6 @@
 
             </div>
         </div>
-
-
     </div>
 </form>
 
@@ -578,7 +576,8 @@
     $('#cat-update').click(function(e) {
         e.preventDefault();
         var form = $(this).parents('form');
-
+        form.submit()
+        .then(
         Swal.fire({
             heightAuto: false,
             position: 'center',
@@ -586,9 +585,11 @@
             title: '修改完成',
             showConfirmButton: false,
             timer: 2500
-        }).then(function() {
-            form.submit();
         })
+        ).then(function() {
+            window.location
+        })
+        
     })
 
     // 刪除貓咪
