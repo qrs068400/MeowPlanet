@@ -220,7 +220,7 @@ namespace MeowPlanet.Controllers
             msg.Subject = "重新設定您在 MeowPlanet 的密碼";
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
             msg.Body = "這是 MeowPlanet 喵屋星球 的密碼重置信，若你不曾要求重設密碼，請忽略這封信<br />" +
-                "<a href='" + "https://localhost:44394/Login/ResetPassword" + "?Email=" + Email + "'>請點擊此連結重置密碼</a>" + "<br /><br />MeowPlanet 喵屋星球";
+                "<a href='" + "https://meowplanet.lol/Login/ResetPassword" + "?Email=" + Email + "'>請點擊此連結重置密碼</a>" + "<br /><br />MeowPlanet 喵屋星球";
             msg.BodyEncoding = System.Text.Encoding.UTF8;
             msg.IsBodyHtml = true;
 
