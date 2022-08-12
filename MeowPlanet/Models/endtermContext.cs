@@ -33,6 +33,8 @@ namespace MeowPlanet.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=114.35.243.117,49172;Initial Catalog=endterm;Persist Security Info=True;User ID=endterm;Password=iii-fourth");
             }
         }
 
@@ -391,6 +393,18 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
+                entity.Property(e => e.Area1)
+                    .HasMaxLength(50)
+                    .HasColumnName("area_1");
+
+                entity.Property(e => e.Area2)
+                    .HasMaxLength(50)
+                    .HasColumnName("area_2");
+
+                entity.Property(e => e.Area3)
+                    .HasMaxLength(50)
+                    .HasColumnName("area_3");
+
                 entity.Property(e => e.AvgStar)
                     .HasColumnType("decimal(2, 1)")
                     .HasColumnName("avg_star");
@@ -402,6 +416,10 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.CatNumber)
                     .HasMaxLength(50)
                     .HasColumnName("cat_number");
+
+                entity.Property(e => e.FormattedAddress)
+                    .HasMaxLength(100)
+                    .HasColumnName("formatted_address");
 
                 entity.Property(e => e.Img01)
                     .HasMaxLength(100)

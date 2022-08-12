@@ -1,0 +1,417 @@
+﻿@model  MeowPlanet.ViewModels.Sitters.SitterComfirmPayViewModels;
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+<link href="~/css/sitter-orderhistory.css" rel="stylesheet" />
+
+
+<style>
+        /* 顏色 */
+        :root {
+            --project-bg-color: #171B20;
+            --project-primary-color: #B99668;
+            --project-primary-color-buzz: rgba(185, 150, 104, 0.5);
+            --project-pink-color: #FF8EFF;
+            --project-pink-color-buzz: rgba(255, 142, 255, 0.5);
+
+            --project-gray-color: #4B5461;
+            --project-gray-color-buzz: rgba(75, 84, 97, 0.5);
+            --project-green-color: #2A483A;
+            --project-green-color-buzz: rgba(42, 72, 58, 0.5);
+            --project-txt-color: #ffffff;
+            --project-txt-color-buzz: rgba(255, 255, 255, 0.5);
+
+            --project-scroll-color: #b996689c;
+        }
+
+        /* width */
+        ::-webkit-scrollbar {
+            width: 8px;
+
+        }
+
+        /* Track */
+        ::-webkit-scrollbar-track {
+            box-shadow: inset 0 0 5px grey;
+            border-radius: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        /* Handle */
+        ::-webkit-scrollbar-thumb {
+            background: var(--project-primary-color);
+            border-radius: 10px;
+        }
+
+        /* Handle on hover */
+        ::-webkit-scrollbar-thumb:hover {
+            background: #b99668e5;
+        }
+    </style>
+    <style>
+        .div0 {
+            width: 950px;
+            height: 660px;
+            margin: auto;
+            margin-top: 10px;
+        }
+
+
+        .div1 {
+            width: 850px;
+            height: 570px;
+            margin: 0 auto;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            padding-top: 30px;
+        }
+        .div1-01 {
+            font-size: 20px;
+            margin: 20px 0px 10px 35px;
+            color: #B99668;
+            font-weight: 900;
+        }
+
+        .div1-1 {
+            width: 770px;
+            margin: 0 auto;
+            /* 太空感  */
+            color: rgb(134, 171, 190, 0.5);
+            padding: 1rem;
+            border: 2px rgb(150, 152, 155) solid;
+            box-shadow: 0 0 0.7rem rgba(245, 251, 253, 0.541) inset;
+            background: rgba(0, 0, 0, .3);
+            border-radius: 25px;
+            background-color: #041325;
+            /* 轉成DIV特性 */
+            display: block;
+        }
+
+        .div2 {
+            display: flex;
+            height: 20px;
+            align-items: center;
+            padding: 0px 10px 0px 30px;
+        }
+
+        .div2-1 {
+            width: 600px;
+            font-size: 17px;
+            /* 粗體 */
+            font-weight: 900;
+            color: rgb(209, 209, 209);
+            display: flex;
+        }
+
+        .div2-2 {
+            padding-left: 30px;
+            color: rgb(255, 255, 255);
+        }
+
+        .div3 {
+            width: 700px;
+            padding: 15px 40px 0px 20px;
+            margin: 25px 20px 10px 20px;
+            border-radius: 5px;
+            /* 字中 */
+            text-align: left;
+        }
+
+        .div4 {
+            width: 550px;
+            height: 140px;
+            margin: 0px 0px 20px 20px;
+            display: flex;
+        }
+
+        .div4-1 {
+            width: 150px;
+            height: 190px;
+            margin-right: 30px;
+        }
+
+        .div4-1 img {
+            width: 100%;
+            border-radius: 15px;
+            display: block;
+            margin: auto;
+        }
+
+        .div4-2 {
+            width: 330px;
+            font-size: 20px;
+            color: rgb(255, 255, 255);
+        }
+
+        .div4-2-1 {
+            width: 400px;
+            color: rgb(255, 255, 255);
+            font-size: 20px;
+            margin: 0px 0px 0px 20px;
+        }
+
+        .div5 {
+            text-align: center;
+            display: flex;
+            margin-top: 50px;
+        }
+
+        .div5-1 {
+            width: 250px;
+            height: 55px;
+            font-size: 20px;
+            margin-left: 55px;
+            border-radius: 10px;
+            line-height: 15px;
+            font-weight: 800;
+
+            color: rgb(255, 255, 255);
+            padding: 1rem;
+            border: 2px rgba(0, 150, 209, 0.829) solid;
+            box-shadow: 0 0 0.5rem rgba(0, 150, 209, 0.829) inset;
+            background: rgba(0, 0, 0, .3);
+            border-radius: 20px;
+            /* but轉成DIV特性 */
+            display: block;
+        }
+
+        .div5-2 {
+            width: 250px;
+            height: 55px;
+            font-size: 20px;
+            margin-left: 40px;
+            border-radius: 10px;
+            line-height: 15px;
+            font-weight: 800;
+
+
+            color: rgb(255, 255, 255);
+            padding: 1rem;
+            border: 2px rgb(142, 255, 212, 0.767) solid;
+            box-shadow: 0 0 0.5rem rgba(142, 255, 212, 0.767) inset;
+            background: rgba(0, 0, 0, .3);
+            border-radius: 20px;
+            /* but轉成DIV特性 */
+            display: block;
+        }
+    </style>
+    <style>
+        /* 評論彈出------------------------------------------*/
+        .swal2-modal {
+            background-color: var(--project-bg-color);
+            border: 2px var(--project-txt-color) solid;
+            box-shadow: 0 0 1.5rem var(--project-txt-color-buzz) inset;
+            border-radius: 2%;
+
+        }
+
+        .div6-1 {
+            margin-bottom: 15px;
+        }
+
+        .div6-2 {
+            text-align: left;
+            margin-bottom: 10px;
+        }
+
+        .div6-2-1 {
+            margin-top: 50px;
+        }
+
+        .div7 {
+            font-size: 55px;
+            margin-right: 30px;
+            color: rgb(185, 150, 104);
+            ;
+            cursor: pointer;
+        }
+
+        .div8 {
+            width: 500px;
+            margin: 40px 0px 10px 130px;
+        }
+
+        .div9 {
+            width: 550px;
+            height: 240px;
+            margin-left: 60px;
+            margin-top: 20px;
+            font-size: 20px;
+            /* 太空感  */
+            color: rgb(248, 248, 248);
+            padding: 1rem;
+            border: 2px rgb(219, 232, 248) solid;
+            box-shadow: 0 0 0.5rem rgba(134, 171, 190, 0.5) inset;
+            background: rgba(0, 0, 0, .3);
+            border-radius: 25px;
+        }
+
+        .div10 {
+            width: 180px;
+            height: 45px;
+            font-size: 17px;
+            margin: 45px 0px 0px 240px;
+            border-radius: 10px;
+            line-height: 5px;
+            font-weight: 800;
+
+
+            color: rgb(255, 255, 255);
+            padding: 1rem;
+            border: 2px rgb(142, 255, 212, 0.767) solid;
+            box-shadow: 0 0 0.5rem rgba(142, 255, 212, 0.767) inset;
+            background: rgba(0, 0, 0, .3);
+            border-radius: 20px;
+            /* but轉成DIV特性 */
+            display: block;
+        }
+    </style>
+
+
+@section Styles{
+            <link  href="~/css/sitter-reserverecord.css" rel="stylesheet"/>
+}
+
+    <div class="div0">
+     
+        <div style="overflow-y: auto;">
+            <div id="accordionExample" class="div1">
+
+                <div class="div1-01"><i class="fa-solid fa-user-clock"></i> &nbsp 預 &nbsp 約 &nbsp 紀 &nbsp 錄</div>
+                <button class="div1-1">
+                    
+                    <!-- data-target="#collapse【1】"***需更改數字*** -->
+                    <div data-toggle="collapse" data-target="#collapse1" class="div2">
+                        <div class="div2-1">
+                            <div><i class="fa-solid fa-user-large"></i> &nbsp  &nbsp 保母名稱: @Model.ServiceName &nbsp</div>
+                            <div>| &nbsp 入宿日期: @Model.DateStart.ToString("d") - @Model.DateOver.ToString("d")</div>
+                        </div>
+                        <div class="div2-2">
+                            <i class="fa-solid fa-angles-down"></i>
+                        </div>
+                    </div>
+                    <!-- id="collapse【1】"***需更改數字***   -->
+                    <div id="collapse1" class="div3 collapse card-body" data-parent="#accordionExample">
+                        <!-- 訂單細項 -->
+                        <div class="div4">
+                            <div class="div4-1">
+                                <img src="@Model.SitterPhoto" alt="">
+                            </div>
+                            <div class="div4-2">
+
+                                <div class="div4-2-1">
+                                    <div>保母名稱 : @Model.ServiceName</div>
+                                    <div>保母地址 : 高雄市前金區中正路211號</div>
+                                    <div>保母電話 : 0989932923</div>
+                                    <div>入住日期 : @Model.DateStart.ToString("d") - @Model.DateOver.ToString("d")</div>
+                                    <div>總共費用 : 新台幣 @Model.Pay 元</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div5">
+                            <!-- <div class="comment-area"> -->
+                            <span type="button" class="div5-1">完成訂單</span>
+                            <!-- </div> -->
+                            <div type="button" class="div5-2">取消訂單</div>
+                        </div>
+                    </div>
+                </button>
+
+                <div class="div1-01"><i class="fa-solid fa-folder-open"></i> &nbsp 歷 &nbsp 史 &nbsp 訂 &nbsp 單</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+
+    <script src="./js/jquery-3.6.0.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.9.0/slick.js"></script>
+
+
+    <script src="sitter-detail.js" rel="javascript"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+         <script>
+        //* 彈出評論
+        $(".div5-1").click(function () {
+            Swal.fire(
+                {
+                    title: '',
+                    width: 800,
+                    padding: '2em',
+                    color: '#fff',
+                    background: "#171B20",
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    backdrop: `rgba(0,0,0,0.4)`,
+                    html: `<div class="div6-1 h2">
+                        <i class="fa-solid fa-star"></i>
+                        <span class="">保母服務評價</span>
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+
+
+                    <div class="pop-comment-area">
+                        <div class="div6-2">
+                            <div class="pop-user-info">
+                                <div class="div6-2-1">評分 &nbsp （5★為最高分）<div>
+                                <div class="div8"></div>
+                                <div class="div6-2-1">評價 &nbsp （切勿人身攻擊）<div>
+                               <input class="div9"></input>
+                               <button class="div10">送 &nbsp 出</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    `,
+                });
+            div7Create()
+        })
+    </script>
+    <script>
+        function div7Create() {
+            $(function () {
+                let count = 5
+                let score = 1
+                for (let i = 0; i < count; i++) {
+                    let div7 = $("<i/>").addClass('iconfont').addClass('div7')
+                    if (i < score) div7.addClass('icon-xingxing1')
+                    else div7.addClass('icon-xingxing')
+                    $('.div8').append(div7)
+                }
+                $('.div7').mouseenter(function () {
+                    let index = $(this).index()
+                    $('.div7').each(function (i) {
+                        console.log(index);
+                        if (i <= index)
+                            $(this).addClass('icon-xingxing1').removeClass('icon-xingxing')
+                        else
+                            $(this).addClass('icon-xingxing').removeClass('icon-xingxing1')
+                    })
+                })
+                $('.div7').mouseleave(function () {
+                    $('.div7').each(function (i) {
+                        if (i < score)
+                            $(this).addClass('icon-xingxing1').removeClass('icon-xingxing')
+                        else
+                            $(this).addClass('icon-xingxing').removeClass('icon-xingxing1')
+                    })
+                })
+                $('.div7').click(function () {
+                    score = $(this).index() + 1
+                })
+            })
+        }        
+    </script>

@@ -3,11 +3,10 @@
 @using System.Text.Json.Serialization;
 <link href="~/css/sitter-editmode.css" rel="stylesheet" />
 
-
     <div style="overflow-y: auto;">
         <div id="accordionExample" class="div3">
             <!-- 開關鈕 -->
-            <form method="post" asp-action="SaveSitter" asp-controller="Sitter" id="saveSitterForm" enctype='multipart/form-data' autocomplete="off">
+            <form method="post" id="saveSitterForm" enctype='multipart/form-data' autocomplete="off">
             <div class="div0">
                 <div style="margin-right: 20px;">服務模式:</div>
                 <div class="switch">
@@ -32,37 +31,47 @@
                     <div class="d-flex align-items-center">
                         <div id="dropZone1" class="dropZone-1" style="position: relative;">
                             <img id="dropImg1" class="dropImg" src="@Model.sitter.Img01"/>
-                            <p id="plus1">
-                                <i class="fa-solid fa-plus"></i>
-                            </p>
+                            @if(Model.sitter.Img01 == null){
+                                <p id="plus1">
+                                    <i class="fa-solid fa-plus"></i>
+                                </p>
+                            }
                             <input type="file" name="file1" class="img-input" id="theFile1" />
                         </div>
                         <div id="dropZone2" class="dropZone-1 div0-1" style="position: relative;">
                             <img id="dropImg2" class="dropImg" src="@Model.sitter.Img02"/>
-                            <p id="plus2">
-                                <i class="fa-solid fa-plus"></i>
-                            </p>
+                            @if(Model.sitter.Img02 == null){
+                                <p id="plus2">
+                                    <i class="fa-solid fa-plus"></i>
+                                </p>
+                            }
                             <input type="file" name="file2" class="img-input" id="theFile2" />
                         </div>
                         <div id="dropZone3" class="dropZone-1 div0-1" style="position: relative;">
                             <img id="dropImg3" class="dropImg" src="@Model.sitter.Img03"/>
-                            <p id="plus3">
-                                <i class="fa-solid fa-plus"></i>
-                            </p>
+                            @if(Model.sitter.Img03 == null){
+                                <p id="plus3">
+                                    <i class="fa-solid fa-plus"></i>
+                                </p>
+                            }
                             <input type="file" name="file3" class="img-input" id="theFile3" />
                         </div>
                         <div id="dropZone4" class="dropZone-1 div0-1" style="position: relative;">
                             <img id="dropImg4" class="dropImg" src="@Model.sitter.Img04"/>
-                            <p id="plus4">
-                                <i class="fa-solid fa-plus"></i>
-                            </p>
+                            @if(Model.sitter.Img04 == null){
+                                <p id="plus4">
+                                    <i class="fa-solid fa-plus"></i>
+                                </p>
+                            }
                             <input type="file" name="file4" class="img-input" id="theFile4" />
                         </div>
                         <div id="dropZone5" class="dropZone-1 div0-1" style="position: relative;">
                             <img id="dropImg5" class="dropImg" src="@Model.sitter.Img05"/>
-                            <p id="plus5">
-                                <i class="fa-solid fa-plus"></i>
-                            </p>
+                            @if(Model.sitter.Img05 == null){
+                                <p id="plus5">
+                                    <i class="fa-solid fa-plus"></i>
+                                </p>
+                            }
                             <input type="file" name="file5" class="img-input" id="theFile5" />
                         </div>
                     </div>
@@ -136,7 +145,7 @@
             </div>
             <div class="div0-2">
                 <div>
-                    <button id="save" type="submit" class="div6-1">儲存</button>
+                    <button id="save" type="button" class="div6-1">儲存</button>
                 </div>
                 <div>
                     <button type="button" id="cancel" class="div6-2">返回</button>
@@ -163,7 +172,7 @@
             $('#equip button').eq(2).addClass('div0-4-1');
         }
         for (let i = 0; i < 4; i++) {
-            for (let j = 0; j < 3; j++) {
+            for (let j = 0; j < 4; j++) {
                 if (m.sitterfeatureList[j] == $('#catFeature label').eq(i).text()) {
                     $('#catFeature label').eq(i).addClass('div0-4-1');
                     $("#catFeature input").eq(i).prop("checked", true);
@@ -182,28 +191,23 @@
         }
     })
 
-
-// 地址轉經緯度
+// 經緯度轉地址
     function initMap() {
         var geocoder = new google.maps.Geocoder();
 
         (function getlatlng() {
             var latlng = { lat: m.sitter.PosLat, lng: m.sitter.PosLng };
             geocoder.geocode({ 'location': latlng }, function(results, status) {
-                console.log(status);
-                console.log(results[0]);
-
+                console.log(results[0].formatted_address);
                 if (status === 'OK') {
-
                     if (results[0]) {
-
                         $('#address').val(results[0].formatted_address);
                     }
                 }
             })
         }())
+        
     }
-
 
     //click 更改 input
     {
@@ -259,29 +263,27 @@
 
     //儲存
     $('#save').click(() => {
-        $('#saveSitterForm').submit()
-        //.then(function() {
-        //    Swal.fire({
-        //        heightAuto: false,
-        //        position: 'center',
-        //        icon: 'success',
-        //        title: '儲存',
-        //        showConfirmButton: false,
-        //        timer: 2500
-        //    })
-        //})
-        //.then(function() {
-        //    $.get('/Sitter/SitterViewMode', function(data) {
-        //        $('#member-right-region').html(data);
-        //    })
-        //})
+        let form = $('#saveSitterForm')[0];
+        let formdata = new FormData(form);
+        $.ajax({
+            url:'/Sitter/SaveSitter',
+            type:'POST',
+            data: formdata,
+            contentType: false,
+            processData: false,
+            success: function() {
+                $.get('/Sitter/SitterViewMode', function(data) {
+                    $('#sitterContent').html(data);
+                })
+            }
+        })
     })
-    
+
+
     //取消
     $('#cancel').click(() => {
-
-        $.get('/Sitter/SitterViewMode',function(data) {
-            $('#member-right-region').html(data);
+        $.get('/Sitter/SitterViewMode', function(data) {
+            $('#sitterContent').html(data);
         })
     })
 }
@@ -304,7 +306,7 @@
 
     let remainNum = 5;
 
-    $(".dropZone-1, .dropZone1").on({
+    $(".dropZone-1").on({
 
         "dragover": function(event) {
             event.preventDefault();

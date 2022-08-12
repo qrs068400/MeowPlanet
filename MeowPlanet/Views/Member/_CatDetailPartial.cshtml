@@ -139,7 +139,6 @@
                     <img src="@Model.Img05" style="width:180px;height:140px;border-radius:30px; object-fit:cover" id="imgPreview5" class="dropZone">
                     <input id="imgInput5" type="file" class="d-none" name="file5" />
                 </div>
-
             </div>
 
             <div class="text-center">
@@ -542,7 +541,8 @@
     $('#cat-update').click(function(e) {
         e.preventDefault();
         var form = $(this).parents('form');
-
+        form.submit()
+        .then(
         Swal.fire({
             heightAuto: false,
             position: 'center',
@@ -550,9 +550,11 @@
             title: '修改完成',
             showConfirmButton: false,
             timer: 2500
-        }).then(function() {
-            form.submit();
         })
+        ).then(function() {
+            window.location
+        })
+        
     })
 
 </script>

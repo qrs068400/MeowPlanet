@@ -225,6 +225,8 @@ function getlatlng() {
     }, function (result) {
         $('#lat').attr('value', result[0].geometry.location.lat());
         $('#lng').attr('value', result[0].geometry.location.lng());
+        console.log(result[0].geometry.location.lat())
+        console.log(result[0].geometry.location.lng())
     })
 }
 
@@ -309,7 +311,7 @@ $('.con4-b').click(function () {
 $('#sitterform').on('submit', function (e) {
     e.preventDefault();
     let data = $(this).serialize();
-
+    console.log(data);
     $.post("/Member/AddSitter", data, function (data) {
 
         if (data == "服務建立完成") {

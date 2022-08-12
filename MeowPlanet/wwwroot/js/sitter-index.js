@@ -123,7 +123,6 @@ function initMap() {
             }
         }
         star += sitter.avgStar;
-        star += `(${sitter.featureList.length})`
         return star;
     };
 
