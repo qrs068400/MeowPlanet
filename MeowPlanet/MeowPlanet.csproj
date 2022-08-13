@@ -42,4 +42,8 @@
     <Folder Include="wwwroot\images\userUpload\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
+  </ItemGroup>
+
 </Project>

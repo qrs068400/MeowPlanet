@@ -13,6 +13,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using System.Net.Mail;
 using Google.Apis.Auth;
+using System.Security;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace MeowPlanet.Controllers
 {
@@ -43,19 +46,6 @@ namespace MeowPlanet.Controllers
         public IActionResult ResetPassword()
         {
             return View();
-        }
-
-        // 重置密碼
-        [HttpGet]
-        public async Task<IActionResult> DoPwdReset(string email, string password)
-        {
-
-            var UserInfo = _context.Members.FirstOrDefault(x => x.Email == email);
-
-            UserInfo.Password = password;
-
-            await _context.SaveChangesAsync();
-            return Content("修改完成");
         }
 
         // 登入判定Email及密碼是否正確
@@ -92,7 +82,7 @@ namespace MeowPlanet.Controllers
 
         // 登入
         [HttpPost]
-        public ActionResult Login(Member member, string rememberme)
+        public ActionResult Login(Member member, bool rememberme)
         {
             var count = _context.Members.Count(p => p.Email == member.Email && p.Password == member.Password);
 
@@ -104,7 +94,6 @@ namespace MeowPlanet.Controllers
 
                 var LoginName = LoginInfo.Name;
 
-                //cookie驗證
                 var claims = new List<Claim>
                 {
                     new Claim(ClaimTypes.Sid, LoginId.ToString()),
@@ -113,13 +102,14 @@ namespace MeowPlanet.Controllers
 
                 };
 
+                //cookie驗證
                 var claimsIdentity = new ClaimsIdentity(
                            claims, CookieAuthenticationDefaults.AuthenticationScheme);
 
                 //記住我
                 var properties = new AuthenticationProperties
                 {
-                    IsPersistent = Convert.ToBoolean(rememberme),
+                    IsPersistent = rememberme,
                     ExpiresUtc = DateTimeOffset.UtcNow.AddDays(1)
                 };
 
@@ -212,6 +202,22 @@ namespace MeowPlanet.Controllers
         // 寄密碼重置信
         public ActionResult SendEmailMsg(string Email)
         {
+            // 加密
+
+            string sVerify = Email;
+            string SecretKey = "meow";
+
+            TripleDESCryptoServiceProvider DES = new TripleDESCryptoServiceProvider();
+            MD5 md5 = new MD5CryptoServiceProvider();
+            byte[] buf = Encoding.UTF8.GetBytes(SecretKey);
+            byte[] result = md5.ComputeHash(buf);
+            string md5Key = BitConverter.ToString(result).Replace("-", "").ToLower().Substring(0, 24);
+            DES.Key = UTF8Encoding.UTF8.GetBytes(md5Key);
+            DES.Mode = CipherMode.ECB;
+            ICryptoTransform DESEncrypt = DES.CreateEncryptor();
+            byte[] Buffer = UTF8Encoding.UTF8.GetBytes(sVerify);
+            sVerify = Convert.ToBase64String(DESEncrypt.TransformFinalBlock(Buffer, 0, Buffer.Length));
+
             // 建立MailMessage物件，編寫信件內容
             MailMessage msg = new MailMessage();
             // 收件信箱
@@ -224,7 +230,7 @@ namespace MeowPlanet.Controllers
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
             // 內容
             msg.Body = "這是 MeowPlanet 喵屋星球 的密碼重置信，若你不曾要求重設密碼，請忽略這封信<br />" +
-                "<a href='" + "https://meowplanet.lol/Login/ResetPassword" + "?Email=" + Email + "'>請點擊此連結重置密碼</a>" + "<br /><br />MeowPlanet 喵屋星球";
+                "<a href='" + "https://meowplanet.lol/Login/ResetPassword" + "?verify=" + sVerify + "'>請點擊此連結重置密碼</a>" + "<br /><br />MeowPlanet 喵屋星球";
             // 內容編碼
             msg.BodyEncoding = System.Text.Encoding.UTF8;
             // 內容為html格式
@@ -247,6 +253,39 @@ namespace MeowPlanet.Controllers
             msg.Dispose();
 
             return NoContent();
+        }
+
+        // 重置密碼
+        [HttpGet]
+        public async Task<IActionResult> DoPwdReset(string email, string password)
+        {
+            // 解密
+            string SecretKey = "meow";
+            TripleDESCryptoServiceProvider DES2 = new TripleDESCryptoServiceProvider();
+            MD5 md6 = new MD5CryptoServiceProvider();
+            byte[] buf2 = Encoding.UTF8.GetBytes(SecretKey);
+            byte[] md5result = md6.ComputeHash(buf2);
+            string md5Key2 = BitConverter.ToString(md5result).Replace("-", "").ToLower().Substring(0, 24);
+            DES2.Key = UTF8Encoding.UTF8.GetBytes(md5Key2);
+            DES2.Mode = CipherMode.ECB;
+            DES2.Padding = System.Security.Cryptography.PaddingMode.PKCS7;
+            ICryptoTransform DESDecrypt2 = DES2.CreateDecryptor();
+            byte[] Buffer2 = Convert.FromBase64String(email);
+            string deCode = UTF8Encoding.UTF8.GetString(DESDecrypt2.TransformFinalBlock(Buffer2, 0, Buffer2.Length));
+
+            
+            var UserInfo = _context.Members.FirstOrDefault(x => x.Email == deCode);
+            if (UserInfo != null)
+            {
+                UserInfo.Password = password;
+                await _context.SaveChangesAsync();
+                return Content("修改完成");
+            }
+            else
+            {
+                return NoContent();
+            }
+
         }
 
         [HttpGet]
