@@ -451,7 +451,7 @@ body {
 }
 
 .feimg1 {
-    background: url('../images/service6.jpg');
+    background: url('../images/service5.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: right;
@@ -493,7 +493,7 @@ body {
 }
 
 .feimg3 {
-    background: url('../images/service5.jpg');
+    background: url('../images/service6.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
@@ -606,10 +606,10 @@ body {
     }
 
 .sitter {
-    background: url('../images/intro1.jpg');
+    background: url('../images/intro6.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: center 39%;
     height: 12vh;
     align-items: center;
     
@@ -628,10 +628,10 @@ body {
 }
 
 .adopt {
-    background: url('../images/intro2.jpg');
+    background: url('../images/intro4.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: center 20%;
     height: 12vh;
     align-items: center;
 }
@@ -648,10 +648,10 @@ body {
 }
 
 .find {
-    background: url('../images/intro3.jpg');
+    background: url('../images/intro5.jpg');
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;
+    background-position: center 20%;
     height: 12vh;
     align-items: center;
 }
