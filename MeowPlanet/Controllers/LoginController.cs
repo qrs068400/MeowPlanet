@@ -212,24 +212,37 @@ namespace MeowPlanet.Controllers
         // 寄密碼重置信
         public ActionResult SendEmailMsg(string Email)
         {
-            System.Net.Mail.MailMessage msg = new System.Net.Mail.MailMessage();
+            // 建立MailMessage物件，編寫信件內容
+            MailMessage msg = new MailMessage();
+            // 收件信箱
             msg.To.Add(Email);
-
+            // 寄件者、編碼
             msg.From = new MailAddress("meowplanet04@gmail.com", "喵屋星球", System.Text.Encoding.UTF8);
-
+            // 標題
             msg.Subject = "重新設定您在 MeowPlanet 的密碼";
+            // 標題編碼
             msg.SubjectEncoding = System.Text.Encoding.UTF8;
+            // 內容
             msg.Body = "這是 MeowPlanet 喵屋星球 的密碼重置信，若你不曾要求重設密碼，請忽略這封信<br />" +
                 "<a href='" + "https://meowplanet.lol/Login/ResetPassword" + "?Email=" + Email + "'>請點擊此連結重置密碼</a>" + "<br /><br />MeowPlanet 喵屋星球";
+            // 內容編碼
             msg.BodyEncoding = System.Text.Encoding.UTF8;
+            // 內容為html格式
             msg.IsBodyHtml = true;
 
+            // 建立SmtpClient物件，設定發信的帳號、smtp主機跟port
             SmtpClient client = new SmtpClient();
+            // 設定發信帳號及密碼取得 Smtp 伺服器的憑證
             client.Credentials = new System.Net.NetworkCredential("meowplanet04@gmail.com", "cbqjonjcosbrqnnv");
+            // 設定smtp主機
             client.Host = "smtp.gmail.com";
+            // 設定port
             client.Port = 25;
+            // 啟用ssl (Gmail需使用)
             client.EnableSsl = true;
+            // 寄出信件
             client.Send(msg);
+            // 結束連接
             client.Dispose();
             msg.Dispose();
 
