@@ -114,12 +114,12 @@
                         <button class="reserve-number-btn">
                             <div class="pet-rec" style="display: none;">
                                 @for (int i = 0; i < @ViewBag.catList.Count; i++)
-                            {
+                                {
                                 <div class="cat-card" data-index=@i>
                                     <img src="@ViewBag.catList[i].Img01"/>
                                     <span>@ViewBag.catList[i].Name</span>
                                 </div>
-                            }
+                                }
                             </div>
                             <div class="number-txt">哪一隻寵物</div>
                             <div class="number">
@@ -161,14 +161,12 @@
                             </div>
                         </div>
                     </div>
-                    if(i == 9){ break; }
-                }
-                    <button class="more-comment buzz">
-                        顯示全部評價
-                    </button>
+                    if(i == 8){ break; }
+                    }
                 </div>
-                
-                
+                <button class="more-comment buzz">
+                    顯示全部評價
+                </button>
             </div>
         </comment>
         <hr>

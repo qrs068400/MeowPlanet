@@ -101,10 +101,10 @@ body {
 /* --------------------------------------------- */
 /* 地圖搜尋 */
 .input-box {
-    background-color: var(--project-primary-color);
     position: sticky;
     top: 8.2%;
     z-index: 99;
+
 }
 
 #mapInput {
@@ -114,8 +114,10 @@ body {
     height: 40px;
     min-width: 350px;
     padding: 0 0 0 15px;
-    border: 2px solid black;
+/*    border: 2px solid black;*/
     border-radius: 50rem;
+    color: #fff;
+    
 }
 
 /* 搜尋下拉式選單 */
@@ -133,7 +135,6 @@ body {
 /* 地圖顯示區 */
 .show-map_div2-1 {
     Position: fixed;
-    /* bottom: 6%; */
     left: 0;
 }
 
@@ -177,8 +178,8 @@ body {
 }
 
     .marker:hover {
-        transition: 0.8s ease-in-out;
-        background-color: var(--project-pink-color);
+        transition: 0.4s ease-in-out;
+        background-color: var(--project-primary-color);
         color: var(--project-txt-color);
     }
 
@@ -273,8 +274,8 @@ a[href^="https://maps.google.com/maps"] {
 
     .sitter-pic_div5-1 img {
         border-radius: 40px;
-        width: 100%;
-        height:100%;
+        width: 60px;
+        height:60px;
     }
 
 .sitter-info_div5-2 {

@@ -1,9 +1,11 @@
 import createHTMLMapMarker from "./html-map-marker.js";
 //!!!!! 地圖   
 let map;
+let sitterList = [];
+
 function initMap() {
 
-    //初始化地圖(應該定位到使用者位置)
+    //初始化地圖(應該定位到使用者位置)---------------------------!@#$^&(@*&()!())
     map = new google.maps.Map($('#map')[0], {
         center: { lat: 22.62931421, lng: 120.29299528 },
         zoom: 16,
@@ -39,7 +41,6 @@ function initMap() {
     //搜尋框----------------------------------------------------------
     const input = document.getElementById("mapInput");
     const searchBox = new google.maps.places.SearchBox(input);
-    // map.controls[google.maps.ControlPosition.TOP_CENTER].push(input);
 
     map.addListener("bounds_changed", () => {
         searchBox.setBounds(map.getBounds());
@@ -68,21 +69,20 @@ function initMap() {
         map.fitBounds(bounds);
     });
 
-    let sitterList = [];
-    //! 取得所有保母的所有資訊
+    
+    //! 建立所有保母的所有資訊
     model.forEach((value, index) => {
         let sitter = value.sitter;
         let latlng = new google.maps.LatLng(sitter.posLat, sitter.posLng);
         let marker = createHTMLMapMarker({
             latlng,
-            html: `<div class="marker">$ ${sitter.pay} TWD</div>`,
+            html: `<div class="marker" >$ ${sitter.pay} TWD</div>`,
         });
         let center = map.getCenter();
         let distanceToMe = (google.maps.geometry.spherical.computeDistanceBetween(center, latlng) / 1000).toFixed(1);
+
         //綁定marker 事件
-        marker.addListener("click", () => {
-            alert("Partyin Partyin Yeah!", this);
-        })
+        marker.addListener("click", () => { scrollToItem(sitter) });
 
         sitter.marker = marker;
         sitter.latlng = latlng;
@@ -91,54 +91,99 @@ function initMap() {
         sitter.featureList = value.sitterfeatureList;
         sitter.orderList = value.OrderCommentList;
         sitterList.push(sitter);
-        console.log(sitterList);
+        console.log(sitter);
     })
 
-    //-------!@##$$%^**()---!!!!!!!!!!照片來源還需要修改!!!!!!!!!---------!@#$%^&*()-------
-    function pic() {
-        let pic = "";
-        for (var j = 1; j < 3; j++) {
-            pic += `<div class="slide-${j}"><img src="../images/sitter/cat${j}.jpg"></div>`
-        }
-        return pic;
-    };
+    //綁定地圖停止時，取得地圖邊界做搜尋
+    map.addListener('idle', () => {
+        bounds = map.getBounds();
+        searchSitter(bounds)
+    });
 
-    function avg_star(sitter) {
-        let star = "";
-        let solidstar = parseInt(sitter.avgStar / 1);
-        let halfstar = sitter.avgStar % 1 == 0;
-        //產生實星星
-        for (var i = 0; i < solidstar; i++) {
-            star += '<i class="fa-solid mr-1 fa-star fa-xs"></i>';
-        }
-        //產生半星及空星
-        if (halfstar) {
-            for (var i = 0; i < 5 - solidstar; i++) {
-                star += '<i class="fa-regular mr-1 fa-star fa-xs"></i>';
-            }
-        } else {
-            star += '<i class="fa-solid mr-1 fa-star-half-stroke fa-xs"></i>';
-            for (var i = 0; i < 5 - 1 - solidstar; i++) {
-                star += '<i class="fa-regular mr-1 fa-star fa-xs"></i>';
-            }
-        }
-        star += sitter.avgStar;
-        return star;
-    };
+    
 
-    function featureOrNot(sitter) {
-        if (sitter.featureList.length ==0) {
-            return "無設備";
-        } else {
-            return "有設備";
-        }
-    };
+    
+};
+$(initMap());
 
-    for (var i = 0; i < sitterList.length; i++) {
-        $('.row').append(
-            `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}">
+//移動至該卡片高度
+function scrollToItem(sitter) {
+    $('html').animate(
+        { scrollTop: $(`div[data-sid=${sitter.serviceId}]`).offset().top - 116 },
+        100,
+        'swing',
+        function () {
+            setTimeout(function () {
+                $(`div[data-sid=${sitter.serviceId}]`).effect("shake");
+            }, 500)
+        },
+    );
+};
+
+//建立照片html
+function pic(sitter) {
+    let pic = "";
+    for (var j = 1; j < 6; j++) {
+        if (sitter[`img0${j}`] !== null) {
+            pic += `<div class="slide-${j}"><img src="${sitter[`img0${j}`]}"></div>`
+        }
+    }
+    return pic;
+};
+
+function avg_star(sitter) {
+    let star = "";
+    let solidstar = parseInt(sitter.avgStar / 1);
+    let halfstar = sitter.avgStar % 1 == 0;
+    //產生實星星
+    for (var i = 0; i < solidstar; i++) {
+        star += '<i class="fa-solid mr-1 fa-star fa-xs"></i>';
+    }
+    //產生半星及空星
+    if (halfstar) {
+        for (var i = 0; i < 5 - solidstar; i++) {
+            star += '<i class="fa-regular mr-1 fa-star fa-xs"></i>';
+        }
+    } else {
+        star += '<i class="fa-solid mr-1 fa-star-half-stroke fa-xs"></i>';
+        for (var i = 0; i < 5 - 1 - solidstar; i++) {
+            star += '<i class="fa-regular mr-1 fa-star fa-xs"></i>';
+        }
+    }
+    star += sitter.avgStar;
+    return star;
+};
+
+//產生地址字串
+function address(sitter) {
+    let address = "";
+    if (sitter[`area1`] !== null) {
+        address += sitter[`area1`];
+    }
+    if (sitter[`area2`] !== null) {
+        address += sitter[`area2`];
+    }
+    if (sitter[`area3`] !== null) {
+        address += "&nbsp"+sitter[`area3`];
+    }
+    
+    return address;
+};
+//判斷有無設備
+function featureOrNot(sitter) {
+    if (sitter.featureList.length == 0) {
+        return "無設備";
+    } else {
+        return "有設備";
+    }
+};
+
+//產生所有保母卡片
+for (var i = 0; i < sitterList.length; i++) {
+    $('.row').append(
+        `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}">
                 <div class="pic_div4-1">
-                    ${pic()}
+                    ${pic(sitterList[i])}
                 </div>
                 <div class="sitter-box_div5">
                     <div class="d-flex">
@@ -156,7 +201,7 @@ function initMap() {
                     </div>
                     <div class="sitter-location_div5-3 ">
                         <i class="fa-solid fa-location-dot fa-sm"></i>
-                        <span>&nbsp高雄市 前金區</span>
+                        <span>&nbsp${address(sitterList[i])}</span>
                         <span>${sitterList[i].distanceToMe} Km</span>
                     </div>
                     <div class="sitter-feature_div6">
@@ -173,52 +218,53 @@ function initMap() {
                     </a>
                 </div>
             </div>`
-        )
-    };
-    let showingSitterList = [];
-    searchSitter();
-
-
-    //綁定地圖停止時，做搜尋
-    map.addListener('idle', searchSitter);
-
-    function searchSitter() {
-        sitterList.forEach((sitter, index) => {
-            let marker = sitter.marker;
-            let latlng = sitter.latlng;
-            let center = map.getCenter();
-            let distance = google.maps.geometry.spherical.computeDistanceBetween(center, latlng);
-
-            //距離小於1公里就加入圖標 & 顯示在左邊item列
-            if (distance < 1000) {
-
-                marker.setMap(map);
-
-                if (!showingSitterList.includes(sitter)) {
-                    showingSitterList.push(sitter);
-                    $(`[data-sid="${sitter.serviceId}"]`).remove().appendTo('.row').delay(100).fadeIn(600);
-                }
-                $(`[data-sid="${sitter.serviceId}"]`).fadeIn(600);
-            }
-            else {
-
-                marker.setMap(null);
-
-                if (showingSitterList.includes(sitter)) {
-                    showingSitterList.splice(showingSitterList.indexOf(sitter), 1);
-                    $(`[data-sid="${sitter.serviceId}"]`).fadeOut(600);
-                }
-            }
-        })
-
-    };
-
-    //function scrollToItem(item) {
-    //    let id = $(item).data('id');
-    //    catList.filter(x => x.missingId == id)[0].marker.setAnimation(google.maps.Animation.BOUNCE);
-    //}
+    )
 };
-$(initMap());
+
+let showingSitterList = [];
+let bounds;
+
+//顯示地圖範圍內的保母
+function searchSitter(bounds) {
+    console.log(bounds);
+    sitterList.forEach((sitter, index) => {
+        let marker = sitter.marker;
+        let latlng = sitter.latlng;
+        let center = map.getCenter();
+        let distance = google.maps.geometry.spherical.computeDistanceBetween(center, latlng);
+
+        //在地圖範圍就顯示
+        if (bounds.contains(latlng)) {
+
+            marker.setMap(map);
+
+            if (!showingSitterList.includes(sitter)) {
+                showingSitterList.push(sitter);
+                $(`[data-sid="${sitter.serviceId}"]`).remove().appendTo('.row').delay(100).fadeIn(600);
+            }
+            $(`[data-sid="${sitter.serviceId}"]`).fadeIn(600);
+        }
+        else {
+
+            marker.setMap(null);
+
+            if (showingSitterList.includes(sitter)) {
+                showingSitterList.splice(showingSitterList.indexOf(sitter), 1);
+                $(`[data-sid="${sitter.serviceId}"]`).fadeOut(600);
+            }
+        }
+    })
+};
+
+
+
+
+
+
+
+
+
+
 
 
 //! 地圖彈出
@@ -241,6 +287,7 @@ $(initMap());
         document.getElementById('btn01').classList.remove("btnHidden");
     })
 }
+
 //!  照片輪播 
 {
     $('.pic_div4-1').slick({
