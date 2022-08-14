@@ -8,7 +8,7 @@
         <div class="title"><p>會員資料</p></div>
         <div class="member-div">
             <p>Email</p>
-            <input type="email" value="@Model.Email" id="email-in" asp-for="Email" />
+            <input type="email" value="@Model.Email" id="email-in" asp-for="Email" disabled />
         </div>
         <div class="member-div">
             <p>密碼</p>
@@ -35,14 +35,25 @@
         <a class="btn" asp-controller="Member" asp-action="CreateCat">+建立</a>
     </div>
     <div class="cat-region-select" id="cat-region-select">
+        <div class="h-100 w-100 d-flex align-items-center justify-content-center" style="display:none" id="noCat">
+            <p style="font-size:24px;">您尚未建立貓咪<br />請點擊右上角建立</p>
+        </div>
     </div>
 </div>
 
 <script>
+var da;
+    
     $(function() {
 
         $.get("@Url.Action("GetCatInfo", "Member")", function(data) {
-            $("#cat-region-select").html(data)
+            if (data == "nocat"){
+                $('#noCat').css('display','block')
+            } else {
+
+                $("#cat-region-select").html(data)
+            }
+            
         })
     })
 
