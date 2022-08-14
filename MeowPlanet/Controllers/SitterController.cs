@@ -37,7 +37,7 @@ namespace MeowPlanet.Controllers
 
             //方法一
             var result = await _context.Sitters
-                //.AsNoTracking()
+                .AsNoTracking()
                 //.AsNoTrackingWithIdentityResolution()
                 //.Include(c => c.SitterFeatures)
                 .Where(m => m.IsService == true)
@@ -86,19 +86,28 @@ namespace MeowPlanet.Controllers
             //    result.Add(model);
             //}
 
-            TempData["controller"] = "Sitter";
-            TempData["action"] = "Index";
+            //TempData["controller"] = "Sitter";
+            //TempData["action"] = "Index";
+
             return View( result);
         }
 
         public async Task<IActionResult> Detail(int? id)
         {
-            SitterViewModels model = new SitterViewModels()
-            {
-                sitter = await _context.Sitters.FirstOrDefaultAsync(m => m.ServiceId == id),
-                sitterfeatureList = await _context.SitterFeatures.Include(x => x.Feature).Where(m => m.ServiceId == id).Select(x => x.Feature.Name).ToListAsync(),
-                OrderCommentList = await _context.Orderlists.Where(m => m.ServiceId == id).ToListAsync(),
-            };
+            var result = await _context.Sitters
+                .AsNoTracking()
+                //.AsNoTrackingWithIdentityResolution()
+                .Where(m => m.ServiceId == id)
+                .Select(m => new SitterViewModels
+                {
+                    sitter = m,
+                    memberPhoto = m.Member.Photo,
+                    sitterfeatureList = m.SitterFeatures.Select(m => m.Feature.Name).ToList(),
+                    OrderCommentList = m.Orderlists.Where(m => m.Status == 2).OrderByDescending(m => m.DateOver).ToList(),
+                    CommentOfUserList =m.Orderlists.Where(m => m.Status == 2).OrderByDescending(m => m.DateOver).Select(m => m.Member).ToList(),
+                }).FirstOrDefaultAsync();
+
+
             var catList = await _context.Cats
                 .Where(m => m.MemberId == _memberId)
                 .Select(m => new Cat
@@ -115,10 +124,12 @@ namespace MeowPlanet.Controllers
                 }).ToListAsync();
 
             ViewBag.catList = catList;
-            TempData["controller"] = "Sitter";
-            TempData["action"] = "Detail";
-            TempData["ids"] = $"{id}";
-            return View(model);
+
+            //TempData["controller"] = "Sitter";
+            //TempData["action"] = "Detail";
+            //TempData["ids"] = $"{id}";
+
+            return View(result);
         }
         //方法一
         // 使用 變數 來接收submit資料
@@ -198,21 +209,16 @@ namespace MeowPlanet.Controllers
         public async Task<ActionResult> SitterBox()
         {
             var sitter = await _context.Sitters
-             //要用theninclude 才看的到 feature
-             //.Include(x => x.SitterFeatures)
-             //.ThenInclude(x => x.Feature)
-             //直接 include 看不到 feature
-             //.Include(x => x.SitterFeatures.Feature)
              .Where(x => x.MemberId == _memberId)
              .Select(x => new SitterViewModels
              {
                  sitter = x,
-                 //實際測試 我根本不用上面的include就可以取到我要資料了，這串語法自帶LEFT JOIN 跟 INNER JOIN
                  sitterfeatureList = x.SitterFeatures.Select(x => x.Feature.Name).ToList(),
              }).FirstOrDefaultAsync();
             return PartialView("_SitterBoxPartial",sitter);
         }
-            [HttpGet]
+
+        [HttpGet]
         public  async Task<ActionResult> SitterViewMode()
         {
             var sitter = await _context.Sitters
@@ -317,8 +323,12 @@ namespace MeowPlanet.Controllers
             sitterDB.Monitor = j.sitter.Monitor;
             sitterDB.Meal = j.sitter.Meal;
             sitterDB.CatNumber = j.sitter.CatNumber;
-            //sitterDB.PosLat = j.sitter.PosLat;
-            //sitterDB.PosLng = j.sitter.PosLng;   地址還沒轉換
+            sitterDB.PosLat = j.sitter.PosLat;
+            sitterDB.PosLng = j.sitter.PosLng;
+            sitterDB.Area1 = j.sitter.Area1;
+            sitterDB.Area2 = j.sitter.Area2;
+            sitterDB.Area3 = j.sitter.Area3;
+            sitterDB.FormattedAddress = j.sitter.FormattedAddress;
             sitterDB.IsService = j.sitter.IsService;
 
 
@@ -375,6 +385,27 @@ namespace MeowPlanet.Controllers
             return PartialView("_SitterWorkManagePartial", result);
         }
 
+        public async Task<IActionResult> SitterReserveRecord()
+        {
+            var result1 = await _context.Orderlists.Where(x => x.Member.MemberId == _memberId)
+                .Select(x => new SitterRecordViewModel
+                {
+                    OrderId = x.OrderId,
+                    SitterName = x.Service.Name,
+                    SitterPhone = x.Service.Member.Phone,
+                    SitterPhoto = x.Service.Member.Photo,
+                    FormattedAddress = x.Service.FormattedAddress,
+                    DateStart = x.DateStart,
+                    DateOver = x.DateOver,
+                    CatName = x.Cat.Name,
+                    Total = x.Total,
+                    Status = x.Status
+                }).ToListAsync();
+
+            return PartialView("_SitterReserveRecordPartial", result1);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> SetOrderStatus(int orderId, int status)
         {
             var order = await _context.Orderlists.FirstOrDefaultAsync(x => x.OrderId == orderId);
@@ -383,6 +414,27 @@ namespace MeowPlanet.Controllers
 
             return Content("OK");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> SetOrderStatus(int orderId, int status, int div12, string comment)
+        {
+            //訂單星星寫入
+            var order = await _context.Orderlists.FirstOrDefaultAsync(x => x.OrderId == orderId);
+            order.Status = status;
+            order.Star = div12;
+            order.Comment = comment;
+            
+            //星星平均計算
+            var allOrder = _context.Orderlists.Where(x => x.ServiceId == order.ServiceId && x.Status == 2).ToList();
+            var avg = Convert.ToDecimal(allOrder.Sum(x => x.Star)+order.Star)/Convert.ToDecimal(allOrder.Count()+1);
+            var sitter = _context.Sitters.Where(x => x.ServiceId == order.ServiceId).FirstOrDefault();
+            sitter.AvgStar = avg;
+            await _context.SaveChangesAsync();
+
+            return Content("OK");
+        }
+
+        
 
     }
 }

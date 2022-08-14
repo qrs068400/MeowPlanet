@@ -4,7 +4,7 @@
 }
 <link href="~/css/sitter-workmanage.css" rel="stylesheet" />
 
-<div style="    overflow-y: auto;margin: 0 auto;width: 810px;">
+<div style="overflow-y: auto;margin: 0 auto;width: 810px;display: flex;">
     <div id="accordionExample" class="div1">
         <!-- 待確認訂單 -->
         <div class="div1-01"><i class="fa-solid fa-circle-question"></i> &nbsp 待 &nbsp 確 &nbsp 認</div>
@@ -16,9 +16,9 @@
                 <div class="div1-1">
                     <!-- data-target="#collapse【1】"***需更改數字*** -->
                     <div data-toggle="collapse" data-target="#@collapse" class="div2">
-                        <div class="div2-1">
-                            <div><i class="fa-solid fa-user-large"></i> &nbsp  &nbsp 貓咪姓名: @item.CatName &nbsp</div>
-                            <div>| &nbsp 住宿日期: @item.DateStart.ToString("yyyy年MM月dd日") - @item.DateOver.ToString("MM月dd日") (共 @item.DateOver.Subtract(item.DateStart).ToString("%d") 日)</div>
+                        <div class="div2-1">                                
+                            <div class="div2-1-1"><i class="fa-solid fa-user-large"></i> &nbsp &nbsp 貓咪姓名: @item.CatName &nbsp</div>
+                            <div class="div2-1-2">| &nbsp &nbsp 住宿日期:@item.DateStart.ToString("yyyy年MM月dd日") - @item.DateOver.ToString("MM月dd日") &nbsp (共 @item.DateOver.Subtract(item.DateStart).ToString("%d") 日)</div>
                         </div>
                         <div class="div2-2">
                             <i class="fa-solid fa-angles-down"></i>
@@ -44,8 +44,8 @@
                                     @*貓咪*@
                                     <div class="div0-1">
                                         <div class="div5-1">
-                                            <img src="@item.CatImg01" alt="">
-                                            <div class="div5-1-1">品種 : @item.BreedName</div>
+                                            <img src="@item.CatImg01">
+                                            <div class="div5-1-1">@item.BreedName</div>
                                         </div>
                                         <div>
                                             <div> 貓咪姓名 : @item.CatName &nbsp
@@ -95,15 +95,15 @@
 
                 <div class="div1-1">
                     <div data-toggle="collapse" data-target="#@collapse" class="div2">
-                        <div class="div2-1">
-                            <div><i class="fa-solid fa-user-large"></i> &nbsp  &nbsp 貓咪姓名: @item.CatName &nbsp</div>
-                            <div>| &nbsp 住宿日期: @item.DateStart.ToString("yyyy年MM月dd日") - @item.DateOver.ToString("MM月dd日") (共 @item.DateOver.Subtract(item.DateStart).ToString("%d") 日)</div>
+                        <div class="div2-1">                                
+                            <div class="div2-1-1"><i class="fa-solid fa-user-large"></i> &nbsp &nbsp 貓咪姓名: @item.CatName &nbsp</div>
+                            <div class="div2-1-2">| &nbsp &nbsp 住宿日期:@item.DateStart.ToString("yyyy年MM月dd日") - @item.DateOver.ToString("MM月dd日") &nbsp (共 @item.DateOver.Subtract(item.DateStart).ToString("%d") 日)</div>
                         </div>
                         <div class="div2-2">
                             <i class="fa-solid fa-angles-down"></i>
                         </div>
                     </div>
-                    <div id="@collapse" class="div3 collapse card-body" data-parent="#accordionExample">
+                    <div id="@collapse" class="div3-1 collapse card-body" data-parent="#accordionExample">
                         <div class="div4">
                             <div style="display: flex;">
                                 <div>
@@ -122,8 +122,8 @@
                                     @*貓咪*@
                                     <div class="div0-1">
                                         <div class="div5-1">
-                                            <img src="@item.CatImg01" alt="">
-                                            <div class="div5-1-1">品種 : @item.BreedName</div>
+                                            <img src="@item.CatImg01">
+                                            <div class="div5-1-1">@item.BreedName</div>
                                         </div>
                                         <div>
                                             <div> 貓咪姓名 : @item.CatName &nbsp
@@ -175,9 +175,9 @@
         let title;
 
         if(status == 1){
-            title = "" //接受訂單的內容
+            title = "已確認接單!!" //接受訂單的內容
         }else{
-            title = "" //拒絕訂單的內容
+            title = "確認拒絕此訂單?" //拒絕訂單的內容
         }
 
 

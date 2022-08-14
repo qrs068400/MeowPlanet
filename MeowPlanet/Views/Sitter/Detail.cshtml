@@ -8,56 +8,157 @@
     <link  href="~/css/sitter-detail.css" rel="stylesheet"/>
 }
 
+<style>
+#carousel {
+    position: relative;
+    height: 400px;
+    top: 50%;
+    overflow: hidden;
+}
+#carousel div {
+  position: absolute;
+  transition: transform 1s, left 1s, opacity 1s, z-index 0s;
+  opacity: 1;
+}
+#carousel div img {
+  width: 400px;
+  transition: width 1s;
+}
+#carousel div.hideLeft {
+  left: 0%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+#carousel div.hideLeft img {
+  width: 200px;
+}
+#carousel div.hideRight {
+  left: 100%;
+  opacity: 0;
+  transform: translateY(50%) translateX(-50%);
+}
+#carousel div.hideRight img {
+  width: 200px;
+}
+#carousel div.prev {
+  z-index: 5;
+  left: 30%;
+  transform: translateY(50px) translateX(-50%);
+}
+#carousel div.prev img {
+  width: 300px;
+}
+#carousel div.prevLeftSecond {
+  z-index: 4;
+  left: 15%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+}
+#carousel div.prevLeftSecond img {
+  width: 200px;
+}
+#carousel div.selected {
+  z-index: 10;
+  left: 50%;
+  transform: translateY(0px) translateX(-50%);
+}
+#carousel div.next {
+  z-index: 5;
+  left: 70%;
+  transform: translateY(50px) translateX(-50%);
+}
+#carousel div.next img {
+  width: 300px;
+}
+#carousel div.nextRightSecond {
+  z-index: 4;
+  left: 85%;
+  transform: translateY(50%) translateX(-50%);
+  opacity: 0.7;
+}
+#carousel div.nextRightSecond img {
+  width: 200px;
+}
 
-
+.buttons {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 10px;
+}
+</style>
+<div class="starsky">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
     <div class="container">
+        
+
+        @*輪播牆*@
+        <slider>
+            <div class="row">
+                <div id="carousel">
+                    @*這邊的照片比例一定要 1:1*@
+                    <div class="prevLeftSecond">
+                        <img src="@Model.sitter.Img04">
+                    </div>
+
+                    <div class="prev">
+                        <img src="@Model.sitter.Img02">
+                    </div>
+
+                    <div class="selected">
+                        <img src="@Model.sitter.Img01">
+                    </div>
+
+                    <div class="next">
+                        <img src="@Model.sitter.Img03">
+                    </div>
+                    <div class="nextRightSecond">
+                        <img src="@Model.sitter.Img05">
+                    </div>
+                </div>
+
+                @*<div class="buttons">
+                  <button id="prev">Prev</button>
+                  <button id="next">Next</button>
+                </div>*@
+            </div>
+        </slider>
         <div class="row">
             <div class="title">
             <span class="h1">服務名稱：</span>
             <h1>@Html.DisplayFor(model => model.sitter.Name)</h1>
             </div>
         </div>
-
-        @*輪播牆*@
-        <slider>
-            <div class="row">
-                <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
-                    <div class="carousel-inner">
-                        <div class="carousel-item active">
-                            <img src="~/images/sitter/slide3.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item active">
-                            <img src="~/images/sitter/slide3.jpg" class="d-block w-100" alt="...">
-                        </div>
-                        <div class="carousel-item active">
-                            <img src="~/images/sitter/slide3.jpg" class="d-block w-100" alt="...">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </slider>
-
         <content>
-            <div class="row sitter-detail pt-4 pb-4">
-                <div class="col-7 p-0">
+            <div class="row justify-content-between pt-4 pb-4">
+                <div class="col-7 p-0" id="sitter-detail">
                     <h3>服務介紹</h3>
                     <hr>
                     <h5>自介</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Summary)</p>
-                    <h5>有無相關證照</h5>
+                    <h5>保母有無相關證照</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Licence)</p>
-                    <h5>是否關籠</h5>
+                    <h5>貓咪晚上是否關籠</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Cage)</p>
                     <h5>是否提供即時監控設備</h5>
                     <p>@Html.DisplayFor(model => model.sitter.Monitor)</p>
-                    <h5>貓需要的室內設施</h5>
-                        @for(int i = 0 ; i< Model.sitterfeatureList.Count; i++)
+                    <h5>保母提供的室內設施</h5>
+                    @if(Model.sitterfeatureList.Count>0)
+                    {
+                        for(int i = 0 ; i< Model.sitterfeatureList.Count; i++)
                         {
                             <p>
-                            @Html.DisplayFor(model => model.sitterfeatureList[i])
+                                @Html.DisplayFor(model => model.sitterfeatureList[i])
                             </p>
                         }
-                        
+                    }
+                    else
+                    {
+                        <p>無</p>
+                    }
+                    
                 </div>
                 <div class="sticky order-col  buzz col-4 p-4">
                     <div class="pay-star">
@@ -67,7 +168,7 @@
                         </div>
                         <div class="star">
                             <i class="fa-solid fa-star"></i>
-                            <span class="star-txt">4.9</span>
+                            <span class="star-txt">@Model.sitter.AvgStar</span>
                             <span class="comment-num">@Html.DisplayFor(model => model.OrderCommentList.Count) 則評價</span>
                         </div>
                     </div>
@@ -114,12 +215,12 @@
                         <button class="reserve-number-btn">
                             <div class="pet-rec" style="display: none;">
                                 @for (int i = 0; i < @ViewBag.catList.Count; i++)
-                            {
+                                {
                                 <div class="cat-card" data-index=@i>
                                     <img src="@ViewBag.catList[i].Img01"/>
                                     <span>@ViewBag.catList[i].Name</span>
                                 </div>
-                            }
+                                }
                             </div>
                             <div class="number-txt">哪一隻寵物</div>
                             <div class="number">
@@ -141,7 +242,7 @@
             <div class="row d-block pt-4 pb-4">
                 <div class="star">
                     <i class="fa-solid fa-star h3"></i>
-                    <span class="star-txt h4">4.9</span>
+                    <span class="star-txt h4">@Model.sitter.AvgStar</span>
                     <span class="h4">&nbsp;@Html.DisplayFor(model => model.OrderCommentList.Count)則評價</span>
                 </div>
                 <div class="comment-area">
@@ -150,10 +251,10 @@
                     <div class="one-comment">
                         <div class="user-info">
                             <div class="d-flex">
-                                <img class="user-pic" src="@Href("~/images/sitter/cat.jpg")">
+                                <img class="user-pic" src="@Model.CommentOfUserList[i].Photo">
                                 <div class="user-detail">
-                                    <div class="user-name">@Html.DisplayFor(model => model.OrderCommentList[i].MemberId)</div>
-                                    <div class="comment-time">@Html.DisplayFor(model => model.OrderCommentList[i].DateOver)</div>
+                                    <div class="user-name">@Model.CommentOfUserList[i].Name</div>
+                                    <div class="comment-time">@Model.OrderCommentList[i].DateOver.ToString("yyyy年MM月")</div>
                                 </div>
                             </div>
                             <div class="user-comment">
@@ -161,14 +262,12 @@
                             </div>
                         </div>
                     </div>
-                    if(i == 9){ break; }
-                }
-                    <button class="more-comment buzz">
-                        顯示全部評價
-                    </button>
+                    if(i == 8){ break; }
+                    }
                 </div>
-                
-                
+                <button class="more-comment buzz">
+                    顯示全部評價
+                </button>
             </div>
         </comment>
         <hr>
@@ -183,10 +282,8 @@
             </div>
         </location>
         <hr>
-
-
     </div>
-
+</div>
 
     @section Scripts{
      <script>  
@@ -213,7 +310,7 @@
                 backdrop: `rgba(0,0,0,0.4)`,
                 html: `<div class="pop-star h2">
                             <i class="fa-solid fa-star"></i>
-                            <span class="star-txt">4.9</span>
+                            <span class="star-txt">@Model.sitter.AvgStar</span>
                             <span class="">@Html.DisplayFor(model => model.OrderCommentList.Count)則評價</span>
                         </div>
                             <div class="pop-comment-area">
@@ -221,10 +318,10 @@
                                 <div class="pop-one-comment">
                                     <div class="pop-user-info">
                                         <div class="d-flex">
-                                            <img class="user-pic" src="/images/sitter/cat.jpg">
+                                            <img class="user-pic" src="@Model.CommentOfUserList[i].Photo">
                                             <div class="user-detail">
-                                                <div class="user-name">@Html.DisplayFor(model => model.OrderCommentList[i].MemberId)</div>
-                                                <div class="comment-time">@Html.DisplayFor(model => model.OrderCommentList[i].DateOver)</div>
+                                                <div class="user-name">@Model.CommentOfUserList[i].Name</div>
+                                                <div class="comment-time">@Model.OrderCommentList[i].DateOver.ToString("yyyy年MM月")</div>
                                             </div>
                                         </div>
                                         <div class="user-comment">
