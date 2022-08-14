@@ -229,17 +229,11 @@ $(".dropZone, .dropZone1").on({
             reader.readAsDataURL(file);
             reader.addEventListener("load", function (event) {
                 for (let i = 0; i < imgList.length; i++) {
-
                     //如果該img為空則把該圖片的url assign進去
                     if (imgList[i].src == '') {
                         imgList[i].src = event.target.result;
                         $(`#plus${i + 1}`).css('display', 'none')
                         $(`#dropZone${i + 1}`).css('border', '2px rgb(115, 244, 222) solid')
-                        if (remainNum > 0) {
-                            remainNum -= 1;
-                        }
-                            $('#re-p').text(`還剩${remainNum}張可以選擇`)
-
                         break;  //跳脫出for迴圈
                     }
                 }
@@ -305,11 +299,6 @@ function fileChange(num) {
     readFile.addEventListener('load', function () {
         $(`#dropImg${num}`)[0].src = readFile.result
     })
-
-    if (remainNum > 0) {
-        remainNum -= 1;
-    }
-    $('#re-p').text(`還剩${remainNum}張可以選擇`)
     $(`#plus${num}`).css('display', 'none')
     $(`#dropZone${num}`).css('border', '2px rgb(115, 244, 222) solid')
 }
