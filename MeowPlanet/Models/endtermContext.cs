@@ -91,7 +91,7 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.Img01)
                     .HasMaxLength(100)
                     .HasColumnName("img_01")
-                    .HasDefaultValueSql("(N'../images/defaultcat.png')");
+                    .HasDefaultValueSql("(N'/images/defaultcat.png')");
 
                 entity.Property(e => e.Img02)
                     .HasMaxLength(100)
@@ -261,7 +261,7 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.Photo)
                     .HasMaxLength(100)
                     .HasColumnName("photo")
-                    .HasDefaultValueSql("(N'../images/defaultperson.png')");
+                    .HasDefaultValueSql("(N'/images/ar.png')");
             });
 
             modelBuilder.Entity<Message>(entity =>
@@ -391,6 +391,18 @@ namespace MeowPlanet.Models
 
                 entity.Property(e => e.ServiceId).HasColumnName("service_id");
 
+                entity.Property(e => e.Area1)
+                    .HasMaxLength(50)
+                    .HasColumnName("area_1");
+
+                entity.Property(e => e.Area2)
+                    .HasMaxLength(50)
+                    .HasColumnName("area_2");
+
+                entity.Property(e => e.Area3)
+                    .HasMaxLength(50)
+                    .HasColumnName("area_3");
+
                 entity.Property(e => e.AvgStar)
                     .HasColumnType("decimal(2, 1)")
                     .HasColumnName("avg_star");
@@ -402,6 +414,10 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.CatNumber)
                     .HasMaxLength(50)
                     .HasColumnName("cat_number");
+
+                entity.Property(e => e.FormattedAddress)
+                    .HasMaxLength(100)
+                    .HasColumnName("formatted_address");
 
                 entity.Property(e => e.Img01)
                     .HasMaxLength(100)
