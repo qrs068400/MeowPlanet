@@ -112,9 +112,7 @@ div:first-of-type.clue-item {
                         <p>
                             @item.BreedName
                         </p>
-                        <p>
-                            申請人:@item.Name
-                        </p>
+                        <button id="@item.MemberId" class="btn btn-outline-secondary messageTo" value="@item.MemberId" style="font-size:1.3rem;color:antiquewhite">申請人:@item.Name  <i class="fa-regular fa-comment-dots"></i></button>
                         <p>
                             @if (@item.DateOver == null)
                             {
@@ -149,7 +147,6 @@ div:first-of-type.clue-item {
                         {
                             <button id="@item.CatId" class="btn btn-outline-secondary no" value="@item.MemberId"><i class="fa-solid fa-xmark adoptclose"></i></button>
                             <button id="@item.CatId" class="btn btn-outline-secondary yes" value="@item.MemberId" style="margin-left:-1px;"><i class="fa-solid fa-check adoptclose"></i></button>
-                            <button id="@item.MemberId" class="btn btn-outline-secondary messageTo" value="@item.MemberId" style="padding-left:15px;margin-top:40px;font-size:2rem"><i class="fa-regular fa-comment-dots"></i></button>
                         }
 
                     </div>
