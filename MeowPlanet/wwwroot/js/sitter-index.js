@@ -76,7 +76,7 @@ function initMap() {
         let latlng = new google.maps.LatLng(sitter.posLat, sitter.posLng);
         let marker = createHTMLMapMarker({
             latlng,
-            html: `<div class="marker" >$ ${sitter.pay} TWD</div>`,
+            html: `<div class="marker" data-mid="${sitter.serviceId}">$ ${sitter.pay} TWD</div>`,
         });
         let center = map.getCenter();
         let distanceToMe = (google.maps.geometry.spherical.computeDistanceBetween(center, latlng) / 1000).toFixed(1);
@@ -181,7 +181,7 @@ function featureOrNot(sitter) {
 //產生所有保母卡片
 for (var i = 0; i < sitterList.length; i++) {
     $('.row').append(
-        `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}">
+        `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}" >
                 <div class="pic_div4-1">
                     ${pic(sitterList[i])}
                 </div>
@@ -255,6 +255,23 @@ function searchSitter(bounds) {
         }
     })
 };
+
+//mouseover mouseleave card 
+$(document).on("mouseenter", ".card_div4", this, function () {
+    let sid = $(this).data('sid');
+    $(`div[data-mid='${sid}']`).parent().css('z-index', '1000');
+    $(`div[data-mid='${sid}']`).addClass('cardhover');
+})
+
+$(document).on("mouseleave", ".card_div4", this, function () {
+    let sid = $(this).data('sid');
+    $(`div[data-mid='${sid}']`).parent().css('z-index', '999');
+    $(`div[data-mid='${sid}']`).removeClass('cardhover');
+})
+
+
+
+
 
 
 

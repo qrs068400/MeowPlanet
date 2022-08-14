@@ -12,8 +12,10 @@ namespace MeowPlanet.ViewModels.Sitters
 
         public List<Orderlist>? OrderCommentList { get; set; }
 
+        public List<Member>? CommentOfUserList { get; set; }
+
         public List<Cat>? usercatList { get; set; }
 
-        public List<SitterWorkViewModel> sitterWorkViewModels { get; set; }
+        
     }
 }

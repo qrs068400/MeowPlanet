@@ -172,18 +172,24 @@ body {
 .marker {
     background-color: var(--project-txt-color);
     border-radius: 50rem;
-    padding: 10px;
-    height: 30px;
+    padding: 8px;
     text-align: center;
+    transform: scale(1);
+    font-weight: 600;
+    transition: 0.3s;
 }
 
     .marker:hover {
-        transition: 0.4s ease-in-out;
+        transform: scale(1.2);
         background-color: var(--project-primary-color);
         color: var(--project-txt-color);
     }
 
-
+.cardhover {
+    transform: scale(1.2);
+    background-color: var(--project-primary-color);
+    color: var(--project-txt-color);
+}
 
 /* powered by google */
     .pac-container:after {

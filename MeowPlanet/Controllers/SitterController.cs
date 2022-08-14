@@ -37,7 +37,7 @@ namespace MeowPlanet.Controllers
 
             //方法一
             var result = await _context.Sitters
-                //.AsNoTracking()
+                .AsNoTracking()
                 //.AsNoTrackingWithIdentityResolution()
                 //.Include(c => c.SitterFeatures)
                 .Where(m => m.IsService == true)
@@ -86,19 +86,28 @@ namespace MeowPlanet.Controllers
             //    result.Add(model);
             //}
 
-            TempData["controller"] = "Sitter";
-            TempData["action"] = "Index";
+            //TempData["controller"] = "Sitter";
+            //TempData["action"] = "Index";
+
             return View( result);
         }
 
         public async Task<IActionResult> Detail(int? id)
         {
-            SitterViewModels model = new SitterViewModels()
-            {
-                sitter = await _context.Sitters.FirstOrDefaultAsync(m => m.ServiceId == id),
-                sitterfeatureList = await _context.SitterFeatures.Include(x => x.Feature).Where(m => m.ServiceId == id).Select(x => x.Feature.Name).ToListAsync(),
-                OrderCommentList = await _context.Orderlists.Where(m => m.ServiceId == id).ToListAsync(),
-            };
+            var result = await _context.Sitters
+                .AsNoTracking()
+                //.AsNoTrackingWithIdentityResolution()
+                .Where(m => m.ServiceId == id)
+                .Select(m => new SitterViewModels
+                {
+                    sitter = m,
+                    memberPhoto = m.Member.Photo,
+                    sitterfeatureList = m.SitterFeatures.Select(m => m.Feature.Name).ToList(),
+                    OrderCommentList = m.Orderlists.Where(m => m.Status == 2).OrderByDescending(m => m.DateOver).ToList(),
+                    CommentOfUserList =m.Orderlists.Where(m => m.Status == 2).OrderByDescending(m => m.DateOver).Select(m => m.Member).ToList(),
+                }).FirstOrDefaultAsync();
+
+
             var catList = await _context.Cats
                 .Where(m => m.MemberId == _memberId)
                 .Select(m => new Cat
@@ -115,10 +124,12 @@ namespace MeowPlanet.Controllers
                 }).ToListAsync();
 
             ViewBag.catList = catList;
-            TempData["controller"] = "Sitter";
-            TempData["action"] = "Detail";
-            TempData["ids"] = $"{id}";
-            return View(model);
+
+            //TempData["controller"] = "Sitter";
+            //TempData["action"] = "Detail";
+            //TempData["ids"] = $"{id}";
+
+            return View(result);
         }
         //方法一
         // 使用 變數 來接收submit資料
