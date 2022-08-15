@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<MeowPlanet.ViewModels.OrderCommentViewModel>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -153,156 +155,148 @@
                                     </div>
                                 </div>
                             </div>
+
+                            @foreach (var item in Model)
+                        {
                             <div class="carousel-item">
                                 <div class="d-flex justify-content-center align-items-center">
-                                    <img src="@Href("~/Images/comment2.jpg")" alt="..." style="object-fit:cover">
+                                    <img src="@item.Photo" alt="..." style="object-fit:cover">
                                     <div class="w-p-wrap d-flex align-items-center">
-                                        <p>我家貓很膽小，幸好有這樣的服務，才能讓我們短期回南部看長輩。兩次餵食跟貓砂清潔很快速的完成，貓也沒有到非常緊張，很感謝！</p>
+                                        <p>@item.Comment</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="carousel-item">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <img src="@Href("~/Images/comment3.jpg")" alt="..." style="object-fit:cover">
-                                    <div class="w-p-wrap d-flex align-items-center">
-                                        <p>家裡24小時有人，環境很適合我們家毛孩，令人安心。隨時聯繫得到保母，會發照片告知狀況。以後出遠門還會把我們家毛孩送來 Julia 家</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Previous</span>
-                        </button>
-                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="visually-hidden">Next</span>
-                        </button>
+                        }
+
                     </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
+            </div>
 
-            </section>
+        </section>
 
+    </div>
+</section>
+
+<section id="mob">
+    <section id="catbanner">
+        <div class="container d-flex">
+            <div class="row">
+                <p>
+                    在各方面為您的貓咪著想
+                </p>
+                <a asp-controller="Login" asp-action="Register" class="btn d-flex">
+                    成為會員
+                </a>
+            </div>
         </div>
     </section>
 
-    <section id="mob">
-        <section id="catbanner">
-            <div class="container d-flex">
-                <div class="row">
-                    <p>
-                        在各方面為您的貓咪著想
-                    </p>
-                    <a asp-controller="Login" asp-action="Register" class="btn d-flex">
-                        成為會員
-                    </a>
-                </div>
-            </div>
-        </section>
+    <div class="sec d-flex">
+        <p class="func">功 能 選 擇</p>
+    </div>
 
-        <div class="sec d-flex">
-            <p class="func">功 能 選 擇</p>
-        </div>
-
-        <section>
-            <a asp-controller="Sitter" asp-action="Index" id="sitterLink">
+    <section>
+        <a asp-controller="Sitter" asp-action="Index" id="sitterLink">
             <div class="sitter d-flex">
                 <p>保 姆</p>
             </div>
-            </a>
+        </a>
 
-            <a asp-controller="Adoption" asp-action="Index" id="adoptionLink">
+        <a asp-controller="Adoption" asp-action="Index" id="adoptionLink">
             <div class="adopt d-flex">
                 <p>領 養</p>
             </div>
-            </a>
+        </a>
 
-            <a asp-controller="Missings" asp-action="Index" id="missingsLink">
+        <a asp-controller="Missings" asp-action="Index" id="missingsLink">
             <div class="find d-flex">
                 <p>協 尋</p>
             </div>
-            </a>
-        </section>
-
-        <div class="third d-flex">
-            <p>找到最適合您的貓咪服務</p>
-        </div>
-
-        <section id="service">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <img class="ml-4" src="@Href("~/Images/service5.jpg")">
-                    </div>
-                    <div class="col">
-                        <p class="mr-4">為孤單在家的貓咪<br>找個專業保姆陪伴</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <p class="ml-4">幫忙走失無助的貓<br>咪找到回家的路</p>
-                    </div>
-                    <div class="col">
-                        <img class="mr-4" src="@Href("~/Images/service6.jpg")">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col">
-                        <img class="ml-4" src="@Href("~/Images/service4.jpg")">
-                    </div>
-                    <div class="col">
-                        <p class="mr-4">找到適合您的貓咪<br>讓他有個溫暖的家</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div class="fourth d-flex">
-            <p>用戶評價</p>
-        </div>
-
-        <section id="car">
-
-            <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <img src="@Href("~/Images/comment1.jpg")" alt="...">
-                            <div class="p-wrap d-flex align-items-center">
-                                <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動，是個充滿溫暖和快樂的寄宿家庭，下次有機會還會想讓Pocky過去玩~</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="d-flex justify-content-center align-items-center d-block w-100">
-                            <img src="@Href("~/Images/comment2.jpg")" alt="...">
-                            <div class="p-wrap d-flex align-items-center">
-                                <p>我家貓很膽小，幸好有這樣的服務，才能讓我們短期回南部看長輩。兩次餵食跟貓砂清潔很快速的完成，貓也沒有到非常緊張，很感謝！</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="carousel-item">
-                        <div class="d-flex justify-content-center align-items-center d-block w-100">
-                            <img src="@Href("~/Images/comment3.jpg")" alt="...">
-                            <div class="p-wrap d-flex align-items-center">
-                                <p>家裡24小時有人，環境很適合我們家毛孩，令人安心。隨時聯繫得到保母，會發照片告知狀況。以後出遠門還會把我們家毛孩送來 Julia 家</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Previous</span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="visually-hidden">Next</span>
-                </button>
-            </div>
-        </section>
+        </a>
     </section>
 
-    @section Scripts{
+    <div class="third d-flex">
+        <p>找到最適合您的貓咪服務</p>
+    </div>
+
+    <section id="service">
+        <div class="container">
+            <div class="row">
+                <div class="col">
+                    <img class="ml-4" src="@Href("~/Images/service5.jpg")">
+                </div>
+                <div class="col">
+                    <p class="mr-4">為孤單在家的貓咪<br>找個專業保姆陪伴</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="ml-4">幫忙走失無助的貓<br>咪找到回家的路</p>
+                </div>
+                <div class="col">
+                    <img class="mr-4" src="@Href("~/Images/service6.jpg")">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <img class="ml-4" src="@Href("~/Images/service4.jpg")">
+                </div>
+                <div class="col">
+                    <p class="mr-4">找到適合您的貓咪<br>讓他有個溫暖的家</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="fourth d-flex">
+        <p>用戶評價</p>
+    </div>
+
+    <section id="car">
+
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <img src="@Href("~/Images/comment1.jpg")" alt="...">
+                        <div class="p-wrap d-flex align-items-center">
+                            <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動，是個充滿溫暖和快樂的寄宿家庭，下次有機會還會想讓Pocky過去玩~</p>
+                        </div>
+                    </div>
+                </div>
+                @foreach (var item in Model)
+                {
+                    <div class="carousel-item">
+                        <div class="d-flex justify-content-center align-items-center">
+                            <img src="@item.Photo" alt="..." style="object-fit:cover">
+                            <div class="p-wrap d-flex align-items-center">
+                                <p>@item.Comment</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </section>
+</section>
+
+@section Scripts{
     <script src="~/js/homepage.js"></script>
 
 }
