@@ -153,7 +153,7 @@ namespace MeowPlanet.Controllers
             msg.IsBodyHtml = true;
 
             SmtpClient client = new SmtpClient();
-            client.Credentials = new System.Net.NetworkCredential("meowplanet04@gmail.com", "cbqjonjcosbrqnnv");
+            client.Credentials = new System.Net.NetworkCredential("meowplanet04@gmail.com", "vxzqhwksdippafpq");
             client.Host = "smtp.gmail.com";
             client.Port = 25;
             client.EnableSsl = true;
@@ -239,7 +239,7 @@ namespace MeowPlanet.Controllers
             // 建立SmtpClient物件，設定發信的帳號、smtp主機跟port
             SmtpClient client = new SmtpClient();
             // 設定發信帳號及密碼取得 Smtp 伺服器的憑證
-            client.Credentials = new System.Net.NetworkCredential("meowplanet04@gmail.com", "cbqjonjcosbrqnnv");
+            client.Credentials = new System.Net.NetworkCredential("meowplanet04@gmail.com", "vxzqhwksdippafpq");
             // 設定smtp主機
             client.Host = "smtp.gmail.com";
             // 設定port

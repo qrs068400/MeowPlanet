@@ -41,12 +41,10 @@
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">密碼</p>
-
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="password" />
-
                             </div>
 
                             <div class="d-flex justify-content-start align-items-center err-msg-div">
@@ -55,12 +53,10 @@
 
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">姓名</p>
-
                             </div>
 
                             <div class="d-flex align-items-center">
                                 <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="name" />
-
                             </div>
 
                             <div class="d-flex justify-content-start align-items-center err-msg-div">
@@ -127,15 +123,13 @@
             $('#sendEmail').click(function() {
                 let form = $(this).parents('form');
                 if (form.valid()) {
-                    $.get("EmailCheck", { email: $('input[type=email]').val() }, function(data) {
+                    $.get("/Login/EmailCheck", { email: $('input[type=email]').val() }, function(data) {
                         if (data == "此信箱可使用") {
                             let email = $('input[type=email]').val();
                             $.get("/Login/SendRegistMail", { email }, function(data) {
                                 $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', 'white');
                                 verifycode = data;
                             })
-                        } else {
-
                         }
                     })
                 }
