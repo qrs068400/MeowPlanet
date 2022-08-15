@@ -9,7 +9,6 @@
         <div style="margin-top:35px;margin-bottom:35px;">
             <p>Email</p>
             <input type="email" value="@Model.Email" id="email-in" asp-for="Email" disabled />
-
         </div>
         <div>
             <p>密碼</p>
@@ -92,17 +91,19 @@
     $('#member-update').click(function(e) {
         e.preventDefault();
         var form = $(this).parents('form');
+        if (form.valid()) {
+            Swal.fire({
+                heightAuto: false,
+                position: 'center',
+                icon: 'success',
+                title: '修改完成',
+                showConfirmButton: false,
+                timer: 2500
+            }).then(function() {
+                form.submit();
+            })
+        }
 
-        Swal.fire({
-            heightAuto: false,
-            position: 'center',
-            icon: 'success',
-            title: '修改完成',
-            showConfirmButton: false,
-            timer: 2500
-        }).then(function() {
-            form.submit();
-        })
     })
 
 </script>
