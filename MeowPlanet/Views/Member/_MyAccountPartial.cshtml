@@ -44,20 +44,19 @@
         <a class="btn" asp-controller="Member" asp-action="CreateCat">+建立</a>
     </div>
     <div class="cat-region-select" id="cat-region-select">
-        <div class="h-100 w-100 d-flex align-items-center justify-content-center" style="display:none" id="noCat">
-            <p style="font-size:24px;">您尚未建立貓咪<br />請點擊右上角建立</p>
-        </div>
     </div>
 </div>
 
 <partial name="_ValidationScriptsPartial" />
 <script>
-
+    var nocathtml = `<div class="h-100 w-100 d-flex align-items-center justify-content-center" id="noCat">
+                        <p style="font-size:24px;">您尚未建立貓咪<br />請點擊右上角建立</p>
+                    </div>`
     $(function() {
 
         $.get("@Url.Action("GetCatInfo", "Member")", function(data) {
             if (data == "nocat") {
-                $('#noCat').css('display', 'block')
+                $("#cat-region-select").html(nocathtml)
             } else {
 
                 $("#cat-region-select").html(data)
