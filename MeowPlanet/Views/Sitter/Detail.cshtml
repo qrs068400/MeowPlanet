@@ -92,7 +92,6 @@
     <div id="stars2"></div>
     <div id="stars3"></div>
     <div class="container">
-        
 
         @*輪播牆*@
         <slider>
@@ -125,38 +124,47 @@
                 </div>*@
             </div>
         </slider>
-        <div class="row">
-            <div class="title">
-            <span class="h1">服務名稱：</span>
-            <h1>@Html.DisplayFor(model => model.sitter.Name)</h1>
-            </div>
-        </div>
+
         <content>
             <div class="row justify-content-between pt-4 pb-4">
                 <div class="col-7 p-0" id="sitter-detail">
-                    <h3>服務介紹</h3>
+                    <div>
+                        <div>
+                            <div class="title">
+                                <span class="h1">服務名稱：</span>
+                                <h1>@Html.DisplayFor(model => model.sitter.Name)</h1>
+                                </div>
+                            <h3>服務介紹</h3>
+                        </div>
+                        <img class="sitter-photo" src="@Model.memberPhoto"/>
+                        <div class="black-overlay" data-sid="@Model.sitter.MemberId">
+                            <i class="fa-solid fa-comment-dots"></i>
+                        </div>
+                    </div>
                     <hr>
                     <h5>自介</h5>
-                    <p>@Html.DisplayFor(model => model.sitter.Summary)</p>
+                    <p class="buzz-primary p-4" style="display:inline-block;">@Html.DisplayFor(model => model.sitter.Summary)</p>
                     <h5>保母有無相關證照</h5>
-                    <p>@Html.DisplayFor(model => model.sitter.Licence)</p>
+                    <p class="buzz-primary p-4" style="display:inline-block;"><i class="fa-solid fa-id-card"></i> @Html.DisplayFor(model => model.sitter.Licence)</p>
                     <h5>貓咪晚上是否關籠</h5>
-                    <p>@Html.DisplayFor(model => model.sitter.Cage)</p>
+                    <p class="buzz-primary p-4" style="display:inline-block;"><i class="fa-solid fa-house"></i> @Html.DisplayFor(model => model.sitter.Cage)</p>
                     <h5>是否提供即時監控設備</h5>
-                    <p>@Html.DisplayFor(model => model.sitter.Monitor)</p>
+                    <p class="buzz-primary p-4" style="display:inline-block;"><i class="fa-solid fa-desktop"></i> @Html.DisplayFor(model => model.sitter.Monitor)</p>
                     <h5>保母提供的室內設施</h5>
                     @if(Model.sitterfeatureList.Count>0)
                     {
                         for(int i = 0 ; i< Model.sitterfeatureList.Count; i++)
                         {
-                            <p>
-                                @Html.DisplayFor(model => model.sitterfeatureList[i])
+                            <p class="buzz-primary p-4 me-3" style="display:inline-block;">
+                                <i class="fa-solid fa-cat"></i> @Html.DisplayFor(model => model.sitterfeatureList[i])
                             </p>
                         }
                     }
                     else
                     {
-                        <p>無</p>
+                        <p class="buzz-primary p-4 me-3" style="display:inline-block;">
+                            <i class="fa-solid fa-circle-question"></i> 無設備
+                        </p>
                     }
                     
                 </div>
@@ -286,7 +294,7 @@
 </div>
 
     @section Scripts{
-     <script>  
+     <script>
          var viewBag_catList = @Html.Raw(Json.Serialize(ViewBag.catList));
          var model = @Html.Raw(Json.Serialize(Model));
          var isLogin = '@isLogin';
