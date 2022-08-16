@@ -3,6 +3,21 @@ import createHTMLMapMarker from "./html-map-marker.js";
 let map;
 let sitterList = [];
 
+//把地圖平移到目前位置
+function currentPos() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                let pos = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude,
+                };
+                map.setCenter(pos);
+            }
+        )
+    };
+}
+
 function initMap() {
 
     //初始化地圖(應該定位到使用者位置)---------------------------!@#$^&(@*&()!())
@@ -15,6 +30,8 @@ function initMap() {
         mapId: 'a5f4cec6781c8dda',
         gestureHandling: 'cooperative'
     });
+
+    currentPos();
 
     //定位按鈕
     const locationButton = document.createElement("button");
@@ -98,12 +115,9 @@ function initMap() {
     map.addListener('idle', () => {
         bounds = map.getBounds();
         searchSitter(bounds)
-    });
-
-    
-
-    
+    });  
 };
+
 $(initMap());
 
 //移動至該卡片高度

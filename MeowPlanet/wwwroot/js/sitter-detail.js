@@ -27,7 +27,7 @@ $(".cat-card").on("click", function (e) {
 
 
 
-//* 日曆
+// 日曆
 // 儲存開始結束時間
 let startend = [];
 let night;
@@ -107,6 +107,14 @@ function CalendarControl() {
             let dateSelect = document.querySelectorAll(".number-item"); // div tag
             let dateNumber = document.querySelectorAll(".calendar .dateNumber");  //a tag
 
+            //本日前日期槓掉
+            dateNumber.forEach( aTag => {
+                let aTagDate = new Date(aTag.dataset.dateid);
+                if (aTagDate.getTime() < localDate.getTime()) {
+                    aTag.classList.add('dateover');
+                }
+            });
+            
             if (startend.length === 0) {
 
             } else if (startend.length === 1) {
@@ -117,7 +125,6 @@ function CalendarControl() {
                 if (startend[0].getTime() < calendarControl.firstDay().getTime()) {
 
                     if (startend[1].getTime() > calendarControl.firstDay().getTime() && startend[1].getTime() < calendarControl.lastDay().getTime()) {
-                        console.log("S | E |")
                         //  S | E |
                         for (let i = 0; i < startend[1].getDate(); i++) {
                             if (i == startend[1].getDate() - 1) {
@@ -129,7 +136,6 @@ function CalendarControl() {
                         }
 
                     } else if (startend[1].getTime() > calendarControl.lastDay().getTime()) {
-                        console.log("S | | E")
                         // S | | E
                         dateSelect.forEach(element => {
                             element.classList.add("calendar-during");
@@ -141,7 +147,6 @@ function CalendarControl() {
 
                 } else if (startend[0].getTime() > calendarControl.firstDay().getTime() && startend[0].getTime() < calendarControl.lastDay().getTime()) {
                     if (startend[1].getTime() < calendarControl.lastDay().getTime()) {
-                        console.log(" |S E|")
                         //  |S E|
                         let night = (startend[1] - startend[0]) / (1000 * 3600 * 24);
                         for (let i = 0; i < night + 1; i++) {
@@ -156,7 +161,6 @@ function CalendarControl() {
                             }
                         }
                     } else if (startend[1].getTime() > calendarControl.lastDay().getTime()) {
-                        console.log("| S | E")
                         // | S | E
                         let night = calendarControl.lastDay().getDate() - startend[0].getDate()
                         for (let i = 0; i < night; i++) {
@@ -170,15 +174,16 @@ function CalendarControl() {
                     }
                 } else if (startend[0].getTime() > calendarControl.lastDay().getTime() &&
                     startend[1].getTime() > calendarControl.lastDay().getTime()) {
-                    console.log("| | S E")
                     //  | | S E 
                 }
             }
         },
+
         displayYear: function () {
             let yearLabel = document.querySelector(".calendar .calendar-year-label");
             yearLabel.innerHTML = calendar.getFullYear();
         },
+
         displayMonth: function () {
             let monthLabel = document.querySelector(
                 ".calendar .calendar-month-label"
@@ -189,31 +194,32 @@ function CalendarControl() {
         // 月份選擇
         plotSelectors: function () {
             document.querySelector(".calendar").innerHTML +=
-                `<div class="calendar-inner">
-                            <div class="calendar-controls">
-                                <div class="calendar-prev">
-                                    <a >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-                                            <path fill="#666" d="M88.2 3.8L35.8 56.23 28 64l7.8 7.78 52.4 52.4 9.78-7.76L45.58 64l52.4-52.4z" />
-                                        </svg>
-                                    </a>
-                                </div>
-                                <div class="calendar-year-month">
-                                    <div class="calendar-year-label"></div>
-                                    <div>-</div>
-                                    <div class="calendar-month-label"></div>
-                                </div>
-                                <div class="calendar-next">
-                                    <a >
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
-                                            <path fill="#666"  d="M38.8 124.2l52.4-52.42L99 64l-7.77-7.78-52.4-52.4-9.8 7.77L81.44 64 29 116.42z" />
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-                            <div class="calendar-body"></div>
-                        </div>`;
+            `<div class="calendar-inner">
+                <div class="calendar-controls">
+                    <div class="calendar-prev">
+                        <a >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+                                <path fill="#666" d="M88.2 3.8L35.8 56.23 28 64l7.8 7.78 52.4 52.4 9.78-7.76L45.58 64l52.4-52.4z" />
+                            </svg>
+                        </a>
+                    </div>
+                    <div class="calendar-year-month">
+                        <div class="calendar-year-label"></div>
+                        <div>-</div>
+                        <div class="calendar-month-label"></div>
+                    </div>
+                    <div class="calendar-next">
+                        <a >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+                                <path fill="#666"  d="M38.8 124.2l52.4-52.42L99 64l-7.77-7.78-52.4-52.4-9.8 7.77L81.44 64 29 116.42z" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                <div class="calendar-body"></div>
+            </div>`;
         },
+
         // 輸出星期名字
         plotDayNames: function () {
             for (let i = 0; i < calendarControl.calWeekDays.length; i++) {
@@ -222,6 +228,7 @@ function CalendarControl() {
                 ).innerHTML += `<div>${calendarControl.calWeekDays[i]}</div>`;
             }
         },
+
         //輸出日期
         plotDates: function () {
             document.querySelector(".calendar .calendar-body").innerHTML = "";
@@ -264,10 +271,11 @@ function CalendarControl() {
                      </div>`;
             }
         },
+
         attachEvents: function () {
             let prevBtn = document.querySelector(".calendar .calendar-prev a");
             let nextBtn = document.querySelector(".calendar .calendar-next a");
-            /*let todayDate = document.querySelector(".calendar .calendar-today-date");*/
+            let todayDate = document.querySelector(".calendar .calendar-today-date");
             let dateNumber = document.querySelectorAll(".calendar .dateNumber");
             let clearSelect = document.querySelector(".clear-select");
             let closeCalendar = document.querySelector(".close-calendar");
@@ -284,6 +292,7 @@ function CalendarControl() {
             clearSelect.addEventListener("click", calendarControl.clearSelect);
             closeCalendar.addEventListener("click", calendarControl.closeCalendar);
         },
+
         closeCalendar: function (e) {
             if (startend[0] !== undefined) {
                 $("#check-in").html(calendarControl.formatShortDate(startend[0]));
@@ -296,9 +305,9 @@ function CalendarControl() {
                 $("#check-out").html("輸入日期");
 
             }
-
             $(".calender-rec").slideUp();
         },
+
         clearSelect: function (e) {
             let dateSelect = document.querySelectorAll(".number-item"); // div tag
             let dateNumber = document.querySelectorAll(".calendar .dateNumber");  //a tag
@@ -311,7 +320,6 @@ function CalendarControl() {
             document.querySelector(".calender-header span:nth-child(2)").innerHTML = "";
             startend = [];
             e.stopPropagation();
-
         },
 
         selectDate: function (e) {
@@ -375,6 +383,7 @@ function CalendarControl() {
             calendarControl.plotSelectors();
             calendarControl.plotDates();
             calendarControl.attachEvents();
+            calendarControl.checkRenderOrNot();
         }
     };
     calendarControl.init();
@@ -548,4 +557,10 @@ $('#comfirmPay').click(
         });
     }
 )
+
+//私訊保母
+$('.black-overlay').click(function () {
+    let s = $(this).data('sid');
+    messagebox.messageTo(s, memberId);
+});
 
