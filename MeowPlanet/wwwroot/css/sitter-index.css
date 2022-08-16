@@ -240,7 +240,7 @@ a[href^="https://maps.google.com/maps"] {
     margin: 0px 0px 20px 0px;
     color: rgb(197, 193, 193);
     background-color: transparent;
-    background-image: url("../images/sitter/保姆展示框.png");
+    background-image: url("/images/sitter/保姆展示框.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

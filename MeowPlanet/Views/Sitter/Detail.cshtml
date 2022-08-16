@@ -4,6 +4,9 @@
 @{
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
 }
+@{
+    ViewData["Title"] = "保姆詳細";
+}
 @section Styles{
     <link  href="~/css/sitter-detail.css" rel="stylesheet"/>
 }
