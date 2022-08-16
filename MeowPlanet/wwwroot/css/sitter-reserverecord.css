@@ -153,6 +153,8 @@
         border-radius: 15px;
         display: block;
         margin: auto;
+        object-fit: cover;
+        height: 100%;
     }
 
 .div4-2 {
