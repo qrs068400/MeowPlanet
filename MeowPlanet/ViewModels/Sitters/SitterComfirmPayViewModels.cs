@@ -2,7 +2,7 @@
 {
     public class SitterComfirmPayViewModels
     {
-        //保母本人資料
+        //保姆本人資料
         public string SitterName { get; set; } = null!;
         public string? SitterPhoto { get; set; }
         //使用者本人資料

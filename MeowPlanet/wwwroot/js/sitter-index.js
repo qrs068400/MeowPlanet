@@ -87,7 +87,7 @@ function initMap() {
     });
 
     
-    //! 建立所有保母的所有資訊
+    //! 建立所有保姆的所有資訊
     model.forEach((value, index) => {
         let sitter = value.sitter;
         let latlng = new google.maps.LatLng(sitter.posLat, sitter.posLng);
@@ -192,7 +192,7 @@ function featureOrNot(sitter) {
     }
 };
 
-//產生所有保母卡片
+//產生所有保姆卡片
 for (var i = 0; i < sitterList.length; i++) {
     $('.row').append(
         `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}" >
@@ -238,7 +238,7 @@ for (var i = 0; i < sitterList.length; i++) {
 let showingSitterList = [];
 let bounds;
 
-//顯示地圖範圍內的保母
+//顯示地圖範圍內的保姆
 function searchSitter(bounds) {
     console.log(bounds);
     sitterList.forEach((sitter, index) => {

@@ -147,25 +147,31 @@
 
                     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <img src="@Href("~/Images/comment1.jpg")" alt="..." style="object-fit:cover">
-                                    <div class="w-p-wrap d-flex align-items-center">
-                                        <p>褓姆全家都非常愛毛孩，很用心在照顧也用愛與關懷與寵物互動，是個充滿溫暖和快樂的寄宿家庭，下次有機會還會想讓Pocky過去玩~</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.Select((value, index) => new { value, index }))
                         {
-                            <div class="carousel-item">
-                                <div class="d-flex justify-content-center align-items-center">
-                                    <img src="@item.Photo" alt="..." style="object-fit:cover">
-                                    <div class="w-p-wrap d-flex align-items-center">
-                                        <p>@item.Comment</p>
+                            if (item.index == 0)
+                            {
+                                <div class="carousel-item active">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="@item.value.Photo" alt="...">
+                                        <div class="w-p-wrap d-flex align-items-center">
+                                            <p>@item.value.Comment</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
+                            else
+                            {
+
+                                <div class="carousel-item">
+                                    <div class="d-flex justify-content-center align-items-center">
+                                        <img src="@item.value.Photo" alt="..." style="object-fit:cover">
+                                        <div class="w-p-wrap d-flex align-items-center">
+                                            <p>@item.value.Comment</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
                         }
 
                     </div>
@@ -264,24 +270,32 @@
 
         <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <div class="d-flex justify-content-center align-items-center">
-                        <img src="@Href("~/Images/comment1.jpg")" alt="...">
-                        <div class="p-wrap d-flex align-items-center">
-                            <p>保姆接待前會詳細了解狗的狀況及主人需求，住宿時會主動介紹室內環境(溫馨乾淨室內環境)及散步環境(優質的河堤邊)讓家長放心，住宿期間保姆非常熱心傳狗狗近況讓主人了解。</p>
-                        </div>
-                    </div>
-                </div>
-                @foreach (var item in Model)
+
+                @foreach (var item in Model.Select((value, index) => new { value, index }))
                 {
-                    <div class="carousel-item">
-                        <div class="d-flex justify-content-center align-items-center">
-                            <img src="@item.Photo" alt="..." style="object-fit:cover">
-                            <div class="p-wrap d-flex align-items-center">
-                                <p>@item.Comment</p>
+                    if (item.index == 0)
+                    {
+                        <div class="carousel-item active">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@item.value.Photo" alt="...">
+                                <div class="p-wrap d-flex align-items-center">
+                                    <p>@item.value.Comment</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    }
+                    else
+                    {
+
+                        <div class="carousel-item">
+                            <div class="d-flex justify-content-center align-items-center">
+                                <img src="@item.value.Photo" alt="..." style="object-fit:cover">
+                                <div class="p-wrap d-flex align-items-center">
+                                    <p>@item.value.Comment</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 }
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">

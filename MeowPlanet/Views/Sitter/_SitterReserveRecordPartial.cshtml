@@ -332,7 +332,7 @@
     <div style="overflow-y: auto;">
         <div id="accordionExample" class="div1">
 
-            <div class="div1-01"><i class="fa-solid fa-user-clock"></i> &nbsp 訂 &nbsp 單 &nbsp 狀 &nbsp 態 &nbsp<span style="font-size:15px;">| &nbsp 保母尚未接單 </span></div>
+            <div class="div1-01"><i class="fa-solid fa-user-clock"></i> &nbsp 訂 &nbsp 單 &nbsp 狀 &nbsp 態 &nbsp<span style="font-size:15px;">| &nbsp 保姆尚未接單 </span></div>
 
             @foreach (var item in Model)
             {
@@ -345,7 +345,7 @@
                         <!-- data-target="#collapse【1】"***需更改數字*** -->
                             <div data-toggle="collapse" data-target="#@collapse" class="div2">
                             <div class="div2-1">                                
-                                <div class="div2-1-1"><i class="fa-solid fa-user-large"></i> &nbsp &nbsp 保母名稱: @item.SitterName &nbsp</div>
+                                <div class="div2-1-1"><i class="fa-solid fa-user-large"></i> &nbsp &nbsp 保姆名稱: @item.SitterName &nbsp</div>
                                         <div class="div2-1-2">| &nbsp &nbsp 入宿日期:@item.DateStart.ToString("yyyy年MM月dd日") - @item.DateOver.ToString("MM月dd日") &nbsp (共 @item.DateOver.Subtract(item.DateStart).ToString("%d") 日)</div>
                             </div>
                             <div class="div2-2">
@@ -362,9 +362,9 @@
                                 <div class="div4-2">
 
                                     <div class="div4-2-1">
-                                        <div>保母名稱 &nbsp : &nbsp @item.SitterName </div>
-                                        <div>保母地址 &nbsp : &nbsp * 於保母接單後顯示 *</div>
-                                        <div>保母電話 &nbsp : &nbsp * 於保母接單後顯示 *</div>
+                                        <div>保姆名稱 &nbsp : &nbsp @item.SitterName </div>
+                                        <div>保姆地址 &nbsp : &nbsp * 於保姆接單後顯示 *</div>
+                                        <div>保姆電話 &nbsp : &nbsp * 於保姆接單後顯示 *</div>
                                         <div>入宿日期 &nbsp : &nbsp @item.DateStart.ToString("yyyy/MM/dd") - @item.DateOver.ToString("yyyy/MM/dd")</div>
                                         <div>入宿貓咪 &nbsp : &nbsp @item.CatName</div>
                                         <div>總共費用 &nbsp : &nbsp 新台幣 @item.Total 元</div>
@@ -395,7 +395,7 @@
                         <!-- data-target="#collapse【1】"***需更改數字*** -->
                         <div data-toggle="collapse" data-target="#@collapse" class="div2">
                             <div class="div2-1">                                
-                                <div class="div2-1-1"><i class="fa-solid fa-user-large"></i> &nbsp &nbsp 保母名稱: @item.SitterName &nbsp</div>
+                                <div class="div2-1-1"><i class="fa-solid fa-user-large"></i> &nbsp &nbsp 保姆名稱: @item.SitterName &nbsp</div>
                                         <div class="div2-1-2">| &nbsp &nbsp 入宿日期:@item.DateStart.ToString("yyyy年MM月dd日") - @item.DateOver.ToString("MM月dd日") &nbsp (共 @item.DateOver.Subtract(item.DateStart).ToString("%d") 日)</div>
                             </div>
                             <div class="div2-2">
@@ -412,9 +412,9 @@
                                 <div class="div4-2">
 
                                     <div class="div4-2-1">
-                                        <div>保母名稱 &nbsp : &nbsp @item.SitterName </div>
-                                        <div class="div4-2-2">保母地址 &nbsp : &nbsp @item.FormattedAddress</div>
-                                        <div>保母電話 &nbsp : &nbsp @item.SitterPhone</div>
+                                        <div>保姆名稱 &nbsp : &nbsp @item.SitterName </div>
+                                        <div class="div4-2-2">保姆地址 &nbsp : &nbsp @item.FormattedAddress</div>
+                                        <div>保姆電話 &nbsp : &nbsp @item.SitterPhone</div>
                                         <div>入宿日期 &nbsp : &nbsp @item.DateStart.ToString("yyyy/MM/dd") - @item.DateOver.ToString("yyyy/MM/dd")</div>
                                         <div>入宿貓咪 &nbsp : &nbsp @item.CatName</div>
                                         <div>總共費用 &nbsp : &nbsp 新台幣 @item.Total 元</div>
@@ -446,7 +446,7 @@
                         <!-- data-target="#collapse【1】"***需更改數字*** -->
                         <div data-toggle="collapse" data-target="#@collapse" class="div2">
                             <div class="div2-1">                                
-                                <div class="div2-1-1"><i class="fa-solid fa-user-large"></i> &nbsp &nbsp 保母名稱: @item.SitterName &nbsp</div>
+                                <div class="div2-1-1"><i class="fa-solid fa-user-large"></i> &nbsp &nbsp 保姆名稱: @item.SitterName &nbsp</div>
                                         <div class="div2-1-2">| &nbsp &nbsp 入宿日期:@item.DateStart.ToString("yyyy年MM月dd日") - @item.DateOver.ToString("MM月dd日") &nbsp (共 @item.DateOver.Subtract(item.DateStart).ToString("%d") 日)</div>
                             </div>
                             <div class="div2-2">
@@ -463,9 +463,9 @@
                                 <div class="div4-2">
 
                                     <div class="div4-2-1">
-                                        <div>保母名稱 &nbsp : &nbsp @item.SitterName </div>
-                                        <div class="div4-2-2">保母地址 &nbsp : &nbsp @item.FormattedAddress</div>
-                                        <div>保母電話 &nbsp : &nbsp @item.SitterPhone</div>
+                                        <div>保姆名稱 &nbsp : &nbsp @item.SitterName </div>
+                                        <div class="div4-2-2">保姆地址 &nbsp : &nbsp @item.FormattedAddress</div>
+                                        <div>保姆電話 &nbsp : &nbsp @item.SitterPhone</div>
                                         <div>入宿日期 &nbsp : &nbsp @item.DateStart.ToString("yyyy/MM/dd") - @item.DateOver.ToString("yyyy/MM/dd")</div>
                                         <div>入宿貓咪 &nbsp : &nbsp @item.CatName</div>
                                         <div>總共費用 &nbsp : &nbsp 新台幣 @item.Total 元</div>
@@ -546,7 +546,7 @@
                     backdrop: `rgba(0,0,0,0.4)`,
                     html: `<div class="div6-1 h2">
                         <i class="fa-solid fa-calendar-star"></i>
-                        <span class="">保母服務評價</span>
+                        <span class="">保姆服務評價</span>
                         <i class="fa-solid fa-calendar-star"></i>
                     </div>
 
