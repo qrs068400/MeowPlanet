@@ -135,6 +135,7 @@ namespace MeowPlanet.Controllers
         }
 
         // 寄送註冊驗證碼
+        [HttpGet]
         public ActionResult SendRegistMail(string email)
         {
 
@@ -200,6 +201,7 @@ namespace MeowPlanet.Controllers
         }
 
         // 寄密碼重置信
+        [HttpGet]
         public ActionResult SendEmailMsg(string Email)
         {
             // 加密
@@ -295,9 +297,7 @@ namespace MeowPlanet.Controllers
 
             if (count > 0)
             {
-                SendEmailMsg(ForgetEmail);
-
-                return Content("驗證信已寄出");
+                return Content("重置信已寄出");
             }
             else
             {

@@ -13,6 +13,10 @@ function currentPos() {
                     lng: position.coords.longitude,
                 };
                 map.setCenter(pos);
+                let marker = new google.maps.Marker({
+                    position: pos,
+                    map:map,
+                });
             }
         )
     };

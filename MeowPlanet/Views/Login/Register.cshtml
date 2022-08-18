@@ -126,8 +126,8 @@
                     $.get("/Login/EmailCheck", { email: $('input[type=email]').val() }, function(data) {
                         if (data == "此信箱可使用") {
                             let email = $('input[type=email]').val();
+                            $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', 'white');
                             $.get("/Login/SendRegistMail", { email }, function(data) {
-                                $('#verifyspan').text("驗證碼已寄出").removeClass('text-danger').css('color', 'white');
                                 verifycode = data;
                             })
                         }
@@ -141,7 +141,7 @@
                 if ($('#verify').val().length == 5) {
                     if (verifycode != $('#verify').val()) {
                         $('#verifyspan').text("驗證碼錯誤").addClass('text-danger');
-                    } 
+                    }
                 }
             })
 
