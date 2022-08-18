@@ -214,13 +214,13 @@ $(document).on('mouseenter', '.pic_div4-1>img', function () {
         }
     }
 
-    triInter = setInterval(function x() { picPlay(tar); return x; }(), 1500 * arrayPicSrc.length);
+    triInter = setInterval(function x() { picPlay(tar); return x; }(), 1300 * arrayPicSrc.length);
 });
 
 function picPlay(el) {
     arrTimer = [];
     for (let i in arrayPicSrc) {
-        triTime = setTimeout(function () { $(el).attr('src', arrayPicSrc[i]) }, 1500 * i);
+        triTime = setTimeout(function () { $(el).attr('src', arrayPicSrc[i]) }, 1300 * i);
         arrTimer.push(triTime);
     };
 };
@@ -246,7 +246,7 @@ for (var i = 0; i < sitterList.length; i++) {
     $('.row').append(
         `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}" >
                 <div class="pic_div4-1">
-                    <img src="${sitterList[i].img01}" />
+                    <img src="${sitterList[i].img01}" style="object-fit:cover" class=""h-100 w-100/>
                 </div>
                 <div class="sitter-box_div5">
                     <div class="d-flex">
