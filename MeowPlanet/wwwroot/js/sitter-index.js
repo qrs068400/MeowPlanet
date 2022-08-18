@@ -13,6 +13,10 @@ function currentPos() {
                     lng: position.coords.longitude,
                 };
                 map.setCenter(pos);
+                let marker = new google.maps.Marker({
+                    position: pos,
+                    map: map,
+                });
             }
         )
     };
@@ -20,7 +24,7 @@ function currentPos() {
 
 function initMap() {
 
-    //初始化地圖(應該定位到使用者位置)---------------------------!@#$^&(@*&()!())
+    //初始化地圖
     map = new google.maps.Map($('#map')[0], {
         center: { lat: 22.62931421, lng: 120.29299528 },
         zoom: 16,
@@ -32,6 +36,8 @@ function initMap() {
     });
 
     currentPos();
+
+    
 
     //定位按鈕
     const locationButton = document.createElement("button");
@@ -108,7 +114,7 @@ function initMap() {
         sitter.featureList = value.sitterfeatureList;
         sitter.orderList = value.OrderCommentList;
         sitterList.push(sitter);
-        console.log(sitter);
+
     })
 
     //綁定地圖停止時，取得地圖邊界做搜尋
@@ -137,11 +143,7 @@ function scrollToItem(sitter) {
 //建立照片html
 function pic(sitter) {
     let pic = "";
-    for (var j = 1; j < 6; j++) {
-        if (sitter[`img0${j}`] !== null) {
-            pic += `<div class="slide-${j}"><img src="${sitter[`img0${j}`]}"></div>`
-        }
-    }
+   
     return pic;
 };
 
@@ -191,13 +193,60 @@ function featureOrNot(sitter) {
         return "有設備";
     }
 };
+//照片hover輪播
+
+    
+   
+    
+let triInter;
+let triTime;
+let arrTimer;
+let arrayPicSrc = [];
+
+$(document).on('mouseenter', '.pic_div4-1>img', function () {
+    let tar = this;
+    let sitterNum = $(tar).closest('[data-sid]').data('sid');
+    let sitter = sitterList.find(o => o.serviceId == `${sitterNum}`);
+    arrayPicSrc = [];
+    for (var j = 1; j < 6; j++) {
+        if (sitter[`img0${j}`] !== null) {
+            arrayPicSrc.push(sitter[`img0${j}`])
+        }
+    }
+
+    triInter = setInterval(function x() { picPlay(tar); return x; }(), 1500 * arrayPicSrc.length);
+});
+
+function picPlay(el) {
+    arrTimer = [];
+    for (let i in arrayPicSrc) {
+        triTime = setTimeout(function () { $(el).attr('src', arrayPicSrc[i]) }, 1500 * i);
+        arrTimer.push(triTime);
+    };
+};
+
+$(document).on('mouseleave', '.pic_div4-1>img', function () {
+    clearInterval(triInter);
+    console.log(arrTimer);
+
+    for (const value of arrTimer) {
+        clearTimeout(value);
+    }
+
+    $(this).attr('src', arrayPicSrc[0]);
+});
+
+
+
+
+
 
 //產生所有保母卡片
 for (var i = 0; i < sitterList.length; i++) {
     $('.row').append(
         `<div class="card_div4" style="display:none;" data-sid="${sitterList[i].serviceId}" >
                 <div class="pic_div4-1">
-                    ${pic(sitterList[i])}
+                    <img src="${sitterList[i].img01}" />
                 </div>
                 <div class="sitter-box_div5">
                     <div class="d-flex">
@@ -240,7 +289,6 @@ let bounds;
 
 //顯示地圖範圍內的保母
 function searchSitter(bounds) {
-    console.log(bounds);
     sitterList.forEach((sitter, index) => {
         let marker = sitter.marker;
         let latlng = sitter.latlng;
@@ -321,11 +369,11 @@ $(document).on("mouseleave", ".card_div4", this, function () {
 
 //!  照片輪播 
 {
-    $('.pic_div4-1').slick({
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: false,
-    });
+    //$('.pic_div4-1').slick({
+    //    slidesToShow: 1,
+    //    slidesToScroll: 1,
+    //    autoplay: false,
+    //});
 }
 
 

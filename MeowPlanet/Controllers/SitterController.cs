@@ -34,12 +34,12 @@ namespace MeowPlanet.Controllers
             //方法三的sql 語法速度加總大概 280ms 以上
             //想要用forloop來測試 10圈的速度
             //發現第一圈花了2.X秒，其餘圈數都花<100ms左右而已
+            //.AsNoTrackingWithIdentityResolution()
+            //.Include(c => c.SitterFeatures)
 
             //方法一
             var result = await _context.Sitters
                 .AsNoTracking()
-                //.AsNoTrackingWithIdentityResolution()
-                //.Include(c => c.SitterFeatures)
                 .Where(m => m.IsService == true)
                 .Select(m => new SitterViewModels
                 {
@@ -52,9 +52,6 @@ namespace MeowPlanet.Controllers
             //方法二
             //var result = new List<Sitter>();
             //result = await _context.Sitters
-            //.Include(c => c.Member)
-            //.Include(c => c.SitterFeatures)
-            //.ThenInclude(c => c.Feature)
             //.Where(m => m.IsService == true).ToListAsync();
 
             //List<SitterViewModels> result2 = new List<SitterViewModels>();
@@ -89,7 +86,7 @@ namespace MeowPlanet.Controllers
             //TempData["controller"] = "Sitter";
             //TempData["action"] = "Index";
 
-            return View( result);
+            return View(result);
         }
 
         public async Task<IActionResult> Detail(int? id)
