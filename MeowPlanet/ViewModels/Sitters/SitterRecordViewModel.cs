@@ -4,17 +4,17 @@ namespace MeowPlanet.ViewModels.Sitters
     public class SitterRecordViewModel
     {
 
-        //保母本人資料
+        //保姆本人資料
 
         //訂單ID
         public int OrderId { get; set; }
-        //保母姓名
+        //保姆姓名
         public string SitterName { get; set; } = null!;
-        //保母電話
+        //保姆電話
         public string SitterPhone { get; set; } = null!;
-        //保母照片
+        //保姆照片
         public string? SitterPhoto { get; set; }
-        //保母地址
+        //保姆地址
         public string? FormattedAddress { get; set; }
         //訂單入宿開始日期
         public DateTime DateStart { get; set; }

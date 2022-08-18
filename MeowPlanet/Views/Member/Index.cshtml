@@ -2,7 +2,7 @@
 @using System.Security.Claims;
 
 @{
-    ViewData["Title"] = "memberInfo";
+    ViewData["Title"] = "會員中心";
 }
 
 @section Styles{
@@ -114,7 +114,7 @@
                 }
             })
         })
-        //保母資訊
+        //保姆資訊
         $('#sitter').click(() => {
             $.get('/Sitter/SitterBox', function(data) {
                 $('#member-right-region').html(data);

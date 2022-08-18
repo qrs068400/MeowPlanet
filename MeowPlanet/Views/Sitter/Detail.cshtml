@@ -4,6 +4,9 @@
 @{
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
 }
+@{
+    ViewData["Title"] = "保姆詳細";
+}
 @section Styles{
     <link  href="~/css/sitter-detail.css" rel="stylesheet"/>
 }
@@ -144,13 +147,13 @@
                     <hr>
                     <h5>自介</h5>
                     <p class="buzz-primary p-4" style="display:inline-block;">@Html.DisplayFor(model => model.sitter.Summary)</p>
-                    <h5>保母有無相關證照</h5>
+                    <h5>保姆有無相關證照</h5>
                     <p class="buzz-primary p-4" style="display:inline-block;"><i class="fa-solid fa-id-card"></i> @Html.DisplayFor(model => model.sitter.Licence)</p>
                     <h5>貓咪晚上是否關籠</h5>
                     <p class="buzz-primary p-4" style="display:inline-block;"><i class="fa-solid fa-house"></i> @Html.DisplayFor(model => model.sitter.Cage)</p>
                     <h5>是否提供即時監控設備</h5>
                     <p class="buzz-primary p-4" style="display:inline-block;"><i class="fa-solid fa-desktop"></i> @Html.DisplayFor(model => model.sitter.Monitor)</p>
-                    <h5>保母提供的室內設施</h5>
+                    <h5>保姆提供的室內設施</h5>
                     @if(Model.sitterfeatureList.Count>0)
                     {
                         for(int i = 0 ; i< Model.sitterfeatureList.Count; i++)
@@ -270,7 +273,7 @@
                             </div>
                         </div>
                     </div>
-                    if(i == 6){ break; }
+                    if(i == 5){ break; }
                     }
                 </div>
                 <button class="more-comment buzz">
@@ -282,7 +285,7 @@
 
         <location>
             <div class="row pt-5 pb-5">
-                <div class="h3">保母位置</div>
+                <div class="h3">保姆位置</div>
 
                 <div class="map" id="map">
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MeowPlanet.Models
 {
@@ -19,8 +20,13 @@ namespace MeowPlanet.Models
 
         public int MemberId { get; set; }
         public string Email { get; set; } = null!;
+        [Required(ErrorMessage = "請輸入有效的密碼")]
+        [StringLength(10, MinimumLength = 6, ErrorMessage = "密碼必須是6-10位")]
         public string Password { get; set; } = null!;
+        [Required(ErrorMessage = "請輸入有效的手機號碼")]
+        [RegularExpression(@"^09[0-9]{8}$", ErrorMessage = "手機號碼格式不正確")]
         public string Phone { get; set; } = null!;
+        [Required(ErrorMessage = "請輸入有效的名字")]
         public string Name { get; set; } = null!;
         public string? Photo { get; set; }
 

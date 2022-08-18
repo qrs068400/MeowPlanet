@@ -145,7 +145,7 @@ namespace MeowPlanet.Controllers
 
         // 建立保姆資料
         [HttpPost]
-        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5 , string sitterfeature)
+        public async Task<IActionResult> AddSitter(Sitter sitter, IFormFile file1, IFormFile file2, IFormFile file3, IFormFile file4, IFormFile file5, string sitterfeature)
         {
             Random random = new Random();
             string? uniqueFileName = null;
@@ -268,20 +268,30 @@ namespace MeowPlanet.Controllers
         {
             var LoginId = Convert.ToInt32(User.FindFirst(ClaimTypes.Sid).Value);
 
-            var CatInfo = _context.Cats.Where(x => x.MemberId == LoginId).Join(_context.CatBreeds,
-                c => c.BreedId,
-                s => s.BreedId,
-                (c, s) => new CatSelectViewModel
-                {
-                    CatId = c.CatId,
-                    Breed = s.Name,
-                    Name = c.Name,
-                    Sex = c.Sex,
-                    Img01 = c.Img01
+            var CatCount = _context.Cats.Count(x => x.MemberId == LoginId);
 
-                }).ToList();
+            if (CatCount > 0)
+            {
+                var CatInfo = _context.Cats.Where(x => x.MemberId == LoginId).Join(_context.CatBreeds,
+                    c => c.BreedId,
+                    s => s.BreedId,
+                    (c, s) => new CatSelectViewModel
+                    {
+                        CatId = c.CatId,
+                        Breed = s.Name,
+                        Name = c.Name,
+                        Sex = c.Sex,
+                        Img01 = c.Img01
 
-            return PartialView("_CatSelectPartial", CatInfo);
+                    }).ToList();
+
+                return PartialView("_CatSelectPartial", CatInfo);
+
+            }
+            else
+            {
+                return Content("nocat");
+            }
         }
 
         // 取得貓咪詳細資料
@@ -394,7 +404,7 @@ namespace MeowPlanet.Controllers
             oldCat.City = cat.City;
             oldCat.Introduce = cat.Introduce;
 
-            if ((oldCat.IsMissing != true)||(oldCat.IsSitting != true))
+            if ((oldCat.IsMissing != true) || (oldCat.IsSitting != true))
             {
                 oldCat.IsAdoptable = cat.IsAdoptable;
             }

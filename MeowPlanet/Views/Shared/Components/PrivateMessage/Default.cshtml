@@ -348,7 +348,7 @@
         connection.start().then(function() {
             console.log("已連接即時聊天");
         }).catch(function(err) {
-            alert('聊天系統發生了一點小問題: ' + err.toString());
+            console.log('聊天系統發生了一點小問題: ' + err.toString());
         });
 
         //收到訊息

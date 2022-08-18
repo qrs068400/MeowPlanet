@@ -514,7 +514,7 @@ body {
 }
 
 #showcom img {
-    width: 400px;
+    width: 250px;
     height: 250px;
     border: 2px rgb(219, 232, 248) solid;
     box-shadow: 0 0 3rem rgba(134, 171, 190, 0.5) inset;
@@ -756,9 +756,10 @@ body {
 }
 
 #car img {
-    width: 160px;
+    width: 120px;
     height: 120px;
     border-radius: 20%;
+    object-fit:cover;
 }
 
 #car p {
