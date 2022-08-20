@@ -398,7 +398,7 @@ let map;
 let marker;
 let catList = [];
 function initMap() {
-    //偏移保母位置
+    //偏移保姆位置
     let seed = model.sitter.serviceId % 4;
     let part = model.sitter.serviceId % 10 + 1;
     let latlng;
@@ -428,7 +428,7 @@ function initMap() {
         gestureHandling: 'cooperative'
     });
 
-    //保母位置marker
+    //保姆位置marker
     marker = new google.maps.Marker({
         position: latlng,
         map: map,
@@ -551,14 +551,14 @@ $('#comfirmPay').click(
                  /*alert($('#confirmForm input[name="sitter"]').val());*/
                 $('#confirmForm').submit();
             } else {
-                alert("請先選擇入住退房日期及需保母寵物");
+                alert("請先選擇入住退房日期及需保姆寵物");
             }
             
         });
     }
 )
 
-//私訊保母
+//私訊保姆
 $('.black-overlay').click(function () {
     let s = $(this).data('sid');
     messagebox.messageTo(s, memberId);

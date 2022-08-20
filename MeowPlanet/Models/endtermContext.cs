@@ -93,7 +93,7 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.Img01)
                     .HasMaxLength(100)
                     .HasColumnName("img_01")
-                    .HasDefaultValueSql("(N'../images/defaultcat.png')");
+                    .HasDefaultValueSql("(N'/images/defaultcat.png')");
 
                 entity.Property(e => e.Img02)
                     .HasMaxLength(100)
@@ -263,7 +263,7 @@ namespace MeowPlanet.Models
                 entity.Property(e => e.Photo)
                     .HasMaxLength(100)
                     .HasColumnName("photo")
-                    .HasDefaultValueSql("(N'../images/defaultperson.png')");
+                    .HasDefaultValueSql("(N'/images/ar.png')");
             });
 
             modelBuilder.Entity<Message>(entity =>

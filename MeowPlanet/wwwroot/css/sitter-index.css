@@ -216,7 +216,7 @@ a[href^="https://maps.google.com/maps"] {
 }
 
 /* ------------------------------------------- */
-/* 保母卡片 */
+/* 保姆卡片 */
 
 @media (min-width: 1400px){
     .container, .container-lg, .container-md, .container-sm, .container-xl, .container-xxl {
@@ -240,7 +240,7 @@ a[href^="https://maps.google.com/maps"] {
     margin: 0px 0px 20px 0px;
     color: rgb(197, 193, 193);
     background-color: transparent;
-    background-image: url("../images/sitter/保母展示框.png");
+    background-image: url("/images/sitter/保姆展示框.png");
     background-size: contain;
     background-repeat: no-repeat;
     background-position: center;

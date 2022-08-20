@@ -7,7 +7,9 @@
     bool isLogin = Int32.TryParse(User.Claims.Where(x => x.Type == ClaimTypes.Sid).Select(x => x.Value).FirstOrDefault(), out int memberId);
 }
 
-
+@{
+    ViewData["Title"] = "協尋貓咪";
+}
 
 <div id="stars"></div>
 <div id="stars2"></div>
