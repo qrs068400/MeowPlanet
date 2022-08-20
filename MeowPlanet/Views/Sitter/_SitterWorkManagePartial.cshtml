@@ -197,7 +197,7 @@
                 $.post('/Sitter/SetOrderStatus', {orderId,status}, function(){
                     //執行更新內容
                     $.get('/Sitter/SitterWorkManage', function(data) {
-                        $('#member-right-region').html(data);
+                        $('#sitterContent').html(data);
                     })
                 })                            
             }
