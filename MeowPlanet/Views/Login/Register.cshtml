@@ -24,14 +24,14 @@
 
                 <div class="col-6 mycontent-right d-flex align-items-center justify-content-center">
 
-                    <form method="post" asp-action="AddMember" asp-controller="Login" autocomplete="off">
+                    <form method="post" asp-action="AddMember" asp-controller="Login" autocomplete="on">
                         <div class="regist-form">
                             <div class="d-flex justify-content-between align-items-center">
                                 <p class="form-p">Email</p>
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="email" asp-for="Email" class="form-control regist-sp" autocomplete="username" aria-required="true" id="email" />
+                                <input type="email" asp-for="Email" class="form-control regist-sp" value="meowplanet004@gmail.com" aria-required="true" id="email" />
 
                             </div>
 
@@ -44,7 +44,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="password" asp-for="Password" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="password" />
+                                <input type="password" asp-for="Password" class="form-control regist-sp" value="123456" aria-required="true" id="password" />
                             </div>
 
                             <div class="d-flex justify-content-start align-items-center err-msg-div">
@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="text" asp-for="Name" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="name" />
+                                <input type="text" asp-for="Name" class="form-control regist-sp" value="meow" aria-required="true" id="name" />
                             </div>
 
                             <div class="d-flex justify-content-start align-items-center err-msg-div">
@@ -68,7 +68,7 @@
                             </div>
 
                             <div class="d-flex align-items-center">
-                                <input type="text" asp-for="Phone" class="form-control regist-sp" autocomplete="current-password" aria-required="true" id="phone" />
+                                <input type="text" asp-for="Phone" class="form-control regist-sp" value="0911222333" aria-required="true" id="phone" />
 
                             </div>
 
